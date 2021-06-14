@@ -1,0 +1,72 @@
+<div class="dialog-content-wrapper">
+
+  <mat-toolbar class="mb-2" matDialogTitle color="primary" id="toolbarHeader">
+    <mat-toolbar-row fxLayoutAlign="space-between center">
+      <span *ngIf="!isEditing" class="mat-title mb-0">{{'Add mailTemplate'}}</span>
+      <span *ngIf="isEditing" class="mat-title mb-0">{{'Edit mailTemplate'}}</span>
+      <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <div mat-dialog-content class="my-dialog-content">
+    <small>Variables traduccion formato <span><%=d.key%></span> &nbsp;&nbsp;</small>
+    <button [cdkCopyToClipboard]="'<%=d.key%>'" style="cursor: pointer">
+      <mat-icon>file_copy</mat-icon>
+    </button>
+
+    <br>
+    <small>Variables formato <span><%=key%></span> &nbsp;&nbsp;</small>
+    <button [cdkCopyToClipboard]="'<%=key%>'" style="cursor: pointer">
+      <mat-icon>file_copy</mat-icon>
+    </button>
+
+    <br>
+    <small><b>Nota: Para agragar una variable copie el contenido y reemplace 'key' por su clave</b></small>
+    <form [formGroup]="form">
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+        <div fxLayout="row wrap" class="mt-3" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
+
+          <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+            <mat-label>
+              <span style="text-transform: capitalize;">{{'emailTitle'}}</span>
+            </mat-label>
+            <input matInput (change)="updateKeys()" [formControl]="form.get('emailTitle')" placeholder="{{'emailTitle'}}" required type="text">
+          </mat-form-field>
+          <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+            <mat-label>
+              <span style="text-transform: capitalize;">{{'keepXHours'}}</span>
+            </mat-label>
+            <input matInput [formControl]="form.get('keepXHours')" placeholder="{{'keepXHours'}}" type="number">
+          </mat-form-field>
+          <div fxFlex="100" class="mb-3">
+            <p class="mt-0 mb-2"><span style="text-transform: capitalize;">{{'emailBody'}}</span></p>
+            <ckeditor (change)="updateKeys()" [config]="config" [editor]="Editor" [formControl]="form.get('emailBody')" tagName="textarea">
+            </ckeditor>
+          </div>
+          <h5 fxFlex="100" *ngIf="keyArrays.length > 0">KEYS</h5>
+          <mat-form-field fxFlex="49" fxFlex.lt-md="100" appearance="outline" *ngFor="let item of keyArrays">
+            <mat-label>
+              <span style="text-transform: capitalize;">{{item}}</span>
+            </mat-label>
+            <input matInput required type="text">
+          </mat-form-field>
+        </div>
+
+
+      </div>
+
+    </form>
+
+
+  </div>
+
+  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">
+    <button mat-flat-button (click)="onSave()" [disabled]="this.form.invalid || isSaving" color="primary">
+      {{'Guardar'}}
+    </button>
+
+  </div>
+
+</div>

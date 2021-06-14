@@ -1,0 +1,38 @@
+.container-image {
+  padding: 16px;
+  position: relative;
+
+  .image-background {
+    background-image: url('../../../assets/images/500-error.jpg');
+    height: 500px !important;
+    width: auto;
+    max-width: 100%;
+    padding: 15px;
+
+  }
+
+  font-family: 'Poppins',
+  sans-serif !important;
+
+  @media (max-width:599px) {
+    .title {
+      font-size: 36px !important;
+    }
+
+    .subtitle {
+      font-size: 17px !important;
+    }
+  }
+
+  .title {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 50px;
+  }
+
+  .subtitle {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 25px;
+  }
+}

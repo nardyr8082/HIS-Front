@@ -1,0 +1,211 @@
+import {
+  UtilsService
+} from 'src/app/core/services/utils/utils.service';
+import {
+  environment
+} from 'src/environments/environment';
+import {
+  Component,
+  Inject,
+  ViewEncapsulation,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef
+} from '@angular/material/dialog';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
+import {
+  NgxSpinnerService
+} from 'ngx-spinner';
+import {
+  Subject
+} from 'rxjs';
+import {
+  takeUntil
+} from 'rxjs/operators';
+import {
+  MailTemplateParamService
+} from 'src/app/backend/services/mail-template-param/mail-template-param.service';
+import {
+  ImagePickerConf
+} from 'ngp-image-picker';
+import {
+  LoggedInUserService
+} from 'src/app/core/services/loggedInUser/logged-in-user.service';
+import {
+  ShowToastrService
+} from 'src/app/core/services/show-toastr/show-toastr.service';
+
+
+import * as Editor from '../../../../../assets/js/ckeditor/build/ckeditor';
+import {
+  cdkEditorBasicConfig
+} from '../../../../core/classes/cdkeditor-full-config';
+import { MailTemplateService } from '../../../services/mail-template/mail-template.service';
+
+@Component({
+  selector: 'app-dialog-add-edit-mail-template-param',
+  templateUrl: './dialog-add-edit-mail-template-param.component.html',
+  styleUrls: ['./dialog-add-edit-mail-template-param.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+})
+export class DialogAddEditMailTemplateParamComponent implements OnInit, OnDestroy {
+  isSaving = false;
+  isEditing = false;
+  loggedInUser: any;
+  form: FormGroup;
+  languages: any[] = [];
+  imageUrl: any;
+  languageForm: FormControl;
+  language: any;
+  _unsubscribeAll: Subject < any > ;
+  selectedMailTemplateParam = null;
+  imagePickerConf: ImagePickerConf = {
+    borderRadius: '4px',
+    language: 'es',
+    height: '120px',
+    width: '160px'
+  };
+
+  allMailTemplate: any[] = [];
+  allType: any[] = ["STRING", "FILE"];
+  public Editor = Editor;
+  config = cdkEditorBasicConfig;
+  /////////////////////////////////////////////////
+  languageData: any = {};
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef < DialogAddEditMailTemplateParamComponent > ,
+    private loggedInUserService: LoggedInUserService,
+    private fb: FormBuilder,
+    public spinner: NgxSpinnerService,
+    public utilsService: UtilsService,
+    private mailTemplateParamService: MailTemplateParamService,
+    private mailtemplateService: MailTemplateService,
+
+    private showToastr: ShowToastrService,
+  ) {
+    this.dialogRef.disableClose = true;
+    this.loggedInUser = this.loggedInUserService.getLoggedInUser();
+    this._unsubscribeAll = new Subject < any > ();
+
+    this.isEditing = data.isEditing;
+    this.selectedMailTemplateParam = data.selectedMailTemplateParam;
+    this.imageUrl = environment.imageUrl;
+
+    // ------------------LANGUAGE INITIALIZATION----------------
+    this.languages = this.loggedInUserService.getlaguages();
+    this.language = this.loggedInUserService.getLanguage() ? this.loggedInUserService.getLanguage().lang : 'es';
+    this.languageForm = new FormControl(this.language);
+    // -------------------------------------------------------------------------------------------------
+  }
+
+  ngOnInit(): void {
+    this.createForm();
+    //////////////////EVENT ASSOCIATED WITH CHANGE LANGUAGE////////////////////////////
+    this.languageForm.valueChanges.pipe(takeUntil(this._unsubscribeAll)).subscribe((data) => {
+      this.updateLanguageData();
+      this.language = data;
+
+
+    });
+    //////////////////////////////////////////////
+    this.fetchData();
+  }
+
+  createForm(): void {
+    this.form = this.fb.group({
+      MailTemplateId: [this.selectedMailTemplateParam?.MailTemplate?.id, [Validators.required]],
+      param: [this.selectedMailTemplateParam?.param, []],
+      description: [this.selectedMailTemplateParam?.description, []],
+      example: [this.selectedMailTemplateParam?.example, []],
+      type: [this.selectedMailTemplateParam?.type, []],
+    });
+  }
+
+  fetchData() {
+    /*Ponga aqui las peticiones para loas datos de Tipo REFERENCE*/
+    this.mailtemplateService.getAllMailTemplates().subscribe((data) => {
+      this.allMailTemplate = data.data;
+    }, e => {
+      //catch error
+    });
+
+  }
+
+  ngOnDestroy(): void {
+    this._unsubscribeAll.next();
+    this._unsubscribeAll.complete();
+  }
+
+
+
+
+  //////////////////////////////////////////
+  //////////////////////////////////////////
+
+  onSave(): void {
+    this.spinner.show();
+    this.updateLanguageData();
+    let data = {
+      ...this.form.value,
+      ...this.languageData
+    };
+    this.isSaving = true;
+    console.log(data);
+
+    if (!this.isEditing) {
+      this.mailTemplateParamService.createMailTemplateParam(data).subscribe(
+        () => {
+          this.showToastr.showSucces('Elemento creado correctamente');
+          this.spinner.hide();
+          this.dialogRef.close(true);
+        },
+        (error) => {
+          this.spinner.hide();
+          this.isSaving = false;
+          if (error.status == 404 || error.status == 403) {
+            this.dialogRef.close();
+          }
+        },
+      );
+    } else {
+      let dataOutput = {
+        id: this.selectedMailTemplateParam.id
+      };
+      for (let key in data) {
+        if (!this.utilsService.isObjectEquals(this.selectedMailTemplateParam[key], data[key])) {
+          dataOutput[key] = data[key];
+        }
+      }
+      this.mailTemplateParamService.editMailTemplateParam(dataOutput).subscribe(
+        () => {
+          this.showToastr.showSucces('Elemento editado correctanmete');
+          this.spinner.hide();
+          this.dialogRef.close(true);
+        },
+        (error) => {
+          this.spinner.hide();
+          this.isSaving = false;
+          if (error.status == 404 || error.status == 403) {
+            this.dialogRef.close();
+          }
+        },
+      );
+    }
+  }
+
+  //////////////////////////// UTILS FOR LANGUAGE HANDLE ///////////////////////////////////////
+  updateLanguageData() {
+
+  }
+  ///////////////////////////////////////////////////////////////////////////////////////////
+}

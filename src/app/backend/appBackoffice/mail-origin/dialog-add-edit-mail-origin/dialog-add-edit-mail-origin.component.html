@@ -1,0 +1,79 @@
+<div class="dialog-content-wrapper">
+
+    <mat-toolbar class="mb-2" matDialogTitle color="primary" id="toolbarHeader">
+        <mat-toolbar-row fxLayoutAlign="space-between center">
+            <span *ngIf="!isEditing" class="mat-title mb-0">{{'Add mailOrigin'}}</span>
+            <span *ngIf="isEditing" class="mat-title mb-0">{{'Edit mailOrigin'}}</span>
+            <button mat-icon-button (click)="dialogRef.close()" aria-label="Close dialog">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <div mat-dialog-content class="my-dialog-content">
+        <form [formGroup]="form">
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+
+                <div fxLayout="row wrap" class="mt-3" fxLayoutAlign="space-between start" fxLayoutGap="gappx">
+
+                    <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                        <mat-label>
+                            <span style="text-transform: capitalize;">{{'Host'}}</span>
+                        </mat-label>
+                        <input matInput [formControl]="form.get('host')" placeholder="{{'Host'}}" required type="text">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                        <mat-label>
+                            <span style="text-transform: capitalize;">{{'mailFrom'}}</span>
+                        </mat-label>
+                        <input matInput [formControl]="form.get('mailFrom')" placeholder="{{'Mail From'}}" required type="text">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                        <mat-label>
+                            <span style="text-transform: capitalize;">{{'Port'}}</span>
+                        </mat-label>
+                        <input matInput [formControl]="form.get('port')" placeholder="{{'Port'}}" required type="number">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                        <mat-label>
+                            <span style="text-transform: capitalize;">{{'User'}}</span>
+                        </mat-label>
+                        <input matInput [formControl]="form.get('user')" placeholder="{{'User'}}" required type="text">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                        <mat-label>
+                            <span style="text-transform: capitalize;">{{'Password'}}</span>
+                        </mat-label>
+                        <input matInput [formControl]="form.get('password')" placeholder="{{'Password'}}" required type="text">
+                    </mat-form-field>
+                    <mat-form-field fxFlex="48" fxFlex.lt-md="100" appearance="outline">
+                        <mat-label>
+                            <span style="text-transform: capitalize;">{{'Test To'}}</span>
+                        </mat-label>
+                        <input matInput [formControl]="form.get('testTo')" placeholder="{{'Test To'}}" required type="text">
+                    </mat-form-field>
+
+                    <mat-slide-toggle matTooltip="Toogle isOK" [formControl]="form.get('isOK')">
+                        <span class="mat-body-2">isOK</span>
+                    </mat-slide-toggle>
+                </div>
+
+
+
+
+
+            </div>
+
+        </form>
+
+
+
+
+    </div>
+
+    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end start">
+        <button mat-flat-button (click)="onSave()" [disabled]="this.form.invalid || isSaving" color="primary">{{'Guardar'}}</button>
+
+    </div>
+
+</div>

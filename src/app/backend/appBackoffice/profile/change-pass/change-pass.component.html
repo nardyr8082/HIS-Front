@@ -1,0 +1,46 @@
+<div fxLayout="column" fxLayoutAlign="start stretch">
+  <form [formGroup]="this.form" class="form-layout">
+    <div fxLayout="column" fxLayoutAlign="space-around stretch" class="cf-padding-top-20">
+
+      <mat-form-field appearance="outline">
+        <mat-label>{{'Contraseña actual'}}</mat-label>
+        <input matInput placeholder="{{'Contraseña actual'}}" type="password" required [formControl]="form.controls['currentPassword']">
+        <mat-error *ngIf="form.controls['currentPassword'].hasError('required')">
+          {{'Contraseña actual'}}&nbsp;<strong>{{'is required'}}</strong>
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="example-full-width" appearance="outline" fxFlex="48">
+        <mat-label>{{'Nueva contraseña'}}</mat-label>
+        <input matInput placeholder="{{'Nueva contraseña'}}" type="{{passType}}" required [formControl]="fromPass.controls['password']">
+        <mat-icon style="cursor: pointer;" matSuffix class="grey-600" (click)="showPass()">remove_red_eye</mat-icon>
+        <mat-error *ngIf="fromPass.controls['password'].hasError('minlength')">
+          {{'Nueva contraseña'}} <strong>{{'must be at least 6 characters'}}</strong>
+        </mat-error>
+        <mat-error *ngIf="fromPass.hasError('mismatch')">
+          {{'Nueva contraseña'}} <strong>{{'deben ser iguales'}}</strong>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width" appearance="outline" fxFlex="48"
+        [ngClass]="{'mat-form-field-invalid': fromPass.hasError('mismatch'), 'ng-invalid': fromPass.hasError('mismatch'), 'ng-valid': !fromPass.hasError('mismatch')}">
+        <mat-label>{{'Repita la contraseña'}}</mat-label>
+        <input matInput placeholder="{{'Repita la contraseña'}}" required type="{{passType}}"
+          [ngClass]="{'ng-invalid': fromPass.hasError('mismatch')}" [formControl]="fromPass.controls['repeat']">
+        <mat-icon style="cursor: pointer;" matSuffix class="grey-600" (click)="showPass()">remove_red_eye</mat-icon>
+        <mat-error *ngIf="fromPass.hasError('mismatch')">
+          {{'Contraseña'}} <strong>{{'deben ser iguales'}}</strong>
+        </mat-error>
+      </mat-form-field>
+
+
+
+      <button mat-raised-button color="primary" class="RegisterBtn" [disabled]="form.invalid" (click)="onSubmit()">
+        <span class="uppercase color-white">{{'Confirmar'}}</span>
+      </button>
+
+    </div>
+
+  </form>
+</div>

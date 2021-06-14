@@ -1,0 +1,32 @@
+<div class="layoutFiles">
+  <p class="mat-body-2 uppercase">{{'GALERÍA DE IMÁGENES y videos'}}</p>
+  <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="1rem">
+    <div *ngFor="let item of allFileUploaded" class="cardItem mt-3" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
+      <img class="imageMedia" *ngIf="item.type=='image'" [src]="this.imageUrl + item.file">
+      <video class="videoMedia" *ngIf="item.type=='video'" controls>
+        <source [src]="this.imageUrl + item.file" type="video/mp4">
+      </video>
+
+      <iframe class="videoMedia" *ngIf="item.type=='externalMedia'" [src]="item.file|safeResourseUrl" frameborder="0"
+        allowfullscreen></iframe>
+
+      <div fxLayout="column" fxLayoutAlign="end center" class="text-section">
+        <p>
+          <button matTooltip="Eliminar archivo" (click)="onDeleteMedia(item.id)" style="color: white;" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </p>
+        <p>
+          <button matTooltip="Marcar como principal" (click)="markAsMain(item)" style="color: white;" mat-icon-button>
+            <mat-icon>star_rate</mat-icon>
+          </button>
+        </p>
+      </div>
+      <span *ngIf="item.isMain" class="mainLabel">
+        Principal
+      </span>
+
+    </div>
+
+  </div>
+</div>

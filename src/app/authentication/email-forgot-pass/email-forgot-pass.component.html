@@ -1,0 +1,65 @@
+<div fxFlexFill fxLayout="column" fxLayoutAlign="center stretch" class="login-background">
+  <div fxLayout="row" fxLayoutAlign="center center">
+
+    <mat-card class="login-card mat-elevation-z8">
+
+      <div fxLayout="column" fxFlexAlign="center center" fxFlex="100">
+        <div fxLayout="column" fxLayoutAlign="start stretch" class="login-header">
+          <mat-toolbar color="primary" id="toolbarHeader">
+            <mat-progress-bar *ngIf="this.inLoading" id="progressBar" color="accent" [mode]="'indeterminate'" [value]="valueSpiner"
+              [bufferValue]="bufferValue">
+            </mat-progress-bar>
+            <mat-toolbar-row>
+            </mat-toolbar-row>
+
+            <mat-toolbar-row fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="gappx">
+              <div class="mat-elevation-z4" id="ImgLayout">
+              </div>
+            </mat-toolbar-row>
+
+            <mat-toolbar-row>
+
+            </mat-toolbar-row>
+          </mat-toolbar>
+
+        </div>
+
+        <form name="login" class="login-form">
+          <!-- <div fxLayout="row" class="mt-3 mb-3" fxLayoutAlign="center center" fxLayoutGap="gappx">
+            <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="gappx">
+              <h1 class="h3"></h1>
+            </div>
+          </div> -->
+
+          <div fxLayout="column" class="mt-2" fxLayoutAlign="center center">
+
+            <p class="mat-body-2 uppercase mt-2">
+              Inserte su cuenta de correo
+            </p>
+
+            <mat-form-field class="example-full-width" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="example@gmail.com" [disabled]="inLoading" [formControl]="emailForm.controls['email']"
+                name="email">
+              <mat-error *ngIf="this.emailForm.controls['email'].invalid">
+                {{'El email es'}} <strong>requerido</strong>
+              </mat-error>
+              <mat-error *ngIf="this.emailForm.controls['email'].invalid">
+                {{'El email es'}} <strong>es inválido</strong>
+              </mat-error>
+            </mat-form-field>
+
+
+            <button class="px-3" style="width: 180px;" mat-raised-button color="primary" [disabled]="emailForm.invalid || this.inLoading"
+              (click)="sendForm()">ENVIAR
+            </button>
+
+
+          </div>
+
+        </form>
+      </div>
+    </mat-card>
+
+  </div>
+</div>

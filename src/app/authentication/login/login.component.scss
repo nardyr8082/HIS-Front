@@ -1,0 +1,96 @@
+@import '../../../assets/scss/theme/variables';
+
+$havanatur-color: #0d47a1;
+
+.login-card {
+  border-radius: 16px !important;
+  padding: 0;
+  min-width: 450px;
+  max-width: 600px;
+  animation: 1s ease-in-out fadeIn;
+  @media (max-width: 800px) {
+    min-width: 350px !important;
+    max-width: 400px !important;
+  }
+  min-height: 560px !important;
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: translateY(125%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+}
+
+.login-header {
+  #toolbarHeader {
+    border-top-left-radius: 16px !important;
+    border-top-right-radius: 16px !important;
+
+    #progressBar {
+      border-top-left-radius: 16px !important;
+      border-top-right-radius: 16px !important;
+    }
+
+    #ImgLayout {
+      height: 170px;
+      width: 170px;
+
+      @media only screen and (max-width: 800px) {
+        height: 140px !important;
+        width: 140px !important;
+      }
+
+      border-radius: 50%;
+      border: solid 2.2px #bbb;
+      background-image: url('../../../assets/images/users/profile2.png');
+      background-position: center;
+      background-size: cover;
+    }
+  }
+}
+
+.mat-card-header-text {
+  margin: 0px !important;
+}
+
+.login-toolbar {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.login-form {
+  #lineUnder {
+    background-color: $havanatur-color;
+    width: 30px;
+    height: 2px;
+    border-radius: 4px;
+  }
+}
+
+.example-full-width {
+  width: 90%;
+}
+
+.login-background {
+  // background: url('../../../assets/images/background/auto_5.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-color: #fafafa;
+  height: 100vh !important;
+}
+
+.link {
+  text-decoration: none;
+  color: #616161;
+
+  &:hover {
+    color: #2196f3;
+    text-decoration: underline;
+  }
+}

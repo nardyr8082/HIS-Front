@@ -1,0 +1,26 @@
+<div class="container-profile py-3">
+  <mat-tab-group [color]="'accent'">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>account_circle</mat-icon>
+        <span class="mat-body-2 uppercase ml-2">
+          Mi perfil
+        </span>
+      </ng-template>
+      <ng-template matTabContent>
+        <app-editar-perfil></app-editar-perfil>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>lock_open</mat-icon>
+        <span class="mat-body-2 uppercase ml-2">
+          Cambiar contraseña
+        </span>
+      </ng-template>
+      <ng-template matTabContent>
+        <app-change-pass></app-change-pass>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>

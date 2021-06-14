@@ -1,0 +1,105 @@
+<div class="loading-shade-full" style="background: rgba(0, 0, 0, 0.12) !important; width: 100%; height: 100%"
+     *ngIf="false">
+  <mat-spinner *ngIf="false">
+  </mat-spinner>
+</div>
+<div fxLayout="column" fxLayoutAlign="space-around start">
+  <mat-toolbar class="toolbar-table">
+    <mat-toolbar-row>
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100">
+        <span fxHide.xs class="mat-title mb-0">{{'Envío de prueba'}}</span>
+        <span fxHide fxShow.xs class="mat-title mb-0">{{'Testing'}}</span>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxFlex="100" style="margin-top: 30px; width: 100%">
+    <form [formGroup]="form" style="width: 100%">
+      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+
+        <div fxLayout="row" fxLayoutAlign="center center" class="ImageLayout">
+          <div fxLayout="column" fxLayoutAlign="start start" fxLayoutAlign.lt-sm="center stretch" class="mb-2">
+            <div
+              [ngClass]="fileName == '' ? 'file-upload' : 'file-upload-ok'"
+              fxFlex="row" fxLayoutAlign="center center">
+              <mat-icon class="avatar-icon">insert_drive_file</mat-icon>
+
+              <button id="photoCameraBtn" style="position: absolute;" mat-icon-button (click)="openFileBrowser($event)">
+                <mat-icon style="color: white;" aria-label="Example icon-button with a heart icon">
+                  attach_file
+                </mat-icon>
+              </button>
+            </div>
+            <mat-error *ngIf="showErrorFile">
+              EL fichero sobrepasa los <strong>500 Kb</strong>
+            </mat-error>
+            <input type="file" class="hide-style" id="filePicker" (change)="handleFileSelect($event)">
+          </div>
+        </div>
+        <div>
+          <mat-form-field appearance="outline" fxFlex="30">
+            <mat-label>{{'Lenguaje'}}</mat-label>
+            <mat-select placeholder="{{'Lenguaje'}}" [formControl]="form.controls['language']" required>
+              <mat-option *ngFor="let l of ['es', 'en']" [value]="l">
+                <span class="mat-body-2">
+                  {{l}}
+                </span>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="30">
+            <mat-label>{{'Código de plantilla'}}</mat-label>
+            <mat-select placeholder="{{'Código de plantilla'}}" [formControl]="form.controls['MailTemplateCode']" required>
+              <mat-option *ngFor="let mail of allMailTemplate" [value]="mail.code">
+                <span class="mat-body-2">
+                  {{mail.code}}
+                </span>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="30">
+            <mat-label>{{'Email de origen'}}</mat-label>
+            <mat-select placeholder="{{'Email de origen'}}" [formControl]="form.controls['MailOrigin']" required>
+              <mat-option *ngFor="let mail of allMailOrigin" [value]="mail.user">
+                <span class="mat-body-2">
+                  {{mail.user}}
+                </span>
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center">
+          <p>Lista de emails de destino</p>
+          <span class="add-bottom" (click)="addEmailDestination()"><mat-icon>add</mat-icon></span>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="start start">
+          <div *ngFor="let control of getFormArray(form, 'emailDestinationList').controls; index as i">
+            <mat-form-field appearance="outline" style="width: 300px">
+              <mat-label>{{'Email'}}</mat-label>
+              <input required type="text" matInput [formControl]="control"
+                     placeholder="{{'Email'}}">
+              <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div fxLayout="column" fxLayoutAlign="start start">
+          <mat-form-field appearance="outline" style="width: 500px">
+            <mat-label>{{'Email de destino'}}</mat-label>
+            <input required type="text" matInput [formControl]="form.controls['emailDestination']" placeholder="{{'Email de destino'}}">
+            <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
+            <mat-error *ngIf="form.controls['emailDestination'].hasError('required')">
+              {{'Email de destino'}} <strong>{{'es requerido'}}</strong>
+            </mat-error>
+          </mat-form-field>
+
+          <button mat-flat-button (click)="onSendMail()" [disabled]="this.form.invalid"
+                  color="primary">{{'GUARDAR'}}</button>
+        </div>
+
+
+      </div>
+    </form>
+  </div>
+</div>
+

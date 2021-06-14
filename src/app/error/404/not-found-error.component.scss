@@ -1,0 +1,24 @@
+@import "../../../assets/scss/theme/variables";
+
+.error-app {
+  padding: 48px 0px;
+
+}
+
+.card-error {
+  max-width: 100%;
+  width: 500px;
+  height: 400px;
+  max-height: 100%;
+
+  .error-cartel {
+    font-size: 9rem;
+    margin-top: auto;
+    margin-bottom: 60px;
+    text-align: center;
+    font-weight: 500;
+    color: $main-primary;
+
+  }
+
+}
