@@ -38,12 +38,13 @@ export class LoggedInUserService {
 
   public getLoggedInUser(): any {
     let data = JSON.parse(localStorage.getItem('user'));
-    data = data ? data.profile : null;
+    // data = data ? data.profile : null;
+    data = data ? data.access : null;
     return data;
   }
   public getTokenOfUser(): any {
     let data = JSON.parse(localStorage.getItem('user'));
-    data = data ? data.Authorization : null;
+    data = data ? data.access : null;
     return data;
   }
 
@@ -65,7 +66,8 @@ export class LoggedInUserService {
     this.$loggedInUserUpdated.next(this.loggedInUser);
   }
 
-  public isAdminUser() { return true;
+  public isAdminUser() {
+    return true;
     let flag = false;
     const user = this.getLoggedInUser();
     if (!user) {
@@ -79,7 +81,6 @@ export class LoggedInUserService {
     });
     return flag;
   }
-
 
   public getlaguages() {
     return this.flags;

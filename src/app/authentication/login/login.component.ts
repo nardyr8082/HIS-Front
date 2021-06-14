@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.authService.login(username, password).subscribe(
       (result: any) => {
         console.log(result);
-        this.loggedInUserService.updateUserProfile(result.data);
+        this.loggedInUserService.updateUserProfile(result);
         this.showToastr.showSucces('Usted está logeado en nuestro sistema.', 'Felicidades!', 5500);
         this.inLoading = false;
         this.router.navigate(['backend/perfil']);

@@ -25,16 +25,18 @@ export class AuthenticationService {
 
   login(user: string, password: string) {
     const base64EncodedPw = btoa(user + ':' + password);
+    const data = {
+      username: user,
+      password: password,
+    };
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: 'Basic ' + base64EncodedPw,
       }),
-      username: user,
-      password: password,
     };
 
-    return this.httpClient.get<IUser>(this.userUrl, httpOptions);
+    return this.httpClient.post<any>(this.userUrl, data, httpOptions);
   }
 
   logout(): Observable<any> {
