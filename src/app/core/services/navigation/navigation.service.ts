@@ -41,6 +41,13 @@ export class NavigationService {
       ],
       display: true,
     },
+    {
+      displayName: 'Mi Perfil',
+      iconName: ['account_circle'],
+      material: true,
+      route: 'backend/perfil',
+      display: true,
+    },
   ];
 
   constructor() {}
