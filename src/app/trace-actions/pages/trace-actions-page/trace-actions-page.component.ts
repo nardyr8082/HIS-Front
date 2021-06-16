@@ -59,7 +59,7 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getTraceActions(filters = this.filters, sortColumn = 'updatedAt', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getTraceActions(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     const sub = this.traceActionService
       .getTracesActions(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
@@ -78,11 +78,11 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
-    this.getTraceActions(this.filters, 'updatedAt', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getTraceActions(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filter: FilterResponse) {
     this.filters = { ...this.filters, [filter.name]: filter.result };
-    this.getTraceActions(this.filters, 'updatedAt', 'desc');
+    this.getTraceActions(this.filters, 'fecha', 'desc');
   }
 }
