@@ -59,11 +59,12 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
   login(username: string, password: string): boolean {
     this.inLoading = true;
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    localStorage.removeItem('access-token');
     this.authService.login(username, password).subscribe(
       (result: any) => {
         console.log(result);
-        this.loggedInUserService.updateUserProfile(result);
+        this.loggedInUserService.updateUserToken(result);
         this.showToastr.showSucces('Usted está logeado en nuestro sistema.', 'Felicidades!', 5500);
         this.inLoading = false;
         this.router.navigate(['backend/perfil']);

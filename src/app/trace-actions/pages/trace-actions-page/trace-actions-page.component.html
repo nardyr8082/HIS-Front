@@ -6,6 +6,8 @@
     [displayedColumns]="displayedColumns"
     [columnsName]="columnsName"
     [paginationSize]="paginationSize"
+    [filters]="tableFilters"
     (changePage)="onChangePage($event)"
+    (changeFilter)="onChangeFilter($event)"
   ></app-custom-table>
 </div>

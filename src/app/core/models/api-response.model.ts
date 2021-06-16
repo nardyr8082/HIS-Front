@@ -5,6 +5,6 @@ export interface ApiResponse<T> {
   results: Array<T>;
 }
 
-export const DEFAULT_PAGE_SIZE = 2;
+export const DEFAULT_PAGE_SIZE = 10;
 
 export const DEFAULT_PAGINATION_SIZE = [DEFAULT_PAGE_SIZE, 25, 50, 100];

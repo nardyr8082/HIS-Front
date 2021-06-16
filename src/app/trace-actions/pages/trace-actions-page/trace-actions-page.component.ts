@@ -1,3 +1,4 @@
+import { FilterResponse, FilterTable } from './../../../shared/models/table-filter.model';
 import { ToastrService } from 'ngx-toastr';
 import { TracerActionsService } from './../../services/trace-actions.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -16,9 +17,37 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
   traceActions: TraceAction[];
   dataCount = 0;
   subscriptions: Subscription[] = [];
-  displayedColumns = ['fecha', 'hora'];
-  columnsName = ['Fecha', 'Hora'];
   paginationSize = DEFAULT_PAGINATION_SIZE;
+  displayedColumns = ['fecha', 'ip', 'usuario', 'objeto', 'evento'];
+  columnsName = ['Fecha', 'IP', 'Usuario', 'Objeto', 'Evento'];
+  filters = {};
+  tableFilters: FilterTable[] = [
+    {
+      name: 'fecha',
+      type: 'text',
+      title: 'Fecha',
+    },
+    {
+      name: 'ip',
+      type: 'text',
+      title: 'IP',
+    },
+    {
+      name: 'usuario',
+      type: 'text',
+      title: 'Usuario',
+    },
+    {
+      name: 'objeto',
+      type: 'text',
+      title: 'Objeto',
+    },
+    {
+      name: 'evento',
+      type: 'text',
+      title: 'Evento',
+    },
+  ];
 
   constructor(private traceActionService: TracerActionsService, private toastService: ToastrService) {}
 
@@ -30,7 +59,7 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getTraceActions(filters = {}, sortColumn = 'updatedAt', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getTraceActions(filters = this.filters, sortColumn = 'updatedAt', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     const sub = this.traceActionService
       .getTracesActions(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
@@ -49,6 +78,11 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
-    this.getTraceActions({}, 'updatedAt', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getTraceActions(this.filters, 'updatedAt', 'desc', page.pageIndex + 1, page.pageSize);
+  }
+
+  onChangeFilter(filter: FilterResponse) {
+    this.filters = { ...this.filters, [filter.name]: filter.result };
+    this.getTraceActions(this.filters, 'updatedAt', 'desc');
   }
 }
