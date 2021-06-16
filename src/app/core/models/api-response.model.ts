@@ -4,3 +4,7 @@ export interface ApiResponse<T> {
   previous: string;
   results: Array<T>;
 }
+
+export const DEFAULT_PAGE_SIZE = 2;
+
+export const DEFAULT_PAGINATION_SIZE = [DEFAULT_PAGE_SIZE, 25, 50, 100];
