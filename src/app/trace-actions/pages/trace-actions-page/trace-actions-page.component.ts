@@ -27,7 +27,7 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getTraceActions(filters = {}, sortColumn = 'updatedAt', sortDirection = 'desc', page = 1, pageSize = 1) {
+  getTraceActions(filters = {}, sortColumn = 'updatedAt', sortDirection = 'desc', page = 1, pageSize = 10) {
     const sub = this.traceActionService
       .getTracesActions(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
