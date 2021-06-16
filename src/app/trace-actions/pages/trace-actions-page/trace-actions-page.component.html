@@ -1,0 +1,11 @@
+<div class="container mt-3">
+  <app-custom-table
+    *ngIf="traceActions"
+    [data]="traceActions"
+    [dataCount]="dataCount"
+    [displayedColumns]="displayedColumns"
+    [columnsName]="columnsName"
+    [paginationSize]="paginationSize"
+    (changePage)="onChangePage($event)"
+  ></app-custom-table>
+</div>

@@ -27,6 +27,7 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "angular2-image-upload": "^1.0.0-rc.2",
     "angular2-uuid": "^1.1.1",
+    "bootstrap": "^5.0.1",
     "ngp-image-picker": "^1.2.6",
     "ngp-lazy-image": "0.0.6",
     "ngx-rating": "0.0.9",

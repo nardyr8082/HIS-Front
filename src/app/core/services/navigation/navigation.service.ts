@@ -34,7 +34,7 @@ export class NavigationService {
         {
           displayName: 'Historial de acciones',
           iconName: ['offline_bolt'],
-          route: 'backend/about-us/about',
+          route: 'trace-actions',
           material: true,
           display: true,
         },

@@ -1,70 +1,22 @@
-import {
-  IPagination
-} from 'src/app/core/classes/pagination.class';
-import {
-  debounceTime,
-  takeUntil,
-  distinctUntilChanged
-} from 'rxjs/operators';
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  OnDestroy
-} from '@angular/core';
-import {
-  SelectionModel
-} from '@angular/cdk/collections';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
-import {
-  Subject
-} from 'rxjs';
-import {
-  ShowToastrService
-} from 'src/app/core/services/show-toastr/show-toastr.service';
-import {
-  LoggedInUserService
-} from 'src/app/core/services/loggedInUser/logged-in-user.service';
-import {
-  environment
-} from 'src/environments/environment';
-import {
-  UtilsService
-} from 'src/app/core/services/utils/utils.service';
-import {
-  DialogAddEditBusinessComponent
-} from '../dialog-add-edit-business/dialog-add-edit-business.component';
-import {
-  BreadcrumbService
-} from '../../../common-layout-components/breadcrumd/service/breadcrumb.service';
-import {
-  BusinessService
-} from '../../../services/business/business.service';
-import {
-  ConfirmationDialogComponent
-} from 'src/app/backend/common-dialogs-module/confirmation-dialog/confirmation-dialog.component';
-import {
-  MatTableDataSource
-} from '@angular/material/table';
-import {
-  MatPaginator
-} from '@angular/material/paginator';
-import {
-  MatSort
-} from '@angular/material/sort';
-import {
-  MatDialog,
-  MatDialogRef
-} from '@angular/material/dialog';
-import {
-  TranslateService
-} from '@ngx-translate/core';
-
-
+import { IPagination } from 'src/app/core/classes/pagination.class';
+import { debounceTime, takeUntil, distinctUntilChanged } from 'rxjs/operators';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
+import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
+import { environment } from 'src/environments/environment';
+import { UtilsService } from 'src/app/core/services/utils/utils.service';
+import { DialogAddEditBusinessComponent } from '../dialog-add-edit-business/dialog-add-edit-business.component';
+import { BusinessService } from '../../../services/business/business.service';
+import { ConfirmationDialogComponent } from 'src/app/backend/common-dialogs-module/confirmation-dialog/confirmation-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
+import { BreadcrumbService } from 'src/app/shared/common-layout-components/breadcrumd/service/breadcrumb.service';
 
 @Component({
   selector: 'app-business-table',
@@ -75,12 +27,12 @@ export class BusinessTableComponent implements OnInit, OnDestroy {
   allBusinesss: any[] = [];
   searchForm: FormGroup;
   formFilters: FormGroup;
-  dataSource: MatTableDataSource < any > ;
+  dataSource: MatTableDataSource<any>;
   showFilterBusiness: boolean;
   loggedInUser: any;
   loading = false;
-  _unsubscribeAll: Subject < any > ;
-  selection: SelectionModel < any > ;
+  _unsubscribeAll: Subject<any>;
+  selection: SelectionModel<any>;
   imageUrl: any;
   showActionsBtn = false;
   language = 'es';
@@ -88,11 +40,13 @@ export class BusinessTableComponent implements OnInit, OnDestroy {
   pageSizeOptions: number[] = [this.initialPage, 25, 100, 1000];
   searchElementCount = 0;
   @ViewChild(MatPaginator, {
-    static: true
-  }) paginator: MatPaginator;
+    static: true,
+  })
+  paginator: MatPaginator;
   @ViewChild(MatSort, {
-    static: true
-  }) sort: MatSort;
+    static: true,
+  })
+  sort: MatSort;
   isLoading = false;
   query: IPagination = {
     limit: this.initialPage,
@@ -106,8 +60,8 @@ export class BusinessTableComponent implements OnInit, OnDestroy {
     },
   };
 
-  displayedColumns: string[] = ["select", "name", "apiUrl", "businessUUID", "hiddenCode", "actions"];
-  displayedColumnsFilters: string[] = ["selectF", "nameF", "apiUrlF", "businessUUIDF", "hiddenCodeF", "actionsF"];
+  displayedColumns: string[] = ['select', 'name', 'apiUrl', 'businessUUID', 'hiddenCode', 'actions'];
+  displayedColumnsFilters: string[] = ['selectF', 'nameF', 'apiUrlF', 'businessUUIDF', 'hiddenCodeF', 'actionsF'];
 
   constructor(
     private fb: FormBuilder,
@@ -120,9 +74,9 @@ export class BusinessTableComponent implements OnInit, OnDestroy {
 
     private showToastr: ShowToastrService,
   ) {
-    this._unsubscribeAll = new Subject < any > ();
+    this._unsubscribeAll = new Subject<any>();
     this.dataSource = new MatTableDataSource([]);
-    this.selection = new SelectionModel < any > (true, []);
+    this.selection = new SelectionModel<any>(true, []);
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.imageUrl = environment.imageUrl;
 
@@ -140,29 +94,27 @@ export class BusinessTableComponent implements OnInit, OnDestroy {
 
     ///////////////////////////////////////////
 
-    this.searchForm.valueChanges
-      .pipe(takeUntil(this._unsubscribeAll), distinctUntilChanged(), debounceTime(250))
-      .subscribe((val: any) => {
-        if (val.textCtrl.length !== 0) {
-          if (val.textCtrl.toString().trim() !== '') {
-            this.refreshData();
-            this.paginator.firstPage();
-          }
-        } else {
-          this.query = {
-            limit: this.initialPage,
-            offset: 0,
-            total: 0,
-            page: 0,
-            order: this.query.order || 'id',
-            filter: {
-              filterText: '',
-            },
-          };
+    this.searchForm.valueChanges.pipe(takeUntil(this._unsubscribeAll), distinctUntilChanged(), debounceTime(250)).subscribe((val: any) => {
+      if (val.textCtrl.length !== 0) {
+        if (val.textCtrl.toString().trim() !== '') {
           this.refreshData();
           this.paginator.firstPage();
         }
-      });
+      } else {
+        this.query = {
+          limit: this.initialPage,
+          offset: 0,
+          total: 0,
+          page: 0,
+          order: this.query.order || 'id',
+          filter: {
+            filterText: '',
+          },
+        };
+        this.refreshData();
+        this.paginator.firstPage();
+      }
+    });
 
     this.formFilters.valueChanges.pipe(debounceTime(500)).subscribe((data) => {
       this.refreshData();
@@ -180,7 +132,6 @@ export class BusinessTableComponent implements OnInit, OnDestroy {
 
   fetchData() {
     /*Ponga aqui las peticiones para loas datos de Tipo REFERENCE*/
-
   }
 
   ngOnDestroy() {
@@ -198,7 +149,6 @@ export class BusinessTableComponent implements OnInit, OnDestroy {
       this.query.filter.properties.push('filter[$or][apiUrl][$like]');
       this.query.filter.properties.push('filter[$or][businessUUID][$like]');
       this.query.filter.properties.push('filter[$or][hiddenCode][$like]');
-
     } else {
       this.query.filter.filterText = '';
     }
@@ -232,7 +182,6 @@ export class BusinessTableComponent implements OnInit, OnDestroy {
       businessUUID: [null, []],
       hiddenCode: [null, []],
     });
-
   }
 
   showSearchForm() {
@@ -272,7 +221,7 @@ export class BusinessTableComponent implements OnInit, OnDestroy {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row ? : any): string {
+  checkboxLabel(row?: any): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
@@ -282,7 +231,7 @@ export class BusinessTableComponent implements OnInit, OnDestroy {
   //////////////////////////////
 
   onCreateBusiness(): void {
-    let dialogRef: MatDialogRef < DialogAddEditBusinessComponent, any > ;
+    let dialogRef: MatDialogRef<DialogAddEditBusinessComponent, any>;
     dialogRef = this.dialog.open(DialogAddEditBusinessComponent, {
       panelClass: 'app-dialog-add-edit-business',
       maxWidth: '100vw',
@@ -301,7 +250,7 @@ export class BusinessTableComponent implements OnInit, OnDestroy {
   onEditBusiness(business): void {
     this.businessService.getBusiness(business).subscribe(
       (data) => {
-        let dialogRef: MatDialogRef < DialogAddEditBusinessComponent, any > ;
+        let dialogRef: MatDialogRef<DialogAddEditBusinessComponent, any>;
         dialogRef = this.dialog.open(DialogAddEditBusinessComponent, {
           panelClass: 'app-dialog-add-edit-business',
           maxWidth: '100vw',

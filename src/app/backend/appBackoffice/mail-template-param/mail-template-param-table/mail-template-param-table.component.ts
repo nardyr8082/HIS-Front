@@ -1,72 +1,24 @@
-import {
-  IPagination
-} from 'src/app/core/classes/pagination.class';
-import {
-  debounceTime,
-  takeUntil,
-  distinctUntilChanged
-} from 'rxjs/operators';
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  OnDestroy
-} from '@angular/core';
-import {
-  SelectionModel
-} from '@angular/cdk/collections';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
-import {
-  Subject
-} from 'rxjs';
-import {
-  ShowToastrService
-} from 'src/app/core/services/show-toastr/show-toastr.service';
-import {
-  LoggedInUserService
-} from 'src/app/core/services/loggedInUser/logged-in-user.service';
-import {
-  environment
-} from 'src/environments/environment';
-import {
-  UtilsService
-} from 'src/app/core/services/utils/utils.service';
-import {
-  DialogAddEditMailTemplateParamComponent
-} from '../dialog-add-edit-mail-template-param/dialog-add-edit-mail-template-param.component';
-import {
-  BreadcrumbService
-} from '../../../common-layout-components/breadcrumd/service/breadcrumb.service';
-import {
-  MailTemplateParamService
-} from '../../../services/mail-template-param/mail-template-param.service';
-import {
-  ConfirmationDialogComponent
-} from 'src/app/backend/common-dialogs-module/confirmation-dialog/confirmation-dialog.component';
-import {
-  MatTableDataSource
-} from '@angular/material/table';
-import {
-  MatPaginator
-} from '@angular/material/paginator';
-import {
-  MatSort
-} from '@angular/material/sort';
-import {
-  MatDialog,
-  MatDialogRef
-} from '@angular/material/dialog';
-import {
-  TranslateService
-} from '@ngx-translate/core';
+import { IPagination } from 'src/app/core/classes/pagination.class';
+import { debounceTime, takeUntil, distinctUntilChanged } from 'rxjs/operators';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
+import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
+import { environment } from 'src/environments/environment';
+import { UtilsService } from 'src/app/core/services/utils/utils.service';
+import { DialogAddEditMailTemplateParamComponent } from '../dialog-add-edit-mail-template-param/dialog-add-edit-mail-template-param.component';
+
+import { MailTemplateParamService } from '../../../services/mail-template-param/mail-template-param.service';
+import { ConfirmationDialogComponent } from 'src/app/backend/common-dialogs-module/confirmation-dialog/confirmation-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { MailTemplateService } from '../../../services/mail-template/mail-template.service';
-
-
-
+import { BreadcrumbService } from 'src/app/shared/common-layout-components/breadcrumd/service/breadcrumb.service';
 
 @Component({
   selector: 'app-mail-template-param-table',
@@ -77,12 +29,12 @@ export class MailTemplateParamTableComponent implements OnInit, OnDestroy {
   allMailTemplateParams: any[] = [];
   searchForm: FormGroup;
   formFilters: FormGroup;
-  dataSource: MatTableDataSource < any > ;
+  dataSource: MatTableDataSource<any>;
   showFilterMailTemplateParam: boolean;
   loggedInUser: any;
   loading = false;
-  _unsubscribeAll: Subject < any > ;
-  selection: SelectionModel < any > ;
+  _unsubscribeAll: Subject<any>;
+  selection: SelectionModel<any>;
   imageUrl: any;
   showActionsBtn = false;
   language: 'es';
@@ -90,11 +42,13 @@ export class MailTemplateParamTableComponent implements OnInit, OnDestroy {
   pageSizeOptions: number[] = [this.initialPage, 25, 100, 1000];
   searchElementCount = 0;
   @ViewChild(MatPaginator, {
-    static: true
-  }) paginator: MatPaginator;
+    static: true,
+  })
+  paginator: MatPaginator;
   @ViewChild(MatSort, {
-    static: true
-  }) sort: MatSort;
+    static: true,
+  })
+  sort: MatSort;
   isLoading = false;
   query: IPagination = {
     limit: this.initialPage,
@@ -108,10 +62,10 @@ export class MailTemplateParamTableComponent implements OnInit, OnDestroy {
     },
   };
 
-  displayedColumns: string[] = ["select", "MailTemplateId", "param", "description", "example", "type", "actions"];
-  displayedColumnsFilters: string[] = ["selectF", "MailTemplateIdF", "paramF", "descriptionF", "exampleF", "typeF", "actionsF"]
-  allMailTemplate: any[] = [];allType: any[] = ["STRING", "FILE"];
-
+  displayedColumns: string[] = ['select', 'MailTemplateId', 'param', 'description', 'example', 'type', 'actions'];
+  displayedColumnsFilters: string[] = ['selectF', 'MailTemplateIdF', 'paramF', 'descriptionF', 'exampleF', 'typeF', 'actionsF'];
+  allMailTemplate: any[] = [];
+  allType: any[] = ['STRING', 'FILE'];
 
   constructor(
     private fb: FormBuilder,
@@ -124,9 +78,9 @@ export class MailTemplateParamTableComponent implements OnInit, OnDestroy {
     private mailtemplateService: MailTemplateService,
     private showToastr: ShowToastrService,
   ) {
-    this._unsubscribeAll = new Subject < any > ();
+    this._unsubscribeAll = new Subject<any>();
     this.dataSource = new MatTableDataSource([]);
-    this.selection = new SelectionModel < any > (true, []);
+    this.selection = new SelectionModel<any>(true, []);
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.imageUrl = environment.imageUrl;
 
@@ -144,29 +98,27 @@ export class MailTemplateParamTableComponent implements OnInit, OnDestroy {
 
     ///////////////////////////////////////////
 
-    this.searchForm.valueChanges
-      .pipe(takeUntil(this._unsubscribeAll), distinctUntilChanged(), debounceTime(250))
-      .subscribe((val: any) => {
-        if (val.textCtrl.length !== 0) {
-          if (val.textCtrl.toString().trim() !== '') {
-            this.refreshData();
-            this.paginator.firstPage();
-          }
-        } else {
-          this.query = {
-            limit: this.initialPage,
-            offset: 0,
-            total: 0,
-            page: 0,
-            order: this.query.order || 'id',
-            filter: {
-              filterText: '',
-            },
-          };
+    this.searchForm.valueChanges.pipe(takeUntil(this._unsubscribeAll), distinctUntilChanged(), debounceTime(250)).subscribe((val: any) => {
+      if (val.textCtrl.length !== 0) {
+        if (val.textCtrl.toString().trim() !== '') {
           this.refreshData();
           this.paginator.firstPage();
         }
-      });
+      } else {
+        this.query = {
+          limit: this.initialPage,
+          offset: 0,
+          total: 0,
+          page: 0,
+          order: this.query.order || 'id',
+          filter: {
+            filterText: '',
+          },
+        };
+        this.refreshData();
+        this.paginator.firstPage();
+      }
+    });
 
     this.formFilters.valueChanges.pipe(debounceTime(500)).subscribe((data) => {
       this.refreshData();
@@ -184,12 +136,14 @@ export class MailTemplateParamTableComponent implements OnInit, OnDestroy {
 
   fetchData() {
     /*Ponga aqui las peticiones para loas datos de Tipo REFERENCE*/
-    this.mailtemplateService.getAllMailTemplates().subscribe((data) => {
-      this.allMailTemplate = data.data;
-    }, e => {
-      //catch error
-    });
-
+    this.mailtemplateService.getAllMailTemplates().subscribe(
+      (data) => {
+        this.allMailTemplate = data.data;
+      },
+      (e) => {
+        //catch error
+      },
+    );
   }
 
   ngOnDestroy() {
@@ -207,7 +161,6 @@ export class MailTemplateParamTableComponent implements OnInit, OnDestroy {
       this.query.filter.properties.push('filter[$or][description][$like]');
       this.query.filter.properties.push('filter[$or][example][$like]');
       this.query.filter.properties.push('filter[$or][type][$like]');
-
     } else {
       this.query.filter.filterText = '';
     }
@@ -242,7 +195,6 @@ export class MailTemplateParamTableComponent implements OnInit, OnDestroy {
       example: [null, []],
       type: [null, []],
     });
-
   }
 
   showSearchForm() {
@@ -282,7 +234,7 @@ export class MailTemplateParamTableComponent implements OnInit, OnDestroy {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row ? : any): string {
+  checkboxLabel(row?: any): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
@@ -292,7 +244,7 @@ export class MailTemplateParamTableComponent implements OnInit, OnDestroy {
   //////////////////////////////
 
   onCreateMailTemplateParam(): void {
-    let dialogRef: MatDialogRef < DialogAddEditMailTemplateParamComponent, any > ;
+    let dialogRef: MatDialogRef<DialogAddEditMailTemplateParamComponent, any>;
     dialogRef = this.dialog.open(DialogAddEditMailTemplateParamComponent, {
       panelClass: 'app-dialog-add-edit-mail-template-param',
       maxWidth: '100vw',
@@ -311,7 +263,7 @@ export class MailTemplateParamTableComponent implements OnInit, OnDestroy {
   onEditMailTemplateParam(mailTemplateParam): void {
     this.mailTemplateParamService.getMailTemplateParam(mailTemplateParam).subscribe(
       (data) => {
-        let dialogRef: MatDialogRef < DialogAddEditMailTemplateParamComponent, any > ;
+        let dialogRef: MatDialogRef<DialogAddEditMailTemplateParamComponent, any>;
         dialogRef = this.dialog.open(DialogAddEditMailTemplateParamComponent, {
           panelClass: 'app-dialog-add-edit-mail-template-param',
           maxWidth: '100vw',
