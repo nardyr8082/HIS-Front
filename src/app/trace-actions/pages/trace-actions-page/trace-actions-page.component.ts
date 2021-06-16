@@ -14,8 +14,8 @@ import { ApiResponse } from 'src/app/core/models/api-response.model';
 export class TraceActionsPageComponent implements OnInit, OnDestroy {
   traceActions: TraceAction[];
   subscriptions: Subscription[] = [];
-  displayedColumns = ['fecha', 'hora'];
-  columnsName = ['Fecha', 'Hora'];
+  displayedColumns = ['fecha', 'ip', 'usuario', 'objeto', 'evento'];
+  columnsName = ['Fecha', 'IP', 'Usuario', 'Objeto', 'Evento'];
 
   constructor(private traceActionService: TracerActionsService, private toastService: ToastrService) {}
 
@@ -32,6 +32,7 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
       .getTracesActions(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<TraceAction>) => {
+          console.log(response.results);
           this.traceActions = response.results;
         }),
         catchError(() => {
