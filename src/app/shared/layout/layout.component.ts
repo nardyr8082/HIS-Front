@@ -180,11 +180,9 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   onLogout() {
-    this.authService.logout().subscribe(() => {
-      localStorage.removeItem('user');
-      this.router.navigate(['']);
-      this.showToastr.showInfo('Usuario deslogeado exitósamente', 'Ok');
-    });
+    localStorage.removeItem('user');
+    this.router.navigate(['']);
+    this.showToastr.showInfo('Usuario deslogeado exitósamente', 'Cerrar Sesión');
   }
 
   public changeLang(lang) {
