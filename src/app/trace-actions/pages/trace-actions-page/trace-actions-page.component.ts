@@ -16,9 +16,9 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
   traceActions: TraceAction[];
   dataCount = 0;
   subscriptions: Subscription[] = [];
-  displayedColumns = ['fecha', 'hora'];
-  columnsName = ['Fecha', 'Hora'];
   paginationSize = DEFAULT_PAGINATION_SIZE;
+  displayedColumns = ['fecha', 'ip', 'usuario', 'objeto', 'evento'];
+  columnsName = ['Fecha', 'IP', 'Usuario', 'Objeto', 'Evento'];
 
   constructor(private traceActionService: TracerActionsService, private toastService: ToastrService) {}
 
@@ -35,6 +35,7 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
       .getTracesActions(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<TraceAction>) => {
+          console.log(response.results);
           this.traceActions = response.results;
           this.dataCount = response.count;
         }),

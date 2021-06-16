@@ -12,11 +12,10 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.token = this.loggedInUserService.getTokenOfUser();
-    console.log('token', this.token);
     if (this.token && !request.url.includes('auth/login')) {
       request = request.clone({
         setHeaders: {
-          Authorization: this.token,
+          Authorization: 'Bearer ' + this.token,
         },
       });
     }

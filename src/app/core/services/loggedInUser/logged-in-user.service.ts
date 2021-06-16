@@ -9,7 +9,7 @@ import { NavigationService } from '../navigation/navigation.service';
 export class LoggedInUserService {
   $loggedInUserUpdated = new Subject<any>();
   $languageChanged = new Subject<any>();
-  loggedInUser: IUser = null;
+  loggedInUser: any = null;
   listNavItems: any[] = [];
   public flags = [
     { name: 'Español', image: 'assets/images/flags/es.svg', lang: 'es', abbreviation: 'esp' },
@@ -51,7 +51,19 @@ export class LoggedInUserService {
   public setLoggedInUser(user: any) {
     this.loggedInUser = user;
   }
-
+  public updateUserToken(resp: any) {
+    let dataString: string;
+    this.loggedInUser = JSON.parse(localStorage.getItem('user'));
+    const tempdata = this.loggedInUser ? this.loggedInUser : {};
+    if (resp) {
+      this.loggedInUser = Object.assign(tempdata, resp);
+    } else {
+      this.loggedInUser = null;
+    }
+    dataString = JSON.stringify(this.loggedInUser);
+    localStorage.setItem('user', dataString);
+    this.$loggedInUserUpdated.next(this.loggedInUser);
+  }
   public updateUserProfile(user) {
     let dataString: string;
     this.loggedInUser = JSON.parse(localStorage.getItem('user'));

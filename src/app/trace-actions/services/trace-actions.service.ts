@@ -12,7 +12,7 @@ import { TraceAction } from '../models/trace-action.model';
   providedIn: 'root',
 })
 export class TracerActionsService {
-  private apiEndpoint = `${environment.apiUrl}traza/`;
+  private apiEndpoint = `${environment.apiUrl}traza`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'updatedAt';
