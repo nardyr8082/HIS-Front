@@ -9,9 +9,9 @@ import { AuthenticationService } from 'src/app/core/services/authentication/auth
 import { environment } from 'src/environments/environment';
 import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
 import { NavigationService } from 'src/app/core/services/navigation/navigation.service';
-import { PanelNotificationsComponent } from '../common-layout-components/panel-notifications/panel-notifications.component';
-import { SpinnerLoadingService } from '../services/spinner-loading/spinner-loading.service';
+import { SpinnerLoadingService } from '../../backend/services/spinner-loading/spinner-loading.service';
 import { TranslateService } from '@ngx-translate/core';
+import { PanelNotificationsComponent } from '../common-layout-components/panel-notifications/panel-notifications.component';
 
 @Component({
   selector: 'app-layout',

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { BreadcrumbService } from '../../../common-layout-components/breadcrumd/service/breadcrumb.service';
+import { BreadcrumbService } from 'src/app/shared/common-layout-components/breadcrumd/service/breadcrumb.service';
 
 @Component({
   selector: 'app-admin-list-users',

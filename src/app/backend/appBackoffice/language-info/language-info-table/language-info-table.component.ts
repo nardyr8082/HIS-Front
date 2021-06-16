@@ -1,71 +1,23 @@
-import {
-  IPagination
-} from 'src/app/core/classes/pagination.class';
-import {
-  debounceTime,
-  takeUntil,
-  distinctUntilChanged
-} from 'rxjs/operators';
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  OnDestroy
-} from '@angular/core';
-import {
-  SelectionModel
-} from '@angular/cdk/collections';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators
-} from '@angular/forms';
-import {
-  Subject
-} from 'rxjs';
-import {
-  ShowToastrService
-} from 'src/app/core/services/show-toastr/show-toastr.service';
-import {
-  LoggedInUserService
-} from 'src/app/core/services/loggedInUser/logged-in-user.service';
-import {
-  environment
-} from 'src/environments/environment';
-import {
-  UtilsService
-} from 'src/app/core/services/utils/utils.service';
-import {
-  DialogAddEditLanguageInfoComponent
-} from '../dialog-add-edit-language-info/dialog-add-edit-language-info.component';
-import {
-  BreadcrumbService
-} from '../../../common-layout-components/breadcrumd/service/breadcrumb.service';
-import {
-  LanguageInfoService
-} from '../../../services/language-info/language-info.service';
-import {
-  ConfirmationDialogComponent
-} from 'src/app/backend/common-dialogs-module/confirmation-dialog/confirmation-dialog.component';
-import {
-  MatTableDataSource
-} from '@angular/material/table';
-import {
-  MatPaginator
-} from '@angular/material/paginator';
-import {
-  MatSort
-} from '@angular/material/sort';
-import {
-  MatDialog,
-  MatDialogRef
-} from '@angular/material/dialog';
-import {
-  TranslateService
-} from '@ngx-translate/core';
+import { IPagination } from 'src/app/core/classes/pagination.class';
+import { debounceTime, takeUntil, distinctUntilChanged } from 'rxjs/operators';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { SelectionModel } from '@angular/cdk/collections';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
+import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
+import { environment } from 'src/environments/environment';
+import { UtilsService } from 'src/app/core/services/utils/utils.service';
+import { DialogAddEditLanguageInfoComponent } from '../dialog-add-edit-language-info/dialog-add-edit-language-info.component';
+import { LanguageInfoService } from '../../../services/language-info/language-info.service';
+import { ConfirmationDialogComponent } from 'src/app/backend/common-dialogs-module/confirmation-dialog/confirmation-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { MailTemplateService } from '../../../services/mail-template/mail-template.service';
-
-
+import { BreadcrumbService } from 'src/app/shared/common-layout-components/breadcrumd/service/breadcrumb.service';
 
 @Component({
   selector: 'app-language-info-table',
@@ -76,12 +28,12 @@ export class LanguageInfoTableComponent implements OnInit, OnDestroy {
   allLanguageInfos: any[] = [];
   searchForm: FormGroup;
   formFilters: FormGroup;
-  dataSource: MatTableDataSource < any > ;
+  dataSource: MatTableDataSource<any>;
   showFilterLanguageInfo: boolean;
   loggedInUser: any;
   loading = false;
-  _unsubscribeAll: Subject < any > ;
-  selection: SelectionModel < any > ;
+  _unsubscribeAll: Subject<any>;
+  selection: SelectionModel<any>;
   imageUrl: any;
   showActionsBtn = false;
   language: 'es';
@@ -89,11 +41,13 @@ export class LanguageInfoTableComponent implements OnInit, OnDestroy {
   pageSizeOptions: number[] = [this.initialPage, 25, 100, 1000];
   searchElementCount = 0;
   @ViewChild(MatPaginator, {
-    static: true
-  }) paginator: MatPaginator;
+    static: true,
+  })
+  paginator: MatPaginator;
   @ViewChild(MatSort, {
-    static: true
-  }) sort: MatSort;
+    static: true,
+  })
+  sort: MatSort;
   isLoading = false;
   query: IPagination = {
     limit: this.initialPage,
@@ -107,11 +61,10 @@ export class LanguageInfoTableComponent implements OnInit, OnDestroy {
     },
   };
 
-  displayedColumns: string[] = ["select", "CreatorId", "MailTemplateId", "actions"];
-  displayedColumnsFilters: string[] = ["selectF", "CreatorIdF", "MailTemplateIdF", "actionsF"];
+  displayedColumns: string[] = ['select', 'CreatorId', 'MailTemplateId', 'actions'];
+  displayedColumnsFilters: string[] = ['selectF', 'CreatorIdF', 'MailTemplateIdF', 'actionsF'];
   allPerson: any[] = [];
   allMailTemplate: any[] = [];
-
 
   constructor(
     private fb: FormBuilder,
@@ -124,9 +77,9 @@ export class LanguageInfoTableComponent implements OnInit, OnDestroy {
     private mailtemplateService: MailTemplateService,
     private showToastr: ShowToastrService,
   ) {
-    this._unsubscribeAll = new Subject < any > ();
+    this._unsubscribeAll = new Subject<any>();
     this.dataSource = new MatTableDataSource([]);
-    this.selection = new SelectionModel < any > (true, []);
+    this.selection = new SelectionModel<any>(true, []);
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.imageUrl = environment.imageUrl;
 
@@ -144,29 +97,27 @@ export class LanguageInfoTableComponent implements OnInit, OnDestroy {
 
     ///////////////////////////////////////////
 
-    this.searchForm.valueChanges
-      .pipe(takeUntil(this._unsubscribeAll), distinctUntilChanged(), debounceTime(250))
-      .subscribe((val: any) => {
-        if (val.textCtrl.length !== 0) {
-          if (val.textCtrl.toString().trim() !== '') {
-            this.refreshData();
-            this.paginator.firstPage();
-          }
-        } else {
-          this.query = {
-            limit: this.initialPage,
-            offset: 0,
-            total: 0,
-            page: 0,
-            order: this.query.order || 'id',
-            filter: {
-              filterText: '',
-            },
-          };
+    this.searchForm.valueChanges.pipe(takeUntil(this._unsubscribeAll), distinctUntilChanged(), debounceTime(250)).subscribe((val: any) => {
+      if (val.textCtrl.length !== 0) {
+        if (val.textCtrl.toString().trim() !== '') {
           this.refreshData();
           this.paginator.firstPage();
         }
-      });
+      } else {
+        this.query = {
+          limit: this.initialPage,
+          offset: 0,
+          total: 0,
+          page: 0,
+          order: this.query.order || 'id',
+          filter: {
+            filterText: '',
+          },
+        };
+        this.refreshData();
+        this.paginator.firstPage();
+      }
+    });
 
     this.formFilters.valueChanges.pipe(debounceTime(500)).subscribe((data) => {
       this.refreshData();
@@ -182,12 +133,14 @@ export class LanguageInfoTableComponent implements OnInit, OnDestroy {
   }
 
   fetchData() {
-    this.mailtemplateService.getAllMailTemplates().subscribe((data) => {
-      this.allMailTemplate = data.data;
-    }, e => {
-      //catch error
-    });
-
+    this.mailtemplateService.getAllMailTemplates().subscribe(
+      (data) => {
+        this.allMailTemplate = data.data;
+      },
+      (e) => {
+        //catch error
+      },
+    );
   }
 
   ngOnDestroy() {
@@ -201,7 +154,6 @@ export class LanguageInfoTableComponent implements OnInit, OnDestroy {
     if (searchvalue && searchvalue !== '') {
       this.query.filter.filterText = searchvalue.toString().trim();
       this.query.filter.properties = [];
-
     } else {
       this.query.filter.filterText = '';
     }
@@ -233,7 +185,6 @@ export class LanguageInfoTableComponent implements OnInit, OnDestroy {
       CreatorId: [null, []],
       MailTemplateId: [null, []],
     });
-
   }
 
   showSearchForm() {
@@ -273,7 +224,7 @@ export class LanguageInfoTableComponent implements OnInit, OnDestroy {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row ? : any): string {
+  checkboxLabel(row?: any): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
@@ -283,7 +234,7 @@ export class LanguageInfoTableComponent implements OnInit, OnDestroy {
   //////////////////////////////
 
   onCreateLanguageInfo(): void {
-    let dialogRef: MatDialogRef < DialogAddEditLanguageInfoComponent, any > ;
+    let dialogRef: MatDialogRef<DialogAddEditLanguageInfoComponent, any>;
     dialogRef = this.dialog.open(DialogAddEditLanguageInfoComponent, {
       panelClass: 'app-dialog-add-edit-language-info',
       maxWidth: '100vw',
@@ -302,7 +253,7 @@ export class LanguageInfoTableComponent implements OnInit, OnDestroy {
   onEditLanguageInfo(languageInfo): void {
     this.languageInfoService.getLanguageInfo(languageInfo).subscribe(
       (data) => {
-        let dialogRef: MatDialogRef < DialogAddEditLanguageInfoComponent, any > ;
+        let dialogRef: MatDialogRef<DialogAddEditLanguageInfoComponent, any>;
         dialogRef = this.dialog.open(DialogAddEditLanguageInfoComponent, {
           panelClass: 'app-dialog-add-edit-language-info',
           maxWidth: '100vw',
