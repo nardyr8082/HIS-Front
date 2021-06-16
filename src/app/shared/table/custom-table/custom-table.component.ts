@@ -2,7 +2,10 @@ import { AfterViewInit, Component, EventEmitter, Input, Output, ViewChild } from
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { DEFAULT_PAGINATION_SIZE } from 'src/app/core/models/api-response.model';
+import { FilterResponse, FilterTable } from '../../models/table-filter.model';
 
 @Component({
   selector: 'app-custom-table',
@@ -15,26 +18,37 @@ export class CustomTableComponent implements AfterViewInit {
   @Input() displayedColumns: string[] = [];
   @Input() columnsName: string[] = [];
   @Input() paginationSize = DEFAULT_PAGINATION_SIZE;
+  @Input() filters: FilterTable[];
 
+  @Output() changeFilter: EventEmitter<FilterResponse> = new EventEmitter();
   @Output() changePage: EventEmitter<PageEvent> = new EventEmitter();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor() {}
+  searchTerm = new Subject<FilterResponse>();
+
+  constructor() {
+    this.searchTerm
+      .pipe(
+        map((e: FilterResponse) => ({ ...e, result: e.result.target.value })),
+        debounceTime(400),
+        distinctUntilChanged(),
+        filter((term) => term.result.length > 0),
+      )
+      .subscribe((searchTerm) => {
+        this.changeFilter.emit(searchTerm);
+      });
+  }
 
   ngAfterViewInit() {
     this.data.paginator = this.paginator;
     this.data.sort = this.sort;
   }
 
-  applyFilter(event: Event) {
+  applyFilter(event: Event, filterName: string) {
+    console.log((event.target as HTMLInputElement).value, filterName);
     const filterValue = (event.target as HTMLInputElement).value;
-    this.data.filter = filterValue.trim().toLowerCase();
-
-    if (this.data.paginator) {
-      this.data.paginator.firstPage();
-    }
   }
 
   onChangePage(page: PageEvent) {

@@ -37,12 +37,14 @@ export class TracerActionsService {
     return this.http.get<ApiResponse<TraceAction>>(this.apiEndpoint + queryParams);
   }
 
-  private formatQueryParams(filter?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
+  private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
     let queryParams = '';
 
-    if (filter.collectionId && filter.collectionId.length > 0) {
-      queryParams += queryParams.length > 0 ? '&' : '?';
-      queryParams += `collectionId=${filter.collectionId}`;
+    if (filters) {
+      for (const property in filters) {
+        queryParams += queryParams.length > 0 ? '&' : '?';
+        queryParams += `${property}=${filters[property]}`;
+      }
     }
 
     if (sortColumn) {
