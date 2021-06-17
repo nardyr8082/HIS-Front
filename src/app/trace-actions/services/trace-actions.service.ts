@@ -15,7 +15,7 @@ export class TracerActionsService {
   private apiEndpoint = `${environment.apiUrl}traza`;
   private defaultFilter: any = {};
 
-  private defaultSortColumn: string = 'updatedAt';
+  private defaultSortColumn: string = 'fecha';
 
   private defaultSortDirection: string = 'desc';
 
@@ -33,7 +33,7 @@ export class TracerActionsService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-
+    console.log(this.apiEndpoint + queryParams);
     return this.http.get<ApiResponse<TraceAction>>(this.apiEndpoint + queryParams);
   }
 
