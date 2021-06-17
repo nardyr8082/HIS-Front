@@ -148,7 +148,7 @@ export class NavigationService {
         {
           displayName: 'Historial de acceso',
           iconName: ['receipt'],
-          route: 'backend/about-us/about',
+          route: 'trace-access',
           material: true,
           display: true,
         },
