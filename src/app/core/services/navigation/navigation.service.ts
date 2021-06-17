@@ -6,6 +6,13 @@ import { Injectable } from '@angular/core';
 export class NavigationService {
   navBackend: any[] = [
     {
+      displayName: 'Dashboard',
+      iconName: ['home'],
+      material: true,
+      route: 'backend/dashboard',
+      display: true,
+    },
+    {
       displayName: 'Estructura',
       iconName: ['domain'],
       material: true,
