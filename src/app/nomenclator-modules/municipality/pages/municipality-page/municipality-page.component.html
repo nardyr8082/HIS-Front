@@ -1,4 +1,7 @@
 <div class="container mt-3">
+  <div class="d-flex justify-content-end">
+    <button (click)="createMunicipality()" mat-raised-button color="primary" class="button">Crear Municipio</button>
+  </div>
   <app-custom-table
     *ngIf="municipalities"
     [data]="municipalities"
@@ -7,6 +10,8 @@
     [columnsName]="configuration.columnsName"
     [paginationSize]="configuration.paginationSize"
     [filters]="configuration.tableFilters"
+    [rowActionButtons]="rowActionButtons"
+    [loading]="loading"
     (changePage)="onChangePage($event)"
     (changeFilter)="onChangeFilter($event)"
   ></app-custom-table>

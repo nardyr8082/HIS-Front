@@ -12,11 +12,31 @@
   </button>
 </div>
 
-<div *ngIf="data" class="mat-elevation-z8 w-100">
-  <table mat-table [dataSource]="data" matSort>
+<div class="mat-elevation-z8 w-100">
+  <table *ngIf="data && displayTable && !loading" mat-table [dataSource]="data" matSort>
     <ng-container *ngFor="let column of displayedColumns; let i = index" matColumnDef="{{ column }}">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ columnsName[i] }}</th>
-      <td mat-cell *matCellDef="let row">{{ row[column] }}</td>
+      <ng-container *ngIf="displayedColumns[i] !== 'actions'; else actionsButtons">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ columnsName[i] }}</th>
+        <td mat-cell *matCellDef="let row">{{ row[column] }}</td>
+      </ng-container>
+      <ng-template #actionsButtons>
+        <th mat-header-cell *matHeaderCellDef class="header-align-right"></th>
+        <td mat-cell *matCellDef="let row">
+          <div class="pull-right">
+            <ng-container *ngFor="let action of rowActionButtons">
+              <button
+                *ngIf="action.visible !== false"
+                mat-icon-button
+                matTooltip="{{ action.tooltipText }}"
+                color="{{ action.color }}"
+                (click)="fireActionButtonEvent(row, action)"
+              >
+                <mat-icon>{{ action.icon }}</mat-icon>
+              </button>
+            </ng-container>
+          </div>
+        </td>
+      </ng-template>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -27,6 +47,11 @@
       <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
     </tr> -->
   </table>
+  <div *ngIf="loading" class="d-flex justify-content-center">
+    <div class="my-5">
+      <mat-spinner diameter="30"></mat-spinner>
+    </div>
+  </div>
 
   <mat-paginator (page)="onChangePage($event)" [length]="dataCount" [pageSizeOptions]="paginationSize"></mat-paginator>
 </div>

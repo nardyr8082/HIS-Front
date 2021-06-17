@@ -1,4 +1,4 @@
-import { MunicipalityPageComponent } from './components/municipality-page/municipality-page.component';
+import { MunicipalityPageComponent } from './pages/municipality-page/municipality-page.component';
 import { LayoutComponent } from '../../shared/layout/layout.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';

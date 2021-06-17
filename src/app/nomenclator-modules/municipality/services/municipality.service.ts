@@ -26,7 +26,7 @@ export class MunicipalityService {
 
   constructor(private http: HttpClient) {}
 
-  getMunicipalities(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<TraceAction>> {
+  getMunicipalities(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Municipality>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -34,7 +34,6 @@ export class MunicipalityService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    console.log(this.apiEndpoint + queryParams);
     return this.http.get<ApiResponse<Municipality>>(this.apiEndpoint + queryParams);
   }
 
@@ -70,5 +69,17 @@ export class MunicipalityService {
     }
 
     return queryParams;
+  }
+
+  createMunicipality(data: Municipality): Observable<Municipality> {
+    return this.http.post<any>(`${this.apiEndpoint}/`, data);
+  }
+
+  editMunicipality(data: Municipality): Observable<Municipality> {
+    return this.http.put<Municipality>(`${this.apiEndpoint}/${data.id}/`, data);
+  }
+
+  deleteMunicipality(id: string): Observable<any> {
+    return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 }
