@@ -81,8 +81,7 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
     this.getTraceActions(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
-  onChangeFilter(filter: FilterResponse) {
-    this.filters = { ...this.filters, [filter.name]: filter.result };
-    this.getTraceActions(this.filters, 'fecha', 'desc');
+  onChangeFilter(filters) {
+    this.getTraceActions(filters, 'fecha', 'desc');
   }
 }
