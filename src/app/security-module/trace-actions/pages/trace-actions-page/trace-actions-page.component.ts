@@ -1,6 +1,6 @@
-import { FilterResponse, FilterTable } from './../../../shared/models/table-filter.model';
+import { FilterResponse, FilterTable } from '../../../../shared/models/table-filter.model';
 import { ToastrService } from 'ngx-toastr';
-import { TracerActionsService } from './../../services/trace-actions.service';
+import { TracerActionsService } from '../../services/trace-actions.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { catchError, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
