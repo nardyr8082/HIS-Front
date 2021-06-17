@@ -1,0 +1,13 @@
+<div class="container mt-3">
+  <app-custom-table
+    *ngIf="traceAccess"
+    [data]="traceAccess"
+    [dataCount]="dataCount"
+    [displayedColumns]="displayedColumns"
+    [columnsName]="columnsName"
+    [paginationSize]="paginationSize"
+    [filters]="tableFilters"
+    (changePage)="onChangePage($event)"
+    (changeFilter)="onChangeFilter($event)"
+  ></app-custom-table>
+</div>

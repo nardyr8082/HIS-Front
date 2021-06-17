@@ -112,7 +112,7 @@ export class NavigationService {
         {
           displayName: 'Municipio',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'municipality',
           material: true,
           display: true,
         },
@@ -155,7 +155,7 @@ export class NavigationService {
         {
           displayName: 'Historial de acceso',
           iconName: ['receipt'],
-          route: 'backend/about-us/about',
+          route: 'trace-access',
           material: true,
           display: true,
         },

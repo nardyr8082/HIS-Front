@@ -20,6 +20,8 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
   @Input() columnsName: string[] = [];
   @Input() paginationSize = DEFAULT_PAGINATION_SIZE;
   @Input() filters: FilterTable[];
+  @Input() rowActionButtons?: any[];
+  @Input() loading: boolean;
 
   @Output() changeFilter: EventEmitter<FilterResponse> = new EventEmitter();
   @Output() changePage: EventEmitter<PageEvent> = new EventEmitter();
@@ -29,6 +31,7 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
 
   searchTerm = new Subject<any>();
   filterForm: FormGroup;
+  displayTable = false;
 
   constructor() {
     this.searchTerm
@@ -43,6 +46,8 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
+    this.fillDataSource();
+
     if (this.filters) {
       this.filterForm = new FormGroup({});
       this.filters.forEach((filter) => {
@@ -54,6 +59,28 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.data.paginator = this.paginator;
     this.data.sort = this.sort;
+  }
+
+  fillDataSource() {
+    if (this.data) {
+      if (this.rowActionButtons) {
+        const hasAction = !!this.displayedColumns.find((c) => c === 'actions');
+        if (!hasAction) {
+          this.columnsName.push('Actions');
+          this.displayedColumns.push('actions');
+        }
+      }
+      // this.dataSource = new MatTableDataSource<any>(this.data);
+      // if (!this.pagination) {
+      //   this.dataSource.paginator = this.paginator;
+      // }
+
+      this.displayTable = true;
+    }
+  }
+
+  fireActionButtonEvent(item, button) {
+    button.callback(item);
   }
 
   applyFilter(event: Event, filterName: string) {

@@ -1,3 +1,4 @@
+import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MenuListItemComponent } from './common-layout-components/menu-list-item/menu-list-item.component';
 import { BreadcrumdComponent } from './common-layout-components/breadcrumd/breadcrumd.component';
@@ -50,7 +51,7 @@ import { CustomTableComponent } from './table/custom-table/custom-table.componen
 
 ///////////////////////////////////////////////////////////////////
 
-const components = [CustomTableComponent];
+const components = [CustomTableComponent, DeleteConfirmationModalComponent];
 @NgModule({
   declarations: [
     EditProfileComponent,
@@ -63,7 +64,7 @@ const components = [CustomTableComponent];
     PanelNotificationsComponent,
     ...components,
   ],
-  entryComponents: [PanelNotificationsComponent],
+  entryComponents: [PanelNotificationsComponent, DeleteConfirmationModalComponent],
   imports: [
     ReactiveFormsModule,
     FormsModule,
@@ -101,6 +102,7 @@ const components = [CustomTableComponent];
     MatProgressBarModule,
   ],
   exports: [
+    ReactiveFormsModule,
     CommonModule,
     MatButtonModule,
     MatSnackBarModule,
