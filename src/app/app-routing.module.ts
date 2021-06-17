@@ -1,4 +1,4 @@
-import { TraceActionsModule } from './trace-actions/trace-actions.module';
+import { TraceActionsModule } from './security-module/trace-actions/trace-actions.module';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
@@ -31,7 +31,7 @@ const routes: Routes = [
       },
       {
         path: 'trace-actions',
-        loadChildren: () => import('../app/trace-actions/trace-actions.module').then((m) => m.TraceActionsModule),
+        loadChildren: () => import('./security-module/trace-actions/trace-actions.module').then((m) => m.TraceActionsModule),
         canActivate: [BackendGuard],
       },
     ],

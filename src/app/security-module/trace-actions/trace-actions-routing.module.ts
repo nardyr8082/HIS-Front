@@ -1,7 +1,7 @@
 import { TraceActionsPageComponent } from './pages/trace-actions-page/trace-actions-page.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LayoutComponent } from '../shared/layout/layout.component';
+import { LayoutComponent } from '../../shared/layout/layout.component';
 
 const routes: Routes = [
   {

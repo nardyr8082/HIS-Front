@@ -39,7 +39,7 @@
 
       <div style="overflow: hidden; height: 100%" fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx">
         <mat-nav-list class="navList" id="style-4">
-          <app-menu-list-item *ngFor="let item of navigationData" [item]="item"></app-menu-list-item>
+          <app-menu-list-item *ngFor="let item of navigationData" [expanded]="isActiveSomeChild(item)" [item]="item"></app-menu-list-item>
         </mat-nav-list>
         <div class="w-100" fxFlex fxLayout="column" fxLayoutAlign="end end" fxLayoutGap="gappx">
           <footer id="NavBarFooter" class="w-100">
