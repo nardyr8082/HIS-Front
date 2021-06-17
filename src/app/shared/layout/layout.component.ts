@@ -190,4 +190,13 @@ export class LayoutComponent implements OnInit, OnDestroy {
     this.flag = lang;
     this.translateService.use(lang.lang || 'es');
   }
+
+  isActiveSomeChild(item) {
+    const children: any[] = item.children && item.children.length ? item.children : null;
+    const url = this.router.url.substring(1);
+    if (children) {
+      return children.some((child) => child.route == url);
+    }
+    return false;
+  }
 }

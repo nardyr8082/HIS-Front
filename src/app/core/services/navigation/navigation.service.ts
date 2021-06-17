@@ -34,7 +34,7 @@ export class NavigationService {
         {
           displayName: 'Puesto de Trabajo',
           iconName: ['store'],
-          route: 'trace-actions',
+          route: 'test',
           material: true,
           display: true,
         },
@@ -70,7 +70,7 @@ export class NavigationService {
         {
           displayName: 'Tipo Documento Id',
           iconName: ['radio_button_unchecked'],
-          route: 'trace-actions',
+          route: 'test',
           material: true,
           display: true,
         },
@@ -98,7 +98,7 @@ export class NavigationService {
         {
           displayName: 'Estado Civil',
           iconName: ['radio_button_unchecked'],
-          route: 'trace-actions',
+          route: 'test',
           material: true,
           display: true,
         },
