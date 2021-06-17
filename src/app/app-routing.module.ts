@@ -38,6 +38,11 @@ const routes: Routes = [
         loadChildren: () => import('./security-module/trace-access/trace-access.module').then(m => m.TraceAccessModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'municipality',
+        loadChildren: () => import('./nomenclator-modules/municipality/municipality.module').then((m) => m.MunicipalityModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {

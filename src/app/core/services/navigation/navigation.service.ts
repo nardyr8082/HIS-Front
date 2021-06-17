@@ -112,7 +112,7 @@ export class NavigationService {
         {
           displayName: 'Municipio',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'municipality',
           material: true,
           display: true,
         },
