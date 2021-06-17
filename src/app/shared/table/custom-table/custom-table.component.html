@@ -1,12 +1,13 @@
-<div *ngIf="filters" class="d-flex flex-row flex-wrap">
+<div *ngIf="filters" class="d-flex flex-row flex-wrap align-items-center">
   <ng-container *ngFor="let filter of filters">
-    <mat-form-field class="mx-1">
-      <mat-label>{{ filter.title }}</mat-label>
-      <input matInput (keyup)="searchTerm.next({ name: filter.name, result: $event })" />
-      <!-- <input matInput (keyup)="applyFilter($event, filter.name)" /> -->
-    </mat-form-field>
+    <form [formGroup]="filterForm">
+      <mat-form-field class="mx-1">
+        <mat-label>{{ filter.title }}</mat-label>
+        <input matInput (keyup)="searchTerm.next()" formControlName="{{ filter.name }}" />
+      </mat-form-field>
+    </form>
   </ng-container>
-  <button mat-icon-button title="Reiniciar busqueda">
+  <button mat-icon-button title="Reiniciar busqueda" (click)="resetFilters()">
     <mat-icon>clear</mat-icon>
   </button>
 </div>
