@@ -1,0 +1,13 @@
+<div class="container mt-3">
+  <app-custom-table
+    *ngIf="municipalities"
+    [data]="municipalities"
+    [dataCount]="dataCount"
+    [displayedColumns]="configuration.displayedColumns"
+    [columnsName]="configuration.columnsName"
+    [paginationSize]="configuration.paginationSize"
+    [filters]="configuration.tableFilters"
+    (changePage)="onChangePage($event)"
+    (changeFilter)="onChangeFilter($event)"
+  ></app-custom-table>
+</div>
