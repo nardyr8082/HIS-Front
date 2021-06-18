@@ -56,7 +56,7 @@ export class NavigationService {
         {
           displayName: 'Categoria Cientifica',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'cat-science',
           material: true,
           display: true,
         },

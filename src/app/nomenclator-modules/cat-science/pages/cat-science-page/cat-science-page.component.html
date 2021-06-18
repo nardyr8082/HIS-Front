@@ -1,0 +1,18 @@
+<div class="container mt-3">
+  <div class="d-flex justify-content-end">
+    <button (click)="createCatScience()" mat-raised-button color="primary" class="button">Crear Categoría Científica</button>
+  </div>
+  <app-custom-table
+    *ngIf="catScience"
+    [data]="catScience"
+    [dataCount]="dataCount"
+    [displayedColumns]="configuration.displayedColumns"
+    [columnsName]="configuration.columnsName"
+    [paginationSize]="configuration.paginationSize"
+    [filters]="configuration.tableFilters"
+    [rowActionButtons]="rowActionButtons"
+    [loading]="loading"
+    (changePage)="onChangePage($event)"
+    (changeFilter)="onChangeFilter($event)"
+  ></app-custom-table>
+</div>
