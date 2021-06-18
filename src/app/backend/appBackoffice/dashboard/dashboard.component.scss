@@ -15,6 +15,12 @@
 .row {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-start;
   margin-top: 1vw;
+}
+mat-card{
+  margin: 20px;
+  img{
+    height: 150px;
+  }
 }
