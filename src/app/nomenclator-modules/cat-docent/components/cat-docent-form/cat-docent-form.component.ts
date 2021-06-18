@@ -14,15 +14,16 @@ export class CatDocentFormComponent implements OnInit {
   
   catDocentForm: FormGroup;
 
-  constructor(public dialogRef: MatDialogRef<CatDocentFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+    constructor(public dialogRef: MatDialogRef<CatDocentFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.buildForm();
+    console.log(this.catDocentForm.controls)
   }
 
   buildForm() {
     this.catDocentForm = new FormGroup({
-      description: new FormControl(this.data.catDocent ? this.data.catDocent.description : '', Validators.required),
+      descripcion: new FormControl(this.data.catDocent ? this.data.catDocent.descripcion : '', Validators.required),
     })
   }
 
