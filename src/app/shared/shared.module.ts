@@ -47,11 +47,12 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTableModule } from '@angular/material/table';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatSortModule } from '@angular/material/sort';
 import { CustomTableComponent } from './table/custom-table/custom-table.component';
 
 ///////////////////////////////////////////////////////////////////
 
-const components = [CustomTableComponent, DeleteConfirmationModalComponent];
+const components = [DeleteConfirmationModalComponent];
 @NgModule({
   declarations: [
     EditProfileComponent,
@@ -62,6 +63,7 @@ const components = [CustomTableComponent, DeleteConfirmationModalComponent];
     BreadcrumdComponent,
     MenuListItemComponent,
     PanelNotificationsComponent,
+    CustomTableComponent,
     ...components,
   ],
   entryComponents: [PanelNotificationsComponent, DeleteConfirmationModalComponent],
@@ -92,6 +94,7 @@ const components = [CustomTableComponent, DeleteConfirmationModalComponent];
     MatSlideToggleModule,
     MatRippleModule,
     MatPaginatorModule,
+    MatSortModule,
     SwiperModule,
     NgpImageLazyLoadModule,
     PipesModule,
@@ -115,6 +118,7 @@ const components = [CustomTableComponent, DeleteConfirmationModalComponent];
     MatRadioModule,
     MatDialogModule,
     MatBadgeModule,
+    MatSortModule,
     MatChipsModule,
     MatInputModule,
     MatIconModule,
@@ -138,6 +142,7 @@ const components = [CustomTableComponent, DeleteConfirmationModalComponent];
     MatTooltipModule,
     MatProgressBarModule,
     PanelNotificationsComponent,
+    CustomTableComponent,
     ...components,
   ],
   providers: [BreadcrumbService, NavService, PreviousRouteService],
