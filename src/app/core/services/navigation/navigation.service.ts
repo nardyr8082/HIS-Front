@@ -91,7 +91,7 @@ export class NavigationService {
         {
           displayName: 'Pais',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'country',
           material: true,
           display: true,
         },

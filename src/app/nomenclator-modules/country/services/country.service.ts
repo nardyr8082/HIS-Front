@@ -4,15 +4,15 @@ import { Injectable } from '@angular/core';
 //
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response.model';
-import { Municipality } from '../models/municipality.model';
+import { Country } from '../models/country.model';
 
 //
 
 @Injectable({
   providedIn: 'root',
 })
-export class MunicipalityService {
-  private apiEndpoint = `${environment.apiUrl}municipio`;
+export class CountryService {
+  private apiEndpoint = `${environment.apiUrl}pais`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'nombre';
@@ -25,7 +25,7 @@ export class MunicipalityService {
 
   constructor(private http: HttpClient) {}
 
-  getMunicipalities(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Municipality>> {
+  getCountries(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Country>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -33,7 +33,7 @@ export class MunicipalityService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<Municipality>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<Country>>(this.apiEndpoint + queryParams);
   }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
@@ -70,15 +70,15 @@ export class MunicipalityService {
     return queryParams;
   }
 
-  createMunicipality(data: Municipality): Observable<Municipality> {
+  createCountry(data: Country): Observable<Country> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editMunicipality(data: Municipality): Observable<Municipality> {
-    return this.http.put<Municipality>(`${this.apiEndpoint}/${data.id}/`, data);
+  editCountry(data: Country): Observable<Country> {
+    return this.http.put<Country>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteMunicipality(id: string): Observable<any> {
+  deleteCountry(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 }
