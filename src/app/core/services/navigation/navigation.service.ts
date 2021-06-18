@@ -70,7 +70,7 @@ export class NavigationService {
         {
           displayName: 'Sexo',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'gender',
           material: true,
           display: true,
         },

@@ -34,8 +34,9 @@ const routes: Routes = [
         loadChildren: () => import('./security-module/trace-actions/trace-actions.module').then((m) => m.TraceActionsModule),
         canActivate: [BackendGuard],
       },
-      { path: 'trace-access',
-        loadChildren: () => import('./security-module/trace-access/trace-access.module').then(m => m.TraceAccessModule),
+      {
+        path: 'trace-access',
+        loadChildren: () => import('./security-module/trace-access/trace-access.module').then((m) => m.TraceAccessModule),
         canActivate: [BackendGuard],
       },
       {
@@ -46,6 +47,11 @@ const routes: Routes = [
       {
         path: 'cat-science',
         loadChildren: () => import('./nomenclator-modules/cat-science/cat-science.module').then((m) => m.CatScienceModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'gender',
+        loadChildren: () => import('./nomenclator-modules/gender/gender.module').then((m) => m.GenderModule),
         canActivate: [BackendGuard],
       },
     ],

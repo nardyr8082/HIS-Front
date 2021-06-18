@@ -1,64 +1,64 @@
-import { MunicipalityService } from '../../services/municipality.service';
-import { MUNICIPALITY_TABLE_CONFIGURATION } from '../../models/municipality-table-configuration';
+import { GenderService } from '../../services/gender.service';
+import { GENDER_TABLE_CONFIGURATION } from '../../models/gender-table-configuration';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { of, Subscription } from 'rxjs';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { ApiResponse, DEFAULT_PAGE_SIZE } from 'src/app/core/models/api-response.model';
-import { Municipality } from '../../models/municipality.model';
+import { Gender } from '../../models/gender.model';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MunicipalityFormComponent } from '../../components/municipality-form/municipality-form.component';
+import { GenderFormComponent } from '../../components/gender-form/gender-form.component';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
 
 @Component({
-  selector: 'app-municipality-page',
-  templateUrl: './municipality-page.component.html',
-  styleUrls: ['./municipality-page.component.scss'],
+  selector: 'app-gender-page',
+  templateUrl: './gender-page.component.html',
+  styleUrls: ['./gender-page.component.scss'],
 })
-export class MunicipalityPageComponent implements OnInit, OnDestroy {
-  municipalities: Municipality[];
+export class GenderPageComponent implements OnInit, OnDestroy {
+  genders: Gender[];
   dataCount = 0;
-  configuration = MUNICIPALITY_TABLE_CONFIGURATION;
+  configuration = GENDER_TABLE_CONFIGURATION;
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
 
   rowActionButtons = [
     {
-      tooltipText: 'Editar Municipio',
+      tooltipText: 'Editar Sexo',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.openEditForm(item),
     },
     {
-      tooltipText: 'Eliminar Municipio',
+      tooltipText: 'Eliminar Sexo',
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
-      callback: (item) => this.deleteMunicipality(item),
+      callback: (item) => this.deleteGender(item),
     },
   ];
 
-  constructor(private municipalityService: MunicipalityService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(private genderService: GenderService, private toastService: ToastrService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.getMunicipalities();
+    this.getGenders();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getMunicipalities(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getGenders(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
-    const sub = this.municipalityService
-      .getMunicipalities(filters, sortColumn, sortDirection, page, pageSize)
+    const sub = this.genderService
+      .getGenders(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
-        map((response: ApiResponse<Municipality>) => {
-          this.municipalities = response.results;
+        map((response: ApiResponse<Gender>) => {
+          this.genders = response.results;
           this.dataCount = response.count;
           this.loading = false;
         }),
@@ -74,42 +74,42 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
-    this.getMunicipalities(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getGenders(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getMunicipalities(filters, 'fecha', 'desc');
+    this.getGenders(filters, 'fecha', 'desc');
   }
 
-  createMunicipality() {
-    let dialogRef: MatDialogRef<MunicipalityFormComponent, any>;
+  createGender() {
+    let dialogRef: MatDialogRef<GenderFormComponent, any>;
 
-    dialogRef = this.dialog.open(MunicipalityFormComponent, {
+    dialogRef = this.dialog.open(GenderFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
       maxWidth: '500px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',
       data: {
-        municipality: null,
+        gender: null,
       },
     });
 
-    const modalComponentRef = dialogRef.componentInstance as MunicipalityFormComponent;
+    const modalComponentRef = dialogRef.componentInstance as GenderFormComponent;
 
     const sub = modalComponentRef.create
       .pipe(
-        switchMap((municipality: Municipality) =>
-          this.municipalityService.createMunicipality(municipality).pipe(
+        switchMap((gender: Gender) =>
+          this.genderService.createGender(gender).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al crear el municipio. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al crear el sexo. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getMunicipalities();
-                this.toastService.success('El municipio fue creado correctamente.', 'Felicidades');
+                this.getGenders();
+                this.toastService.success('El sexo fue creado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -121,33 +121,33 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
   }
 
   openEditForm(item) {
-    let dialogRef: MatDialogRef<MunicipalityFormComponent, any>;
+    let dialogRef: MatDialogRef<GenderFormComponent, any>;
 
-    dialogRef = this.dialog.open(MunicipalityFormComponent, {
+    dialogRef = this.dialog.open(GenderFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
       maxWidth: '500px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',
       data: {
-        municipality: item,
+        gender: item,
       },
     });
 
-    const modalComponentRef = dialogRef.componentInstance as MunicipalityFormComponent;
+    const modalComponentRef = dialogRef.componentInstance as GenderFormComponent;
 
     const sub = modalComponentRef.edit
       .pipe(
-        switchMap((municipality: Municipality) =>
-          this.municipalityService.editMunicipality({ ...municipality, id: item.id }).pipe(
+        switchMap((gender: Gender) =>
+          this.genderService.editGender({ ...gender, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el municipio. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar el sexo. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getMunicipalities();
-                this.toastService.success('El municipio fue modificado correctamente.', 'Felicidades');
+                this.getGenders();
+                this.toastService.success('El sexo fue modificado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -158,27 +158,27 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  deleteMunicipality(item) {
+  deleteGender(item) {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el municipio: ${item.nombre}`;
+    modalComponentRef.text = `Está seguro que desea eliminar el sexo: ${item.descripcion}`;
 
     const sub = modalComponentRef.accept
       .pipe(
         filter((accept) => accept),
         switchMap(() =>
-          this.municipalityService.deleteMunicipality(item.id).pipe(
+          this.genderService.deleteGender(item.id).pipe(
             map(() => item),
             catchError(() => {
-              this.toastService.error('Hubo un error al eliminar el municipio. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al eliminar el sexo. Por favor, inténtelo de nuevo más tarde.', 'Error');
               modalRef.close();
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getMunicipalities();
-                this.toastService.success('El municipio fue eliminado correctamente.', 'Felicidades');
+                this.getGenders();
+                this.toastService.success('El sexo fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),
@@ -192,6 +192,6 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
   }
 
   changeSort(sort: Sort) {
-    this.getMunicipalities(this.filters, sort.active, sort.direction);
+    this.getGenders(this.filters, sort.active, sort.direction);
   }
 }
