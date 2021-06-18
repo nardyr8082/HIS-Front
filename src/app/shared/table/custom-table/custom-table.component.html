@@ -12,7 +12,7 @@
   </button>
 </div>
 
-<div class="mat-elevation-z8 w-100">
+<div class="mat-elevation-z8 w-100 table-responsive">
   <table *ngIf="data" mat-table [dataSource]="data" matSort (matSortChange)="sortData($event)">
     <ng-container *ngFor="let column of displayedColumns; let i = index" matColumnDef="{{ column }}">
       <ng-container *ngIf="displayedColumns[i] !== 'actions'; else actionsButtons">

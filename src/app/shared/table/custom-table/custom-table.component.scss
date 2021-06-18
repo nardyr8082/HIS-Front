@@ -11,3 +11,54 @@ table {
   text-align: right;
   justify-content: flex-end;
 }
+
+// Responsive
+// .mat-table {
+//   overflow-x: scroll;
+// }
+
+// .mat-cell,
+// .mat-header-cell {
+//   word-wrap: initial;
+//   display: table-cell;
+//   padding: 0px 10px;
+//   line-break: unset;
+//   width: 100%;
+//   white-space: nowrap;
+//   overflow: hidden;
+//   vertical-align: middle;
+// }
+
+// .mat-row,
+// .mat-header-row {
+//   display: table-row;
+// }
+
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  .mat-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    display: table;
+    border-collapse: collapse;
+    margin: 0px;
+  }
+  .mat-row,
+  .mat-header-row {
+    display: table-row;
+  }
+  .mat-cell,
+  .mat-header-cell {
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0px 5px;
+    line-break: unset;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+  }
+}
