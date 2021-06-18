@@ -84,7 +84,7 @@ export class NavigationService {
         {
           displayName: 'Especialidad',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'specialty',
           material: true,
           display: true,
         },

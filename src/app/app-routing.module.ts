@@ -54,6 +54,11 @@ const routes: Routes = [
         loadChildren: () => import('./nomenclator-modules/gender/gender.module').then((m) => m.GenderModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'specialty',
+        loadChildren: () => import('./nomenclator-modules/specialty/specialty.module').then((m) => m.SpecialtyModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {

@@ -1,0 +1,19 @@
+<div class="container mt-3">
+  <div class="d-flex justify-content-end">
+    <button (click)="createSpecialty()" mat-raised-button color="primary" class="button">Crear Especialidad</button>
+  </div>
+  <app-custom-table
+    *ngIf="specialties"
+    [data]="specialties"
+    [dataCount]="dataCount"
+    [displayedColumns]="configuration.displayedColumns"
+    [columnsName]="configuration.columnsName"
+    [paginationSize]="configuration.paginationSize"
+    [filters]="configuration.tableFilters"
+    [rowActionButtons]="rowActionButtons"
+    [loading]="loading"
+    (changePage)="onChangePage($event)"
+    (changeFilter)="onChangeFilter($event)"
+    (changeSort)="changeSort($event)"
+  ></app-custom-table>
+</div>
