@@ -98,7 +98,7 @@ export class NavigationService {
         {
           displayName: 'Estado',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'state',
           material: true,
           display: true,
         },

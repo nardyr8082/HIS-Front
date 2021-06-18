@@ -64,6 +64,11 @@ const routes: Routes = [
         loadChildren: () => import('./nomenclator-modules/country/country.module').then((m) => m.CountryModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'state',
+        loadChildren: () => import('./nomenclator-modules/state/state.module').then((m) => m.StateModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
