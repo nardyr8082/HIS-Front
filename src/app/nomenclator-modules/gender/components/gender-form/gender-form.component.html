@@ -1,0 +1,18 @@
+<div class="form">
+  <h4>{{ data.gender ? 'Editar Sexo' : 'Crear Sexo' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="genderForm" [formGroup]="genderForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Descripción:</mat-label>
+      <input matInput formControlName="descripcion" />
+      <mat-error *ngIf="this.genderForm.controls['descripcion'].invalid"> {{ 'La descripción es' }} <strong>requerida</strong> </mat-error>
+    </mat-form-field>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(genderForm.value)" [disabled]="!genderForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.gender ? 'Editar' : 'Crear' }}
+    </button>
+  </div>
+</div>

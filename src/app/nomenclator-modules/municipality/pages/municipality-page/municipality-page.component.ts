@@ -10,6 +10,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MunicipalityFormComponent } from '../../components/municipality-form/municipality-form.component';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-municipality-page',
@@ -170,7 +171,7 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
           this.municipalityService.deleteMunicipality(item.id).pipe(
             map(() => item),
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el municipio. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al eliminar el municipio. Por favor, inténtelo de nuevo más tarde.', 'Error');
               modalRef.close();
               return of(null);
             }),
@@ -188,5 +189,9 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
 
     const sub1 = modalComponentRef.cancel.pipe(tap(() => modalRef.close())).subscribe();
     this.subscriptions.push(sub, sub1);
+  }
+
+  changeSort(sort: Sort) {
+    this.getMunicipalities(this.filters, sort.active, sort.direction);
   }
 }

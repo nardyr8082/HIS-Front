@@ -2,8 +2,7 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 //
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response.model';
 import { Municipality } from '../models/municipality.model';
 

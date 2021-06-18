@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { TraceAction } from '../../models/trace-action.model';
 import { ApiResponse, DEFAULT_PAGE_SIZE, DEFAULT_PAGINATION_SIZE } from 'src/app/core/models/api-response.model';
 import { PageEvent } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-trace-actions-page',
@@ -84,5 +85,9 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
   onChangeFilter(filters) {
     this.filters = filters;
     this.getTraceActions(filters, 'fecha', 'desc');
+  }
+
+  onChangeSort(sort: Sort) {
+    this.getTraceActions(this.filters, sort.active, sort.direction);
   }
 }

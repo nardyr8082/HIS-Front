@@ -1,4 +1,5 @@
 <div class="container mt-3">
+  <h4>Trazas de Acciones</h4>
   <app-custom-table
     *ngIf="traceActions"
     [data]="traceActions"
@@ -9,5 +10,6 @@
     [filters]="tableFilters"
     (changePage)="onChangePage($event)"
     (changeFilter)="onChangeFilter($event)"
+    (changeSort)="onChangeSort($event)"
   ></app-custom-table>
 </div>

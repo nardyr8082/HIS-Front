@@ -34,8 +34,9 @@ const routes: Routes = [
         loadChildren: () => import('./security-module/trace-actions/trace-actions.module').then((m) => m.TraceActionsModule),
         canActivate: [BackendGuard],
       },
-      { path: 'trace-access',
-        loadChildren: () => import('./security-module/trace-access/trace-access.module').then(m => m.TraceAccessModule),
+      {
+        path: 'trace-access',
+        loadChildren: () => import('./security-module/trace-access/trace-access.module').then((m) => m.TraceAccessModule),
         canActivate: [BackendGuard],
       },
       {
@@ -51,6 +52,25 @@ const routes: Routes = [
       {
         path: 'cat-docent',
         loadChildren: () => import('./nomenclator-modules/cat-docent/cat-docent.module').then((m) => m.CatDocentModule),
+        canActivate: [BackendGuard],
+      },{
+        path: 'gender',
+        loadChildren: () => import('./nomenclator-modules/gender/gender.module').then((m) => m.GenderModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'specialty',
+        loadChildren: () => import('./nomenclator-modules/specialty/specialty.module').then((m) => m.SpecialtyModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'country',
+        loadChildren: () => import('./nomenclator-modules/country/country.module').then((m) => m.CountryModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'state',
+        loadChildren: () => import('./nomenclator-modules/state/state.module').then((m) => m.StateModule),
         canActivate: [BackendGuard],
       },
     ],

@@ -70,7 +70,7 @@ export class NavigationService {
         {
           displayName: 'Sexo',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'gender',
           material: true,
           display: true,
         },
@@ -84,21 +84,21 @@ export class NavigationService {
         {
           displayName: 'Especialidad',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'specialty',
           material: true,
           display: true,
         },
         {
           displayName: 'Pais',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'country',
           material: true,
           display: true,
         },
         {
           displayName: 'Estado',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'state',
           material: true,
           display: true,
         },
