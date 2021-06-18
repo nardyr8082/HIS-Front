@@ -1,10 +1,10 @@
 import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { DEFAULT_PAGINATION_SIZE } from 'src/app/core/models/api-response.model';
 import { FilterResponse, FilterTable } from '../../models/table-filter.model';
 
@@ -25,13 +25,13 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
 
   @Output() changeFilter: EventEmitter<FilterResponse> = new EventEmitter();
   @Output() changePage: EventEmitter<PageEvent> = new EventEmitter();
+  @Output() changeSort: EventEmitter<any> = new EventEmitter();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   searchTerm = new Subject<any>();
   filterForm: FormGroup;
-  displayTable = false;
 
   constructor() {
     this.searchTerm
@@ -74,8 +74,6 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
       // if (!this.pagination) {
       //   this.dataSource.paginator = this.paginator;
       // }
-
-      this.displayTable = true;
     }
   }
 
@@ -97,5 +95,9 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
       this.filterForm.get(filter.name).setValue('');
     });
     this.searchTerm.next();
+  }
+
+  sortData(sort: Sort) {
+    this.changeSort.emit(sort);
   }
 }

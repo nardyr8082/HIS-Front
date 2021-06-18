@@ -10,6 +10,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CatScienceFormComponent } from '../../components/cat-science-form/cat-science-form.component';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-cat-science-page',
@@ -188,5 +189,9 @@ export class CatSciencePageComponent implements OnInit, OnDestroy {
 
     const sub1 = modalComponentRef.cancel.pipe(tap(() => modalRef.close())).subscribe();
     this.subscriptions.push(sub, sub1);
+  }
+
+  onChangeSort(sort: Sort) {
+    this.getCatScience(this.filters, sort.active, sort.direction);
   }
 }

@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {Subscription} from 'rxjs';
-import {catchError, map} from 'rxjs/operators';
-import {FilterTable} from '../../../../shared/models/table-filter.model';
-import {ToastrService} from 'ngx-toastr';
-import {ApiResponse, DEFAULT_PAGE_SIZE, DEFAULT_PAGINATION_SIZE} from '../../../../core/models/api-response.model';
-import {PageEvent} from '@angular/material/paginator';
-import {TraceAccess} from '../../models/trace-access.model';
-import {TracerAccessService} from '../../services/trace-access.service';
+import { Subscription } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { FilterTable } from '../../../../shared/models/table-filter.model';
+import { ToastrService } from 'ngx-toastr';
+import { ApiResponse, DEFAULT_PAGE_SIZE, DEFAULT_PAGINATION_SIZE } from '../../../../core/models/api-response.model';
+import { PageEvent } from '@angular/material/paginator';
+import { TraceAccess } from '../../models/trace-access.model';
+import { TracerAccessService } from '../../services/trace-access.service';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-trace-access-page',
   templateUrl: './trace-access-page.component.html',
-  styleUrls: ['./trace-access-page.component.scss']
+  styleUrls: ['./trace-access-page.component.scss'],
 })
 export class TraceAccessPageComponent implements OnInit {
   traceAccess: TraceAccess[];
@@ -78,5 +79,9 @@ export class TraceAccessPageComponent implements OnInit {
 
   onChangeFilter(filters) {
     this.getTraceAccess(filters, 'fecha', 'desc');
+  }
+
+  onChangeSort(sort: Sort) {
+    this.getTraceAccess(this.filters, sort.active, sort.direction);
   }
 }
