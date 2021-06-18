@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { IUser } from '../../classes/user.class';
-import { Subject } from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import { NavigationService } from '../navigation/navigation.service';
+import {CatScience} from '../../../nomenclator-modules/cat-science/models/cat-science.model';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +20,7 @@ export class LoggedInUserService {
     { name: 'Francés', image: 'assets/images/flags/fr.svg', lang: 'fr', abbreviation: 'fra' },
   ];
 
-  constructor(private navigationService: NavigationService) {
+  constructor(private navigationService: NavigationService, private http: HttpClient) {
     const data = localStorage.getItem('user');
     if (data) {
       this.loggedInUser = JSON.parse(data);
@@ -47,22 +50,30 @@ export class LoggedInUserService {
     data = data ? data.access : null;
     return data;
   }
-
+  public getRefreshOfUser(): any {
+    let data = JSON.parse(localStorage.getItem('user'));
+    data = data.refresh ? data.refresh : null;
+    return data;
+  }
+  public refreshToken(): Observable<any> {
+    const data = JSON.parse(localStorage.getItem('user'));
+    const refresh = data.refresh ? data.refresh : null;
+    const body = {refresh: refresh};
+    return this.http.post<any>(`${environment.apiUrl}auth/token/refresh/`, body);
+  }
   public setLoggedInUser(user: any) {
     this.loggedInUser = user;
   }
   public updateUserToken(resp: any) {
-    let dataString: string;
-    this.loggedInUser = JSON.parse(localStorage.getItem('user'));
-    const tempdata = this.loggedInUser ? this.loggedInUser : {};
-    if (resp) {
-      this.loggedInUser = Object.assign(tempdata, resp);
-    } else {
-      this.loggedInUser = null;
+    console.log("esta es", resp);
+    const dataString = JSON.stringify(resp);
+    console.log(dataString);
+    try {
+      localStorage.setItem('user', dataString);
+    } catch (e) {
+      console.log('aqui esta', e);
     }
-    dataString = JSON.stringify(this.loggedInUser);
-    localStorage.setItem('user', dataString);
-    this.$loggedInUserUpdated.next(this.loggedInUser);
+    // this.$loggedInUserUpdated.next(dataString);
   }
   public updateUserProfile(user) {
     let dataString: string;

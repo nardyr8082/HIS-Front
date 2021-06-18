@@ -33,12 +33,35 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
           this.showToastr.showError(errorMessage, 'Error');
         } else {
           errorMessage = error.error;
-          this.processingBackendError(error);
+          console.log("aqui estoy", error);
+          this.refreshToken(error);
         }
         // console.log('ErrorInterceptorService -> errorMessage', errorMessage);
         return throwError(errorMessage);
       }),
     );
+  }
+  refreshToken(error) {
+    let refresh = this.loggedInUserService.getRefreshOfUser();
+    console.log('test', refresh);
+    if (refresh) {
+      if (error.status == 401 && error.statusText === 'Unauthorized') {
+        this.loggedInUserService.refreshToken().subscribe( resp => {
+          console.log('aaaaaaaaa', resp);
+          const access = resp.access;
+          const data = {access: access, refresh: refresh};
+          console.log('data', data);
+          this.loggedInUserService.updateUserToken(data);
+          window.location.reload();
+        }, error1 => {
+          this.processingBackendError(error);
+        });
+      } else {
+        this.processingBackendError(error);
+      }
+    } else {
+      this.processingBackendError(error);
+    }
   }
 
   ///////////////////////Procesing Error////////////////////////////////
