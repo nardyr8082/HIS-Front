@@ -48,6 +48,11 @@ const routes: Routes = [
         loadChildren: () => import('./nomenclator-modules/cat-science/cat-science.module').then((m) => m.CatScienceModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'cat-docent',
+        loadChildren: () => import('./nomenclator-modules/cat-docent/cat-docent.module').then((m) => m.CatDocentModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
