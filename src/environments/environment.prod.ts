@@ -1,5 +1,7 @@
 export const environment = {
-  production: true,
+  production: false,
+  apiUrl: 'http://127.0.0.1:8000/api/v1/',
+  imageUrl: 'http://127.0.0.1:8000/api/v1/',
   defaultLanguage: 'es',
   version: '0.1.1',
 };

@@ -1,0 +1,26 @@
+.card {
+  max-width: 300px;
+}
+
+.header-image {
+  background-image: url('../../../../assets/images/users/profile2.png');
+  background-size: cover;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: 1vw;
+}
+mat-card{
+  margin: 20px;
+  img{
+    height: 150px;
+  }
+}
