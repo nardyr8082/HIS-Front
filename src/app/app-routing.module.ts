@@ -69,6 +69,11 @@ const routes: Routes = [
         loadChildren: () => import('./nomenclator-modules/state/state.module').then((m) => m.StateModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'roles',
+        loadChildren: () => import('./security-module/role/role.module').then((m) => m.RoleModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
