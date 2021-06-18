@@ -18,7 +18,7 @@ export class CatScienceFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildForm();
-    console.log(this.data);
+    console.log(`data: ${this.data}`);
   }
 
   buildForm() {

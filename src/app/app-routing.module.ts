@@ -50,6 +50,10 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'cat-docent',
+        loadChildren: () => import('./nomenclator-modules/cat-docent/cat-docent.module').then((m) => m.CatDocentModule),
+        canActivate: [BackendGuard],
+      },{
         path: 'gender',
         loadChildren: () => import('./nomenclator-modules/gender/gender.module').then((m) => m.GenderModule),
         canActivate: [BackendGuard],

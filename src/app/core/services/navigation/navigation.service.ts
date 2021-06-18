@@ -63,7 +63,7 @@ export class NavigationService {
         {
           displayName: 'Categoria Docente',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'cat-docent',
           material: true,
           display: true,
         },
