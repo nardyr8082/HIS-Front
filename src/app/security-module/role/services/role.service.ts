@@ -75,7 +75,7 @@ export class RoleService {
   }
 
   editRole(data: Role): Observable<Role> {
-    return this.http.put<Role>(`${this.apiEndpoint}/${data.id}/`, data);
+    return this.http.patch<Role>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
   deleteRole(id: string): Observable<any> {
