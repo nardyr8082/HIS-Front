@@ -146,7 +146,7 @@ export class RacePageComponent implements OnInit, OnDestroy {
             tap((success) => {
               if (success) {
                 this.getRace();
-                this.toastService.success('La raza fue modificado correctamente.', 'Felicidades');
+                this.toastService.success('La raza fue modificada correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -176,7 +176,7 @@ export class RacePageComponent implements OnInit, OnDestroy {
             tap((success) => {
               if (success) {
                 this.getRace();
-                this.toastService.success('La raza fue eliminado correctamente.', 'Felicidades');
+                this.toastService.success('La raza fue eliminada correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),
