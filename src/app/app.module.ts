@@ -11,6 +11,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from './core/services/translate-factory/translate-loader';
+import { WorkstComponentComponent } from './structure-modules/work-station/components/workst-component/workst-component.component';
+import { WorkStationFormComponent } from './structure-modules/work-station/components/work-station-form/work-station-form.component';
+import { WorkStationPageComponent } from './structure-modules/work-station/pages/work-station-page/work-station-page.component';
 
 @NgModule({
   imports: [
@@ -28,7 +31,7 @@ import { HttpLoaderFactory } from './core/services/translate-factory/translate-l
     }),
     NgxSpinnerModule,
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, WorkstComponentComponent, WorkStationFormComponent, WorkStationPageComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
