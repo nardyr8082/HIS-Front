@@ -77,7 +77,7 @@ export class NavigationService {
         {
           displayName: 'Tipo Documento Id',
           iconName: ['radio_button_unchecked'],
-          route: 'test',
+          route: 'doc-type-id',
           material: true,
           display: true,
         },
@@ -119,7 +119,7 @@ export class NavigationService {
         {
           displayName: 'Nacionalidad',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'nationality',
           material: true,
           display: true,
         },

@@ -53,7 +53,13 @@ const routes: Routes = [
         path: 'cat-docent',
         loadChildren: () => import('./nomenclator-modules/cat-docent/cat-docent.module').then((m) => m.CatDocentModule),
         canActivate: [BackendGuard],
-      },{
+      },
+      {
+        path: 'doc-type-id',
+        loadChildren: () => import('./nomenclator-modules/doc-type-id/doc-type-id.module').then((m) => m.DocTypeIdModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'gender',
         loadChildren: () => import('./nomenclator-modules/gender/gender.module').then((m) => m.GenderModule),
         canActivate: [BackendGuard],
@@ -66,6 +72,11 @@ const routes: Routes = [
       {
         path: 'country',
         loadChildren: () => import('./nomenclator-modules/country/country.module').then((m) => m.CountryModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'nationality',
+        loadChildren: () => import('./nomenclator-modules/nationality/nationality.module').then((m) => m.NationalityModule),
         canActivate: [BackendGuard],
       },
       {
