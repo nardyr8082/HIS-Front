@@ -48,8 +48,6 @@ export class CatDocentPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getCatDocent();
-    console.log(`catDocent: ${this.catDocent}`);
-    console.log(this.dialog);
   }
 
   ngOnDestroy() {
@@ -135,7 +133,6 @@ export class CatDocentPageComponent implements OnInit, OnDestroy {
         catDocent: item,
       },
     });
-    console.log(item);
     const modalComponentRef = dialogRef.componentInstance as CatDocentFormComponent;
 
     const sub = modalComponentRef.edit
