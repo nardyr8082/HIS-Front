@@ -148,7 +148,7 @@ export class NavigationService {
         {
           displayName: 'Roles',
           iconName: ['manage_accounts'],
-          route: 'backend/about-us/about',
+          route: 'roles',
           material: true,
           display: true,
         },

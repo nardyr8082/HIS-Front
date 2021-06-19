@@ -19,8 +19,8 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
   dataCount = 0;
   subscriptions: Subscription[] = [];
   paginationSize = DEFAULT_PAGINATION_SIZE;
-  displayedColumns = ['fecha', 'ip', 'usuario', 'objeto', 'evento'];
-  columnsName = ['Fecha', 'IP', 'Usuario', 'Objeto', 'Evento'];
+  displayedColumns = ['fecha', 'ip', 'usuario', 'objeto', 'evento', 'data_old', 'data_new'];
+  columnsName = ['Fecha', 'IP', 'Usuario', 'Objeto', 'Evento', 'Antes', 'Después'];
   filters = {};
   tableFilters: FilterTable[] = [
     {

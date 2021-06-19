@@ -1,3 +1,4 @@
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { DeleteConfirmationModalComponent } from './delete-confirmation-modal/delete-confirmation-modal.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MenuListItemComponent } from './common-layout-components/menu-list-item/menu-list-item.component';
@@ -74,6 +75,7 @@ const components = [DeleteConfirmationModalComponent];
     CommonModule,
     RouterModule,
     MatButtonModule,
+    MatCheckboxModule,
     MatSnackBarModule,
     MatToolbarModule,
     MatListModule,
@@ -108,6 +110,7 @@ const components = [DeleteConfirmationModalComponent];
     ReactiveFormsModule,
     CommonModule,
     MatButtonModule,
+    MatCheckboxModule,
     MatSnackBarModule,
     MatToolbarModule,
     MatListModule,
