@@ -53,7 +53,13 @@ const routes: Routes = [
         path: 'cat-docent',
         loadChildren: () => import('./nomenclator-modules/cat-docent/cat-docent.module').then((m) => m.CatDocentModule),
         canActivate: [BackendGuard],
-      },{
+      },
+      {
+        path: 'doc-type-id',
+        loadChildren: () => import('./nomenclator-modules/doc-type-id/doc-type-id.module').then((m) => m.DocTypeIdModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'gender',
         loadChildren: () => import('./nomenclator-modules/gender/gender.module').then((m) => m.GenderModule),
         canActivate: [BackendGuard],

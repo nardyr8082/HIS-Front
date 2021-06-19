@@ -1,0 +1,18 @@
+<div class="form">
+  <h4>{{ data.docTypeId ? 'Editar Tipo Documento Id' : 'Crear Tipo Documento Id' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="docTypeIdForm" [formGroup]="docTypeIdForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Descripcion:</mat-label>
+      <input matInput formControlName="descripcion" />
+      <mat-error *ngIf="this.docTypeIdForm.controls['descripcion'].invalid"> {{ 'La descripción es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(docTypeIdForm.value)" [disabled]="!docTypeIdForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.docTypeId ? 'Editar' : 'Crear' }}
+    </button>
+  </div>
+</div>
