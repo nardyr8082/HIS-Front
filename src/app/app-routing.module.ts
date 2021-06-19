@@ -75,6 +75,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'nationality',
+        loadChildren: () => import('./nomenclator-modules/nationality/nationality.module').then((m) => m.NationalityModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'state',
         loadChildren: () => import('./nomenclator-modules/state/state.module').then((m) => m.StateModule),
         canActivate: [BackendGuard],

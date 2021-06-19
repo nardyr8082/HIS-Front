@@ -4,16 +4,15 @@ import { Injectable } from '@angular/core';
 //
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response.model';
-import { DocTypeId } from '../models/doc-type-id.model';
-import {DocTypeIdPageComponent} from '../pages/doc-type-id-page/doc-type-id-page.component';
+import { Nationality } from '../models/nationality.model';
 
 //
 
 @Injectable({
   providedIn: 'root',
 })
-export class DocTypeIdService {
-  private apiEndpoint = `${environment.apiUrl}tipo_documento_id`;
+export class NationalityService {
+  private apiEndpoint = `${environment.apiUrl}nacionalidad`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'descripcion';
@@ -26,7 +25,7 @@ export class DocTypeIdService {
 
   constructor(private http: HttpClient) {}
 
-  getDocTypeId(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<DocTypeId>> {
+  getNationalities(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Nationality>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -34,7 +33,7 @@ export class DocTypeIdService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<DocTypeId>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<Nationality>>(this.apiEndpoint + queryParams);
   }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
@@ -71,15 +70,15 @@ export class DocTypeIdService {
     return queryParams;
   }
 
-  createDocTypeId(data: DocTypeId): Observable<DocTypeId> {
+  createNationality(data: Nationality): Observable<Nationality> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editDocTypeId(data: DocTypeId): Observable<DocTypeId> {
-    return this.http.patch<DocTypeId>(`${this.apiEndpoint}/${data.id}/`, data);
+  editNationality(data: Nationality): Observable<Nationality> {
+    return this.http.patch<Nationality>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteDocTypeId(id: string): Observable<any> {
+  deleteNationality(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 }

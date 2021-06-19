@@ -119,7 +119,7 @@ export class NavigationService {
         {
           displayName: 'Nacionalidad',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'nationality',
           material: true,
           display: true,
         },
