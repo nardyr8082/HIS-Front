@@ -11,7 +11,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CivilStatusService {
-  private apiEndpoint = `${environment.apiUrl}estatus_civil`;
+  private apiEndpoint = `${environment.apiUrl}estado_civil`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'description';

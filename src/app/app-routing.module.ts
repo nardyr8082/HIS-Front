@@ -81,6 +81,10 @@ const routes: Routes = [
         path: 'roles',
         loadChildren: () => import('./security-module/role/role.module').then((m) => m.RoleModule),
         canActivate: [BackendGuard],
+      },{
+        path: 'civil_status',
+        loadChildren: () => import('./nomenclator-modules/civil-status/civil-status.module').then((m) => m.CivilStatusModule),
+        canActivate: [BackendGuard],
       },
     ],
   },

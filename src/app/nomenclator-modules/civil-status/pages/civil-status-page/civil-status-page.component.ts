@@ -28,14 +28,14 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
 
   rowActionButtons = [
     {
-      tooltipText: 'Editar Categoría Docente',
+      tooltipText: 'Editar Estado Civil',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.openEditForm(item),
     },
     {
-      tooltipText: 'Eliminar Categoría Docente',
+      tooltipText: 'Eliminar Estado Civil',
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
@@ -74,12 +74,12 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
   }
 
     onChangePage(page: PageEvent) {
-    this.getCatDocent(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getCivilStatus(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getCatDocent(filters, 'fecha', 'desc');
+    this.getCivilStatus(filters, 'fecha', 'desc');
   }
 
   createCivilStatus() {
@@ -103,13 +103,13 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
         switchMap((civilStatus: CivilStatus) =>
           this.civilStatusService.createCivilStatus(civilStatus).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al crear la categoría docente. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al crear el estado civil. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getCatDocent();
-                this.toastService.success('La categoría docente fue creada correctamente.', 'Felicidades');
+                this.getCivilStatus();
+                this.toastService.success('El estado civil fue creado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -140,13 +140,13 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
         switchMap((civilStatus: CivilStatus) =>
           this.civilStatusService.editCivilStatus({ ...civilStatus, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar la categoría docente. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar el estado civil. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getCatDocent();
-                this.toastService.success('La categoría docente fue modificada correctamente.', 'Felicidades');
+                this.getCivilStatus();
+                this.toastService.success('El estado civil fue modificado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -160,7 +160,7 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar la categoría docente: ${item.descripcion}`;
+    modalComponentRef.text = `Está seguro que desea eliminar el estado civil: ${item.descripcion}`;
 
     const sub = modalComponentRef.accept
       .pipe(
@@ -169,14 +169,14 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
           this.civilStatusService.deleteCivilStatus(item.id).pipe(
             map(() => item),
             catchError(() => {
-              this.toastService.error('Hubo un error al eliminar la categoría docente. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al eliminar el estado civil. Por favor, inténtelo de nuevo más tarde.', 'Error');
               modalRef.close();
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getCatDocent();
-                this.toastService.success('La categoría docente fue eliminado correctamente.', 'Felicidades');
+                this.getCivilStatus();
+                this.toastService.success('El estado civil fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),
@@ -190,7 +190,7 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
   }
 
    onChangeSort(sort: Sort) {
-    this.getCatDocent(this.filters, sort.active, sort.direction);
+    this.getCivilStatus(this.filters, sort.active, sort.direction);
   }
 
 }

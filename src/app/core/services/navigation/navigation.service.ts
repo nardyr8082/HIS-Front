@@ -105,7 +105,7 @@ export class NavigationService {
         {
           displayName: 'Estado Civil',
           iconName: ['radio_button_unchecked'],
-          route: 'test',
+          route: 'civil_status',
           material: true,
           display: true,
         },
