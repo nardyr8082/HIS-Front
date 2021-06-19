@@ -73,6 +73,11 @@ const routes: Routes = [
         loadChildren: () => import('./nomenclator-modules/state/state.module').then((m) => m.StateModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'race',
+        loadChildren: () => import('./nomenclator-modules/race/race.module').then((m) => m.RaceModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
