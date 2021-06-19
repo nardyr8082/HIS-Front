@@ -71,6 +71,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       },
       () => {
         this.inLoading = false;
+        this.showToastr.showError('Su usuario y contraseña son incorrectos.', 'Error!!');
       },
     );
 
