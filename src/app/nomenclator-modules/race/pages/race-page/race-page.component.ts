@@ -132,7 +132,6 @@ export class RacePageComponent implements OnInit, OnDestroy {
         race: item,
       },
     });
-    console.log(item);
     const modalComponentRef = dialogRef.componentInstance as RaceFormComponent;
 
     const sub = modalComponentRef.edit

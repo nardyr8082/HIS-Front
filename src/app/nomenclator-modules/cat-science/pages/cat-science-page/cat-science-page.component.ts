@@ -133,7 +133,6 @@ export class CatSciencePageComponent implements OnInit, OnDestroy {
         catScience: item,
       },
     });
-    console.log(item);
     const modalComponentRef = dialogRef.componentInstance as CatScienceFormComponent;
 
     const sub = modalComponentRef.edit

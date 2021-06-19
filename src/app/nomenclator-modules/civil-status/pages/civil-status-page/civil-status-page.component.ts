@@ -132,7 +132,6 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
         civilStatus: item,
       },
     });
-    console.log(item);
     const modalComponentRef = dialogRef.componentInstance as CivilStatusFormComponent;
 
     const sub = modalComponentRef.edit
