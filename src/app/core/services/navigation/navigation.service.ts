@@ -126,7 +126,7 @@ export class NavigationService {
         {
           displayName: 'Raza',
           iconName: ['radio_button_unchecked'],
-          route: 'backend/about-us/about',
+          route: 'race',
           material: true,
           display: true,
         },

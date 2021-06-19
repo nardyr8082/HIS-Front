@@ -80,6 +80,10 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'race',
+        loadChildren: () => import('./nomenclator-modules/race/race.module').then((m) => m.RaceModule),
+        canActivate: [BackendGuard],
+      },{
         path: 'roles',
         loadChildren: () => import('./security-module/role/role.module').then((m) => m.RoleModule),
         canActivate: [BackendGuard],

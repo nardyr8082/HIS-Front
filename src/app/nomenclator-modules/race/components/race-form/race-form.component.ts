@@ -1,0 +1,37 @@
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, Inject, OnInit, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+@Component({
+  selector: 'app-race-form',
+  templateUrl: './race-form.component.html',
+  styleUrls: ['./race-form.component.scss']
+})
+export class RaceFormComponent implements OnInit {
+  @Output() create: EventEmitter<any> = new EventEmitter();
+  @Output() edit: EventEmitter<any> = new EventEmitter();
+
+  raceForm: FormGroup;
+
+  constructor(public dialogRef: MatDialogRef<RaceFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+
+  ngOnInit(): void {
+    this.buildForm();
+  }
+
+  buildForm() {
+    this.raceForm = new FormGroup({
+      descripcion: new FormControl(this.data.race ? this.data.race.descripcion : '', Validators.required),
+    });
+  }
+
+  onSubmit(data) {
+    this.data.race ? this.edit.emit(data) : this.create.emit(data);
+    this.dialogRef.close();
+  }
+
+  onCancel() {
+    this.dialogRef.close();
+  }
+}
