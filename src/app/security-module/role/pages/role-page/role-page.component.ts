@@ -27,14 +27,14 @@ export class RolePageComponent implements OnInit {
 
   rowActionButtons = [
     {
-      tooltipText: 'Editar Grupo',
+      tooltipText: 'Editar Rol',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.openEditForm(item),
     },
     {
-      tooltipText: 'Eliminar Grupo',
+      tooltipText: 'Eliminar Rol',
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
@@ -115,13 +115,13 @@ export class RolePageComponent implements OnInit {
         switchMap((role: Role) =>
           this.roleService.createRole(role).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al crear el grupo. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al crear el rol. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getRoles();
-                this.toastService.success('El grupo fue creada correctamente.', 'Felicidades');
+                this.toastService.success('El rol fue creado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -152,13 +152,13 @@ export class RolePageComponent implements OnInit {
         switchMap((role: Role) =>
           this.roleService.editRole({ ...role, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el grupo. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar el rol. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getRoles();
-                this.toastService.success('El grupo fue modificado correctamente.', 'Felicidades');
+                this.toastService.success('El rol fue modificado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -173,7 +173,7 @@ export class RolePageComponent implements OnInit {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el grupo: ${item.name}`;
+    modalComponentRef.text = `Está seguro que desea eliminar el rol: ${item.name}`;
 
     const sub = modalComponentRef.accept
       .pipe(
@@ -182,14 +182,14 @@ export class RolePageComponent implements OnInit {
           this.roleService.deleteRole(item.id).pipe(
             map(() => item),
             catchError(() => {
-              this.toastService.error('Hubo un error al eliminar el grupo. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al eliminar el rol. Por favor, inténtelo de nuevo más tarde.', 'Error');
               modalRef.close();
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getRoles();
-                this.toastService.success('El grupo fue eliminado correctamente.', 'Felicidades');
+                this.toastService.success('El rol fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),
