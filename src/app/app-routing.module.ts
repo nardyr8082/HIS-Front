@@ -88,13 +88,20 @@ const routes: Routes = [
         path: 'race',
         loadChildren: () => import('./nomenclator-modules/race/race.module').then((m) => m.RaceModule),
         canActivate: [BackendGuard],
-      },{
+      },
+      {
         path: 'roles',
         loadChildren: () => import('./security-module/role/role.module').then((m) => m.RoleModule),
         canActivate: [BackendGuard],
-      },{
+      },
+      {
         path: 'civil_status',
         loadChildren: () => import('./nomenclator-modules/civil-status/civil-status.module').then((m) => m.CivilStatusModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'user',
+        loadChildren: () => import('./security-module/user/user.module').then((m) => m.UserModule),
         canActivate: [BackendGuard],
       },
     ],

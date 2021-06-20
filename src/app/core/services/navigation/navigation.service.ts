@@ -141,7 +141,7 @@ export class NavigationService {
         {
           displayName: 'Usuarios',
           iconName: ['perm_identity'],
-          route: 'backend/about-us/about',
+          route: 'user',
           material: true,
           display: true,
         },

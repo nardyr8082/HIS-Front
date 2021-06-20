@@ -1,0 +1,15 @@
+<app-user-form
+  *ngIf="roles && catDoncents && catSciences && specialties && docTypes && nationalities && contacts && addresses"
+  [user]="user"
+  [roles]="roles"
+  [catDoncents]="catDoncents"
+  [catSciences]="catSciences"
+  [specialties]="specialties"
+  [docTypes]="docTypes"
+  [nationalities]="nationalities"
+  [contacts]="contacts"
+  [addresses]="addresses"
+  (create)="onCreate($event)"
+  (edit)="onEdit($event)"
+>
+</app-user-form>
