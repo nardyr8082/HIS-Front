@@ -14,7 +14,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { ConfirmationDialogFrontComponent } from './confirmation-dialog-front/confirmation-dialog-front.component';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { NgpImageLazyLoadModule } from 'ngp-lazy-image';
@@ -50,6 +50,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSortModule } from '@angular/material/sort';
 import { CustomTableComponent } from './table/custom-table/custom-table.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 ///////////////////////////////////////////////////////////////////
 
@@ -105,6 +107,9 @@ const components = [DeleteConfirmationModalComponent];
     MatProgressSpinnerModule,
     MatTooltipModule,
     MatProgressBarModule,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -146,6 +151,9 @@ const components = [DeleteConfirmationModalComponent];
     MatProgressBarModule,
     PanelNotificationsComponent,
     CustomTableComponent,
+    MatStepperModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     ...components,
   ],
   providers: [BreadcrumbService, NavService, PreviousRouteService],
