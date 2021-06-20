@@ -104,6 +104,11 @@ const routes: Routes = [
         loadChildren: () => import('./security-module/user/user.module').then((m) => m.UserModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'work-station',
+        loadChildren: () => import('./structure-modules/work-station/work-station.module').then((m) => m.WorkStationModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
