@@ -55,7 +55,7 @@ export class TraceAccessPageComponent implements OnInit {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getTraceAccess(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getTraceAccess(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     const sub = this.traceAccessService
       .getTracesAccess(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
@@ -74,11 +74,11 @@ export class TraceAccessPageComponent implements OnInit {
   }
 
   onChangePage(page: PageEvent) {
-    this.getTraceAccess(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getTraceAccess(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
-    this.getTraceAccess(filters, 'fecha', 'desc');
+    this.getTraceAccess(filters, 'id', 'desc');
   }
 
   onChangeSort(sort: Sort) {

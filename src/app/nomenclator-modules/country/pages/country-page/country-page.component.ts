@@ -52,7 +52,7 @@ export class CountryPageComponent implements OnInit {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getCountries(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getCountries(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.countryService
       .getCountries(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,12 +74,12 @@ export class CountryPageComponent implements OnInit {
   }
 
   onChangePage(page: PageEvent) {
-    this.getCountries(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getCountries(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getCountries(filters, 'fecha', 'desc');
+    this.getCountries(filters, 'id', 'desc');
   }
 
   createCountry() {

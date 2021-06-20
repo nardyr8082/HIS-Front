@@ -4,15 +4,14 @@ import { Injectable } from '@angular/core';
 //
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response.model';
-import { State } from '../models/state.model';
-
+import { OrgLevel } from '../models/org-level.model';
 //
 
 @Injectable({
   providedIn: 'root',
 })
-export class StateService {
-  private apiEndpoint = `${environment.apiUrl}estado`;
+export class RoleService {
+  private apiEndpoint = `${environment.apiUrl}nivel_organizacional`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -25,7 +24,7 @@ export class StateService {
 
   constructor(private http: HttpClient) {}
 
-  getStates(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<State>> {
+  getOrgLevel(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<OrgLevel>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -33,7 +32,8 @@ export class StateService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<State>>(this.apiEndpoint + queryParams);
+    console.log(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<OrgLevel>>(this.apiEndpoint + queryParams);
   }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
@@ -70,15 +70,15 @@ export class StateService {
     return queryParams;
   }
 
-  createState(data: State): Observable<State> {
+  createOrgLevel(data: OrgLevel): Observable<OrgLevel> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editState(data: State): Observable<State> {
-    return this.http.put<State>(`${this.apiEndpoint}/${data.id}/`, data);
+  editOrgLevel(data: OrgLevel): Observable<OrgLevel> {
+    return this.http.patch<OrgLevel>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteState(id: string): Observable<any> {
+  deleteOrgLevel(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 }

@@ -13,7 +13,7 @@ export class CatDocentService {
   private apiEndpoint = `${environment.apiUrl}categoria_docente`;
   private defaultFilter: any = {};
 
-  private defaultSortColumn: string = 'description';
+  private defaultSortColumn: string = 'id';
   private defaultSortDirection: string = 'desc';
   private defaultPage: number = 0;
   private defaultPageSize: number = 10;

@@ -14,7 +14,7 @@ export class CivilStatusService {
   private apiEndpoint = `${environment.apiUrl}estado_civil`;
   private defaultFilter: any = {};
 
-  private defaultSortColumn: string = 'description';
+  private defaultSortColumn: string = 'id';
   private defaultSortDirection: string = 'desc';
   private defaultPage: number = 0;
   private defaultPageSize: number = 10;

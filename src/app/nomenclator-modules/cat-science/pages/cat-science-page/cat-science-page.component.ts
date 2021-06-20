@@ -52,7 +52,7 @@ export class CatSciencePageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getCatScience(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getCatScience(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.catScienceService
       .getCatScience(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,12 +74,12 @@ export class CatSciencePageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
-    this.getCatScience(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getCatScience(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getCatScience(filters, 'fecha', 'desc');
+    this.getCatScience(filters, 'id', 'desc');
   }
 
   createCatScience() {

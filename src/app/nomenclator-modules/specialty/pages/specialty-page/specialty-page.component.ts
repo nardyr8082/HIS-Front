@@ -52,7 +52,7 @@ export class SpecialtyPageComponent implements OnInit {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getSpecialtys(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getSpecialtys(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.genderService
       .getSpecialties(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,12 +74,12 @@ export class SpecialtyPageComponent implements OnInit {
   }
 
   onChangePage(page: PageEvent) {
-    this.getSpecialtys(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getSpecialtys(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getSpecialtys(filters, 'fecha', 'desc');
+    this.getSpecialtys(filters, 'id', 'desc');
   }
 
   createSpecialty() {

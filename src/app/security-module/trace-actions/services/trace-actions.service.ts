@@ -15,7 +15,7 @@ export class TracerActionsService {
   private apiEndpoint = `${environment.apiUrl}traza`;
   private defaultFilter: any = {};
 
-  private defaultSortColumn: string = 'fecha';
+  private defaultSortColumn: string = 'id';
 
   private defaultSortDirection: string = 'desc';
 

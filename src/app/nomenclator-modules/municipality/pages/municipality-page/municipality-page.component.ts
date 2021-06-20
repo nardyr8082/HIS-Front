@@ -52,7 +52,7 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getMunicipalities(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getMunicipalities(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.municipalityService
       .getMunicipalities(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,12 +74,12 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
-    this.getMunicipalities(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getMunicipalities(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getMunicipalities(filters, 'fecha', 'desc');
+    this.getMunicipalities(filters, 'id', 'desc');
   }
 
   createMunicipality() {

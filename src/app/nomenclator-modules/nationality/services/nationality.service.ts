@@ -15,7 +15,7 @@ export class NationalityService {
   private apiEndpoint = `${environment.apiUrl}nacionalidad`;
   private defaultFilter: any = {};
 
-  private defaultSortColumn: string = 'descripcion';
+  private defaultSortColumn: string = 'id';
 
   private defaultSortDirection: string = 'desc';
 

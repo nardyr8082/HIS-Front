@@ -15,7 +15,7 @@ export class MunicipalityService {
   private apiEndpoint = `${environment.apiUrl}municipio`;
   private defaultFilter: any = {};
 
-  private defaultSortColumn: string = 'nombre';
+  private defaultSortColumn: string = 'id';
 
   private defaultSortDirection: string = 'desc';
 

@@ -15,7 +15,7 @@ export class CatScienceService {
   private apiEndpoint = `${environment.apiUrl}categoria_cientifica`;
   private defaultFilter: any = {};
 
-  private defaultSortColumn: string = 'descripcion';
+  private defaultSortColumn: string = 'id';
 
   private defaultSortDirection: string = 'desc';
 

@@ -52,7 +52,7 @@ export class DocTypeIdPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getDocTypeId(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getDocTypeId(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.docTypeIdService
       .getDocTypeId(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,12 +74,12 @@ export class DocTypeIdPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
-    this.getDocTypeId(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getDocTypeId(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getDocTypeId(filters, 'fecha', 'desc');
+    this.getDocTypeId(filters, 'id', 'desc');
   }
 
   createdocTypeId() {

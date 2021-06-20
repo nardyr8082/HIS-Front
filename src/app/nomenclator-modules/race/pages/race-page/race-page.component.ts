@@ -52,7 +52,7 @@ export class RacePageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getRace(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getRace(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.raceService
       .getRace(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,12 +74,12 @@ export class RacePageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
-    this.getRace(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getRace(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getRace(filters, 'fecha', 'desc');
+    this.getRace(filters, 'id', 'desc');
   }
 
   createRace() {

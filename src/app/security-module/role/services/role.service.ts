@@ -14,7 +14,7 @@ export class RoleService {
   private apiEndpoint = `${environment.apiUrl}auth/grupo`;
   private defaultFilter: any = {};
 
-  private defaultSortColumn: string = 'fecha';
+  private defaultSortColumn: string = 'id';
 
   private defaultSortDirection: string = 'desc';
 

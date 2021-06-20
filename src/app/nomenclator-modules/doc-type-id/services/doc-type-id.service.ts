@@ -16,7 +16,7 @@ export class DocTypeIdService {
   private apiEndpoint = `${environment.apiUrl}tipo_documento_id`;
   private defaultFilter: any = {};
 
-  private defaultSortColumn: string = 'descripcion';
+  private defaultSortColumn: string = 'id';
 
   private defaultSortDirection: string = 'desc';
 

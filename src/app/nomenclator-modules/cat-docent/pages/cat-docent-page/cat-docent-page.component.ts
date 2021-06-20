@@ -54,7 +54,7 @@ export class CatDocentPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getCatDocent(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getCatDocent(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.catDocentService
       .getCatDocent(filters, sortColumn, sortDirection, page, pageSize)
@@ -75,12 +75,12 @@ export class CatDocentPageComponent implements OnInit, OnDestroy {
   }
 
     onChangePage(page: PageEvent) {
-    this.getCatDocent(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getCatDocent(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getCatDocent(filters, 'fecha', 'desc');
+    this.getCatDocent(filters, 'id', 'desc');
   }
 
   createCatDocent() {

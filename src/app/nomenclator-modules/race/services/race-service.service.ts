@@ -12,7 +12,7 @@ export class RaceService {
   private apiEndpoint = `${environment.apiUrl}raza`;
   private defaultFilter: any = {};
 
-  private defaultSortColumn: string = 'descripcion';
+  private defaultSortColumn: string = 'id';
 
   private defaultSortDirection: string = 'desc';
 

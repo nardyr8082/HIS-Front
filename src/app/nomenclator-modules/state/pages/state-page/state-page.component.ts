@@ -52,7 +52,7 @@ export class StatePageComponent implements OnInit {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getStates(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getStates(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.stateService
       .getStates(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,12 +74,12 @@ export class StatePageComponent implements OnInit {
   }
 
   onChangePage(page: PageEvent) {
-    this.getStates(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getStates(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getStates(filters, 'fecha', 'desc');
+    this.getStates(filters, 'id', 'desc');
   }
 
   createState() {

@@ -1,40 +1,40 @@
-import { RoleService } from './../../services/role.service';
-import { ROLE_TABLE_CONFIGURATION } from './../../models/role-table-configuration';
-import { Permission, Role } from './../../models/role.model';
-import { Component, OnInit } from '@angular/core';
+import { OrgLevelService } from './../../services/org-level.service';
+import { ORG_LEVEL_TABLE_CONFIGURATION } from './../../models/org-level-table-configuration';
+import { OrgLevel } from './../../models/org-level.model';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { of, Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { ApiResponse, DEFAULT_PAGE_SIZE } from 'src/app/core/models/api-response.model';
-import { RoleFormComponent } from '../../components/role-form/role-form.component';
+import { OrgLevelFormComponent } from '../../components/org-level-form/org-level-form.component';
 import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
 
 @Component({
-  selector: 'app-role-page',
-  templateUrl: './role-page.component.html',
-  styleUrls: ['./role-page.component.scss'],
+  selector: 'app-org-level-page',
+  templateUrl: './org-level-page.component.html',
+  styleUrls: ['./org-level-page.component.scss'],
 })
-export class RolePageComponent implements OnInit {
-  roles: Role[];
+export class OrgLevelPageComponent implements OnInit, OnDestroy {
+  roles: OrgLevel[];
   dataCount = 0;
-  configuration = ROLE_TABLE_CONFIGURATION;
+  configuration = ORG_LEVEL_TABLE_CONFIGURATION;
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
 
   rowActionButtons = [
     {
-      tooltipText: 'Editar Grupo',
+      tooltipText: 'Editar Nivel Organizacional',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.openEditForm(item),
     },
     {
-      tooltipText: 'Eliminar Grupo',
+      tooltipText: 'Eliminar Nivel Organizacional',
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
@@ -42,25 +42,24 @@ export class RolePageComponent implements OnInit {
     },
   ];
 
-  constructor(private roleService: RoleService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(private orgLevelService: OrgLevelService, private toastService: ToastrService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.getRoles();
+    this.getOrgLevel();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getRoles(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getOrgLevel(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
-    const sub = this.roleService
-      .getRoles(filters, sortColumn, sortDirection, page, pageSize)
+    const sub = this.orgLevelService
+      .getOrgLevel(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
-        map((response: ApiResponse<Role>) => {
+        map((response: ApiResponse<OrgLevel>) => {
           this.roles = response.results.map((response) => {
-            const permissions_string = this.getPermissionsString(response.permissions);
-            return { ...response, permissions_string: permissions_string };
+            return { ...response };
           });
           this.dataCount = response.count;
           this.loading = false;
@@ -76,52 +75,43 @@ export class RolePageComponent implements OnInit {
     this.subscriptions.push(sub);
   }
 
-  getPermissionsString(permissions: Permission[]) {
-    let permissions_string = '';
-    permissions.forEach((permission) => {
-      permissions_string = permissions_string.concat(`${permission.name}, `);
-    });
-    // To remove the last blank space and comma
-    return permissions_string.substring(0, permissions_string.length - 2);
-  }
-
   onChangePage(page: PageEvent) {
-    this.getRoles(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getOrgLevel(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getRoles(filters, 'id', 'desc');
+    this.getOrgLevel(filters, 'id', 'desc');
   }
 
-  createRole() {
-    let dialogRef: MatDialogRef<RoleFormComponent, any>;
+  createOrgLevel() {
+    let dialogRef: MatDialogRef<OrgLevelFormComponent, any>;
 
-    dialogRef = this.dialog.open(RoleFormComponent, {
+    dialogRef = this.dialog.open(OrgLevelFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
       maxWidth: '500px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',
       data: {
-        role: null,
+        orgLevel: null,
       },
     });
 
-    const modalComponentRef = dialogRef.componentInstance as RoleFormComponent;
+    const modalComponentRef = dialogRef.componentInstance as OrgLevelFormComponent;
 
     const sub = modalComponentRef.create
       .pipe(
-        switchMap((role: Role) =>
-          this.roleService.createRole(role).pipe(
+        switchMap((orgLevel: OrgLevel) =>
+          this.orgLevelService.createOrgLevel(orgLevel).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al crear el grupo. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al crear el nivel organizacional. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getRoles();
-                this.toastService.success('El grupo fue creada correctamente.', 'Felicidades');
+                this.getOrgLevel();
+                this.toastService.success('El nivel organizacional fue creada correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -133,9 +123,9 @@ export class RolePageComponent implements OnInit {
   }
 
   openEditForm(item) {
-    let dialogRef: MatDialogRef<RoleFormComponent, any>;
+    let dialogRef: MatDialogRef<OrgLevelFormComponent, any>;
 
-    dialogRef = this.dialog.open(RoleFormComponent, {
+    dialogRef = this.dialog.open(OrgLevelFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
       maxWidth: '500px',
       minWidth: '150px',
@@ -145,20 +135,20 @@ export class RolePageComponent implements OnInit {
         role: item,
       },
     });
-    const modalComponentRef = dialogRef.componentInstance as RoleFormComponent;
+    const modalComponentRef = dialogRef.componentInstance as OrgLevelFormComponent;
 
     const sub = modalComponentRef.edit
       .pipe(
-        switchMap((role: Role) =>
-          this.roleService.editRole({ ...role, id: item.id }).pipe(
+        switchMap((orgLevel: OrgLevel) =>
+          this.orgLevelService.editRole({ ...orgLevel, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el grupo. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar el nivel organizacinal. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getRoles();
-                this.toastService.success('El grupo fue modificado correctamente.', 'Felicidades');
+                this.getOrgLevel();
+                this.toastService.success('El nivel organizacional fue modificado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -169,27 +159,27 @@ export class RolePageComponent implements OnInit {
     this.subscriptions.push(sub);
   }
 
-  deleteRole(item) {
+  deleteOrgLevel(item) {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el grupo: ${item.name}`;
+    modalComponentRef.text = `Está seguro que desea eliminar el nivel organizacional: ${item.name}`;
 
     const sub = modalComponentRef.accept
       .pipe(
         filter((accept) => accept),
         switchMap(() =>
-          this.roleService.deleteRole(item.id).pipe(
+          this.orgLevelService.deleteOrgLevel(item.id).pipe(
             map(() => item),
             catchError(() => {
-              this.toastService.error('Hubo un error al eliminar el grupo. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al eliminar el nivel organizacional. Por favor, inténtelo de nuevo más tarde.', 'Error');
               modalRef.close();
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getRoles();
-                this.toastService.success('El grupo fue eliminado correctamente.', 'Felicidades');
+                this.toastService.success('El nivel organizacional fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),
@@ -203,6 +193,6 @@ export class RolePageComponent implements OnInit {
   }
 
   onChangeSort(sort: Sort) {
-    this.getRoles(this.filters, sort.active, sort.direction);
+    this.getOrgLevel(this.filters, sort.active, sort.direction);
   }
 }

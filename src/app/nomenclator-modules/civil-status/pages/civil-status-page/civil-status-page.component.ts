@@ -53,7 +53,7 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getCivilStatus(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getCivilStatus(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.civilStatusService
       .getCivilStatus(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,12 +74,12 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
   }
 
     onChangePage(page: PageEvent) {
-    this.getCivilStatus(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getCivilStatus(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getCivilStatus(filters, 'fecha', 'desc');
+    this.getCivilStatus(filters, 'id', 'desc');
   }
 
   createCivilStatus() {

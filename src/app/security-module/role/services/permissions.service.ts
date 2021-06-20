@@ -14,7 +14,7 @@ export class PermissionService {
   private apiEndpoint = `${environment.apiUrl}auth/permiso/`;
   private defaultFilter: any = {};
 
-  private defaultSortColumn: string = 'name';
+  private defaultSortColumn: string = 'id';
 
   private defaultSortDirection: string = 'desc';
 

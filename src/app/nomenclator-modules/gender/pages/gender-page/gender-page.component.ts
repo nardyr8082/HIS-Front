@@ -52,7 +52,7 @@ export class GenderPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getGenders(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getGenders(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.genderService
       .getGenders(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,12 +74,12 @@ export class GenderPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
-    this.getGenders(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getGenders(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getGenders(filters, 'fecha', 'desc');
+    this.getGenders(filters, 'id', 'desc');
   }
 
   createGender() {
