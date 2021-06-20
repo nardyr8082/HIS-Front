@@ -29,19 +29,19 @@ export class RoleFormComponent implements OnInit, OnDestroy {
     this.subscriptions;
   }
 
-  getPermissions() {
-    const sub = this.permissionService
-      .getAllPermissions()
-      .pipe(
-        map((response: ApiResponse<Permission>) => {
-          console.log(response);
-          this.permissions = response.results;
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
+  // getPermissions() {
+  //   const sub = this.permissionService
+  //     .getAllPermissions()
+  //     .pipe(
+  //       map((response: ApiResponse<Permission>) => {
+  //         console.log(response);
+  //         this.permissions = response.results;
+  //       }),
+  //     )
+  //     .subscribe();
+  //
+  //   this.subscriptions.push(sub);
+  // }
 
   buildForm() {
     const rolesIds = this.data.role ? this.data.role.permissions.map((r) => r.id) : [];

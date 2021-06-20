@@ -8,7 +8,7 @@
       <mat-error *ngIf="this.roleForm.controls['name'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Permissions</mat-label>
+      <mat-label>Permisos</mat-label>
       <mat-select *ngIf="permissions" formControlName="permissions" multiple>
         <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
       </mat-select>
