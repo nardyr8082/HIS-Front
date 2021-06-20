@@ -41,7 +41,7 @@ export class NavigationService {
         {
           displayName: 'Puesto de Trabajo',
           iconName: ['store'],
-          route: 'test',
+          route: 'work-station',
           material: true,
           display: true,
         },
