@@ -59,7 +59,7 @@ export class HealthUnitPageComponent implements OnInit {
       .pipe(
         map((response: ApiResponse<HealthUnit>) => {
           this.healthUnits = response.results.map((response) => {
-            const levels_string = response.nivel.nombre;
+            const levels_string = response.nivel.name;
             return { ...response, levels_string: levels_string };
           });
           this.dataCount = response.count;
@@ -68,20 +68,11 @@ export class HealthUnitPageComponent implements OnInit {
         catchError(() => {
           this.toastService.error('Hubo un error al obtener los datos. Por favor, inténtelo de nuevo más tarde.', 'Error');
           this.loading = false;
-          return null;
+          return of(null);
         }),
       )
       .subscribe();
     this.subscriptions.push(sub);
-  }
-
-  getLevelsString(levels: Nivel[]) {
-    let levels_string = '';
-    levels.forEach((level) => {
-      levels_string = levels_string.concat(`${level.nombre}, `);
-    });
-    // To remove the last blank space and comma
-    return levels_string.substring(0, levels_string.length - 2);
   }
 
   onChangePage(page: PageEvent) {
