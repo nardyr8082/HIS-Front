@@ -15,7 +15,7 @@ import { Sort } from '@angular/material/sort';
 @Component({
   selector: 'app-health-unit-page',
   templateUrl: './health-unit-page.component.html',
-  styleUrls: ['./health-unit-page.component.scss']
+  styleUrls: ['./health-unit-page.component.scss'],
 })
 export class HealthUnitPageComponent implements OnInit {
   healthUnits: HealthUnit[];

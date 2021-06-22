@@ -6,7 +6,6 @@ import { HealthUnitPageComponent } from './pages/health-unit-page/health-unit-pa
 
 import { HealthUnitRoutingModule } from './health-unit-routing.module';
 
-
 @NgModule({
   declarations: [HealthUnitFormComponent, HealthUnitPageComponent],
   imports: [
@@ -15,4 +14,4 @@ import { HealthUnitRoutingModule } from './health-unit-routing.module';
     SharedModule
   ]
 })
-export class HealthUnitModule { }
+export class HealthUnitModule {}

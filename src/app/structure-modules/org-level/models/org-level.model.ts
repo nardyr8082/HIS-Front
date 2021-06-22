@@ -3,4 +3,3 @@ export interface OrgLevel {
   nombre?: string;
   nivel_padre?: string;
 }
-

@@ -34,7 +34,7 @@ export class NavigationService {
         {
           displayName: 'Departamento',
           iconName: ['apartment'],
-          route: 'backend/about-us/about',
+          route: 'office',
           material: true,
           display: true,
         },

@@ -10,6 +10,7 @@
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Nivel Organizacional Padre</mat-label>
       <mat-select *ngIf="orgLevelList" formControlName="nivel_padre">
+        <mat-option value="">Seleccionar...</mat-option>
         <mat-option *ngFor="let np of orgLevelList" [value]="np.id">{{ np.nombre }}</mat-option>
       </mat-select>
     </mat-form-field>
