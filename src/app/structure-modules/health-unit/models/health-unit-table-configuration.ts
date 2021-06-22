@@ -3,7 +3,7 @@ import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model
 export const HEALTH_UNIT_TABLE_CONFIGURATION = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
   displayedColumns: ['name', 'editable', 'permissions_string'],
-  columnsName: ['Nombre', 'Editable', 'Permisos'],
+  columnsName: ['Nombre', 'Nivel', 'Direccion'],
   tableFilters: [
     {
       name: 'name',
@@ -11,14 +11,14 @@ export const HEALTH_UNIT_TABLE_CONFIGURATION = {
       title: 'Descripción',
     },
     {
-      name: 'editable',
+      name: 'direccion',
       type: 'text',
-      title: 'Editable',
+      title: 'Direccion',
     },
     {
-      name: 'permissions',
+      name: 'nivel',
       type: 'text',
-      title: 'Permisos',
+      title: 'Nivel',
     },
   ],
 };

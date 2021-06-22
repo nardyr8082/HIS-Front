@@ -1,11 +1,11 @@
 export interface HealthUnit {
     id: number,
-    nivel?: Nivel,
+    nivel?: Array<Nivel>,
     nombre: string,
     direccion: string
 }
 
 export interface Nivel {
     id: number,
-    name: string
+    nombre: string
 }

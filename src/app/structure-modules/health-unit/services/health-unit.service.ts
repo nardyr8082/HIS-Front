@@ -22,7 +22,7 @@ export class HealthUnitService {
 
   constructor(private http: HttpClient) { }
 
-  getHealthUnit(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<HealthUnit>> {
+  getHealthUnits(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<HealthUnit>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -31,6 +31,8 @@ export class HealthUnitService {
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
     console.log(this.apiEndpoint + queryParams);
+    console.log(`getting data`);
+    console.log(this.http.get<ApiResponse<HealthUnit>>(this.apiEndpoint + queryParams));
     return this.http.get<ApiResponse<HealthUnit>>(this.apiEndpoint + queryParams);
   }
 
