@@ -60,7 +60,7 @@ export class HealthUnitPageComponent implements OnInit {
       .pipe(
         map((response: ApiResponse<HealthUnit>) => {
           this.healthUnits = response.results.map((response) => {
-            const levels_string = this.getLevelsString(response.nivel);
+            const levels_string = response.nivel.nombre;
             return { ...response, levels_string: levels_string };
           });
           this.dataCount = response.count;

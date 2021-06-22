@@ -1,6 +1,6 @@
 export interface HealthUnit {
     id: number,
-    nivel?: Array<Nivel>,
+    nivel?: Nivel,
     nombre: string,
     direccion: string
 }
