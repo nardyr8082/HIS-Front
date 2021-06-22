@@ -4,15 +4,7 @@
       <mat-card-header>
         <div mat-card-avatar class="header-image"></div>
         <mat-card-title>Usuarios</mat-card-title>
-        <mat-card-subtitle>14.5K</mat-card-subtitle>
-      </mat-card-header>
-      <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
-    </mat-card>
-    <mat-card class="card">
-      <mat-card-header>
-        <div mat-card-avatar class="header-image"></div>
-        <mat-card-title>Departamentos</mat-card-title>
-        <mat-card-subtitle>571</mat-card-subtitle>
+        <mat-card-subtitle>{{data.usersCount}}</mat-card-subtitle>
       </mat-card-header>
       <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
     </mat-card>
@@ -20,7 +12,15 @@
       <mat-card-header>
         <div mat-card-avatar class="header-image"></div>
         <mat-card-title>Pacientes</mat-card-title>
-        <mat-card-subtitle>14.5K</mat-card-subtitle>
+        <mat-card-subtitle>{{data.pacientCount}}</mat-card-subtitle>
+      </mat-card-header>
+      <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
+    </mat-card>
+    <mat-card class="card">
+      <mat-card-header>
+        <div mat-card-avatar class="header-image"></div>
+        <mat-card-title>Niveles Organizacional</mat-card-title>
+        <mat-card-subtitle>{{data.orgLevelCount}}</mat-card-subtitle>
       </mat-card-header>
       <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
     </mat-card>
@@ -28,7 +28,15 @@
       <mat-card-header>
         <div mat-card-avatar class="header-image"></div>
         <mat-card-title>Unidades de Salud</mat-card-title>
-        <mat-card-subtitle>14.5K</mat-card-subtitle>
+        <mat-card-subtitle>{{data.healthUnitCount}}</mat-card-subtitle>
+      </mat-card-header>
+      <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
+    </mat-card>
+    <mat-card class="card">
+      <mat-card-header>
+        <div mat-card-avatar class="header-image"></div>
+        <mat-card-title>Departamentos</mat-card-title>
+        <mat-card-subtitle>{{data.officeCount}}</mat-card-subtitle>
       </mat-card-header>
       <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
     </mat-card>
@@ -36,17 +44,10 @@
       <mat-card-header>
         <div mat-card-avatar class="header-image"></div>
         <mat-card-title>Puesto de trabajo</mat-card-title>
-        <mat-card-subtitle>1.5K</mat-card-subtitle>
+        <mat-card-subtitle>{{data.workStationCount}}</mat-card-subtitle>
       </mat-card-header>
       <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
     </mat-card>
-    <mat-card class="card">
-      <mat-card-header>
-        <div mat-card-avatar class="header-image"></div>
-        <mat-card-title>Trabajadores</mat-card-title>
-        <mat-card-subtitle>1.5K</mat-card-subtitle>
-      </mat-card-header>
-      <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
-    </mat-card>
+
   </div>
 </div>
