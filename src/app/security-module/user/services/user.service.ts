@@ -74,7 +74,7 @@ export class UserService {
   }
 
   editUser(data: User): Observable<User> {
-    return this.http.put<User>(`${this.apiEndpoint}/${data.id}/`, data);
+    return this.http.patch<User>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
   deleteUser(id: number): Observable<any> {

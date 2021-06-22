@@ -1,6 +1,4 @@
 import { PersonService } from './../../../../shared/services/person.service';
-import { AddressService } from './../../../../shared/services/address.service';
-import { ContactService } from './../../../../shared/services/contact.service';
 import { DocTypeIdService } from './../../../../nomenclator-modules/doc-type-id/services/doc-type-id.service';
 import { NationalityService } from './../../../../nomenclator-modules/nationality/services/nationality.service';
 import { Specialty } from './../../../../nomenclator-modules/specialty/models/specialty';
@@ -14,12 +12,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { catchError, map } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, forkJoin } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { CatDocentService } from 'src/app/nomenclator-modules/cat-docent/services/cat-docent.service';
 import { CatScienceService } from 'src/app/nomenclator-modules/cat-science/services/cat-science.service';
 import { Role } from 'src/app/security-module/role/models/role.model';
+import { Person } from 'src/app/shared/models/Person.model';
+import { observable } from 'rxjs';
 
 @Component({
   selector: 'app-user-item',
@@ -28,6 +28,7 @@ import { Role } from 'src/app/security-module/role/models/role.model';
 })
 export class UserItemComponent implements OnInit, OnDestroy {
   user: User;
+  person: Person;
   userId;
 
   roles: Role[];
@@ -36,8 +37,6 @@ export class UserItemComponent implements OnInit, OnDestroy {
   specialties: Specialty[];
   docTypes: any[];
   nationalities: any[];
-  contacts: any[];
-  addresses: any[];
 
   subscriptions: Subscription[] = [];
 
@@ -51,8 +50,6 @@ export class UserItemComponent implements OnInit, OnDestroy {
     private specialtyService: SpecialtyService,
     private nationalityService: NationalityService,
     private docTypeIdService: DocTypeIdService,
-    private contactService: ContactService,
-    private addressesService: AddressService,
     private personService: PersonService,
     private router: Router,
   ) {
@@ -72,8 +69,6 @@ export class UserItemComponent implements OnInit, OnDestroy {
     this.getSpecialties();
     this.getNationalities();
     this.getDocTypeIds();
-    this.getContacts();
-    this.getAddresses();
   }
 
   ngOnDestroy() {
@@ -86,6 +81,24 @@ export class UserItemComponent implements OnInit, OnDestroy {
       .pipe(
         map((response: User) => {
           this.user = response;
+          this.getPerson(this.user.persona);
+        }),
+        catchError(() => {
+          this.toastService.error('Hubo un error al obtener el usuario. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          return of(null);
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getPerson(personId: number) {
+    const sub = this.personService
+      .getPersonById(personId)
+      .pipe(
+        map((response: Person) => {
+          this.person = response;
         }),
         catchError(() => {
           this.toastService.error('Hubo un error al obtener el usuario. Por favor, inténtelo de nuevo más tarde.', 'Error');
@@ -197,40 +210,6 @@ export class UserItemComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  getContacts() {
-    const sub = this.contactService
-      .getContacts({}, 'id', 'asc', 1, 10000)
-      .pipe(
-        map((response: ApiResponse<any>) => {
-          this.contacts = response.results;
-        }),
-        catchError(() => {
-          this.toastService.error('Hubo un error al obtener los contactos. Por favor, inténtelo de nuevo más tarde.', 'Error');
-          return of(null);
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-
-  getAddresses() {
-    const sub = this.addressesService
-      .getAddresses({}, 'id', 'asc', 1, 10000)
-      .pipe(
-        map((response: ApiResponse<any>) => {
-          this.addresses = response.results;
-        }),
-        catchError(() => {
-          this.toastService.error('Hubo un error al obtener las direcciones. Por favor, inténtelo de nuevo más tarde.', 'Error');
-          return of(null);
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-
   onCreate(item) {
     this.createPerson(item);
   }
@@ -240,7 +219,6 @@ export class UserItemComponent implements OnInit, OnDestroy {
       .createPerson(item.person)
       .pipe(
         map((response) => {
-          console.log('Response', response);
           this.createUser(item.user, response.id);
         }),
         catchError(() => {
@@ -251,6 +229,32 @@ export class UserItemComponent implements OnInit, OnDestroy {
       .subscribe();
 
     this.subscriptions.push(sub);
+  }
+
+  editPerson(person) {
+    person.id = this.person.id;
+    return this.personService.editPerson(person).pipe(
+      catchError(() => {
+        this.toastService.error('Hubo un error editando la Persona. Por favor, inténtelo de nuevo más tarde.');
+        return of(null);
+      }),
+    );
+    //   .subscribe();
+
+    // this.subscriptions.push(sub);
+  }
+
+  editUser(user) {
+    user.id = this.user.id;
+    return this.userService.editUser(user).pipe(
+      catchError(() => {
+        this.toastService.error('Hubo un error editando el usuario. Por favor, inténtelo de nuevo más tarde.');
+        return of(null);
+      }),
+    );
+    //   .subscribe();
+
+    // this.subscriptions.push(sub);
   }
 
   createUser(user, personId) {
@@ -273,5 +277,18 @@ export class UserItemComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  onEdit(item) {}
+  onEdit(item) {
+    const editPerson: Observable<any> = this.editPerson(item.person);
+    const editUser: Observable<any> = this.editUser(item.user);
+    const observables: Observable<any>[] = [editPerson, editUser];
+    forkJoin(observables).pipe(
+      map(() => {
+        this.toastService.success('El usuario ha sido editado correctamente.', 'Felicidades');
+      }),
+      catchError((error) => {
+        this.toastService.error('Hubo un error editando el final del usuario. Por favor, inténtelo de nuevo más tarde.');
+        return of(error);
+      }),
+    );
+  }
 }
