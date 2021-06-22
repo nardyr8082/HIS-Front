@@ -1,14 +1,13 @@
 <app-user-form
-  *ngIf="roles && catDoncents && catSciences && specialties && docTypes && nationalities && contacts && addresses"
+  *ngIf="roles && catDoncents && catSciences && specialties && docTypes && nationalities && person"
   [user]="user"
+  [person]="person"
   [roles]="roles"
   [catDoncents]="catDoncents"
   [catSciences]="catSciences"
   [specialties]="specialties"
   [docTypes]="docTypes"
   [nationalities]="nationalities"
-  [contacts]="contacts"
-  [addresses]="addresses"
   (create)="onCreate($event)"
   (edit)="onEdit($event)"
 >

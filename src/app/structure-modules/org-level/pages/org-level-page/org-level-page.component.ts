@@ -1,7 +1,7 @@
 import { OrgLevelService } from './../../services/org-level.service';
 import { ORG_LEVEL_TABLE_CONFIGURATION } from './../../models/org-level-table-configuration';
 import { OrgLevel } from './../../models/org-level.model';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { of, Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';

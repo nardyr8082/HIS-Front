@@ -1,3 +1,4 @@
+import { Person } from './../models/Person.model';
 import { environment } from '../../../environments/environment';
 import { ApiResponse } from '../../core/models/api-response.model';
 
@@ -74,10 +75,14 @@ export class PersonService {
   }
 
   editPerson(data): Observable<any> {
-    return this.http.put<any>(`${this.apiEndpoint}/${data.id}/`, data);
+    return this.http.patch<any>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
   deletePerson(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
+  }
+
+  getPersonById(id: number): Observable<Person> {
+    return this.http.get<any>(`${this.apiEndpoint}/${id}/`);
   }
 }
