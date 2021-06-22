@@ -27,7 +27,7 @@ export class NavigationService {
         {
           displayName: 'Unidad de Salud',
           iconName: ['local_hospital'],
-          route: 'backend/about-us/about',
+          route: 'health-unit',
           material: true,
           display: true,
         },
@@ -41,7 +41,7 @@ export class NavigationService {
         {
           displayName: 'Puesto de Trabajo',
           iconName: ['store'],
-          route: 'test',
+          route: 'work-station',
           material: true,
           display: true,
         },
