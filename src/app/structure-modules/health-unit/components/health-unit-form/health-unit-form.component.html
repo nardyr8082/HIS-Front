@@ -4,21 +4,21 @@
   <form *ngIf="healthUnitForm" [formGroup]="healthUnitForm">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Nombre:</mat-label>
-      <input matInput formControlName="name" />
-      <mat-error *ngIf="this.healthUnitForm.controls['name'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong></mat-error>
+      <input matInput formControlName="nombre" />
+      <mat-error *ngIf="this.healthUnitForm.controls['nombre'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong></mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Nivel</mat-label>
-      <mat-select *ngIf="levels" formControlName="level">
+      <mat-select *ngIf="levels" formControlName="nivel">
         <mat-option *ngFor="let level of levels" [value]="level.id">{{ level.nombre }}</mat-option>
       </mat-select>
-      <mat-error *ngIf="this.healthUnitForm.controls['level'].invalid">Seleccione al menos un nivel</mat-error>
+      <mat-error *ngIf="this.healthUnitForm.controls['nivel'].invalid">Seleccione al menos un nivel</mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Direccion:</mat-label>
-      <input matInput formControlName="name" multiple />
+      <input matInput formControlName="direccion" />
       <mat-error *ngIf="this.healthUnitForm.controls['direccion'].invalid"> {{ 'La direccion es' }} <strong>requerida</strong></mat-error>
     </mat-form-field>
   </form>

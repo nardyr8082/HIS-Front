@@ -26,7 +26,6 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.getLevels();
     this.buildForm();
-    console.log(`data: ${this.data}`)
   }
 
    ngOnDestroy() {
@@ -38,7 +37,6 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
       .getAllLevels()
       .pipe(
         map((response: ApiResponse<Nivel>) => {
-          console.log(response);
           this.levels = response.results;
         }),
       )
@@ -47,17 +45,17 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    const rolesIds = this.data.healthUnit ? this.data.healthUnit.levels.map((r) => r.id) : [];
-    console.log(`RolesID: ${rolesIds}`);
+    const levelsId = this.data.healthUnit ? this.data.healthUnit.levels_string : null;
     this.healthUnitForm = new FormGroup({
-      name: new FormControl(this.data.healthUnit ? this.data.healthUnit.name : '', Validators.required),
+      nombre: new FormControl(this.data.healthUnit ? this.data.healthUnit.nombre : '', Validators.required),
+      nivel: new FormControl(levelsId, Validators.required),
       direccion: new FormControl(this.data.healthUnit ? this.data.healthUnit.direccion : false),
-      level: new FormControl(rolesIds, Validators.required),
     });
   }
 
   onSubmit(data) {
     this.data.healthUnit ? this.edit.emit(data) : this.create.emit(data);
+    console.log(this.healthUnitForm.value);
     this.dialogRef.close();
   }
 
