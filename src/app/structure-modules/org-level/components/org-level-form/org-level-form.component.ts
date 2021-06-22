@@ -24,7 +24,6 @@ export class OrgLevelFormComponent implements OnInit, OnDestroy {
   constructor(public orgLevelService: OrgLevelService, public dialogRef: MatDialogRef<OrgLevelFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
-    this.getOrgLevel();
     console.log(this.data);
     this.data.orgLevel ? this.getOtherOrgLevel(this.data.orgLevel.id) : this.getOrgLevel();
     this.buildForm();

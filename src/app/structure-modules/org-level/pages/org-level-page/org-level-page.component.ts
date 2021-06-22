@@ -57,7 +57,7 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
     const sub = this.orgLevelService
       .getOrgLevel(null, filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
-        map((response: ApiResponse<OrgLevel>) => {
+        map((response: ApiResponse<any>) => {
           this.orgLevel = response.results.map((response) => {
             const nivel_padre = response.nivel_padre ? response.nivel_padre.name : '';
             const nivel_padre_id = response.nivel_padre ? response.nivel_padre.id : '';
