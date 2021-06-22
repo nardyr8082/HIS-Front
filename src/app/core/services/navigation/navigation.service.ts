@@ -33,7 +33,7 @@ export class NavigationService {
         },
         {
           displayName: 'Departamento',
-          iconName: ['apartment'],
+          iconName: ['location_city'],
           route: 'office',
           material: true,
           display: true,
@@ -147,7 +147,7 @@ export class NavigationService {
         },
         {
           displayName: 'Roles',
-          iconName: ['manage_accounts'],
+          iconName: ['assignment_ind'],
           route: 'roles',
           material: true,
           display: true,
@@ -161,7 +161,7 @@ export class NavigationService {
         },
         {
           displayName: 'Historial de acciones',
-          iconName: ['offline_bolt'],
+          iconName: ['list_alt'],
           route: 'trace-actions',
           material: true,
           display: true,
