@@ -30,6 +30,11 @@ const routes: Routes = [
         loadChildren: () => import('../app/error/error.module').then((m) => m.ErrorModule),
       },
       {
+        path: 'org-level',
+        loadChildren: () => import('./structure-modules/org-level/org-level.module').then((m) => m.OrgLevelModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'trace-actions',
         loadChildren: () => import('./security-module/trace-actions/trace-actions.module').then((m) => m.TraceActionsModule),
         canActivate: [BackendGuard],

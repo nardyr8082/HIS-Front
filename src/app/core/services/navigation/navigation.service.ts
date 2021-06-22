@@ -20,7 +20,7 @@ export class NavigationService {
         {
           displayName: 'Nivel Organizacional',
           iconName: ['account_balance'],
-          route: 'backend/about-us/about',
+          route: 'org-level',
           material: true,
           display: true,
         },

@@ -18,7 +18,7 @@ import { Sort } from '@angular/material/sort';
   styleUrls: ['./org-level-page.component.scss'],
 })
 export class OrgLevelPageComponent implements OnInit, OnDestroy {
-  roles: OrgLevel[];
+  orgLevel: OrgLevel[];
   dataCount = 0;
   configuration = ORG_LEVEL_TABLE_CONFIGURATION;
   subscriptions: Subscription[] = [];
@@ -38,7 +38,7 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
-      callback: (item) => this.deleteRole(item),
+      callback: (item) => this.deleteOrgLevel(item),
     },
   ];
 
@@ -55,11 +55,13 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
   getOrgLevel(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.orgLevelService
-      .getOrgLevel(filters, sortColumn, sortDirection, page, pageSize)
+      .getOrgLevel(null, filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<OrgLevel>) => {
-          this.roles = response.results.map((response) => {
-            return { ...response };
+          this.orgLevel = response.results.map((response) => {
+            const nivel_padre = response.nivel_padre ? response.nivel_padre.name : '';
+            const nivel_padre_id = response.nivel_padre ? response.nivel_padre.id : '';
+            return { ...response, nivel_padre: nivel_padre, nivel_padre_id: nivel_padre_id };
           });
           this.dataCount = response.count;
           this.loading = false;
@@ -132,7 +134,7 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
       maxHeight: '100vh',
       width: '100%',
       data: {
-        role: item,
+        orgLevel: item,
       },
     });
     const modalComponentRef = dialogRef.componentInstance as OrgLevelFormComponent;
@@ -140,9 +142,9 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
     const sub = modalComponentRef.edit
       .pipe(
         switchMap((orgLevel: OrgLevel) =>
-          this.orgLevelService.editRole({ ...orgLevel, id: item.id }).pipe(
+          this.orgLevelService.editOrgLevel({ ...orgLevel, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el nivel organizacinal. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar el nivel organizacional. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
@@ -163,7 +165,7 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el nivel organizacional: ${item.name}`;
+    modalComponentRef.text = `Está seguro que desea eliminar el nivel organizacional: ${item.nombre}`;
 
     const sub = modalComponentRef.accept
       .pipe(
@@ -178,7 +180,7 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getRoles();
+                this.getOrgLevel();
                 this.toastService.success('El nivel organizacional fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }

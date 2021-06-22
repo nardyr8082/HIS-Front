@@ -5,23 +5,28 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/core/models/api-response.model';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
+import {OrgLevelService} from '../../services/org-level.service';
+import {OrgLevel} from '../../models/org-level.model';
 
 @Component({
-  selector: 'app-rol-form',
-  templateUrl: './role-form.component.html',
-  styleUrls: ['./role-form.component.scss'],
+  selector: 'app-org-level-form',
+  templateUrl: './org-level-form.component.html',
+  styleUrls: ['./org-level-form.component.scss'],
 })
-export class RoleFormComponent implements OnInit, OnDestroy {
+export class OrgLevelFormComponent implements OnInit, OnDestroy {
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
-  roleForm: FormGroup;
+  orgLevelForm: FormGroup;
+  orgLevelList: any = [];
   subscriptions: Subscription[] = [];
 
-  constructor(public dialogRef: MatDialogRef<RoleFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(public orgLevelService: OrgLevelService, public dialogRef: MatDialogRef<OrgLevelFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
-    this.getPermissions();
+    this.getOrgLevel();
+    console.log(this.data);
+    this.data.orgLevel ? this.getOtherOrgLevel(this.data.orgLevel.id) : this.getOrgLevel();
     this.buildForm();
   }
 
@@ -29,31 +34,44 @@ export class RoleFormComponent implements OnInit, OnDestroy {
     this.subscriptions;
   }
 
-  // getPermissions() {
-  //   const sub = this.permissionService
-  //     .getAllPermissions()
-  //     .pipe(
-  //       map((response: ApiResponse<Permission>) => {
-  //         console.log(response);
-  //         this.permissions = response.results;
-  //       }),
-  //     )
-  //     .subscribe();
-  //
-  //   this.subscriptions.push(sub);
-  // }
+  getOtherOrgLevel(exclude: number) {
+    const sub = this.orgLevelService
+      .getOrgLevel(exclude, null, 'id', 'desc', 1, 1000)
+      .pipe(
+        map((response: ApiResponse<OrgLevel>) => {
+          console.log(response);
+          this.orgLevelList = response.results;
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getOrgLevel() {
+    const sub = this.orgLevelService
+      .getOrgLevel(null, null, 'id', 'desc', 1, 1000)
+      .pipe(
+        map((response: ApiResponse<OrgLevel>) => {
+          console.log(response);
+          this.orgLevelList = response.results;
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
 
   buildForm() {
-    const rolesIds = this.data.role ? this.data.role.permissions.map((r) => r.id) : [];
-    this.roleForm = new FormGroup({
-      name: new FormControl(this.data.role ? this.data.role.name : '', Validators.required),
-      editable: new FormControl(this.data.role ? this.data.role.editable : false),
-      permissions: new FormControl(rolesIds, Validators.required),
+    console.log(this.data)
+    this.orgLevelForm = new FormGroup({
+      nombre: new FormControl(this.data.orgLevel ? this.data.orgLevel.nombre : '', Validators.required),
+      nivel_padre: new FormControl(this.data.orgLevel ? this.data.orgLevel.nivel_padre_id : ''),
     });
   }
 
   onSubmit(data) {
-    this.data.role ? this.edit.emit(data) : this.create.emit(data);
+    this.data.orgLevel ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();
   }
 

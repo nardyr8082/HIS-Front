@@ -1,28 +1,24 @@
 <div class="form">
-  <h4>{{ data.role ? 'Editar Grupo' : 'Crear Grupo' }}</h4>
+  <h4>{{ data.orgLevel ? 'Editar Nivel Organizacional' : 'Crear Nivel Organizacional' }}</h4>
   <mat-divider class="my-4"></mat-divider>
-  <form *ngIf="roleForm" [formGroup]="roleForm">
+  <form *ngIf="orgLevelForm" [formGroup]="orgLevelForm">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Nombre:</mat-label>
-      <input matInput formControlName="name" />
-      <mat-error *ngIf="this.roleForm.controls['name'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+      <input matInput formControlName="nombre" />
+      <mat-error *ngIf="this.orgLevelForm.controls['nombre'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Permissions</mat-label>
-      <mat-select *ngIf="permissions" formControlName="permissions" multiple>
-        <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
+      <mat-label>Nivel Organizacional Padre</mat-label>
+      <mat-select *ngIf="orgLevelList" formControlName="nivel_padre">
+        <mat-option *ngFor="let np of orgLevelList" [value]="np.id">{{ np.nombre }}</mat-option>
       </mat-select>
-      <mat-error *ngIf="this.roleForm.controls['permissions'].invalid">Seleccione al menos un permiso</mat-error>
     </mat-form-field>
-    <div class="w-100">
-      <mat-checkbox formControlName="editable">Editable</mat-checkbox>
-    </div>
   </form>
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
-    <button (click)="onSubmit(roleForm.value)" [disabled]="!roleForm.valid" mat-raised-button color="primary" class="button">
-      {{ data.role ? 'Editar' : 'Crear' }}
+    <button (click)="onSubmit(orgLevelForm.value)" [disabled]="!orgLevelForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.orgLevel ? 'Editar' : 'Crear' }}
     </button>
   </div>
 </div>
