@@ -53,7 +53,6 @@ export class HealthUnitPageComponent implements OnInit {
   }
 
   getHealthUnits(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
-    console.log('this shit isnt working');
     this.loading = true;
     const sub = this.healthUnitService
       .getHealthUnits(filters, sortColumn, sortDirection, page, pageSize)
