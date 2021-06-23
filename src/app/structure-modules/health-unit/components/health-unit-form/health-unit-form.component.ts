@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Inject, OnDestroy, Output  } from '@angular/core';
+import { Component, OnInit, EventEmitter, Inject, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -11,7 +11,7 @@ import { LevelService } from '../../services/level.service';
 @Component({
   selector: 'app-health-unit-form',
   templateUrl: './health-unit-form.component.html',
-  styleUrls: ['./health-unit-form.component.scss']
+  styleUrls: ['./health-unit-form.component.scss'],
 })
 export class HealthUnitFormComponent implements OnInit, OnDestroy {
   @Output() create: EventEmitter<any> = new EventEmitter();
@@ -21,14 +21,14 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   levels: Nivel[];
 
-  constructor(private levelService: LevelService, public dialogRef: MatDialogRef<HealthUnitFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private levelService: LevelService, public dialogRef: MatDialogRef<HealthUnitFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.getLevels();
     this.buildForm();
   }
 
-   ngOnDestroy() {
+  ngOnDestroy() {
     this.subscriptions;
   }
 
@@ -55,12 +55,10 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
 
   onSubmit(data) {
     this.data.healthUnit ? this.edit.emit(data) : this.create.emit(data);
-    console.log(this.healthUnitForm.value);
     this.dialogRef.close();
   }
 
   onCancel() {
     this.dialogRef.close();
   }
-
 }

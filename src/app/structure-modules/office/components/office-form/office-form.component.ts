@@ -5,8 +5,8 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/core/models/api-response.model';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
-import {OfficeService} from '../../services/office.service';
-import {Office} from '../../models/office.model';
+import { OfficeService } from '../../services/office.service';
+import { Office } from '../../models/office.model';
 
 @Component({
   selector: 'app-office-form',
@@ -36,7 +36,6 @@ export class OfficeFormComponent implements OnInit, OnDestroy {
       .getHealthUnit()
       .pipe(
         map((response: ApiResponse<Office>) => {
-          console.log(response);
           this.healthUList = response.results;
         }),
       )
@@ -46,7 +45,6 @@ export class OfficeFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    console.log(this.data);
     this.officeForm = new FormGroup({
       nombre: new FormControl(this.data.office ? this.data.office.nombre : '', Validators.required),
       unidad: new FormControl(this.data.office ? this.data.office.unidad_id : '', Validators.required),

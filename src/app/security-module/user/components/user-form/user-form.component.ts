@@ -1,5 +1,5 @@
 import { Person } from './../../../../shared/models/Person.model';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Role } from 'src/app/security-module/role/models/role.model';
 import { Specialty } from 'src/app/nomenclator-modules/specialty/models/specialty';
@@ -10,13 +10,15 @@ import { CatScience } from 'src/app/nomenclator-modules/cat-science/models/cat-s
 import { User } from 'src/app/security-module/user/models/user.model';
 import { createPasswordStrengthValidator } from 'src/app/security-module/user/validators/PasswordStrength.validator';
 import { passwordOnlyNumberValidator } from 'src/app/security-module/user/validators/PasswordOnlyNumber.validators';
+import * as moment from 'moment';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
 })
-export class UserFormComponent implements OnInit {
+export class UserFormComponent implements OnInit, OnChanges {
   @Input() user: User;
   @Input() person: Person;
   @Input() roles: Role[];
@@ -46,6 +48,10 @@ export class UserFormComponent implements OnInit {
     this.buildForms();
   }
 
+  ngOnChanges() {
+    this.buildForms();
+  }
+
   buildForms() {
     this.userFormGroup = this._formBuilder.group({
       is_superuser: [this.user ? this.user.is_superuser : false, Validators.required],
@@ -59,18 +65,31 @@ export class UserFormComponent implements OnInit {
       categ_docente: [this.user ? this.user.categ_docente : []],
       categ_cientifica: [this.user ? this.user.categ_cientifica : []],
       especialidad: [this.user ? this.user.especialidad : []],
-      password: ['', this.user ? [Validators.required, Validators.minLength(8), createPasswordStrengthValidator(), passwordOnlyNumberValidator()] : []],
-      confirm_password: ['', this.user ? [Validators.required] : ''],
+      // password: ['', !this.user ? [Validators.required, Validators.minLength(8), createPasswordStrengthValidator(), passwordOnlyNumberValidator()] : null],
+      // confirm_password: ['', !this.user ? [Validators.required] : null],
     });
+
+    if (this.user) {
+      this.userFormGroup.setControl('change_password', new FormControl(false));
+    } else {
+      this.userFormGroup.setControl(
+        'password',
+        new FormControl('', [Validators.required, Validators.minLength(8), createPasswordStrengthValidator(), passwordOnlyNumberValidator()]),
+      );
+      this.userFormGroup.setControl('confirm_password', new FormControl('', [Validators.required]));
+    }
+
+    // const fechaNacimiento = this.person ? moment(this.person.fecha_nacimiento, 'yyyy-MM-DD') : '';
+    const fechaNacimiento = this.person ? this.getFormattedDate(this.person.fecha_nacimiento) : '';
 
     this.personFormGroup = this._formBuilder.group({
       nro_identificacion: [this.person ? this.person.nro_identificacion : '', Validators.required],
-      fecha_nacimiento: [this.person ? this.person.fecha_nacimiento : '', Validators.required],
+      fecha_nacimiento: [fechaNacimiento, Validators.required],
       profesion: [this.person ? this.person.profesion : ''],
       ocupacion: [this.person ? this.person.ocupacion : ''],
-      sexo: [this.person ? this.person.sexo : 1, Validators.required],
+      sexo: [this.person ? this.person.sexo : '1', Validators.required],
       tipo_doc: [this.person ? this.person.tipo_doc.id : [], Validators.required],
-      nacionalidad: [this.person ? this.person.nacionalidad.name : []],
+      nacionalidad: [this.person ? this.person.nacionalidad?.name : null],
       municipio: [this.person ? this.person.municipio : ''],
       estado: [this.person ? this.person.estado : ''],
       pais: [this.person ? this.person.pais : ''],
@@ -84,8 +103,13 @@ export class UserFormComponent implements OnInit {
       telefono_casa: [this.person ? this.person.telefono_casa : ''],
       telefono_trabajo: [this.person ? this.person.telefono_trabajo : ''],
       telefono_movil: [this.person ? this.person.telefono_movil : ''],
-      foto: [''],
+      // foto: [''],
     });
+  }
+
+  getFormattedDate(apiDate: string) {
+    const arrayDate = apiDate.split('-');
+    return new Date(parseInt(arrayDate[0]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[2]));
   }
 
   get firstNameControl() {
@@ -114,6 +138,19 @@ export class UserFormComponent implements OnInit {
 
   get passwordDontMatch() {
     return this.confirmPasswordControl?.dirty && this.passwordControl?.value != this.confirmPasswordControl?.value;
+  }
+
+  changePasswordControl(event: MatCheckboxChange) {
+    if (event.checked) {
+      this.userFormGroup.setControl(
+        'password',
+        new FormControl('', [Validators.required, Validators.minLength(8), createPasswordStrengthValidator(), passwordOnlyNumberValidator()]),
+      );
+      this.userFormGroup.setControl('confirm_password', new FormControl('', [Validators.required]));
+    } else {
+      this.userFormGroup.removeControl('password');
+      this.userFormGroup.removeControl('confirm_password');
+    }
   }
 
   openFileBrowser(event) {
@@ -148,7 +185,6 @@ export class UserFormComponent implements OnInit {
   }
 
   formatedDate(date: string) {
-    console.log('date', date);
     const dateArray = date.split('/');
     return `${dateArray[2]}-${dateArray[0]}-${dateArray[1]}`;
   }
@@ -181,9 +217,8 @@ export class UserFormComponent implements OnInit {
     if (this.userFormGroup.valid && this.personFormGroup.valid) {
       const user = this.userFormGroup.value;
       const person = this.personFormGroup.value;
-      // const dateFormat = this.formatedDate(person.fecha_nacimiento);
-      const dateFormat = person.fecha_nacimiento as Date;
-      person.fecha_nacimiento = `${dateFormat.getFullYear()}-${dateFormat.getMonth() + 1}-${dateFormat.getDate()}`;
+      const dateFormat = moment(person.fecha_nacimiento);
+      person.fecha_nacimiento = dateFormat.format('yyyy-MM-DD');
       this.user && this.person ? this.edit.emit({ user, person }) : this.create.emit({ user, person });
     } else {
       this.toastService.error('Por favor revise los formularios, quedan campos requeridos sin llenar', 'Error');

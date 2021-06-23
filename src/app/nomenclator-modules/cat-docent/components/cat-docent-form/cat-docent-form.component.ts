@@ -6,25 +6,24 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-cat-docent-form',
   templateUrl: './cat-docent-form.component.html',
-  styleUrls: ['./cat-docent-form.component.scss']
+  styleUrls: ['./cat-docent-form.component.scss'],
 })
 export class CatDocentFormComponent implements OnInit {
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
-  
+
   catDocentForm: FormGroup;
 
-    constructor(public dialogRef: MatDialogRef<CatDocentFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(public dialogRef: MatDialogRef<CatDocentFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.buildForm();
-    console.log(this.catDocentForm.controls)
   }
 
   buildForm() {
     this.catDocentForm = new FormGroup({
       descripcion: new FormControl(this.data.catDocent ? this.data.catDocent.descripcion : '', Validators.required),
-    })
+    });
   }
 
   onSubmit(data) {

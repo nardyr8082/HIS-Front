@@ -33,7 +33,6 @@ export class TracerActionsService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    console.log(this.apiEndpoint + queryParams);
     return this.http.get<ApiResponse<TraceAction>>(this.apiEndpoint + queryParams);
   }
 

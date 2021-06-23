@@ -6,7 +6,7 @@ import { ApiResponse } from '../../../core/models/api-response.model';
 import { HealthUnit } from '../models/health-unit.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HealthUnitService {
   private apiEndpoint = `${environment.apiUrl}unidad_de_salud`;
@@ -20,7 +20,7 @@ export class HealthUnitService {
 
   private defaultPageSize: number = 10;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getHealthUnits(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<HealthUnit>> {
     this.defaultFilter = filter;
@@ -30,9 +30,6 @@ export class HealthUnitService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    console.log(this.apiEndpoint + queryParams);
-    console.log(`getting data`);
-    console.log(this.http.get<ApiResponse<HealthUnit>>(this.apiEndpoint + queryParams));
     return this.http.get<ApiResponse<HealthUnit>>(this.apiEndpoint + queryParams);
   }
 
@@ -81,5 +78,4 @@ export class HealthUnitService {
   deleteHealthUnit(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
-  
 }

@@ -63,7 +63,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     localStorage.removeItem('access-token');
     this.authService.login(username, password).subscribe(
       (result: any) => {
-        console.log(result);
         this.loggedInUserService.updateUserToken(result);
         this.showToastr.showSucces('Usted está logeado en nuestro sistema.', 'Felicidades!', 5500);
         this.inLoading = false;

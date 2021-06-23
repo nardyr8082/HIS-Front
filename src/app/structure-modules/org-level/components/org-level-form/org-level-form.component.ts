@@ -5,8 +5,8 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/core/models/api-response.model';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
-import {OrgLevelService} from '../../services/org-level.service';
-import {OrgLevel} from '../../models/org-level.model';
+import { OrgLevelService } from '../../services/org-level.service';
+import { OrgLevel } from '../../models/org-level.model';
 
 @Component({
   selector: 'app-org-level-form',
@@ -24,7 +24,6 @@ export class OrgLevelFormComponent implements OnInit, OnDestroy {
   constructor(public orgLevelService: OrgLevelService, public dialogRef: MatDialogRef<OrgLevelFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
-    console.log(this.data);
     this.data.orgLevel ? this.getOtherOrgLevel(this.data.orgLevel.id) : this.getOrgLevel();
     this.buildForm();
   }
@@ -38,7 +37,6 @@ export class OrgLevelFormComponent implements OnInit, OnDestroy {
       .getOrgLevel(exclude, null, 'id', 'desc', 1, 1000)
       .pipe(
         map((response: ApiResponse<OrgLevel>) => {
-          console.log(response);
           this.orgLevelList = response.results;
         }),
       )
@@ -52,7 +50,6 @@ export class OrgLevelFormComponent implements OnInit, OnDestroy {
       .getOrgLevel(null, null, 'id', 'desc', 1, 1000)
       .pipe(
         map((response: ApiResponse<OrgLevel>) => {
-          console.log(response);
           this.orgLevelList = response.results;
         }),
       )
@@ -62,7 +59,6 @@ export class OrgLevelFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    console.log(this.data)
     this.orgLevelForm = new FormGroup({
       nombre: new FormControl(this.data.orgLevel ? this.data.orgLevel.nombre : '', Validators.required),
       nivel_padre: new FormControl(this.data.orgLevel ? this.data.orgLevel.nivel_padre_id : ''),

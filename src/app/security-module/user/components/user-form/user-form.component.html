@@ -115,7 +115,13 @@
         <div class="my-3 d-flex justify-content-center align-items-center">
           <h4>Seguridad</h4>
         </div>
-        <div class="row">
+        <!-- is_superuser -->
+        <div *ngIf="user" class="col-12 mb-3">
+          <div class="w-100">
+            <mat-checkbox (change)="changePasswordControl($event)" formControlName="change_password">Cambiar Contraseña.</mat-checkbox>
+          </div>
+        </div>
+        <div class="row" *ngIf="!user || userFormGroup.controls['change_password']?.value">
           <div class="col-lg-6 col-md-12">
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Contraseña</mat-label>
@@ -423,16 +429,16 @@
               <mat-icon class="mx-2" *ngIf="userFormGroup.controls['is_superuser'].value" aria-hidden="false">done</mat-icon>
               <mat-icon class="mx-2" *ngIf="!userFormGroup.controls['is_superuser'].value" aria-hidden="false">close</mat-icon>
             </div>
-            <p class="my-2">
+            <p class="my-2" *ngIf="userFormGroup.controls['groups']?.value">
               Grupo: <b>{{ roles[userFormGroup.controls['groups']?.value]?.name }}</b>
             </p>
-            <p class="my-2">
+            <p class="my-2" *ngIf="userFormGroup.controls['categ_docente']?.value">
               Categoría Docente: <b>{{ catDoncents[userFormGroup.controls['categ_docente']?.value]?.descripcion }}</b>
             </p>
-            <p class="my-2">
+            <p class="my-2" *ngIf="userFormGroup.controls['categ_cientifica']?.value">
               Categoría Científica: <b>{{ catSciences[userFormGroup.controls['categ_cientifica']?.value]?.descripcion }}</b>
             </p>
-            <p class="my-2">
+            <p class="my-2" *ngIf="userFormGroup.controls['especialidad']?.value">
               Especialidad: <b>{{ specialties[userFormGroup.controls['especialidad']?.value]?.descripcion }}</b>
             </p>
           </div>
@@ -448,10 +454,10 @@
               Fecha de Nacimiento: <b>{{ personFormGroup.controls['fecha_nacimiento'].value | date: 'dd/MM/yyyy' }}</b>
             </p>
             <p class="my-2">
-              Correo: <b>{{ personFormGroup.controls['profesion'].value }}</b>
+              Profesión: <b>{{ personFormGroup.controls['profesion'].value }}</b>
             </p>
             <p class="my-2">
-              Correo: <b>{{ personFormGroup.controls['ocupacion'].value }}</b>
+              Ocupación: <b>{{ personFormGroup.controls['ocupacion'].value }}</b>
             </p>
             <div class="d-flex my-2">
               <p>Sexo:</p>
@@ -459,25 +465,55 @@
               <mat-icon class="mx-2" *ngIf="personFormGroup.controls['sexo'].value == 2" aria-hidden="false">male</mat-icon>
             </div>
 
-            <p class="my-2">
+            <p class="my-2" *ngIf="personFormGroup.controls['tipo_doc'].value">
               Tipo de Documento: <b>{{ docTypes[personFormGroup.controls['tipo_doc']?.value]?.descripcion }}</b>
             </p>
-            <!-- <p class="my-2">
-              Dirección: <b>{{ addresses[personFormGroup.controls['direccion']?.value]?.direccion }}</b>
-            </p> -->
-            <p class="my-2">
+
+            <p class="my-2" *ngIf="personFormGroup.controls['nacionalidad'].value">
               Categoría Científica: <b>{{ nationalities[personFormGroup.controls['nacionalidad']?.value]?.descripcion }}</b>
             </p>
-            <!-- <p class="my-2">
-              Contacto: <b>{{ contacts[personFormGroup.controls['contacto']?.value]?.email }}</b>
-            </p> -->
+
+            <p class="my-2" *ngIf="personFormGroup.controls['direccion'].value">
+              Dirección: <b>{{ personFormGroup.controls['direccion'].value }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="personFormGroup.controls['numero'].value">
+              Número: <b>{{ personFormGroup.controls['numero'].value }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="personFormGroup.controls['cod_postal'].value">
+              Código Postal: <b>{{ personFormGroup.controls['cod_postal'].value }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="personFormGroup.controls['nombre_madre'].value">
+              Nombre de la madre: <b>{{ personFormGroup.controls['nombre_madre'].value }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="personFormGroup.controls['nombre_padre'].value">
+              Nombre del Padre: <b>{{ personFormGroup.controls['nombre_padre'].value }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="personFormGroup.controls['telefono_emergencia'].value">
+              Télefono de emergencia: <b>{{ personFormGroup.controls['telefono_emergencia'].value }}</b>
+            </p>
+            <p class="my-2" *ngIf="personFormGroup.controls['telefono_casa'].value">
+              Télefono de la Casa: <b>{{ personFormGroup.controls['telefono_casa'].value }}</b>
+            </p>
+            <p class="my-2" *ngIf="personFormGroup.controls['telefono_trabajo'].value">
+              Télefono del Trabajo: <b>{{ personFormGroup.controls['telefono_trabajo'].value }}</b>
+            </p>
+            <p class="my-2" *ngIf="personFormGroup.controls['telefono_movil'].value">
+              Télefono Movil: <b>{{ personFormGroup.controls['telefono_movil'].value }}</b>
+            </p>
           </div>
         </div>
       </div>
 
       <div class="d-flex justify-content-between mt-3">
         <button color="primary" mat-raised-button matStepperPrevious>Atras</button>
-        <button color="primary" mat-raised-button mat-button (click)="sendData()">{{ user && person ? 'Editar' : 'Crear' }}</button>
+        <button color="primary" mat-raised-button mat-button [disabled]="!userFormGroup.valid || !personFormGroup.valid" (click)="sendData()">
+          {{ user && person ? 'Editar' : 'Crear' }}
+        </button>
       </div>
     </mat-step>
   </mat-horizontal-stepper>

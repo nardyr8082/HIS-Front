@@ -259,7 +259,6 @@ export class UserItemComponent implements OnInit, OnDestroy {
 
   createUser(user, personId) {
     const fullUser = { ...user, persona: personId };
-    console.log('Full user', fullUser);
     const sub = this.userService
       .createUser(fullUser)
       .pipe(
@@ -281,14 +280,17 @@ export class UserItemComponent implements OnInit, OnDestroy {
     const editPerson: Observable<any> = this.editPerson(item.person);
     const editUser: Observable<any> = this.editUser(item.user);
     const observables: Observable<any>[] = [editPerson, editUser];
-    forkJoin(observables).pipe(
-      map(() => {
-        this.toastService.success('El usuario ha sido editado correctamente.', 'Felicidades');
-      }),
-      catchError((error) => {
-        this.toastService.error('Hubo un error editando el final del usuario. Por favor, inténtelo de nuevo más tarde.');
-        return of(error);
-      }),
-    );
+    forkJoin(observables)
+      .pipe(
+        map(() => {
+          this.toastService.success('El usuario ha sido editado correctamente.', 'Felicidades');
+          this.router.navigateByUrl('/user');
+        }),
+        catchError((error) => {
+          this.toastService.error('Hubo un error editando el final del usuario. Por favor, inténtelo de nuevo más tarde.');
+          return of(error);
+        }),
+      )
+      .subscribe();
   }
 }
