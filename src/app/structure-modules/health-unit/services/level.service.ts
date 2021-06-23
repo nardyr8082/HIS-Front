@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response.model';
-import { HealthUnit } from '../models/health-unit.model';
+import { Nivel } from './../models/health-unit.model';
+import { environment } from '../../../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class HealthUnitService {
-  private apiEndpoint = `${environment.apiUrl}unidad_de_salud`;
+export class LevelService {
+  private apiEndpoint = `${environment.apiUrl}nivel_organizacional`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -22,7 +22,7 @@ export class HealthUnitService {
 
   constructor(private http: HttpClient) { }
 
-  getHealthUnits(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<HealthUnit>> {
+  getLevels(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Nivel>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -30,10 +30,11 @@ export class HealthUnitService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    console.log(this.apiEndpoint + queryParams);
-    console.log(`getting data`);
-    console.log(this.http.get<ApiResponse<HealthUnit>>(this.apiEndpoint + queryParams));
-    return this.http.get<ApiResponse<HealthUnit>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<Nivel>>(this.apiEndpoint + queryParams);
+  }
+
+  getAllLevels(): Observable<ApiResponse<Nivel>> {
+    return this.http.get<ApiResponse<Nivel>>(this.apiEndpoint);
   }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
@@ -70,16 +71,16 @@ export class HealthUnitService {
     return queryParams;
   }
 
-  createHealthUnit(data: HealthUnit): Observable<HealthUnit> {
+  createLevel(data: Nivel): Observable<Nivel> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editHealthUnit(data: HealthUnit): Observable<HealthUnit> {
-    return this.http.patch<HealthUnit>(`${this.apiEndpoint}/${data.id}/`, data);
+  editLevel(data: Nivel): Observable<Nivel> {
+    return this.http.put<Nivel>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteHealthUnit(id: string): Observable<any> {
+  deleteLevel(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
-  
+
 }

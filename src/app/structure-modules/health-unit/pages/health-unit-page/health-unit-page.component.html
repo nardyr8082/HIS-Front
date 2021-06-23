@@ -1,11 +1,11 @@
 <div class="container mt-3">
   <div class="d-flex justify-content-between align-items-center">
     <h4>Unidad de salud</h4>
-    <!-- <button (click)="createRole()" mat-raised-button color="primary" class="button">Crear Rol</button> -->
+    <button (click)="createHealthUnit()" mat-raised-button color="primary" class="button">Crear Unidad de Salud</button>
   </div>
-  <!-- <app-custom-table
-    *ngIf="roles"
-    [data]="roles"
+  <app-custom-table
+    *ngIf="healthUnits"
+    [data]="healthUnits"
     [dataCount]="dataCount"
     [displayedColumns]="configuration.displayedColumns"
     [columnsName]="configuration.columnsName"
@@ -16,5 +16,5 @@
     (changePage)="onChangePage($event)"
     (changeFilter)="onChangeFilter($event)"
     (changeSort)="onChangeSort($event)"
-  ></app-custom-table> -->
+  ></app-custom-table>
 </div>

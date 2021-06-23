@@ -1,0 +1,32 @@
+<div class="form">
+  <h4>{{ data.healthUnit ? 'Editar Unidad de Salud' : 'Crear Unidad de Salud' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="healthUnitForm" [formGroup]="healthUnitForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Nombre:</mat-label>
+      <input matInput formControlName="nombre" />
+      <mat-error *ngIf="this.healthUnitForm.controls['nombre'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong></mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Nivel</mat-label>
+      <mat-select *ngIf="levels" formControlName="nivel">
+        <mat-option *ngFor="let level of levels" [value]="level.id">{{ level.nombre }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="this.healthUnitForm.controls['nivel'].invalid">Seleccione al menos un nivel</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Direccion:</mat-label>
+      <input matInput formControlName="direccion" />
+      <mat-error *ngIf="this.healthUnitForm.controls['direccion'].invalid"> {{ 'La direccion es' }} <strong>requerida</strong></mat-error>
+    </mat-form-field>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(healthUnitForm.value)" [disabled]="!healthUnitForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.healthUnit ? 'Editar' : 'Crear' }}
+    </button>
+  </div>
+</div>
