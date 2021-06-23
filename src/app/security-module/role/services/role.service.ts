@@ -32,7 +32,6 @@ export class RoleService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    console.log(this.apiEndpoint + queryParams);
     return this.http.get<ApiResponse<Role>>(this.apiEndpoint + queryParams);
   }
 

@@ -11,14 +11,13 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class CatDocentFormComponent implements OnInit {
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
-  
+
   catDocentForm: FormGroup;
 
     constructor(public dialogRef: MatDialogRef<CatDocentFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.buildForm();
-    console.log(this.catDocentForm.controls)
   }
 
   buildForm() {

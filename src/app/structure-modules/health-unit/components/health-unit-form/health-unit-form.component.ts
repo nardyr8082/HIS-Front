@@ -55,7 +55,6 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
 
   onSubmit(data) {
     this.data.healthUnit ? this.edit.emit(data) : this.create.emit(data);
-    console.log(this.healthUnitForm.value);
     this.dialogRef.close();
   }
 

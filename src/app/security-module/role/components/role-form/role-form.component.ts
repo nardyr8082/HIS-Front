@@ -38,7 +38,6 @@ export class RoleFormComponent implements OnInit, OnDestroy {
       .getAllPermissions()
       .pipe(
         map((response: ApiResponse<Permission>) => {
-          console.log(response);
           this.permissions = response.results;
         }),
       )

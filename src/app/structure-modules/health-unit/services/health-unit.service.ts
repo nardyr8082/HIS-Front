@@ -30,9 +30,6 @@ export class HealthUnitService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    console.log(this.apiEndpoint + queryParams);
-    console.log(`getting data`);
-    console.log(this.http.get<ApiResponse<HealthUnit>>(this.apiEndpoint + queryParams));
     return this.http.get<ApiResponse<HealthUnit>>(this.apiEndpoint + queryParams);
   }
 
@@ -81,5 +78,5 @@ export class HealthUnitService {
   deleteHealthUnit(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
-  
+
 }
