@@ -12,6 +12,8 @@ import { createPasswordStrengthValidator } from 'src/app/security-module/user/va
 import { passwordOnlyNumberValidator } from 'src/app/security-module/user/validators/PasswordOnlyNumber.validators';
 import * as moment from 'moment';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Country } from 'src/app/nomenclator-modules/country/models/country.model';
+import { Municipality } from 'src/app/nomenclator-modules/municipality/models/municipality.model';
 
 @Component({
   selector: 'app-user-form',
@@ -27,6 +29,8 @@ export class UserFormComponent implements OnInit, OnChanges {
   @Input() specialties: Specialty[];
   @Input() docTypes: any[];
   @Input() nationalities: any[];
+  @Input() municipalities: Municipality[];
+  @Input() countries: Country[];
 
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
@@ -89,10 +93,10 @@ export class UserFormComponent implements OnInit, OnChanges {
       ocupacion: [this.person ? this.person.ocupacion : ''],
       sexo: [this.person ? this.person.sexo : '1', Validators.required],
       tipo_doc: [this.person ? this.person.tipo_doc.id : [], Validators.required],
-      nacionalidad: [this.person ? this.person.nacionalidad?.name : null],
-      municipio: [this.person ? this.person.municipio : ''],
+      nacionalidad: [this.person ? this.person.nacionalidad?.id : null],
+      municipio: [this.person ? this.person.municipio?.id : ''],
       estado: [this.person ? this.person.estado : ''],
-      pais: [this.person ? this.person.pais : ''],
+      pais: [this.person ? this.person.pais?.id : ''],
       direccion: [this.person ? this.person.direccion : '', Validators.required],
       numero: [this.person ? this.person.numero : ''],
       cod_postal: [this.person ? this.person.cod_postal : ''],

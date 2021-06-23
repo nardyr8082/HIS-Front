@@ -1,8 +1,10 @@
 <app-user-form
-  *ngIf="roles && catDoncents && catSciences && specialties && docTypes && nationalities"
+  *ngIf="roles && catDoncents && catSciences && specialties && docTypes && nationalities && municipalities && countries"
   [user]="user"
   [person]="person"
   [roles]="roles"
+  [municipalities]="municipalities"
+  [countries]="countries"
   [catDoncents]="catDoncents"
   [catSciences]="catSciences"
   [specialties]="specialties"
