@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response.model';
-import { Nivel } from './../models/health-unit.model';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 
@@ -22,7 +21,7 @@ export class LevelService {
 
   constructor(private http: HttpClient) { }
 
-  getLevels(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Nivel>> {
+  getLevels(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<any>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -30,11 +29,11 @@ export class LevelService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<Nivel>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<any>>(this.apiEndpoint + queryParams);
   }
 
-  getAllLevels(): Observable<ApiResponse<Nivel>> {
-    return this.http.get<ApiResponse<Nivel>>(this.apiEndpoint);
+  getAllLevels(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpoint);
   }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
@@ -71,12 +70,12 @@ export class LevelService {
     return queryParams;
   }
 
-  createLevel(data: Nivel): Observable<Nivel> {
+  createLevel(data: any): Observable<any> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editLevel(data: Nivel): Observable<Nivel> {
-    return this.http.put<Nivel>(`${this.apiEndpoint}/${data.id}/`, data);
+  editLevel(data: any): Observable<any> {
+    return this.http.put<any>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
   deleteLevel(id: string): Observable<any> {

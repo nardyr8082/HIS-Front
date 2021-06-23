@@ -34,7 +34,6 @@ export class OrgLevelService {
     this.defaultExclude = exclude;
 
     const queryParams = this.formatQueryParams(exclude, filter, sortColumn, sortDirection, page, pageSize);
-    console.log(this.apiEndpoint + queryParams);
     return this.http.get<ApiResponse<OrgLevel>>(this.apiEndpoint + queryParams);
   }
 

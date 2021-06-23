@@ -6,7 +6,7 @@ import { ApiResponse } from '../../../core/models/api-response.model';
 import { HealthUnit } from '../models/health-unit.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HealthUnitService {
   private apiEndpoint = `${environment.apiUrl}unidad_de_salud`;
@@ -20,7 +20,7 @@ export class HealthUnitService {
 
   private defaultPageSize: number = 10;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getHealthUnits(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<HealthUnit>> {
     this.defaultFilter = filter;
@@ -78,5 +78,4 @@ export class HealthUnitService {
   deleteHealthUnit(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
-
 }

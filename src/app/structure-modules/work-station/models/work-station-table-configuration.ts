@@ -1,24 +1,24 @@
 import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model';
 
-export const ROLE_TABLE_CONFIGURATION = {
+export const WORK_STATION_TABLE_CONFIGURATION = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['rol', 'departamento', 'descripcion'],
-  columnsName: ['Rol', 'Departamento', 'Descripcion'],
+  displayedColumns: ['descripcion', 'rol_text', 'departamento_text'],
+  columnsName: ['Descripción', 'Grupo', 'Departamento'],
   tableFilters: [
     {
-      name: 'role',
+      name: 'descripcion',
       type: 'text',
       title: 'Rol',
     },
     {
-      name: 'departamento',
+      name: 'rol_text',
       type: 'text',
-      title: 'Departamento',
+      title: 'Grupo',
     },
     {
-      name: 'descripcion',
+      name: 'departamento_text',
       type: 'text',
-      title: 'Descripcion',
+      title: 'Departamento',
     },
   ],
 };

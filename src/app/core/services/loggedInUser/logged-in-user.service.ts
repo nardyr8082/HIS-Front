@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { IUser } from '../../classes/user.class';
-import {Observable, Subject} from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { NavigationService } from '../navigation/navigation.service';
-import {CatScience} from '../../../nomenclator-modules/cat-science/models/cat-science.model';
-import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../../environments/environment';
+import { CatScience } from '../../../nomenclator-modules/cat-science/models/cat-science.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -58,20 +58,18 @@ export class LoggedInUserService {
   public refreshToken(): Observable<any> {
     const data = JSON.parse(localStorage.getItem('user'));
     const refresh = data.refresh ? data.refresh : null;
-    const body = {refresh: refresh};
+    const body = { refresh: refresh };
     return this.http.post<any>(`${environment.apiUrl}auth/token/refresh/`, body);
   }
   public setLoggedInUser(user: any) {
     this.loggedInUser = user;
   }
   public updateUserToken(resp: any) {
-    console.log("esta es", resp);
     const dataString = JSON.stringify(resp);
-    console.log(dataString);
     try {
       localStorage.setItem('user', dataString);
     } catch (e) {
-      console.log('aqui esta', e);
+      console.log('Error', e);
     }
     // this.$loggedInUserUpdated.next(dataString);
   }

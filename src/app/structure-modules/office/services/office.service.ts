@@ -33,7 +33,6 @@ export class OfficeService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    console.log(this.apiEndpoint + queryParams);
     return this.http.get<ApiResponse<Office>>(this.apiEndpoint + queryParams);
   }
   getHealthUnit(): Observable<ApiResponse<Office>> {

@@ -33,7 +33,6 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
           this.showToastr.showError(errorMessage, 'Error');
         } else {
           errorMessage = error.error;
-          console.log("aqui estoy", error);
           this.refreshToken(error);
         }
         // console.log('ErrorInterceptorService -> errorMessage', errorMessage);
@@ -43,19 +42,19 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
   }
   refreshToken(error) {
     let refresh = this.loggedInUserService.getRefreshOfUser();
-    console.log('test', refresh);
     if (refresh) {
       if (error.status == 401 && error.statusText === 'Unauthorized') {
-        this.loggedInUserService.refreshToken().subscribe( resp => {
-          console.log('aaaaaaaaa', resp);
-          const access = resp.access;
-          const data = {access: access, refresh: refresh};
-          console.log('data', data);
-          this.loggedInUserService.updateUserToken(data);
-          window.location.reload();
-        }, error1 => {
-          this.processingBackendError(error);
-        });
+        this.loggedInUserService.refreshToken().subscribe(
+          (resp) => {
+            const access = resp.access;
+            const data = { access: access, refresh: refresh };
+            this.loggedInUserService.updateUserToken(data);
+            window.location.reload();
+          },
+          (error1) => {
+            this.processingBackendError(error);
+          },
+        );
       } else {
         this.processingBackendError(error);
       }
@@ -96,9 +95,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
       } else {
         this.router.navigate(['/error/lost-connection']);
       }
-      this.showToastr.showError(
-        `Server response failed, check your connection to the network, or contact the administrators`,
-      );
+      this.showToastr.showError(`Server response failed, check your connection to the network, or contact the administrators`);
     }
   }
   ///////////////////////////////////////////////////////

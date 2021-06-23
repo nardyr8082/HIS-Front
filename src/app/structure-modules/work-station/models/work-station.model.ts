@@ -2,7 +2,7 @@ export interface WorkStation {
   id: number;
   rol: Role;
   departamento: Departament;
-  descripcion?: string;
+  descripcion: string;
 }
 export interface Role {
   id: number;
