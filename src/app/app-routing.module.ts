@@ -35,6 +35,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'office',
+        loadChildren: () => import('./structure-modules/office/office.module').then((m) => m.OfficeModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'trace-actions',
         loadChildren: () => import('./security-module/trace-actions/trace-actions.module').then((m) => m.TraceActionsModule),
         canActivate: [BackendGuard],

@@ -1,5 +1,5 @@
 export interface OrgLevel {
   id: number;
   nombre?: string;
-  nivel_padre?: any;
+  nivel_padre?: string;
 }

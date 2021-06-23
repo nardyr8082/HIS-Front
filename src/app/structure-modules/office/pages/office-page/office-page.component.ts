@@ -1,24 +1,24 @@
-import { OrgLevelService } from './../../services/org-level.service';
-import { ORG_LEVEL_TABLE_CONFIGURATION } from './../../models/org-level-table-configuration';
-import { OrgLevel } from './../../models/org-level.model';
+import { OfficeService } from './../../services/office.service';
+import { ORG_LEVEL_TABLE_CONFIGURATION } from './../../models/office-table-configuration';
+import { Office } from './../../models/office.model';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import { of, Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { ApiResponse, DEFAULT_PAGE_SIZE } from 'src/app/core/models/api-response.model';
-import { OrgLevelFormComponent } from '../../components/org-level-form/org-level-form.component';
+import { OfficeFormComponent } from '../../components/office-form/office-form.component';
 import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
 
 @Component({
-  selector: 'app-org-level-page',
-  templateUrl: './org-level-page.component.html',
-  styleUrls: ['./org-level-page.component.scss'],
+  selector: 'app-office-page',
+  templateUrl: './office-page.component.html',
+  styleUrls: ['./office-page.component.scss'],
 })
-export class OrgLevelPageComponent implements OnInit, OnDestroy {
-  orgLevel: OrgLevel[];
+export class OfficePageComponent implements OnInit, OnDestroy {
+  office: Office[];
   dataCount = 0;
   configuration = ORG_LEVEL_TABLE_CONFIGURATION;
   subscriptions: Subscription[] = [];
@@ -27,41 +27,41 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
 
   rowActionButtons = [
     {
-      tooltipText: 'Editar Nivel Organizacional',
+      tooltipText: 'Editar Unidad de Salud',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.openEditForm(item),
     },
     {
-      tooltipText: 'Eliminar Nivel Organizacional',
+      tooltipText: 'Eliminar Unidad de Salud',
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
-      callback: (item) => this.deleteOrgLevel(item),
+      callback: (item) => this.deleteOffice(item),
     },
   ];
 
-  constructor(private orgLevelService: OrgLevelService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(private officeService: OfficeService, private toastService: ToastrService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.getOrgLevel();
+    this.getOffice();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getOrgLevel(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getOffice(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
-    const sub = this.orgLevelService
-      .getOrgLevel(null, filters, sortColumn, sortDirection, page, pageSize)
+    const sub = this.officeService
+      .getOffice(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
-          this.orgLevel = response.results.map((response) => {
-            const nivel_padre = response.nivel_padre ? response.nivel_padre.name : '';
-            const nivel_padre_id = response.nivel_padre ? response.nivel_padre.id : '';
-            return { ...response, nivel_padre: nivel_padre, nivel_padre_id: nivel_padre_id };
+          this.office = response.results.map((response) => {
+            const unidad = response.unidad ? response.unidad.name : '';
+            const unidad_id = response.unidad ? response.unidad.id : '';
+            return { ...response, unidad: unidad, unidad_id: unidad_id };
           });
           this.dataCount = response.count;
           this.loading = false;
@@ -78,42 +78,42 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
-    this.getOrgLevel(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getOffice(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getOrgLevel(filters, 'id', 'desc');
+    this.getOffice(filters, 'id', 'desc');
   }
 
-  createOrgLevel() {
-    let dialogRef: MatDialogRef<OrgLevelFormComponent, any>;
+  createOffice() {
+    let dialogRef: MatDialogRef<OfficeFormComponent, any>;
 
-    dialogRef = this.dialog.open(OrgLevelFormComponent, {
+    dialogRef = this.dialog.open(OfficeFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
       maxWidth: '500px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',
       data: {
-        orgLevel: null,
+        office: null,
       },
     });
 
-    const modalComponentRef = dialogRef.componentInstance as OrgLevelFormComponent;
+    const modalComponentRef = dialogRef.componentInstance as OfficeFormComponent;
 
     const sub = modalComponentRef.create
       .pipe(
-        switchMap((orgLevel: OrgLevel) =>
-          this.orgLevelService.createOrgLevel(orgLevel).pipe(
+        switchMap((office: Office) =>
+          this.officeService.createOffice(office).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al crear el nivel organizacional. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al crear el departamento. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getOrgLevel();
-                this.toastService.success('El nivel organizacional fue creada correctamente.', 'Felicidades');
+                this.getOffice();
+                this.toastService.success('El departamento fue creada correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -125,32 +125,32 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
   }
 
   openEditForm(item) {
-    let dialogRef: MatDialogRef<OrgLevelFormComponent, any>;
+    let dialogRef: MatDialogRef<OfficeFormComponent, any>;
 
-    dialogRef = this.dialog.open(OrgLevelFormComponent, {
+    dialogRef = this.dialog.open(OfficeFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
       maxWidth: '500px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',
       data: {
-        orgLevel: item,
+        office: item,
       },
     });
-    const modalComponentRef = dialogRef.componentInstance as OrgLevelFormComponent;
+    const modalComponentRef = dialogRef.componentInstance as OfficeFormComponent;
 
     const sub = modalComponentRef.edit
       .pipe(
-        switchMap((orgLevel: OrgLevel) =>
-          this.orgLevelService.editOrgLevel({ ...orgLevel, id: item.id }).pipe(
+        switchMap((office: Office) =>
+          this.officeService.editOffice({ ...office, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el nivel organizacional. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar el departamento. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getOrgLevel();
-                this.toastService.success('El nivel organizacional fue modificado correctamente.', 'Felicidades');
+                this.getOffice();
+                this.toastService.success('El departamento fue modificado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -161,27 +161,27 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  deleteOrgLevel(item) {
+  deleteOffice(item) {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el nivel organizacional: ${item.nombre}`;
+    modalComponentRef.text = `Está seguro que desea eliminar el departamento: ${item.nombre}`;
 
     const sub = modalComponentRef.accept
       .pipe(
         filter((accept) => accept),
         switchMap(() =>
-          this.orgLevelService.deleteOrgLevel(item.id).pipe(
+          this.officeService.deleteOffice(item.id).pipe(
             map(() => item),
             catchError(() => {
-              this.toastService.error('Hubo un error al eliminar el nivel organizacional. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al eliminar el departamento. Por favor, inténtelo de nuevo más tarde.', 'Error');
               modalRef.close();
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getOrgLevel();
-                this.toastService.success('El nivel organizacional fue eliminado correctamente.', 'Felicidades');
+                this.getOffice();
+                this.toastService.success('el departamento fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),
@@ -195,6 +195,6 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
   }
 
   onChangeSort(sort: Sort) {
-    this.getOrgLevel(this.filters, sort.active, sort.direction);
+    this.getOffice(this.filters, sort.active, sort.direction);
   }
 }
