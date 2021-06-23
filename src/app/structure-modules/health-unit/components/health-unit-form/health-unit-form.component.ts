@@ -49,7 +49,7 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
     this.healthUnitForm = new FormGroup({
       nombre: new FormControl(this.data.healthUnit ? this.data.healthUnit.nombre : '', Validators.required),
       nivel: new FormControl(levelsId, Validators.required),
-      direccion: new FormControl(this.data.healthUnit ? this.data.healthUnit.direccion : false),
+      direccion: new FormControl(this.data.healthUnit ? this.data.healthUnit.direccion : ''),
     });
   }
 
