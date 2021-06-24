@@ -8,7 +8,7 @@
       <mat-error *ngIf="this.workStationForm.controls['descripcion'].invalid"> {{ 'La descripción es' }} <strong>requerida</strong> </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Grupo:</mat-label>
+      <mat-label>Rol:</mat-label>
       <mat-select *ngIf="roles" formControlName="rol">
         <mat-option *ngFor="let rol of roles" [value]="rol.id">{{ rol.name }}</mat-option>
       </mat-select>

@@ -13,6 +13,7 @@ import { WorkStation } from '../models/work-station.model';
 export class WorkStationService {
   private apiEndpoint = `${environment.apiUrl}puesto_de_trabajo`;
   private apiDepartamentEndpoint = `${environment.apiUrl}departamento`;
+  private apiGroupEndpoint = `${environment.apiUrl}auth/grupo`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -38,6 +39,16 @@ export class WorkStationService {
 
   getDepartaments() {
     return this.http.get<ApiResponse<any>>(this.apiDepartamentEndpoint);
+  }
+  getRole(id: number = null) {
+    console.log('mi iddddddd', id);
+    let queryParams = '?';
+    if (id && id != null) {
+      queryParams += `pt__id=${id}`;
+    } else {
+      queryParams += `pt__view=true`;
+    }
+    return this.http.get<ApiResponse<any>>(this.apiGroupEndpoint + queryParams);
   }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
@@ -79,7 +90,7 @@ export class WorkStationService {
   }
 
   editWorkStation(data: WorkStation): Observable<WorkStation> {
-    return this.http.patch<WorkStation>(`${this.apiEndpoint}/${data.id}/`, data);
+    return this.http.put<WorkStation>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
   deleteWorkStation(id: string): Observable<any> {

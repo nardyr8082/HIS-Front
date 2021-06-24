@@ -8,7 +8,7 @@ import { WorkStationService } from '../../services/office.service';
 import { Subscription, of } from 'rxjs';
 import { WORK_STATION_TABLE_CONFIGURATION } from './../../models/work-station-table-configuration';
 import { WorkStation } from './../../models/work-station.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -17,7 +17,7 @@ import { PageEvent } from '@angular/material/paginator';
   templateUrl: './work-station-page.component.html',
   styleUrls: ['./work-station-page.component.scss'],
 })
-export class WorkStationPageComponent implements OnInit {
+export class WorkStationPageComponent implements OnInit, OnDestroy {
   workStations: WorkStation[];
   dataCount = 0;
   configuration = WORK_STATION_TABLE_CONFIGURATION;
@@ -59,7 +59,7 @@ export class WorkStationPageComponent implements OnInit {
       .pipe(
         map((response: ApiResponse<WorkStation>) => {
           this.workStations = response.results.map((res) => {
-            return { ...res, rol_text: res.rol?.name, departamento_text: res.departamento?.name };
+            return { ...res, rol_text: res.rol.name, departamento_text: res.departamento.name };
           });
           this.dataCount = response.count;
           this.loading = false;
@@ -140,7 +140,7 @@ export class WorkStationPageComponent implements OnInit {
     const sub = modalComponentRef.edit
       .pipe(
         switchMap((workStation: WorkStation) =>
-          this.workStationService.editWorkStation({ ...workStation, id: item.rol?.id }).pipe(
+          this.workStationService.editWorkStation({ ...workStation, id: item.id }).pipe(
             catchError(() => {
               this.toastService.error('Hubo un error al editar el puesto de trabajo. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
@@ -169,7 +169,7 @@ export class WorkStationPageComponent implements OnInit {
       .pipe(
         filter((accept) => accept),
         switchMap(() =>
-          this.workStationService.deleteWorkStation(item.rol?.id).pipe(
+          this.workStationService.deleteWorkStation(item.id).pipe(
             map(() => item),
             catchError(() => {
               this.toastService.error('Hubo un error al eliminar el puesto de trabajo. Por favor, inténtelo de nuevo más tarde.', 'Error');
