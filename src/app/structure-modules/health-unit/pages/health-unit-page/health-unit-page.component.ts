@@ -42,13 +42,13 @@ export class HealthUnitPageComponent implements OnInit {
     },
   ];
 
-  constructor(private healthUnitService: HealthUnitService, private toastService: ToastrService, public dialog: MatDialog) { }
+  constructor(private healthUnitService: HealthUnitService, private toastService: ToastrService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getHealthUnits();
   }
 
-   ngOnDestroy() {
+  ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
@@ -162,7 +162,7 @@ export class HealthUnitPageComponent implements OnInit {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el rol: ${item.nombre}`;
+    modalComponentRef.text = `Está seguro que desea eliminar la unidad de salud?: ${item.nombre}`;
 
     const sub = modalComponentRef.accept
       .pipe(
