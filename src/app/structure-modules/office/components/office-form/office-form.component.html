@@ -7,12 +7,21 @@
       <input matInput formControlName="nombre" />
       <mat-error *ngIf="this.officeForm.controls['nombre'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Unidad de Salud</mat-label>
-      <mat-select *ngIf="healthUList" formControlName="unidad">
-        <mat-option *ngFor="let np of healthUList" [value]="np.id">{{ np.nombre }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <div class="mb-4">
+      <ng-select
+        appearance="outline"
+        class="custom w-100"
+        placeholder="Unidad de Salud"
+        [items]="healthUList"
+        bindLabel="nombre"
+        bindValue="id"
+        formControlName="unidad"
+      >
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="officeForm.controls['unidad'].errors?.required && officeForm.controls['unidad'].dirty"
+        >El campo unidad de salud es <strong>requerido</strong></small
+      >
+    </div>
   </form>
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
