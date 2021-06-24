@@ -161,7 +161,7 @@ export class CatSciencePageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar la categoría científica: ${item.descripcion}`;
+    modalComponentRef.text = `Está seguro que desea eliminar la categoría científica: ${item.descripcion}?`;
 
     const sub = modalComponentRef.accept
       .pipe(

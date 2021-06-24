@@ -159,7 +159,7 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el estado civil: ${item.descripcion}`;
+    modalComponentRef.text = `Está seguro que desea eliminar el estado civil: ${item.descripcion}?`;
 
     const sub = modalComponentRef.accept
       .pipe(

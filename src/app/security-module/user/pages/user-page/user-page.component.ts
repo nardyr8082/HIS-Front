@@ -94,7 +94,7 @@ export class UserPageComponent implements OnInit {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el usuario: ${item.first_name} ${item.last_name}`;
+    modalComponentRef.text = `Está seguro que desea eliminar el usuario: ${item.first_name} ${item.last_name}?`;
 
     const sub = modalComponentRef.accept
       .pipe(

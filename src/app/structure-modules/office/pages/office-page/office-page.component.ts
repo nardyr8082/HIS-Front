@@ -1,7 +1,7 @@
 import { OfficeService } from './../../services/office.service';
 import { ORG_LEVEL_TABLE_CONFIGURATION } from './../../models/office-table-configuration';
 import { Office } from './../../models/office.model';
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { of, Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -165,7 +165,7 @@ export class OfficePageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el departamento: ${item.nombre}`;
+    modalComponentRef.text = `Está seguro que desea eliminar el departamento: ${item.nombre}?`;
 
     const sub = modalComponentRef.accept
       .pipe(
@@ -181,7 +181,7 @@ export class OfficePageComponent implements OnInit, OnDestroy {
             tap((success) => {
               if (success) {
                 this.getOffice();
-                this.toastService.success('el departamento fue eliminado correctamente.', 'Felicidades');
+                this.toastService.success('El departamento fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),
