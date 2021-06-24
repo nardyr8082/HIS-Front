@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HealthUnitService } from '../../services/health-unit.service';
 import { HEALTH_UNIT_TABLE_CONFIGURATION } from './../../models/health-unit-table-configuration';
-import { HealthUnit, Nivel } from './../../models/health-unit.model';
+import { HealthUnit } from './../../models/health-unit.model';
 import { of, Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -57,10 +57,11 @@ export class HealthUnitPageComponent implements OnInit {
     const sub = this.healthUnitService
       .getHealthUnits(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
-        map((response: ApiResponse<HealthUnit>) => {
+        map((response: ApiResponse<any>) => {
           this.healthUnits = response.results.map((response) => {
-            const levels_string = response.nivel.name;
-            return { ...response, levels_string: levels_string };
+            const nivel = response.nivel ? response.nivel.name : '';
+            const nivel_id = response.nivel ? response.nivel.id : '';
+            return { ...response, nivel: nivel, nivel_id: nivel_id };
           });
           this.dataCount = response.count;
           this.loading = false;

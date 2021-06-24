@@ -35,7 +35,7 @@ export class OfficeFormComponent implements OnInit, OnDestroy {
     const sub = this.officeService
       .getHealthUnit()
       .pipe(
-        map((response: ApiResponse<Office>) => {
+        map((response: ApiResponse<any>) => {
           this.healthUList = response.results;
         }),
       )

@@ -4,7 +4,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/core/models/api-response.model';
-import { Nivel } from '../../models/health-unit.model';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { LevelService } from '../../services/level.service';
 
@@ -19,7 +18,7 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
 
   healthUnitForm: FormGroup;
   subscriptions: Subscription[] = [];
-  levels: Nivel[];
+  levels: any = [];
 
   constructor(private levelService: LevelService, public dialogRef: MatDialogRef<HealthUnitFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
@@ -36,7 +35,7 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
     const sub = this.levelService
       .getAllLevels()
       .pipe(
-        map((response: ApiResponse<Nivel>) => {
+        map((response: ApiResponse<any>) => {
           this.levels = response.results;
         }),
       )
@@ -45,11 +44,10 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    const levelsId = this.data.healthUnit ? this.data.healthUnit.levels_string : null;
     this.healthUnitForm = new FormGroup({
       nombre: new FormControl(this.data.healthUnit ? this.data.healthUnit.nombre : '', Validators.required),
-      nivel: new FormControl(levelsId, Validators.required),
-      direccion: new FormControl(this.data.healthUnit ? this.data.healthUnit.direccion : false),
+      nivel: new FormControl(this.data.healthUnit ? this.data.healthUnit.nivel_id : '', Validators.required),
+      direccion: new FormControl(this.data.healthUnit ? this.data.healthUnit.direccion : ''),
     });
   }
 
