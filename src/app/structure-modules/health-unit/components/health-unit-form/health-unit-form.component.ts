@@ -1,8 +1,8 @@
 import { Component, OnInit, EventEmitter, Inject, OnDestroy, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Subscription, Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/core/models/api-response.model';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { LevelService } from '../../services/level.service';
@@ -18,7 +18,9 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
 
   healthUnitForm: FormGroup;
   subscriptions: Subscription[] = [];
-  levels: any = [];
+  levels: any[] = [];
+  filteredOptions: Array<any>;
+  levelValue = '';
 
   constructor(private levelService: LevelService, public dialogRef: MatDialogRef<HealthUnitFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
@@ -37,6 +39,7 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
       .pipe(
         map((response: ApiResponse<any>) => {
           this.levels = response.results;
+          this.filteredOptions = this.levels;
         }),
       )
       .subscribe();

@@ -8,13 +8,13 @@
       <mat-error *ngIf="this.healthUnitForm.controls['nombre'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong></mat-error>
     </mat-form-field>
 
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Nivel</mat-label>
-      <mat-select *ngIf="levels" formControlName="nivel">
-        <mat-option *ngFor="let level of levels" [value]="level.id">{{ level.nombre }}</mat-option>
-      </mat-select>
-      <mat-error *ngIf="this.healthUnitForm.controls['nivel'].invalid">Seleccione al menos un nivel</mat-error>
-    </mat-form-field>
+    <div class="mb-4">
+      <ng-select appearance="outline" class="custom w-100" placeholder="Nivel" [items]="levels" bindLabel="nombre" bindValue="id" formControlName="nivel">
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="healthUnitForm.controls['nivel'].errors?.required && healthUnitForm.controls['nivel'].dirty"
+        >El nivel es <strong>requerido</strong></small
+      >
+    </div>
 
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Direccion:</mat-label>
