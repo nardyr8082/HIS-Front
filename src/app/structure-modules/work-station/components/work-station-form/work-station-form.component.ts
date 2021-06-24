@@ -24,7 +24,6 @@ export class WorkStationFormComponent implements OnInit {
 
   constructor(
     public workStationService: WorkStationService,
-    private roleService: RoleService,
     public dialogRef: MatDialogRef<WorkStationFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {}
@@ -52,8 +51,8 @@ export class WorkStationFormComponent implements OnInit {
   }
 
   getRoles() {
-    const sub = this.roleService
-      .getRoles({}, 'id', 'asc', 1, 10000)
+    const sub = this.workStationService
+      .getRole(this.data.workStation ? this.data.workStation.rol?.id : null)
       .pipe(
         map((response: ApiResponse<Role>) => {
           this.roles = response.results;

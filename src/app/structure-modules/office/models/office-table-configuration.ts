@@ -11,7 +11,7 @@ export const ORG_LEVEL_TABLE_CONFIGURATION = {
       title: 'Nombre',
     },
     {
-      name: 'unidad',
+      name: 'unidad__nombre',
       type: 'text',
       title: 'Unidad de Salud',
     },
