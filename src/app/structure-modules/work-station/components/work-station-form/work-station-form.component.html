@@ -1,1 +1,31 @@
-<p>work-station-form works!</p>
+<div class="form">
+  <h4>{{ data.workStation ? 'Editar Puesto de Trabajo' : 'Crear Puesto de Trabajo' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="workStationForm && departaments && roles" [formGroup]="workStationForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Descripción:</mat-label>
+      <input matInput formControlName="descripcion" />
+      <mat-error *ngIf="this.workStationForm.controls['descripcion'].invalid"> {{ 'La descripción es' }} <strong>requerida</strong> </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Grupo:</mat-label>
+      <mat-select *ngIf="roles" formControlName="rol">
+        <mat-option *ngFor="let rol of roles" [value]="rol.id">{{ rol.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Departamento:</mat-label>
+      <mat-select *ngIf="departaments" formControlName="departamento">
+        <mat-option *ngFor="let departament of departaments" [value]="departament.id">{{ departament.nombre }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(workStationForm.value)" [disabled]="!workStationForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.workStation ? 'Editar' : 'Crear' }}
+    </button>
+  </div>
+</div>

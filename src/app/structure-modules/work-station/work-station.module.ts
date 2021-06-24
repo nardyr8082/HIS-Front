@@ -8,5 +8,6 @@ import { WorkStationRoutingModule } from './work-station-routing.module';
 @NgModule({
   declarations: [WorkStationFormComponent, WorkStationPageComponent],
   imports: [CommonModule, WorkStationRoutingModule, SharedModule],
+  entryComponents: [WorkStationFormComponent],
 })
 export class WorkStationModule {}

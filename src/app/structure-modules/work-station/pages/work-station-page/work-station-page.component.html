@@ -1,31 +1,11 @@
 <div class="container mt-3">
-  <p>test</p>
-  <!-- <div class="d-flex justify-content-between align-items-center">
-    <h4>Puestos de Trabajo</h4>
-    <hr />
-    <button (click)="createRole()"mat-raised-button color="primary" class="button">Crear Rol</button>
+  <div class="d-flex justify-content-between align-items-center">
+    <h4>Puesto de Trabajo</h4>
+    <button (click)="createWorkStation()" mat-raised-button color="primary" class="button">Crear Puesto de Trabajo</button>
   </div>
-  select form unit and departament
-  <form *ngIf="roleForm" [formGroup]="roleForm">
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Permisos</mat-label>
-      <mat-select *ngIf="permissions" formControlName="permissions" multiple>
-        <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
-      </mat-select>
-      <mat-error *ngIf="this.roleForm.controls['permissions'].invalid">Seleccione al menos un permiso</mat-error>
-    </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Permisos</mat-label>
-      <mat-select *ngIf="permissions" formControlName="permissions" multiple>
-        <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
-      </mat-select>
-      <mat-error *ngIf="this.roleForm.controls['permissions'].invalid">Seleccione al menos un permiso</mat-error>
-    </mat-form-field>
-  </form> -->
-
-  <!-- <app-custom-table
-    *ngIf="roles"
-    [data]="roles"
+  <app-custom-table
+    *ngIf="workStations"
+    [data]="workStations"
     [dataCount]="dataCount"
     [displayedColumns]="configuration.displayedColumns"
     [columnsName]="configuration.columnsName"
@@ -36,5 +16,5 @@
     (changePage)="onChangePage($event)"
     (changeFilter)="onChangeFilter($event)"
     (changeSort)="onChangeSort($event)"
-  ></app-custom-table> -->
+  ></app-custom-table>
 </div>
