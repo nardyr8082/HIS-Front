@@ -198,16 +198,26 @@
             </div>
           </div>
 
-          <!-- Número de identificación -->
+          <!-- Código de identificación -->
           <div class="col-lg-6 col-md-12">
             <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Número de identificación:</mat-label>
+              <mat-label>Código de identificación:</mat-label>
               <input matInput formControlName="nro_identificacion" />
               <mat-error *ngIf="personFormGroup.controls['nro_identificacion'].invalid">
-                {{ 'El número de identificación es' }} <strong>requerido</strong>
+                {{ 'El código de identificación es' }} <strong>requerido</strong>
               </mat-error>
             </mat-form-field>
           </div>
+          <!-- tipo_doc -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Tipo de Documento:</mat-label>
+                <mat-select formControlName="tipo_doc">
+                  <mat-option *ngFor="let doc of docTypes" [value]="doc.id">{{ doc.descripcion }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="personFormGroup.controls['tipo_doc'].invalid">Seleccione un Documento</mat-error>
+              </mat-form-field>
+            </div>
 
           <!-- Fecha de Nacimiento -->
           <div class="col-lg-6 col-md-12">
@@ -255,17 +265,6 @@
         <div class="card p-3">
           <h5>Dirección y Contacto</h5>
           <div class="row" *ngIf="personFormGroup" [formGroup]="personFormGroup">
-            <!-- tipo_doc -->
-            <div class="col-lg-6 col-md-12">
-              <mat-form-field class="w-100" appearance="outline">
-                <mat-label>Tipo de Documento:</mat-label>
-                <mat-select formControlName="tipo_doc">
-                  <mat-option *ngFor="let doc of docTypes" [value]="doc.id">{{ doc.descripcion }}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="personFormGroup.controls['tipo_doc'].invalid">Seleccione un Documento</mat-error>
-              </mat-form-field>
-            </div>
-
             <!-- nacionalidad -->
             <div class="col-lg-6 col-md-12">
               <mat-form-field class="w-100" appearance="outline">
@@ -316,7 +315,7 @@
             <!-- numero -->
             <div class="col-lg-6 col-md-12">
               <mat-form-field class="w-100" appearance="outline">
-                <mat-label>Número:</mat-label>
+                <mat-label>Código:</mat-label>
                 <input matInput formControlName="numero" />
               </mat-form-field>
             </div>
@@ -452,7 +451,7 @@
           <h5>Información Personal y de contacto</h5>
           <div class="card p-3">
             <p class="my-2">
-              Número de Identificación: <b>{{ personFormGroup.controls['nro_identificacion'].value }}</b>
+              Código de Identificación: <b>{{ personFormGroup.controls['nro_identificacion'].value }}</b>
             </p>
             <p class="my-2">
               Fecha de Nacimiento: <b>{{ personFormGroup.controls['fecha_nacimiento'].value | date: 'dd/MM/yyyy' }}</b>
@@ -482,7 +481,7 @@
             </p>
 
             <p class="my-2" *ngIf="personFormGroup.controls['numero'].value">
-              Número: <b>{{ personFormGroup.controls['numero'].value }}</b>
+              Código: <b>{{ personFormGroup.controls['numero'].value }}</b>
             </p>
 
             <p class="my-2" *ngIf="personFormGroup.controls['cod_postal'].value">
