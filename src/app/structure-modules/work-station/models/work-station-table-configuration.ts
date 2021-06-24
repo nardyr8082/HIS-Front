@@ -11,12 +11,12 @@ export const WORK_STATION_TABLE_CONFIGURATION = {
       title: 'Descripción',
     },
     {
-      name: 'rol_text',
+      name: 'rol',
       type: 'text',
       title: 'Grupo',
     },
     {
-      name: 'departamento_text',
+      name: 'departamento__nombre',
       type: 'text',
       title: 'Departamento',
     },
