@@ -18,7 +18,7 @@ export class NavigationService {
       material: true,
       children: [
         {
-          displayName: 'Nivel Organizacional',
+          displayName: 'Ubicación Organizacional',
           iconName: ['account_balance'],
           route: 'org-level',
           material: true,
