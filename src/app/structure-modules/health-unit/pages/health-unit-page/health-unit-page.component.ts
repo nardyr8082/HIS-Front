@@ -59,9 +59,11 @@ export class HealthUnitPageComponent implements OnInit {
       .pipe(
         map((response: ApiResponse<any>) => {
           this.healthUnits = response.results.map((response) => {
+            console.log('esta es', response);
             const nivel = response.nivel ? response.nivel.name : '';
             const nivel_id = response.nivel ? response.nivel.id : '';
-            return { ...response, nivel: nivel, nivel_id: nivel_id };
+            const ubicacion = response.nivel ? response.nivel.ubicacion : '';
+            return { ...response, nivel: nivel, nivel_id: nivel_id, ubicacion: ubicacion };
           });
           this.dataCount = response.count;
           this.loading = false;
