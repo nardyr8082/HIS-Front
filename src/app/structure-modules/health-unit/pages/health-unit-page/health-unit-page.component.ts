@@ -164,7 +164,7 @@ export class HealthUnitPageComponent implements OnInit {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar la unidad de salud: ${item.nombre}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar la unidad de salud: ${item.nombre}?`;
 
     const sub = modalComponentRef.accept
       .pipe(

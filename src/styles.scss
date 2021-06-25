@@ -14,6 +14,16 @@ body {
     padding: 10px !important;
   }
 }
+#mySelect {
+  position: relative !important;
+}
+.adjust{
+  position: sticky;
+  top: 5px;
+  //left: 400px;
+  float: right;
+  z-index: 999;
+}
 
 @import '../node_modules/swiper/css/swiper.min.css';
 @import '../node_modules/@angular/material/prebuilt-themes/indigo-pink.css';

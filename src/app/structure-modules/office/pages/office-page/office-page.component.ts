@@ -165,7 +165,7 @@ export class OfficePageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el departamento: ${item.nombre}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar el departamento: ${item.nombre}?`;
 
     const sub = modalComponentRef.accept
       .pipe(

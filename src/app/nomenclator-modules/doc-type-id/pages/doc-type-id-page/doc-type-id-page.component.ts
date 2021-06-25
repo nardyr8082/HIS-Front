@@ -162,7 +162,7 @@ export class DocTypeIdPageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el tipo de documento: ${item.descripcion}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar el tipo de documento: ${item.descripcion}?`;
 
     const sub = modalComponentRef.accept
       .pipe(

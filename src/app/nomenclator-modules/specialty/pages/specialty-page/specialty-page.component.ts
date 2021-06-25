@@ -162,7 +162,7 @@ export class SpecialtyPageComponent implements OnInit {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar la especialidad: ${item.descripcion}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar la especialidad: ${item.descripcion}?`;
 
     const sub = modalComponentRef.accept
       .pipe(

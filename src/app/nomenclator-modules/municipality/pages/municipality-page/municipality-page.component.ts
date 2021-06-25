@@ -166,7 +166,7 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el distrito: ${item.nombre}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar el distrito: ${item.nombre}?`;
 
     const sub = modalComponentRef.accept
       .pipe(
