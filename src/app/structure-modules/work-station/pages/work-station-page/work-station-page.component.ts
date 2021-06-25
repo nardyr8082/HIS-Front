@@ -140,7 +140,7 @@ export class WorkStationPageComponent implements OnInit {
     const sub = modalComponentRef.edit
       .pipe(
         switchMap((workStation: WorkStation) =>
-          this.workStationService.editWorkStation({ ...workStation, id: item.rol?.id }).pipe(
+          this.workStationService.editWorkStation({ ...workStation }).pipe(
             catchError(() => {
               this.toastService.error('Hubo un error al editar el puesto de trabajo. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
@@ -169,7 +169,7 @@ export class WorkStationPageComponent implements OnInit {
       .pipe(
         filter((accept) => accept),
         switchMap(() =>
-          this.workStationService.deleteWorkStation(item.rol?.id).pipe(
+          this.workStationService.deleteWorkStation(item.id).pipe(
             map(() => item),
             catchError(() => {
               this.toastService.error('Hubo un error al eliminar el puesto de trabajo. Por favor, inténtelo de nuevo más tarde.', 'Error');
