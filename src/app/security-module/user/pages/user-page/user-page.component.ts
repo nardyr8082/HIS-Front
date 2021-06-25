@@ -27,14 +27,14 @@ export class UserPageComponent implements OnInit {
 
   rowActionButtons = [
     {
-      tooltipText: 'Editar Grupo',
+      tooltipText: 'Editar Usuario',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.goToForm(item),
     },
     {
-      tooltipText: 'Eliminar Grupo',
+      tooltipText: 'Eliminar Usuario',
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',

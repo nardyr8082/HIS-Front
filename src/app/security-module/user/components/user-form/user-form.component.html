@@ -54,12 +54,12 @@
           <!-- Roles -->
           <div class="col-lg-6 col-md-12">
             <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Grupo:</mat-label>
+              <mat-label>Roles:</mat-label>
               <mat-select #mySelect formControlName="groups" multiple>
                 <button type="button" class="btn btn-primary adjust" (click)="mySelect.close()">Cerrar</button>
                 <mat-option *ngFor="let role of roles" [value]="role.id">{{ role.name }}</mat-option>
               </mat-select>
-              <mat-error *ngIf="this.userFormGroup.controls['groups'].invalid">Seleccione un Grupo</mat-error>
+              <mat-error *ngIf="this.userFormGroup.controls['groups'].invalid">Seleccione un Rol</mat-error>
             </mat-form-field>
           </div>
 
@@ -419,23 +419,23 @@
             </p>
             <div class="d-flex my-2">
               <p>Activo:</p>
-              <mat-icon class="mx-2" *ngIf="userFormGroup.controls['username'].value" aria-hidden="false">done</mat-icon>
-              <mat-icon class="mx-2" *ngIf="!userFormGroup.controls['username'].value" aria-hidden="false">close</mat-icon>
+              <mat-icon class="mx-2" *ngIf="userFormGroup.controls['is_active'].value == true" aria-hidden="false">done</mat-icon>
+              <mat-icon class="mx-2" *ngIf="userFormGroup.controls['is_active'].value == false" aria-hidden="false">close</mat-icon>
             </div>
             <p class="my-2">
-              Profesión: <b>{{ userFormGroup.controls['profesion'].value }}</b>
+              Profesión: <b>{{ professions[userFormGroup.controls['profesion']?.value]?.nombre }}</b>
             </p>
             <p class="my-2" *ngIf="userFormGroup.controls['groups']?.value">
-              Grupo: <b>{{ roles[userFormGroup.controls['groups']?.value]?.name }}</b>
+              Roles: <b>{{ getRolesNames() }}</b>
             </p>
             <p class="my-2" *ngIf="userFormGroup.controls['categ_docente']?.value">
-              Categoría Docente: <b>{{ catDoncents[userFormGroup.controls['categ_docente']?.value]?.descripcion }}</b>
+              Categoría Docente: <b>{{ getCatDocentNames() }}</b>
             </p>
             <p class="my-2" *ngIf="userFormGroup.controls['categ_cientifica']?.value">
-              Categoría Científica: <b>{{ catSciences[userFormGroup.controls['categ_cientifica']?.value]?.descripcion }}</b>
+              Categoría Científica: <b>{{ getCatScienceNames() }}</b>
             </p>
             <p class="my-2" *ngIf="userFormGroup.controls['especialidad']?.value">
-              Especialidad: <b>{{ specialties[userFormGroup.controls['especialidad']?.value]?.descripcion }}</b>
+              Especialidad: <b>{{ getSpecialtiesNames() }}</b>
             </p>
           </div>
         </div>

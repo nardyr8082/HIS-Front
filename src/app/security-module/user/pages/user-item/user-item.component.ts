@@ -161,7 +161,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
           this.roles = response.results;
         }),
         catchError(() => {
-          this.toastService.error('Hubo un error al obtener los grupos. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          this.toastService.error('Hubo un error al obtener los roles. Por favor, inténtelo de nuevo más tarde.', 'Error');
           return of(null);
         }),
       )

@@ -137,6 +137,8 @@ export class UserFormComponent implements OnInit, OnChanges {
     return new Date(parseInt(arrayDate[0]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[2]));
   }
 
+  // FORMS CONTROLS
+
   get qrCodeControl() {
     return this.personFormGroup?.get('qr_code') as FormControl;
   }
@@ -163,6 +165,22 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   get confirmPasswordControl() {
     return this.userFormGroup?.get('confirm_password') as FormControl;
+  }
+
+  get rolesControl() {
+    return this.userFormGroup?.get('groups') as FormControl;
+  }
+
+  get catDocentControl() {
+    return this.userFormGroup?.get('categ_docente') as FormControl;
+  }
+
+  get catScientControl() {
+    return this.userFormGroup?.get('categ_cientifica') as FormControl;
+  }
+
+  get specialtyControl() {
+    return this.userFormGroup?.get('especialidad') as FormControl;
   }
 
   get passwordDontMatch() {
@@ -222,6 +240,54 @@ export class UserFormComponent implements OnInit, OnChanges {
   formatedDate(date: string) {
     const dateArray = date.split('/');
     return `${dateArray[2]}-${dateArray[0]}-${dateArray[1]}`;
+  }
+
+  getRolesNames() {
+    if (this.rolesControl?.value) {
+      const roles: any[] = this.rolesControl?.value;
+      let result = '';
+      roles.forEach((rol) => {
+        result = result.concat(`${this.roles[rol].name}, `);
+      });
+
+      return result.slice(0, -2);
+    }
+  }
+
+  getCatDocentNames() {
+    if (this.catDocentControl?.value) {
+      const array: any[] = this.catDocentControl?.value;
+      let result = '';
+      array.forEach((item) => {
+        result = result.concat(`${this.catDoncents[item].descripcion}, `);
+      });
+
+      return result.slice(0, -2);
+    }
+  }
+
+  getCatScienceNames() {
+    if (this.catScientControl?.value) {
+      const array: any[] = this.catScientControl?.value;
+      let result = '';
+      array.forEach((item) => {
+        result = result.concat(`${this.catSciences[item].descripcion}, `);
+      });
+
+      return result.slice(0, -2);
+    }
+  }
+
+  getSpecialtiesNames() {
+    if (this.specialtyControl?.value) {
+      const array: any[] = this.specialtyControl?.value;
+      let result = '';
+      array.forEach((item) => {
+        result = result.concat(`${this.specialties[item].descripcion}, `);
+      });
+
+      return result.slice(0, -2);
+    }
   }
 
   get passwordLetterAndNumberValidation() {
