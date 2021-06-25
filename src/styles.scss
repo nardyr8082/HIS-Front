@@ -10,6 +10,9 @@ body {
   p {
     margin: 0px;
   }
+  .ng-input input {
+    padding: 10px !important;
+  }
 }
 
 @import '../node_modules/swiper/css/swiper.min.css';
