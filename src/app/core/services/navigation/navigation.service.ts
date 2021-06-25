@@ -117,7 +117,7 @@ export class NavigationService {
           display: true,
         },
         {
-          displayName: 'Municipio',
+          displayName: 'Distrito',
           iconName: ['radio_button_unchecked'],
           route: 'municipality',
           material: true,
