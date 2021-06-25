@@ -67,12 +67,12 @@ export class UserFormComponent implements OnInit, OnChanges {
       first_name: [this.user ? this.user.first_name : '', Validators.required],
       last_name: [this.user ? this.user.last_name : '', Validators.required],
       email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-      is_active: [this.user ? this.user.is_active : true, Validators.required],
-      groups: [this.user ? this.user.groups : [], Validators.required],
-      categ_docente: [this.user ? this.user.categ_docente : null, Validators.required],
-      categ_cientifica: [this.user ? this.user.categ_cientifica : null, Validators.required],
-      especialidad: [this.user ? this.user.especialidad : null, Validators.required],
-      profesion: [this.user ? this.user.profesion : null, Validators.required],
+      active: [this.user ? this.user.active : true, Validators.required],
+      groups: [this.user ? this.user.groups.map((item) => item.id) : [], Validators.required],
+      categ_docente: [this.user ? this.user.categ_docente.map((item) => item.id) : null, Validators.required],
+      categ_cientifica: [this.user ? this.user.categ_cientifica.map((item) => item.id) : null, Validators.required],
+      especialidad: [this.user ? this.user.especialidad.map((item) => item.id) : null, Validators.required],
+      profesion: [this.user ? this.user.profesion.id : null, Validators.required],
       // password: ['', !this.user ? [Validators.required, Validators.minLength(8), createPasswordStrengthValidator(), passwordOnlyNumberValidator()] : null],
       // confirm_password: ['', !this.user ? [Validators.required] : null],
     });
@@ -247,7 +247,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       const roles: any[] = this.rolesControl?.value;
       let result = '';
       roles.forEach((rol) => {
-        result = result.concat(`${this.roles[rol].name}, `);
+        result = result.concat(`${this.roles[rol]?.name}, `);
       });
 
       return result.slice(0, -2);
@@ -259,7 +259,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       const array: any[] = this.catDocentControl?.value;
       let result = '';
       array.forEach((item) => {
-        result = result.concat(`${this.catDoncents[item].descripcion}, `);
+        result = result.concat(`${this.catDoncents[item]?.descripcion}, `);
       });
 
       return result.slice(0, -2);
@@ -271,7 +271,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       const array: any[] = this.catScientControl?.value;
       let result = '';
       array.forEach((item) => {
-        result = result.concat(`${this.catSciences[item].descripcion}, `);
+        result = result.concat(`${this.catSciences[item]?.descripcion}, `);
       });
 
       return result.slice(0, -2);
@@ -283,7 +283,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       const array: any[] = this.specialtyControl?.value;
       let result = '';
       array.forEach((item) => {
-        result = result.concat(`${this.specialties[item].descripcion}, `);
+        result = result.concat(`${this.specialties[item]?.descripcion}, `);
       });
 
       return result.slice(0, -2);

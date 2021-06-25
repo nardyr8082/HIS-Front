@@ -59,8 +59,8 @@ export class UserPageComponent implements OnInit {
       .pipe(
         map((response: ApiResponse<User>) => {
           this.users = response.results.map((resp) => {
-            const activo = resp.is_active ? 'Si' : 'No';
-            return {... resp, is_active: activo};
+            const activo = resp.active ? 'Si' : 'No';
+            return { ...resp, activo };
           });
           this.dataCount = response.count;
           this.loading = false;

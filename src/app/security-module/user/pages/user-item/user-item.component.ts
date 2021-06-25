@@ -124,7 +124,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
       .pipe(
         map((response: User) => {
           this.user = response;
-          this.getPerson(this.user.persona);
+          this.getPerson(this.user.persona.id);
         }),
         catchError(() => {
           this.toastService.error('Hubo un error al obtener el usuario. Por favor, inténtelo de nuevo más tarde.', 'Error');

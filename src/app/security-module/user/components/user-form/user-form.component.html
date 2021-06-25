@@ -47,7 +47,7 @@
           <!-- is_active -->
           <div class="col-12">
             <div class="w-100">
-              <mat-checkbox formControlName="is_active">Activo</mat-checkbox>
+              <mat-checkbox formControlName="active">Activo</mat-checkbox>
             </div>
           </div>
 
@@ -419,8 +419,8 @@
             </p>
             <div class="d-flex my-2">
               <p>Activo:</p>
-              <mat-icon class="mx-2" *ngIf="userFormGroup.controls['is_active'].value == true" aria-hidden="false">done</mat-icon>
-              <mat-icon class="mx-2" *ngIf="userFormGroup.controls['is_active'].value == false" aria-hidden="false">close</mat-icon>
+              <mat-icon class="mx-2" *ngIf="userFormGroup.controls['active'].value == true" aria-hidden="false">done</mat-icon>
+              <mat-icon class="mx-2" *ngIf="userFormGroup.controls['active'].value == false" aria-hidden="false">close</mat-icon>
             </div>
             <p class="my-2">
               Profesión: <b>{{ professions[userFormGroup.controls['profesion']?.value]?.nombre }}</b>
