@@ -1,7 +1,6 @@
 export interface Role {
   id: number;
   name?: string;
-  editable?: boolean;
   permissions?: Array<Permission>;
   permissions_string?: string;
 }
