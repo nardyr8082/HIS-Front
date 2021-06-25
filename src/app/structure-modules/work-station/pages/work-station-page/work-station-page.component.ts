@@ -4,7 +4,7 @@ import { WorkStationFormComponent } from './../../components/work-station-form/w
 import { ApiResponse, DEFAULT_PAGE_SIZE } from './../../../../core/models/api-response.model';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { WorkStationService } from '../../services/workStation.service';
+import { WorkStationService } from '../../services/office.service';
 import { Subscription, of } from 'rxjs';
 import { WORK_STATION_TABLE_CONFIGURATION } from './../../models/work-station-table-configuration';
 import { WorkStation } from './../../models/work-station.model';

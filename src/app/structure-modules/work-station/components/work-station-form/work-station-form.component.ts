@@ -1,4 +1,4 @@
-import { WorkStationService } from '../../services/workStation.service';
+import { WorkStationService } from '../../services/office.service';
 import { Subscription } from 'rxjs';
 import { Component, EventEmitter, OnInit, Output, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';

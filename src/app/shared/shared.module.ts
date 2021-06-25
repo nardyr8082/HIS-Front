@@ -10,6 +10,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -52,6 +53,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { CustomTableComponent } from './table/custom-table/custom-table.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 ///////////////////////////////////////////////////////////////////
 
@@ -110,6 +112,8 @@ const components = [DeleteConfirmationModalComponent];
     MatStepperModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
+    NgSelectModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -154,6 +158,8 @@ const components = [DeleteConfirmationModalComponent];
     MatStepperModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
+    NgSelectModule,
     ...components,
   ],
   providers: [BreadcrumbService, NavService, PreviousRouteService],

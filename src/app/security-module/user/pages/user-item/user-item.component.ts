@@ -1,3 +1,5 @@
+import { CountryService } from './../../../../nomenclator-modules/country/services/country.service';
+import { MunicipalityService } from './../../../../nomenclator-modules/municipality/services/municipality.service';
 import { PersonService } from './../../../../shared/services/person.service';
 import { DocTypeIdService } from './../../../../nomenclator-modules/doc-type-id/services/doc-type-id.service';
 import { NationalityService } from './../../../../nomenclator-modules/nationality/services/nationality.service';
@@ -20,6 +22,8 @@ import { CatScienceService } from 'src/app/nomenclator-modules/cat-science/servi
 import { Role } from 'src/app/security-module/role/models/role.model';
 import { Person } from 'src/app/shared/models/Person.model';
 import { observable } from 'rxjs';
+import { Country } from 'src/app/nomenclator-modules/country/models/country.model';
+import { Municipality } from 'src/app/nomenclator-modules/municipality/models/municipality.model';
 
 @Component({
   selector: 'app-user-item',
@@ -37,6 +41,8 @@ export class UserItemComponent implements OnInit, OnDestroy {
   specialties: Specialty[];
   docTypes: any[];
   nationalities: any[];
+  countries: Country[];
+  municipalities: Municipality[];
 
   subscriptions: Subscription[] = [];
 
@@ -51,6 +57,8 @@ export class UserItemComponent implements OnInit, OnDestroy {
     private nationalityService: NationalityService,
     private docTypeIdService: DocTypeIdService,
     private personService: PersonService,
+    private municipalityService: MunicipalityService,
+    private countryService: CountryService,
     private router: Router,
   ) {
     this.activatedRoute.params.subscribe((params) => {
@@ -69,10 +77,46 @@ export class UserItemComponent implements OnInit, OnDestroy {
     this.getSpecialties();
     this.getNationalities();
     this.getDocTypeIds();
+    this.getCountries();
+    this.getMunicipalities();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
+  }
+
+  getCountries() {
+    const sub = this.countryService
+      .getCountries({}, 'id', 'asc', 1, 10000)
+      .pipe(
+        map((response: ApiResponse<Country>) => {
+          this.countries = response.results;
+        }),
+        catchError(() => {
+          this.toastService.error('Hubo un error al obtener los paises. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          return of(null);
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getMunicipalities() {
+    const sub = this.municipalityService
+      .getMunicipalities({}, 'id', 'asc', 1, 10000)
+      .pipe(
+        map((response: ApiResponse<Municipality>) => {
+          this.municipalities = response.results;
+        }),
+        catchError(() => {
+          this.toastService.error('Hubo un error al obtener los municipios. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          return of(null);
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
   }
 
   getUser(userId) {
