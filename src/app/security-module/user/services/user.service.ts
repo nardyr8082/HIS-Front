@@ -84,4 +84,8 @@ export class UserService {
   getUserById(id: number): Observable<User> {
     return this.http.get<any>(`${this.apiEndpoint}/${id}/`);
   }
+
+  getQRCode(data: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}qr_code`, data);
+  }
 }

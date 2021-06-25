@@ -14,6 +14,9 @@ import * as moment from 'moment';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { Municipality } from 'src/app/nomenclator-modules/municipality/models/municipality.model';
 import { Profession } from 'src/app/nomenclator-modules/profession/models/profession.model';
+import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import { UserService } from '../../services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-user-form',
@@ -46,7 +49,9 @@ export class UserFormComponent implements OnInit, OnChanges {
   imageAvatar = null;
   passwordType = 'password';
 
-  constructor(private _formBuilder: FormBuilder, public utilsService: UtilsService, private toastService: ToastrService) {}
+  apiUrl = environment.serverUrl;
+
+  constructor(private _formBuilder: FormBuilder, public utilsService: UtilsService, private toastService: ToastrService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.buildForms();
@@ -106,11 +111,35 @@ export class UserFormComponent implements OnInit, OnChanges {
       telefono_movil: [this.person ? this.person.telefono_movil : '', Validators.required],
       // foto: [''],
     });
+
+    this.identificationCodeControl.valueChanges
+      .pipe(
+        debounceTime(3000),
+        distinctUntilChanged(),
+        map(() => {
+          const myString = JSON.stringify({ codigo: this.identificationCodeControl.value });
+          const formData = new FormData();
+          formData.append('data', myString);
+          this.userService
+            .getQRCode(formData)
+            .pipe(
+              map((response) => {
+                this.personFormGroup.setControl('qr_code', new FormControl(response.qrCode));
+              }),
+            )
+            .subscribe();
+        }),
+      )
+      .subscribe();
   }
 
   getFormattedDate(apiDate: string) {
     const arrayDate = apiDate.split('-');
     return new Date(parseInt(arrayDate[0]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[2]));
+  }
+
+  get qrCodeControl() {
+    return this.personFormGroup?.get('qr_code') as FormControl;
   }
 
   get firstNameControl() {
@@ -140,6 +169,12 @@ export class UserFormComponent implements OnInit, OnChanges {
   get passwordDontMatch() {
     return this.confirmPasswordControl?.dirty && this.passwordControl?.value != this.confirmPasswordControl?.value;
   }
+
+  get identificationCodeControl() {
+    return this.personFormGroup?.get('nro_identificacion') as FormControl;
+  }
+
+  changeIdentificationCode(text) {}
 
   changePasswordControl(event: MatCheckboxChange) {
     if (event.checked) {
