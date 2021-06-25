@@ -90,7 +90,6 @@ export class UserFormComponent implements OnInit, OnChanges {
     this.personFormGroup = this._formBuilder.group({
       nro_identificacion: [this.person ? this.person.nro_identificacion : '', Validators.required],
       fecha_nacimiento: [fechaNacimiento, Validators.required],
-      ocupacion: [this.person ? this.person.ocupacion : '', Validators.required],
       sexo: [this.person ? this.person.sexo : '1', Validators.required],
       tipo_doc: [this.person ? this.person.tipo_doc.id : [], Validators.required],
       nacionalidad: [this.person ? this.person.nacionalidad?.id : null, Validators.required],

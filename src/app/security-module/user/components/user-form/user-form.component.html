@@ -243,15 +243,6 @@
             </mat-form-field>
           </div>
 
-          <!-- ocupacion -->
-          <div class="col-lg-6 col-md-12">
-            <mat-form-field class="w-100" appearance="outline">
-              <mat-label>Ocupación:</mat-label>
-              <input matInput formControlName="ocupacion" />
-              <mat-error *ngIf="personFormGroup.controls['ocupacion'].errors?.required"> {{ 'La Ocupación es ' }} <strong>requerida</strong> </mat-error>
-            </mat-form-field>
-          </div>
-
           <!-- sexo -->
           <mat-radio-group class="my-3" aria-label="Sexo:" formControlName="sexo">
             <mat-radio-button class="mr-3" value="1"
@@ -288,13 +279,21 @@
 
             <!-- municipio -->
             <div class="col-lg-6 col-md-12">
-              <mat-form-field class="w-100" appearance="outline">
-                <mat-label>Distrito:</mat-label>
-                <mat-select formControlName="municipio">
-                  <mat-option *ngFor="let mun of municipalities" [value]="mun.id">{{ mun.nombre }}</mat-option>
-                </mat-select>
-                <mat-error *ngIf="personFormGroup.controls['municipio'].errors?.required"> {{ 'El Distrito es ' }} <strong>requerido</strong> </mat-error>
-              </mat-form-field>
+              <ng-select
+                appearance="outline"
+                class="custom w-100"
+                placeholder="Distrito:"
+                [items]="municipalities"
+                bindLabel="nombre"
+                bindValue="id"
+                formControlName="municipio"
+              >
+              </ng-select>
+              <small
+                class="text-danger error-style"
+                *ngIf="personFormGroup.controls['municipio'].errors?.required && personFormGroup.controls['municipio'].dirty"
+                >El distrito es <strong>requerido</strong></small
+              >
             </div>
 
             <!-- direccion -->
@@ -469,9 +468,6 @@
             </p>
             <p class="my-2">
               Fecha de Nacimiento: <b>{{ personFormGroup.controls['fecha_nacimiento'].value | date: 'dd/MM/yyyy' }}</b>
-            </p>
-            <p class="my-2">
-              Ocupación: <b>{{ personFormGroup.controls['ocupacion'].value }}</b>
             </p>
             <div class="d-flex my-2">
               <p>Sexo:</p>
