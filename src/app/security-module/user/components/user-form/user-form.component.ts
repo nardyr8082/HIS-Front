@@ -107,6 +107,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       telefono_casa: [this.person ? this.person.telefono_casa : '', Validators.required],
       telefono_trabajo: [this.person ? this.person.telefono_trabajo : '', Validators.required],
       telefono_movil: [this.person ? this.person.telefono_movil : '', Validators.required],
+      qr_code: [this.person ? this.person.qr_code : ''],
       // foto: [''],
     });
 
