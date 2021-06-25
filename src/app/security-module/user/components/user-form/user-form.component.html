@@ -188,7 +188,8 @@
                 </button>
               </div>
               <div *ngIf="!loadImage" class="avatar-profile" fxFlex="row" fxLayoutAlign="center center">
-                <mat-icon class="avatar-icon">person_outline</mat-icon>
+                <img *ngIf="person?.foto" class="user-avatar" [src]="person.foto" />
+                <mat-icon *ngIf="!person?.foto" class="avatar-icon">person_outline</mat-icon>
 
                 <button id="photoCameraBtn" style="position: absolute" mat-icon-button (click)="openFileBrowser($event)">
                   <mat-icon style="color: white" aria-label="Example icon-button with a heart icon"> photo_camera </mat-icon>

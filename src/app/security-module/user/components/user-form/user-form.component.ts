@@ -48,6 +48,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   base64textString = null;
   imageAvatar = null;
   passwordType = 'password';
+  imageAvatarFile;
 
   apiUrl = environment.serverUrl;
 
@@ -108,7 +109,6 @@ export class UserFormComponent implements OnInit, OnChanges {
       telefono_trabajo: [this.person ? this.person.telefono_trabajo : '', Validators.required],
       telefono_movil: [this.person ? this.person.telefono_movil : '', Validators.required],
       qr_code: [this.person ? this.person.qr_code : ''],
-      // foto: [''],
     });
 
     this.identificationCodeControl.valueChanges
@@ -218,6 +218,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     const file = files[0];
     if (files[0].size < 500000) {
       if (files && file) {
+        this.imageAvatarFile = file;
         const reader = new FileReader();
         reader.onload = this.handleReaderLoaded.bind(this);
         reader.readAsBinaryString(file);
@@ -320,7 +321,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       const person = this.personFormGroup.value;
       const dateFormat = moment(person.fecha_nacimiento);
       person.fecha_nacimiento = dateFormat.format('yyyy-MM-DD');
-      this.user && this.person ? this.edit.emit({ user, person }) : this.create.emit({ user, person });
+      this.user && this.person ? this.edit.emit({ user, person, foto: this.imageAvatarFile }) : this.create.emit({ user, person, foto: this.imageAvatarFile });
     } else {
       this.toastService.error('Por favor revise los formularios, quedan campos requeridos sin llenar', 'Error');
     }
