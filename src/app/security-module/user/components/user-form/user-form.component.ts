@@ -12,8 +12,8 @@ import { createPasswordStrengthValidator } from 'src/app/security-module/user/va
 import { passwordOnlyNumberValidator } from 'src/app/security-module/user/validators/PasswordOnlyNumber.validators';
 import * as moment from 'moment';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { Country } from 'src/app/nomenclator-modules/country/models/country.model';
 import { Municipality } from 'src/app/nomenclator-modules/municipality/models/municipality.model';
+import { Profession } from 'src/app/nomenclator-modules/profession/models/profession.model';
 
 @Component({
   selector: 'app-user-form',
@@ -30,7 +30,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   @Input() docTypes: any[];
   @Input() nationalities: any[];
   @Input() municipalities: Municipality[];
-  @Input() countries: Country[];
+  @Input() professions: Profession[];
 
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
@@ -66,9 +66,10 @@ export class UserFormComponent implements OnInit, OnChanges {
       is_staff: [this.user ? this.user.is_staff : true, Validators.required],
       is_active: [this.user ? this.user.is_active : true, Validators.required],
       groups: [this.user ? this.user.groups : [], Validators.required],
-      categ_docente: [this.user ? this.user.categ_docente : []],
-      categ_cientifica: [this.user ? this.user.categ_cientifica : []],
-      especialidad: [this.user ? this.user.especialidad : []],
+      categ_docente: [this.user ? this.user.categ_docente : null, Validators.required],
+      categ_cientifica: [this.user ? this.user.categ_cientifica : null, Validators.required],
+      especialidad: [this.user ? this.user.especialidad : null, Validators.required],
+      profesion: [this.user ? this.user.profesion : null, Validators.required],
       // password: ['', !this.user ? [Validators.required, Validators.minLength(8), createPasswordStrengthValidator(), passwordOnlyNumberValidator()] : null],
       // confirm_password: ['', !this.user ? [Validators.required] : null],
     });
@@ -89,24 +90,21 @@ export class UserFormComponent implements OnInit, OnChanges {
     this.personFormGroup = this._formBuilder.group({
       nro_identificacion: [this.person ? this.person.nro_identificacion : '', Validators.required],
       fecha_nacimiento: [fechaNacimiento, Validators.required],
-      profesion: [this.person ? this.person.profesion : ''],
-      ocupacion: [this.person ? this.person.ocupacion : ''],
+      ocupacion: [this.person ? this.person.ocupacion : '', Validators.required],
       sexo: [this.person ? this.person.sexo : '1', Validators.required],
       tipo_doc: [this.person ? this.person.tipo_doc.id : [], Validators.required],
-      nacionalidad: [this.person ? this.person.nacionalidad?.id : null],
-      municipio: [this.person ? this.person.municipio?.id : ''],
-      estado: [this.person ? this.person.estado : ''],
-      pais: [this.person ? this.person.pais?.id : ''],
+      nacionalidad: [this.person ? this.person.nacionalidad?.id : null, Validators.required],
+      municipio: [this.person ? this.person.municipio?.id : '', Validators.required],
       direccion: [this.person ? this.person.direccion : '', Validators.required],
-      numero: [this.person ? this.person.numero : ''],
-      cod_postal: [this.person ? this.person.cod_postal : ''],
-      nombre_madre: [this.person ? this.person.nombre_madre : ''],
-      nombre_padre: [this.person ? this.person.nombre_padre : ''],
-      contacto_emergencia: [this.person ? this.person.contacto_emergencia : ''],
-      telefono_emergencia: [this.person ? this.person.telefono_emergencia : ''],
-      telefono_casa: [this.person ? this.person.telefono_casa : ''],
-      telefono_trabajo: [this.person ? this.person.telefono_trabajo : ''],
-      telefono_movil: [this.person ? this.person.telefono_movil : ''],
+      numero: [this.person ? this.person.numero : '', Validators.required],
+      cod_postal: [this.person ? this.person.cod_postal : '', Validators.required],
+      nombre_madre: [this.person ? this.person.nombre_madre : '', Validators.required],
+      nombre_padre: [this.person ? this.person.nombre_padre : '', Validators.required],
+      contacto_emergencia: [this.person ? this.person.contacto_emergencia : '', Validators.required],
+      telefono_emergencia: [this.person ? this.person.telefono_emergencia : '', Validators.required],
+      telefono_casa: [this.person ? this.person.telefono_casa : '', Validators.required],
+      telefono_trabajo: [this.person ? this.person.telefono_trabajo : '', Validators.required],
+      telefono_movil: [this.person ? this.person.telefono_movil : '', Validators.required],
       // foto: [''],
     });
   }

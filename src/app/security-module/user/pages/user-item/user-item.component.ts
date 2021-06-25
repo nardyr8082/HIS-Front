@@ -1,4 +1,4 @@
-import { CountryService } from './../../../../nomenclator-modules/country/services/country.service';
+import { ProfessionService } from './../../../../nomenclator-modules/profession/services/profession.service';
 import { MunicipalityService } from './../../../../nomenclator-modules/municipality/services/municipality.service';
 import { PersonService } from './../../../../shared/services/person.service';
 import { DocTypeIdService } from './../../../../nomenclator-modules/doc-type-id/services/doc-type-id.service';
@@ -21,9 +21,8 @@ import { CatDocentService } from 'src/app/nomenclator-modules/cat-docent/service
 import { CatScienceService } from 'src/app/nomenclator-modules/cat-science/services/cat-science.service';
 import { Role } from 'src/app/security-module/role/models/role.model';
 import { Person } from 'src/app/shared/models/Person.model';
-import { observable } from 'rxjs';
-import { Country } from 'src/app/nomenclator-modules/country/models/country.model';
 import { Municipality } from 'src/app/nomenclator-modules/municipality/models/municipality.model';
+import { Profession } from 'src/app/nomenclator-modules/profession/models/profession.model';
 
 @Component({
   selector: 'app-user-item',
@@ -41,8 +40,8 @@ export class UserItemComponent implements OnInit, OnDestroy {
   specialties: Specialty[];
   docTypes: any[];
   nationalities: any[];
-  countries: Country[];
   municipalities: Municipality[];
+  professions: Profession[];
 
   subscriptions: Subscription[] = [];
 
@@ -58,7 +57,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
     private docTypeIdService: DocTypeIdService,
     private personService: PersonService,
     private municipalityService: MunicipalityService,
-    private countryService: CountryService,
+    private professionService: ProfessionService,
     private router: Router,
   ) {
     this.activatedRoute.params.subscribe((params) => {
@@ -77,23 +76,23 @@ export class UserItemComponent implements OnInit, OnDestroy {
     this.getSpecialties();
     this.getNationalities();
     this.getDocTypeIds();
-    this.getCountries();
     this.getMunicipalities();
+    this.getProffessions();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getCountries() {
-    const sub = this.countryService
-      .getCountries({}, 'id', 'asc', 1, 10000)
+  getProffessions() {
+    const sub = this.professionService
+      .getProfession({}, 'id', 'asc', 1, 10000)
       .pipe(
-        map((response: ApiResponse<Country>) => {
-          this.countries = response.results;
+        map((response: ApiResponse<Profession>) => {
+          this.professions = response.results;
         }),
         catchError(() => {
-          this.toastService.error('Hubo un error al obtener los paises. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          this.toastService.error('Hubo un error al obtener las profesiones. Por favor, inténtelo de nuevo más tarde.', 'Error');
           return of(null);
         }),
       )
