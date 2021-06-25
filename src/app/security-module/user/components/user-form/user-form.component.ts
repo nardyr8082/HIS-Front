@@ -63,12 +63,10 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   buildForms() {
     this.userFormGroup = this._formBuilder.group({
-      is_superuser: [this.user ? this.user.is_superuser : false, Validators.required],
       username: [this.user ? this.user.username : '', Validators.required],
       first_name: [this.user ? this.user.first_name : '', Validators.required],
       last_name: [this.user ? this.user.last_name : '', Validators.required],
       email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-      is_staff: [this.user ? this.user.is_staff : true, Validators.required],
       is_active: [this.user ? this.user.is_active : true, Validators.required],
       groups: [this.user ? this.user.groups : [], Validators.required],
       categ_docente: [this.user ? this.user.categ_docente : null, Validators.required],
