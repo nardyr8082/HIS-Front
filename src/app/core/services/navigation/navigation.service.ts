@@ -68,6 +68,13 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Profesión',
+          iconName: ['radio_button_unchecked'],
+          route: 'profession',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Sexo',
           iconName: ['radio_button_unchecked'],
           route: 'gender',
