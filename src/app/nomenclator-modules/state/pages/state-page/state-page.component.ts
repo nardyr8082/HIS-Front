@@ -57,7 +57,7 @@ export class StatePageComponent implements OnInit {
     const sub = this.stateService
       .getStates(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
-        map((response: ApiResponse<State>) => {
+        map((response: ApiResponse<any>) => {
           this.states = response.results.map( (resp) => {
             const pais = resp.pais ? resp.pais.name : '';
             const pais_id = resp.pais ? resp.pais.id : '';
