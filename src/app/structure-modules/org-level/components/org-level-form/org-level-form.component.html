@@ -1,5 +1,5 @@
 <div class="form">
-  <h4>{{ data.orgLevel ? 'Editar Nivel Organizacional' : 'Crear Nivel Organizacional' }}</h4>
+  <h4>{{ data.orgLevel ? 'Editar Ubicación Organizacional' : 'Crear Ubicación Organizacional' }}</h4>
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="orgLevelForm" [formGroup]="orgLevelForm">
     <mat-form-field class="w-100" appearance="outline">
@@ -8,7 +8,7 @@
       <mat-error *ngIf="this.orgLevelForm.controls['nombre'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Nivel Organizacional Padre</mat-label>
+      <mat-label>Ubicación Organizacional Padre</mat-label>
       <mat-select *ngIf="orgLevelList" formControlName="nivel_padre">
         <mat-option value="">Seleccionar...</mat-option>
         <mat-option *ngFor="let np of orgLevelList" [value]="np.id">{{ np.nombre }}</mat-option>

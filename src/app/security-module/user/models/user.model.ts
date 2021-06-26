@@ -18,4 +18,5 @@ export interface User {
   categ_docente: Array<CatDocent>;
   categ_cientifica: Array<CatScience>;
   especialidad: Array<any>;
+  profesion: string;
 }
