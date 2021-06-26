@@ -2,13 +2,13 @@ import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model
 
 export const WORK_STATION_TABLE_CONFIGURATION = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['rol_text', 'departamento_text', 'descripcion'],
-  columnsName: ['Rol', 'Departamento', 'Descripción'],
+  displayedColumns: ['descripcion', 'departamento_text', 'rol_text', ],
+  columnsName: [ 'Descripción', 'Departamento', 'Rol', ],
   tableFilters: [
     {
-      name: 'rol__name',
+      name: 'descripcion',
       type: 'text',
-      title: 'Rol',
+      title: 'Descripción',
     },
     {
       name: 'departamento__nombre',
@@ -16,9 +16,9 @@ export const WORK_STATION_TABLE_CONFIGURATION = {
       title: 'Departamento',
     },
     {
-      name: 'descripcion',
+      name: 'rol__name',
       type: 'text',
-      title: 'Descripción',
+      title: 'Rol',
     },
   ],
 };
