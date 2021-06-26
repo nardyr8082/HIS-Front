@@ -19,6 +19,16 @@
     </div>
 
     <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Teléfono fijo:</mat-label>
+      <input matInput formControlName="telefono_fijo" />
+      <mat-error *ngIf="this.healthUnitForm.controls['telefono_fijo'].invalid"> {{ 'El teléfono fijo es' }} <strong>requerida</strong></mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Teléfono Móvil:</mat-label>
+      <input matInput formControlName="telefono_movil" />
+      <mat-error *ngIf="this.healthUnitForm.controls['telefono_movil'].invalid"> {{ 'La teléfono móvil es' }} <strong>requerida</strong></mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
       <mat-label>Direccion:</mat-label>
       <input matInput formControlName="direccion" />
       <mat-error *ngIf="this.healthUnitForm.controls['direccion'].invalid"> {{ 'La direccion es' }} <strong>requerida</strong></mat-error>

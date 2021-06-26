@@ -3,4 +3,6 @@ export interface HealthUnit {
     nivel?: string;
     nombre: string;
     direccion: string;
+    telefono_fijo: string;
+    telefono_movil: string;
 }

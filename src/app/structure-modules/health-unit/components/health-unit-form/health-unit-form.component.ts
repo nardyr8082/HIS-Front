@@ -51,6 +51,8 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
       nombre: new FormControl(this.data.healthUnit ? this.data.healthUnit.nombre : '', Validators.required),
       nivel: new FormControl(this.data.healthUnit ? this.data.healthUnit.nivel_id : '', Validators.required),
       direccion: new FormControl(this.data.healthUnit ? this.data.healthUnit.direccion : ''),
+      telefono_movil: new FormControl(this.data.healthUnit ? this.data.healthUnit.telefono_movil : ''),
+      telefono_fijo: new FormControl(this.data.healthUnit ? this.data.healthUnit.telefono_fijo : ''),
     });
   }
 
