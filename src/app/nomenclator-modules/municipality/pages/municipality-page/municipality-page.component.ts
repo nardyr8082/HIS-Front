@@ -27,14 +27,14 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
 
   rowActionButtons = [
     {
-      tooltipText: 'Editar Municipio',
+      tooltipText: 'Editar Distrito',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.openEditForm(item),
     },
     {
-      tooltipText: 'Eliminar Municipio',
+      tooltipText: 'Eliminar Distrito',
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
@@ -57,8 +57,12 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
     const sub = this.municipalityService
       .getMunicipalities(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
-        map((response: ApiResponse<Municipality>) => {
-          this.municipalities = response.results;
+        map((response: ApiResponse<any>) => {
+          this.municipalities = response.results.map( (resp) => {
+            const province = resp.estado ? resp.estado.name : '';
+            const province_id = resp.estado ? resp.estado.id : '';
+            return { ...resp, province: province, province_id: province_id};
+          });
           this.dataCount = response.count;
           this.loading = false;
         }),
@@ -103,13 +107,13 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
         switchMap((municipality: Municipality) =>
           this.municipalityService.createMunicipality(municipality).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al crear el municipio. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al crear el distrito. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getMunicipalities();
-                this.toastService.success('El municipio fue creado correctamente.', 'Felicidades');
+                this.toastService.success('El distrito fue creado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -141,13 +145,13 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
         switchMap((municipality: Municipality) =>
           this.municipalityService.editMunicipality({ ...municipality, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el municipio. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar el distrito. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getMunicipalities();
-                this.toastService.success('El municipio fue modificado correctamente.', 'Felicidades');
+                this.toastService.success('El distrito fue modificado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -162,7 +166,7 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el municipio: ${item.nombre}?`;
+    modalComponentRef.text = `Está seguro que desea eliminar el distrito: ${item.nombre}?`;
 
     const sub = modalComponentRef.accept
       .pipe(
@@ -171,14 +175,14 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
           this.municipalityService.deleteMunicipality(item.id).pipe(
             map(() => item),
             catchError(() => {
-              this.toastService.error('Hubo un error al eliminar el municipio. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al eliminar el distrito. Por favor, inténtelo de nuevo más tarde.', 'Error');
               modalRef.close();
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getMunicipalities();
-                this.toastService.success('El municipio fue eliminado correctamente.', 'Felicidades');
+                this.toastService.success('El distrito fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),

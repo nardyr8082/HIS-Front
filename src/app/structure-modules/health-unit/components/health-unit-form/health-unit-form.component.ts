@@ -20,7 +20,6 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   levels: any[] = [];
   filteredOptions: Array<any>;
-  levelValue = '';
 
   constructor(private levelService: LevelService, public dialogRef: MatDialogRef<HealthUnitFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 

@@ -1,5 +1,5 @@
 <div class="form">
-  <h4>{{ data.municipality ? 'Editar Municipio' : 'Crear Municipio' }}</h4>
+  <h4>{{ data.municipality ? 'Editar Distrito' : 'Crear Distrito' }}</h4>
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="municipalityForm" [formGroup]="municipalityForm">
     <mat-form-field class="w-100" appearance="outline">
@@ -7,6 +7,13 @@
       <input matInput formControlName="nombre" />
       <mat-error *ngIf="this.municipalityForm.controls['nombre'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
+    <div class="mb-4">
+      <ng-select appearance="outline" class="custom w-100" placeholder="Provincia" [items]="province" bindLabel="nombre" bindValue="id" formControlName="estado">
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="municipalityForm.controls['estado'].errors?.required && municipalityForm.controls['estado'].dirty"
+      >La provincia es <strong>requerido</strong></small
+      >
+    </div>
   </form>
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
