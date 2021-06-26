@@ -9,7 +9,8 @@
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Permisos</mat-label>
-      <mat-select *ngIf="permissions" formControlName="permissions" multiple>
+      <mat-select #mySelect *ngIf="permissions" formControlName="permissions" multiple>
+        <button type="button" class="btn btn-primary adjust" (click)="mySelect.close()">Cerrar</button>
         <mat-option *ngFor="let permission of permissions" [value]="permission.id">{{ permission.name }}</mat-option>
       </mat-select>
       <mat-error *ngIf="this.roleForm.controls['permissions'].invalid">Seleccione al menos un permiso</mat-error>
