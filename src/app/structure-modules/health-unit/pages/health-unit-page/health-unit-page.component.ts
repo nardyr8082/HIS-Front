@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { LevelService } from './../../services/level.service';
+import { Component, Inject, OnInit } from '@angular/core';
 import { HealthUnitService } from '../../services/health-unit.service';
 import { HEALTH_UNIT_TABLE_CONFIGURATION } from './../../models/health-unit-table-configuration';
 import { HealthUnit } from './../../models/health-unit.model';
@@ -42,7 +43,9 @@ export class HealthUnitPageComponent implements OnInit {
     },
   ];
 
-  constructor(private healthUnitService: HealthUnitService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(private healthUnitService: HealthUnitService, private toastService: ToastrService, public dialog: MatDialog, private levelService: LevelService) {
+    this.putLevelsInFilter();
+  }
 
   ngOnInit(): void {
     this.getHealthUnits();
@@ -52,6 +55,19 @@ export class HealthUnitPageComponent implements OnInit {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
+  putLevelsInFilter() {
+    const sub = this.levelService
+      .getAllLevels()
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
   getHealthUnits(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.healthUnitService
@@ -59,7 +75,6 @@ export class HealthUnitPageComponent implements OnInit {
       .pipe(
         map((response: ApiResponse<any>) => {
           this.healthUnits = response.results.map((response) => {
-            console.log('esta es', response);
             const nivel = response.nivel ? response.nivel.name : '';
             const nivel_id = response.nivel ? response.nivel.id : '';
             const ubicacion = response.nivel ? response.nivel.ubicacion : '';
