@@ -48,13 +48,14 @@ export class UserFormComponent implements OnInit, OnChanges {
   base64textString = null;
   imageAvatar = null;
   passwordType = 'password';
-
   apiUrl = environment.serverUrl;
-
+  minDate: Date;
+  maxDate: Date;
   constructor(private _formBuilder: FormBuilder, public utilsService: UtilsService, private toastService: ToastrService, private userService: UserService) {}
 
   ngOnInit(): void {
     this.buildForms();
+    this.validateDate();
   }
 
   ngOnChanges() {
@@ -258,5 +259,11 @@ export class UserFormComponent implements OnInit, OnChanges {
     } else {
       this.toastService.error('Por favor revise los formularios, quedan campos requeridos sin llenar', 'Error');
     }
+  }
+
+  validateDate(): void {
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear - 18, 0, 1);
+    this.maxDate = new Date(currentYear + 100, 11, 31);
   }
 }
