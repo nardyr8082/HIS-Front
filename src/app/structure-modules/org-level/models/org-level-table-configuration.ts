@@ -13,7 +13,7 @@ export const ORG_LEVEL_TABLE_CONFIGURATION = {
     {
       name: 'nivel_padre',
       type: 'text',
-      title: 'Nivel Padre',
+      title: 'Ubicación Org. Padre',
     },
   ],
 };
