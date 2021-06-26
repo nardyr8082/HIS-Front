@@ -58,7 +58,10 @@ export class UserPageComponent implements OnInit {
       .getUsers(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<User>) => {
-          this.users = response.results;
+          this.users = response.results.map((resp) => {
+            const activo = resp.is_active ? 'Si' : 'No';
+            return {... resp, is_active: activo};
+          });
           this.dataCount = response.count;
           this.loading = false;
         }),
