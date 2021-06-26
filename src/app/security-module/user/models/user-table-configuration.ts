@@ -28,7 +28,7 @@ export const USER_TABLE_CONFIGURATION = {
     {
       name: 'is_active',
       type: 'text',
-      title: 'Activo',
+      title: 'Activo (Si o No)',
     },
   ],
 };
