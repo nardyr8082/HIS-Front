@@ -12,4 +12,5 @@ export interface Role {
 export interface Departament {
   id: number;
   name: string;
+  nombre?: string;
 }

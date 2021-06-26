@@ -1,3 +1,6 @@
+import { DepartamentService } from './../../services/departament.service';
+import { RoleService } from './../../../../security-module/role/services/role.service';
+import { HealthUnitService } from './../../../health-unit/services/health-unit.service';
 import { Sort } from '@angular/material/sort';
 import { DeleteConfirmationModalComponent } from './../../../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { WorkStationFormComponent } from './../../components/work-station-form/work-station-form.component';
@@ -11,6 +14,7 @@ import { WorkStation } from './../../models/work-station.model';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
+import { LevelService } from 'src/app/structure-modules/health-unit/services/level.service';
 
 @Component({
   selector: 'app-work-station-page',
@@ -42,7 +46,20 @@ export class WorkStationPageComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor(private workStationService: WorkStationService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(
+    private workStationService: WorkStationService,
+    private toastService: ToastrService,
+    public dialog: MatDialog,
+    private healthUnitService: HealthUnitService,
+    private levelService: LevelService,
+    private roleService: RoleService,
+    private departamentService: DepartamentService,
+  ) {
+    this.putLevelsInFilter();
+    this.putHealthUnits();
+    this.putRoleService();
+    this.putDepartamentsInFIlters();
+  }
 
   ngOnInit(): void {
     this.getWorkStations();
@@ -50,6 +67,58 @@ export class WorkStationPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
+  }
+
+  putLevelsInFilter() {
+    const sub = this.levelService
+      .getAllLevels()
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  putHealthUnits(filters = {}) {
+    const sub = this.healthUnitService
+      .getHealthUnits(filters, 'nombre', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[2].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  putDepartamentsInFIlters(filters = {}) {
+    const sub = this.departamentService
+      .getDepartaments(filters, 'nombre', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[3].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  putRoleService() {
+    const sub = this.roleService
+      .getRoles({}, 'name', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.name }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
   }
 
   getWorkStations(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
@@ -82,6 +151,12 @@ export class WorkStationPageComponent implements OnInit, OnDestroy {
   onChangeFilter(filters) {
     this.filters = filters;
     this.getWorkStations(filters, 'id', 'desc');
+    if (this.filters['nivel__id']) {
+      this.putHealthUnits({ nivel__id: this.filters['nivel__id'] });
+    }
+    if (this.filters['unidad__id']) {
+      this.putDepartamentsInFIlters({ unidad__id: this.filters['nivel__id'] });
+    }
   }
 
   createWorkStation() {
