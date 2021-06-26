@@ -160,7 +160,7 @@ export class CatDocentPageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar la categoría docente: ${item.descripcion}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar la categoría docente: ${item.descripcion}?`;
 
     const sub = modalComponentRef.accept
       .pipe(

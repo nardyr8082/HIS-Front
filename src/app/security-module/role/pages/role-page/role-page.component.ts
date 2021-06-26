@@ -173,7 +173,7 @@ export class RolePageComponent implements OnInit {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el rol: ${item.name}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar el rol: ${item.name}?`;
 
     const sub = modalComponentRef.accept
       .pipe(

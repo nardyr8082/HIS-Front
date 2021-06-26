@@ -162,7 +162,7 @@ export class ProfessionPageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar la profesión: ${item.nombre}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar la profesión: ${item.nombre}?`;
 
     const sub = modalComponentRef.accept
       .pipe(

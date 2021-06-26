@@ -166,7 +166,7 @@ export class StatePageComponent implements OnInit {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar la provincia: ${item.nombre}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar la provincia: ${item.nombre}?`;
 
     const sub = modalComponentRef.accept
       .pipe(
