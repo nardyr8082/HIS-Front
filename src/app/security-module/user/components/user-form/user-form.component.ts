@@ -48,6 +48,8 @@ export class UserFormComponent implements OnInit, OnChanges {
   base64textString = null;
   imageAvatar = null;
   passwordType = 'password';
+  imageAvatarFile;
+
   apiUrl = environment.serverUrl;
   minDate: Date;
   maxDate: Date;
@@ -68,12 +70,12 @@ export class UserFormComponent implements OnInit, OnChanges {
       first_name: [this.user ? this.user.first_name : '', Validators.required],
       last_name: [this.user ? this.user.last_name : '', Validators.required],
       email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-      is_active: [this.user ? this.user.is_active : true, Validators.required],
-      groups: [this.user ? this.user.groups : [], Validators.required],
-      categ_docente: [this.user ? this.user.categ_docente : null, Validators.required],
-      categ_cientifica: [this.user ? this.user.categ_cientifica : null, Validators.required],
-      especialidad: [this.user ? this.user.especialidad : null, Validators.required],
-      profesion: [this.user ? this.user.profesion : null, Validators.required],
+      active: [this.user ? this.user.active : true, Validators.required],
+      groups: [this.user ? this.user.groups.map((item) => item.id) : [], Validators.required],
+      categ_docente: [this.user ? this.user.categ_docente.map((item) => item.id) : null, Validators.required],
+      categ_cientifica: [this.user ? this.user.categ_cientifica.map((item) => item.id) : null, Validators.required],
+      especialidad: [this.user ? this.user.especialidad.map((item) => item.id) : null, Validators.required],
+      profesion: [this.user ? this.user.profesion.id : null, Validators.required],
       // password: ['', !this.user ? [Validators.required, Validators.minLength(8), createPasswordStrengthValidator(), passwordOnlyNumberValidator()] : null],
       // confirm_password: ['', !this.user ? [Validators.required] : null],
     });
@@ -109,7 +111,6 @@ export class UserFormComponent implements OnInit, OnChanges {
       telefono_trabajo: [this.person ? this.person.telefono_trabajo : '', Validators.required],
       telefono_movil: [this.person ? this.person.telefono_movil : '', Validators.required],
       qr_code: [this.person ? this.person.qr_code : ''],
-      // foto: [''],
     });
 
     this.identificationCodeControl.valueChanges
@@ -138,6 +139,8 @@ export class UserFormComponent implements OnInit, OnChanges {
     return new Date(parseInt(arrayDate[0]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[2]));
   }
 
+  // FORMS CONTROLS
+
   get qrCodeControl() {
     return this.personFormGroup?.get('qr_code') as FormControl;
   }
@@ -164,6 +167,22 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   get confirmPasswordControl() {
     return this.userFormGroup?.get('confirm_password') as FormControl;
+  }
+
+  get rolesControl() {
+    return this.userFormGroup?.get('groups') as FormControl;
+  }
+
+  get catDocentControl() {
+    return this.userFormGroup?.get('categ_docente') as FormControl;
+  }
+
+  get catScientControl() {
+    return this.userFormGroup?.get('categ_cientifica') as FormControl;
+  }
+
+  get specialtyControl() {
+    return this.userFormGroup?.get('especialidad') as FormControl;
   }
 
   get passwordDontMatch() {
@@ -201,6 +220,7 @@ export class UserFormComponent implements OnInit, OnChanges {
     const file = files[0];
     if (files[0].size < 500000) {
       if (files && file) {
+        this.imageAvatarFile = file;
         const reader = new FileReader();
         reader.onload = this.handleReaderLoaded.bind(this);
         reader.readAsBinaryString(file);
@@ -223,6 +243,54 @@ export class UserFormComponent implements OnInit, OnChanges {
   formatedDate(date: string) {
     const dateArray = date.split('/');
     return `${dateArray[2]}-${dateArray[0]}-${dateArray[1]}`;
+  }
+
+  getRolesNames() {
+    if (this.rolesControl?.value) {
+      const roles: any[] = this.rolesControl?.value;
+      let result = '';
+      roles.forEach((rol) => {
+        result = result.concat(`${this.roles[rol]?.name}, `);
+      });
+
+      return result.slice(0, -2);
+    }
+  }
+
+  getCatDocentNames() {
+    if (this.catDocentControl?.value) {
+      const array: any[] = this.catDocentControl?.value;
+      let result = '';
+      array.forEach((item) => {
+        result = result.concat(`${this.catDoncents[item]?.descripcion}, `);
+      });
+
+      return result.slice(0, -2);
+    }
+  }
+
+  getCatScienceNames() {
+    if (this.catScientControl?.value) {
+      const array: any[] = this.catScientControl?.value;
+      let result = '';
+      array.forEach((item) => {
+        result = result.concat(`${this.catSciences[item]?.descripcion}, `);
+      });
+
+      return result.slice(0, -2);
+    }
+  }
+
+  getSpecialtiesNames() {
+    if (this.specialtyControl?.value) {
+      const array: any[] = this.specialtyControl?.value;
+      let result = '';
+      array.forEach((item) => {
+        result = result.concat(`${this.specialties[item]?.descripcion}, `);
+      });
+
+      return result.slice(0, -2);
+    }
   }
 
   get passwordLetterAndNumberValidation() {
@@ -255,7 +323,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       const person = this.personFormGroup.value;
       const dateFormat = moment(person.fecha_nacimiento);
       person.fecha_nacimiento = dateFormat.format('yyyy-MM-DD');
-      this.user && this.person ? this.edit.emit({ user, person }) : this.create.emit({ user, person });
+      this.user && this.person ? this.edit.emit({ user, person, foto: this.imageAvatarFile }) : this.create.emit({ user, person, foto: this.imageAvatarFile });
     } else {
       this.toastService.error('Por favor revise los formularios, quedan campos requeridos sin llenar', 'Error');
     }

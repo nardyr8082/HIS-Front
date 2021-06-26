@@ -78,6 +78,10 @@ export class PersonService {
     return this.http.patch<any>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
+  uploadImagePerson(data, id): Observable<any> {
+    return this.http.patch<any>(`${this.apiEndpoint}/${id}/`, data);
+  }
+
   deletePerson(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }

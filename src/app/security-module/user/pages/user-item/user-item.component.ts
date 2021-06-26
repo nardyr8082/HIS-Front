@@ -124,7 +124,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
       .pipe(
         map((response: User) => {
           this.user = response;
-          this.getPerson(this.user.persona);
+          this.getPerson(this.user.persona.id);
         }),
         catchError(() => {
           this.toastService.error('Hubo un error al obtener el usuario. Por favor, inténtelo de nuevo más tarde.', 'Error');
@@ -161,7 +161,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
           this.roles = response.results;
         }),
         catchError(() => {
-          this.toastService.error('Hubo un error al obtener los grupos. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          this.toastService.error('Hubo un error al obtener los roles. Por favor, inténtelo de nuevo más tarde.', 'Error');
           return of(null);
         }),
       )
@@ -262,6 +262,13 @@ export class UserItemComponent implements OnInit, OnDestroy {
       .createPerson(item.person)
       .pipe(
         map((response) => {
+          if (item.foto) {
+            const formData = new FormData();
+            formData.append('id', response.id);
+            formData.append('foto', item.foto);
+            const sub = this.personService.uploadImagePerson(formData, response.id).subscribe();
+            this.subscriptions.push(sub);
+          }
           this.createUser(item.user, response.id);
         }),
         catchError(() => {
@@ -323,11 +330,21 @@ export class UserItemComponent implements OnInit, OnDestroy {
     const editPerson: Observable<any> = this.editPerson(item.person);
     const editUser: Observable<any> = this.editUser(item.user);
     const observables: Observable<any>[] = [editPerson, editUser];
+
+    if (item.foto) {
+      const formData = new FormData();
+      formData.append('id', item.person.id);
+      formData.append('foto', item.foto);
+      const uploadImageObservable = this.personService.uploadImagePerson(formData, item.person.id);
+      observables.push(uploadImageObservable);
+    }
+
     forkJoin(observables)
       .pipe(
-        map(() => {
+        map((response) => {
           this.toastService.success('El usuario ha sido editado correctamente.', 'Felicidades');
           this.router.navigateByUrl('/user');
+          return response;
         }),
         catchError((error) => {
           this.toastService.error('Hubo un error editando el final del usuario. Por favor, inténtelo de nuevo más tarde.');

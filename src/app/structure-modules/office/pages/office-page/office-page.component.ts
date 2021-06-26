@@ -1,3 +1,5 @@
+import { LevelService } from './../../../health-unit/services/level.service';
+import { HealthUnitService } from './../../../health-unit/services/health-unit.service';
 import { OfficeService } from './../../services/office.service';
 import { ORG_LEVEL_TABLE_CONFIGURATION } from './../../models/office-table-configuration';
 import { Office } from './../../models/office.model';
@@ -42,7 +44,16 @@ export class OfficePageComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor(private officeService: OfficeService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(
+    private officeService: OfficeService,
+    private toastService: ToastrService,
+    public dialog: MatDialog,
+    private healthUnitService: HealthUnitService,
+    private levelService: LevelService,
+  ) {
+    this.putLevelsInFilter();
+    this.putHealthUnits();
+  }
 
   ngOnInit(): void {
     this.getOffice();
@@ -50,6 +61,32 @@ export class OfficePageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
+  }
+
+  putLevelsInFilter() {
+    const sub = this.levelService
+      .getAllLevels()
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  putHealthUnits(filters = {}) {
+    const sub = this.healthUnitService
+      .getHealthUnits(filters, 'nombre', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[2].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
   }
 
   getOffice(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
@@ -84,6 +121,9 @@ export class OfficePageComponent implements OnInit, OnDestroy {
   onChangeFilter(filters) {
     this.filters = filters;
     this.getOffice(filters, 'id', 'desc');
+    if (this.filters['nivel__id']) {
+      this.putHealthUnits({ nivel__id: this.filters['nivel__id'] });
+    }
   }
 
   createOffice() {

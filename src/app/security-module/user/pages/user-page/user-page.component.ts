@@ -27,14 +27,14 @@ export class UserPageComponent implements OnInit {
 
   rowActionButtons = [
     {
-      tooltipText: 'Editar Grupo',
+      tooltipText: 'Editar Usuario',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.goToForm(item),
     },
     {
-      tooltipText: 'Eliminar Grupo',
+      tooltipText: 'Eliminar Usuario',
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
@@ -58,7 +58,10 @@ export class UserPageComponent implements OnInit {
       .getUsers(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<User>) => {
-          this.users = response.results;
+          this.users = response.results.map((resp) => {
+            const activo = resp.active ? 'Si' : 'No';
+            return { ...resp, activo };
+          });
           this.dataCount = response.count;
           this.loading = false;
         }),

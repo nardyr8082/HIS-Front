@@ -2,7 +2,7 @@ import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model
 
 export const USER_TABLE_CONFIGURATION = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['first_name', 'last_name', 'username', 'email', 'is_active'],
+  displayedColumns: ['first_name', 'last_name', 'username', 'email', 'activo'],
   columnsName: ['Nombre', 'Apellidos', 'Usuario', 'Correo', 'Activo'],
   tableFilters: [
     {
@@ -28,7 +28,7 @@ export const USER_TABLE_CONFIGURATION = {
     {
       name: 'is_active',
       type: 'text',
-      title: 'Activo',
+      title: 'Activo (Si o No)',
     },
   ],
 };
