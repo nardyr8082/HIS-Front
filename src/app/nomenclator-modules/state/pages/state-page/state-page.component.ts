@@ -58,7 +58,11 @@ export class StatePageComponent implements OnInit {
       .getStates(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<State>) => {
-          this.states = response.results;
+          this.states = response.results.map( (resp) => {
+            const pais = resp.pais ? resp.pais.name : '';
+            const pais_id = resp.pais ? resp.pais.id : '';
+            return { ...resp, pais: pais, pais_id: pais_id};
+          });
           this.dataCount = response.count;
           this.loading = false;
         }),
@@ -103,13 +107,13 @@ export class StatePageComponent implements OnInit {
         switchMap((state: State) =>
           this.stateService.createState(state).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al crear el estado. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al crear la provincia. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getStates();
-                this.toastService.success('El estado fue creado correctamente.', 'Felicidades');
+                this.toastService.success('La provincia fue creado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -141,13 +145,13 @@ export class StatePageComponent implements OnInit {
         switchMap((state: State) =>
           this.stateService.editState({ ...state, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el estado. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar la provincia. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getStates();
-                this.toastService.success('El estado fue modificado correctamente.', 'Felicidades');
+                this.toastService.success('La provincia fue modificado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -162,7 +166,7 @@ export class StatePageComponent implements OnInit {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `Está seguro que desea eliminar el estado: ${item.nombre}?`;
+    modalComponentRef.text = `Está seguro que desea eliminar la provincia: ${item.nombre}?`;
 
     const sub = modalComponentRef.accept
       .pipe(
@@ -171,14 +175,14 @@ export class StatePageComponent implements OnInit {
           this.stateService.deleteState(item.id).pipe(
             map(() => item),
             catchError(() => {
-              this.toastService.error('Hubo un error al eliminar el estado. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al eliminar la provincia. Por favor, inténtelo de nuevo más tarde.', 'Error');
               modalRef.close();
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getStates();
-                this.toastService.success('El estado fue eliminado correctamente.', 'Felicidades');
+                this.toastService.success('La provincia fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),

@@ -7,6 +7,13 @@
       <input matInput formControlName="nombre" />
       <mat-error *ngIf="this.stateForm.controls['nombre'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
+    <div class="mb-4">
+      <ng-select appearance="outline" class="custom w-100" placeholder="País" [items]="country" bindLabel="nombre" bindValue="id" formControlName="pais">
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="stateForm.controls['pais'].errors?.required && stateForm.controls['pais'].dirty"
+      >La provincia es <strong>requerido</strong></small
+      >
+    </div>
   </form>
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
