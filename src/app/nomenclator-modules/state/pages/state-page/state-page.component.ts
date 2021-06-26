@@ -27,14 +27,14 @@ export class StatePageComponent implements OnInit {
 
   rowActionButtons = [
     {
-      tooltipText: 'Editar Estado',
+      tooltipText: 'Editar Provincia',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.openEditForm(item),
     },
     {
-      tooltipText: 'Eliminar Estado',
+      tooltipText: 'Eliminar Provincia',
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
