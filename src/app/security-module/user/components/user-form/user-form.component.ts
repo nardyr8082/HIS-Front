@@ -17,6 +17,7 @@ import { Profession } from 'src/app/nomenclator-modules/profession/models/profes
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
 import { environment } from 'src/environments/environment';
+import { Gender } from 'src/app/nomenclator-modules/gender/models/gender.model';
 
 @Component({
   selector: 'app-user-form',
@@ -34,6 +35,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   @Input() nationalities: any[];
   @Input() municipalities: Municipality[];
   @Input() professions: Profession[];
+  @Input() genders: Gender[];
 
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();

@@ -23,6 +23,8 @@ import { Role } from 'src/app/security-module/role/models/role.model';
 import { Person } from 'src/app/shared/models/Person.model';
 import { Municipality } from 'src/app/nomenclator-modules/municipality/models/municipality.model';
 import { Profession } from 'src/app/nomenclator-modules/profession/models/profession.model';
+import { GenderService } from 'src/app/nomenclator-modules/gender/services/gender.service';
+import { Gender } from 'src/app/nomenclator-modules/gender/models/gender.model';
 
 @Component({
   selector: 'app-user-item',
@@ -42,6 +44,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
   nationalities: any[];
   municipalities: Municipality[];
   professions: Profession[];
+  genders: Gender[];
 
   subscriptions: Subscription[] = [];
 
@@ -58,6 +61,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
     private personService: PersonService,
     private municipalityService: MunicipalityService,
     private professionService: ProfessionService,
+    private genderService: GenderService,
     private router: Router,
   ) {
     this.activatedRoute.params.subscribe((params) => {
@@ -78,6 +82,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
     this.getDocTypeIds();
     this.getMunicipalities();
     this.getProffessions();
+    this.getGenders();
   }
 
   ngOnDestroy() {
@@ -93,6 +98,24 @@ export class UserItemComponent implements OnInit, OnDestroy {
         }),
         catchError(() => {
           this.toastService.error('Hubo un error al obtener las profesiones. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          return of(null);
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getGenders() {
+    // TODO: Doing sex get
+    const sub = this.genderService
+      .getGenders({}, 'id', 'asc', 1, 10000)
+      .pipe(
+        map((response: ApiResponse<Gender>) => {
+          this.genders = response.results;
+        }),
+        catchError(() => {
+          this.toastService.error('Hubo un error al obtener los sexos. Por favor, inténtelo de nuevo más tarde.', 'Error');
           return of(null);
         }),
       )
