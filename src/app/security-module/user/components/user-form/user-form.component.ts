@@ -51,7 +51,6 @@ export class UserFormComponent implements OnInit, OnChanges {
   imageAvatarFile;
 
   apiUrl = environment.serverUrl;
-  minDate: Date;
   maxDate: Date;
   constructor(private _formBuilder: FormBuilder, public utilsService: UtilsService, private toastService: ToastrService, private userService: UserService) {}
 
@@ -331,7 +330,6 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   validateDate(): void {
     const currentYear = new Date().getFullYear();
-    this.maxDate = new Date(currentYear - 18, 0, 1);
-    this.minDate = new Date(currentYear - 130, 11, 31);
+    this.maxDate = new Date(currentYear - 18, 11, 31);
   }
 }
