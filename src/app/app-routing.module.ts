@@ -129,6 +129,11 @@ const routes: Routes = [
         loadChildren: () => import('./structure-modules/health-unit/health-unit.module').then((m) => m.HealthUnitModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'configurations',
+        loadChildren: () => import('./configurations/configurations.module').then(m => m.ConfigurationsModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {

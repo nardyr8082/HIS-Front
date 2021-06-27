@@ -183,6 +183,13 @@ export class NavigationService {
       route: 'backend/perfil',
       display: true,
     },
+    {
+      displayName: 'Configuración',
+      iconName: ['settings'],
+      material: true,
+      route: 'configurations',
+      display: true,
+    },
   ];
 
   constructor() {}
