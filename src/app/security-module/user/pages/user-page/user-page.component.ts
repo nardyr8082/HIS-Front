@@ -33,13 +33,13 @@ export class UserPageComponent implements OnInit {
       class: 'btn-primary',
       callback: (item) => this.goToForm(item),
     },
-    {
-      tooltipText: 'Eliminar Usuario',
-      icon: 'delete',
-      color: 'warn',
-      class: 'btn-danger',
-      callback: (item) => this.deleteUser(item),
-    },
+    // {
+    //   tooltipText: 'Eliminar Usuario',
+    //   icon: 'delete',
+    //   color: 'warn',
+    //   class: 'btn-danger',
+    //   callback: (item) => this.deleteUser(item),
+    // },
   ];
 
   constructor(private userService: UserService, private toastService: ToastrService, public dialog: MatDialog, private router: Router) {}
