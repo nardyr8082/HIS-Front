@@ -236,6 +236,12 @@
               <mat-error *ngIf="personFormGroup.controls['fecha_nacimiento'].errors?.required">
                 {{ 'La fecha de nacimiento es ' }} <strong>requerida</strong>
               </mat-error>
+              <mat-error *ngIf="personFormGroup.controls['fecha_nacimiento'].errors?.matDatepickerMax">
+                {{'La fecha debe ser inferior(Mayores de 18 años)'}}
+              </mat-error>
+              <mat-error *ngIf="personFormGroup.controls['fecha_nacimiento'].errors?.matDatepickerMin">
+                {{'La fecha debe ser superior(Menores de 130 años)'}}
+              </mat-error>
             </mat-form-field>
           </div>
 
