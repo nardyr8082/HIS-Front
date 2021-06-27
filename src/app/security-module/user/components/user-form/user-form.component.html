@@ -227,6 +227,7 @@
               <mat-label>Fecha de Nacimiento</mat-label>
               <input matInput
               formControlName="fecha_nacimiento"
+              [min]="minDate"
               [max]="maxDate"
               [matDatepicker]="picker"
               />
