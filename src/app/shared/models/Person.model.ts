@@ -7,7 +7,7 @@ export interface Person {
   pais: Item;
   nro_identificacion: string;
   fecha_nacimiento: string;
-  profesion: string;
+  profesion: Item;
   ocupacion: string;
   foto: string;
   direccion: string;
@@ -21,11 +21,13 @@ export interface Person {
   telefono_trabajo: string;
   telefono_movil: string;
   email: string;
-  sexo: number;
+  sexo: any;
   qr_code: string;
 }
 
 interface Item {
   id: number;
   name: string;
+  descripcion?: string;
+  nombre?: string;
 }

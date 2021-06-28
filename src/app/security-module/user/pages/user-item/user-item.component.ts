@@ -107,7 +107,6 @@ export class UserItemComponent implements OnInit, OnDestroy {
   }
 
   getGenders() {
-    // TODO: Doing sex get
     const sub = this.genderService
       .getGenders({}, 'id', 'asc', 1, 10000)
       .pipe(

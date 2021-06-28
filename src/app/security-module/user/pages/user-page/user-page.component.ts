@@ -27,19 +27,26 @@ export class UserPageComponent implements OnInit {
 
   rowActionButtons = [
     {
+      tooltipText: 'Activar o desactivar',
+      icon: 'check_circle_outline',
+      color: 'warn',
+      class: 'btn-warning',
+      callback: (item) => this.disableOrEnableUser(item),
+    },
+    {
+      tooltipText: 'Detalles del Usuario',
+      icon: 'list',
+      color: 'primary',
+      class: 'btn-default',
+      callback: (item) => this.goToDetails(item),
+    },
+    {
       tooltipText: 'Editar Usuario',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.goToForm(item),
     },
-    // {
-    //   tooltipText: 'Eliminar Usuario',
-    //   icon: 'delete',
-    //   color: 'warn',
-    //   class: 'btn-danger',
-    //   callback: (item) => this.deleteUser(item),
-    // },
   ];
 
   constructor(private userService: UserService, private toastService: ToastrService, public dialog: MatDialog, private router: Router) {}
@@ -52,14 +59,14 @@ export class UserPageComponent implements OnInit {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getUsers(filters = this.filters, sortColumn = 'fecha', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getUsers(filters = this.filters, sortColumn = 'first_name', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.userService
       .getUsers(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<User>) => {
           this.users = response.results.map((resp) => {
-            const activo = resp.active ? 'Si' : 'No';
+            const activo = resp.active ? '<p class="text-success">Si</p>' : '<p class="text-danger">No</p>';
             return { ...resp, activo };
           });
           this.dataCount = response.count;
@@ -76,12 +83,18 @@ export class UserPageComponent implements OnInit {
     this.subscriptions.push(sub);
   }
 
+  goToDetails(user?: User) {
+    user ? this.router.navigateByUrl(`/user/details/${user.id}`) : this.router.navigateByUrl(`/user/create`);
+  }
+
   goToForm(user?: User) {
     user ? this.router.navigateByUrl(`/user/edit/${user.id}`) : this.router.navigateByUrl(`/user/create`);
   }
 
   onChangeSort(sort: Sort) {
-    this.getUsers(this.filters, sort.active, sort.direction);
+    // Change activo for active sort column
+    // Beacuse activo is a custom field
+    this.getUsers(this.filters, sort.active == 'activo' ? 'active' : sort.active, sort.direction);
   }
 
   onChangeFilter(filters) {
@@ -91,6 +104,23 @@ export class UserPageComponent implements OnInit {
 
   onChangePage(page: PageEvent) {
     this.getUsers(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+  }
+
+  disableOrEnableUser(item: User) {
+    const newUser = { id: item.id, active: !item.active };
+    const sub = this.userService
+      .editUser(newUser)
+      .pipe(
+        map(() => {
+          this.getUsers();
+          !item.active
+            ? this.toastService.success(`El usuario ${item.username} fue activado correctamente.`, 'Felicidades')
+            : this.toastService.warning(`El usuario ${item.username} fue desactivado.`, 'Atención');
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
   }
 
   deleteUser(item: User) {

@@ -1,0 +1,108 @@
+<div class="container my-3" *ngIf="user">
+  <mat-card class="w-100">
+    <mat-card-header>
+      <div class="d-flex justify-content-between align-items-center w-100">
+        <div class="d-flex">
+          <img class="img-detail-avatar mx-3" [src]="user.persona?.foto" />
+          <div>
+            <h3 class="title">{{ user.first_name }} {{ user.last_name }}</h3>
+            <p class="status-size date-color">Unido: {{ timeAgo }}</p>
+            <p [ngClass]="user.active ? 'text-success status-size' : 'text-danger status-size'">{{ user.active ? 'Activo' : 'Desactivado' }}</p>
+          </div>
+        </div>
+        <div>
+          <button (click)="goBack()" mat-fab color="primary" aria-label="Back icon">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-divider class="my-3"></mat-divider>
+    <mat-card-content>
+      <div class="row mt-5">
+        <div class="col-lg-6 col-sm-12">
+          <h4>Datos Personales</h4>
+          <div class="card p-3">
+            <p class="my-1" *ngIf="user.username">
+              Nombre de usuario: <b>{{ user.username }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.email">
+              Correo: <b>{{ user.email }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.nro_identificacion">
+              Número de identificación: <b>{{ user.persona.nro_identificacion }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.tipo_doc?.descripcion">
+              Tipo de documento: <b>{{ user.persona.tipo_doc.descripcion }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.fecha_nacimiento">
+              Fecha de Nacimiento: <b>{{ user.persona.fecha_nacimiento | date: 'dd/MM/yyyy' }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.sexo?.descripcion">
+              Sexo: <b>{{ user.persona.sexo.descripcion }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.nacionalidad?.descripcion">
+              Nacionalidad: <b>{{ user.persona.nacionalidad.descripcion }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.municipio?.nombre">
+              Municipio: <b>{{ user.persona.municipio.nombre }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.profesion?.nombre">
+              Profesión: <b>{{ user.profesion.nombre }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.groups?.length">
+              Roles: <b>{{ getItemsRole(user.groups) }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.categ_docente?.length">
+              Categoría Docente: <b>{{ getItemsDescription(user.categ_docente) }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.categ_cientifica?.length">
+              Categorías Científica: <b>{{ getItemsDescription(user.categ_cientifica) }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.especialidad?.length">
+              Especialidades: <b>{{ getItemsDescription(user.especialidad) }}</b>
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+          <h4>Datos de Contacto</h4>
+          <div class="card p-3">
+            <p class="my-1" *ngIf="user.persona?.direccion">
+              Dirección: <b>{{ user.persona?.direccion }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.numero">
+              Número: <b>{{ user.persona?.numero }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.cod_postal">
+              Código Postal: <b>{{ user.persona?.cod_postal }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.nombre_madre">
+              Nombre de la Madre: <b>{{ user.persona?.nombre_madre }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.nombre_padre">
+              Nombre del Padre: <b>{{ user.persona?.nombre_padre }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.contacto_emergencia">
+              Contacto de emergencia: <b>{{ user.persona?.contacto_emergencia }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.telefono_emergencia">
+              Teléfono de emergencia: <b>{{ user.persona?.telefono_emergencia }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.telefono_casa">
+              Teléfono de casa: <b>{{ user.persona?.telefono_casa }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.telefono_trabajo">
+              Teléfono del trabajo: <b>{{ user.persona?.telefono_trabajo }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.telefono_movil">
+              Teléfono Movil: <b>{{ user.persona?.telefono_movil }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.telefono_casa">
+              Teléfono de casa: <b>{{ user.persona?.telefono_casa }}</b>
+            </p>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

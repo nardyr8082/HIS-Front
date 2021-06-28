@@ -26,7 +26,7 @@ export const USER_TABLE_CONFIGURATION = {
       title: 'Correo',
     },
     {
-      name: 'is_active',
+      name: 'active',
       type: 'text',
       title: 'Activo (Si o No)',
     },

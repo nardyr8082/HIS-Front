@@ -6,9 +6,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user-routing.module';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { UserDetailsComponent } from './pages/user-details/user-details.component';
 
 @NgModule({
-  declarations: [UserItemComponent, UserFormComponent, UserPageComponent],
+  declarations: [UserItemComponent, UserFormComponent, UserPageComponent, UserDetailsComponent],
   imports: [CommonModule, SharedModule, UserRoutingModule],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }]
 })
