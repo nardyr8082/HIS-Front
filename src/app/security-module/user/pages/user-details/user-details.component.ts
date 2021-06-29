@@ -8,6 +8,7 @@ import { of, Subscription } from 'rxjs';
 import * as moment from 'moment';
 import { Role } from 'src/app/security-module/role/models/role.model';
 import { Location } from '@angular/common';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-user-details',
@@ -19,6 +20,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   userId: number;
   subscriptions: Subscription[] = [];
   timeAgo;
+  apiUrl = environment.serverUrl;
 
   constructor(private activatedRoute: ActivatedRoute, private userService: UserService, private toastService: ToastrService, private _location: Location) {
     this.activatedRoute.params.subscribe((params) => {

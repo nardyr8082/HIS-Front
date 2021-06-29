@@ -102,6 +102,9 @@
             </p>
           </div>
         </div>
+        <div class="d-flex justify-content-end" *ngIf="user.persona?.qr_code">
+          <img class="qr-image" [src]="apiUrl + user.persona?.qr_code" [alt]="apiUrl + user.persona?.qr_code" />
+        </div>
       </div>
     </mat-card-content>
   </mat-card>
