@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { UserService } from './../../services/user.service';
 import { USER_TABLE_CONFIGURATION } from './../../models/user-table-configuration';
 import { User } from './../../models/user.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { of, Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,7 +17,7 @@ import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirma
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.scss'],
 })
-export class UserPageComponent implements OnInit {
+export class UserPageComponent implements OnInit, OnDestroy {
   users: User[];
   dataCount = 0;
   configuration = USER_TABLE_CONFIGURATION;
