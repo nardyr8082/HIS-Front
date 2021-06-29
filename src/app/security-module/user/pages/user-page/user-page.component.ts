@@ -59,7 +59,7 @@ export class UserPageComponent implements OnInit {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getUsers(filters = this.filters, sortColumn = 'first_name', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getUsers(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
     this.loading = true;
     const sub = this.userService
       .getUsers(filters, sortColumn, sortDirection, page, pageSize)
@@ -99,11 +99,11 @@ export class UserPageComponent implements OnInit {
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getUsers(filters, 'fecha', 'desc');
+    this.getUsers(filters, 'id', 'desc');
   }
 
   onChangePage(page: PageEvent) {
-    this.getUsers(this.filters, 'fecha', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getUsers(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   disableOrEnableUser(item: User) {
