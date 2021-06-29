@@ -64,17 +64,8 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
       .pipe(
         map((response: User) => {
           this.user = response;
-          this.timeAgo = moment(this.user.date_joined)
-            .fromNow(true)
-            .replace('hours', 'horas')
-            .replace('hour', 'hora')
-            .replace('days', 'días')
-            .replace('day', 'día')
-            .replace('months', 'meses')
-            .replace('month', 'mes')
-            .replace('a ', 'un ')
-            .replace('years', 'años')
-            .replace('year', 'año');
+          moment.locale('es');
+          this.timeAgo = moment(this.user.date_joined).fromNow(true);
         }),
         catchError(() => {
           this.toastService.error('Hubo un error al obtener el usuario. Por favor, inténtelo de nuevo más tarde.', 'Error');
