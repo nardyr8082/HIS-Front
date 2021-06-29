@@ -35,7 +35,7 @@ export class UserPageComponent implements OnInit {
     },
     {
       tooltipText: 'Detalles del Usuario',
-      icon: 'list',
+      icon: 'visibility',
       color: 'primary',
       class: 'btn-default',
       callback: (item) => this.goToDetails(item),
