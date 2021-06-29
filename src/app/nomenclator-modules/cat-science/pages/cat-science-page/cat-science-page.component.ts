@@ -24,6 +24,8 @@ export class CatSciencePageComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -52,7 +54,7 @@ export class CatSciencePageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getCatScience(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getCatScience(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.catScienceService
       .getCatScience(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,6 +76,8 @@ export class CatSciencePageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getCatScience(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -108,7 +112,7 @@ export class CatSciencePageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getCatScience();
+                this.getCatScience(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La categoría científica fue creada correctamente.', 'Felicidades');
               }
             }),
@@ -145,7 +149,7 @@ export class CatSciencePageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getCatScience();
+                this.getCatScience(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La categoría científica fue modificado correctamente.', 'Felicidades');
               }
             }),
@@ -176,7 +180,7 @@ export class CatSciencePageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getCatScience();
+                this.getCatScience(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La categoría científica fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }

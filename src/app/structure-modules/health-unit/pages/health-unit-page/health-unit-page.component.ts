@@ -25,6 +25,8 @@ export class HealthUnitPageComponent implements OnInit {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -68,7 +70,7 @@ export class HealthUnitPageComponent implements OnInit {
     this.subscriptions.push(sub);
   }
 
-  getHealthUnits(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getHealthUnits(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.healthUnitService
       .getHealthUnits(filters, sortColumn, sortDirection, page, pageSize)
@@ -94,6 +96,8 @@ export class HealthUnitPageComponent implements OnInit {
   }
 
   onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getHealthUnits(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -128,7 +132,7 @@ export class HealthUnitPageComponent implements OnInit {
             }),
             tap((success) => {
               if (success) {
-                this.getHealthUnits();
+                this.getHealthUnits(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La unidad de salud fue creada correctamente.', 'Felicidades');
               }
             }),
@@ -164,7 +168,7 @@ export class HealthUnitPageComponent implements OnInit {
             }),
             tap((success) => {
               if (success) {
-                this.getHealthUnits();
+                this.getHealthUnits(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La unidad de salud fue modificada correctamente.', 'Felicidades');
               }
             }),
@@ -194,7 +198,7 @@ export class HealthUnitPageComponent implements OnInit {
             }),
             tap((success) => {
               if (success) {
-                this.getHealthUnits();
+                this.getHealthUnits(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La unidad de salud fue eliminada correctamente.', 'Felicidades');
                 modalRef.close();
               }

@@ -28,6 +28,8 @@ export class WorkStationPageComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -121,7 +123,7 @@ export class WorkStationPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  getWorkStations(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getWorkStations(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.workStationService
       .getWorkStations(filters, sortColumn, sortDirection, page, pageSize)
@@ -145,6 +147,8 @@ export class WorkStationPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getWorkStations(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -185,7 +189,7 @@ export class WorkStationPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getWorkStations();
+                this.getWorkStations(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El puesto de trabajo fue creado correctamente.', 'Felicidades');
               }
             }),
@@ -222,7 +226,7 @@ export class WorkStationPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getWorkStations();
+                this.getWorkStations(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El puesto de trabajo fue modificado correctamente.', 'Felicidades');
               }
             }),
@@ -253,7 +257,7 @@ export class WorkStationPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getWorkStations();
+                this.getWorkStations(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El puesto de trabajo fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }

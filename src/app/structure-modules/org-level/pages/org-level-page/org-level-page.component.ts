@@ -24,6 +24,8 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -52,7 +54,7 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getOrgLevel(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getOrgLevel(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.orgLevelService
       .getOrgLevel(null, filters, sortColumn, sortDirection, page, pageSize)
@@ -78,6 +80,8 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getOrgLevel(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -112,7 +116,7 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getOrgLevel();
+                this.getOrgLevel(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El Ubicación Organizacional fue creada correctamente.', 'Felicidades');
               }
             }),
@@ -149,7 +153,7 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getOrgLevel();
+                this.getOrgLevel(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El Ubicación Organizacional fue modificado correctamente.', 'Felicidades');
               }
             }),
@@ -180,7 +184,7 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getOrgLevel();
+                this.getOrgLevel(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El Ubicación Organizacional fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }

@@ -24,6 +24,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -59,7 +61,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getUsers(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getUsers(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.userService
       .getUsers(filters, sortColumn, sortDirection, page, pageSize)
@@ -103,6 +105,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getUsers(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -142,7 +146,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getUsers();
+                this.getUsers(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El usuario fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
