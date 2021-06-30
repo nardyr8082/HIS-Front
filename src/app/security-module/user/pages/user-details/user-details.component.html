@@ -50,11 +50,11 @@
             <p class="my-1" *ngIf="user.persona?.nacionalidad?.descripcion">
               Nacionalidad: <b>{{ user.persona.nacionalidad.descripcion }}</b>
             </p>
-            <p class="my-1" *ngIf="user.persona?.municipio?.nombre">
-              País: <b>{{ user.pais }}</b>
+            <p class="my-1" *ngIf="user.persona?.municipio?.estado?.pais?.nombre">
+              País: <b>{{ user.persona.municipio.estado.pais.nombre }}</b>
             </p>
-            <p class="my-1" *ngIf="user.persona?.municipio?.nombre">
-              Provincia: <b>{{ user.provincia }}</b>
+            <p class="my-1" *ngIf="user.persona?.municipio?.estado?.nombre">
+              Provincia: <b>{{ user.persona.municipio.estado.nombre }}</b>
             </p>
             <p class="my-1" *ngIf="user.persona?.municipio?.nombre">
               Distrito: <b>{{ user.persona.municipio.nombre }}</b>
