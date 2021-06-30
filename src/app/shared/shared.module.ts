@@ -55,6 +55,8 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
+import { NgxDropzoneModule } from 'ngx-dropzone';
+
 ///////////////////////////////////////////////////////////////////
 
 const components = [DeleteConfirmationModalComponent];
@@ -114,6 +116,7 @@ const components = [DeleteConfirmationModalComponent];
     MatNativeDateModule,
     MatAutocompleteModule,
     NgSelectModule,
+    NgxDropzoneModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -160,6 +163,7 @@ const components = [DeleteConfirmationModalComponent];
     MatNativeDateModule,
     MatAutocompleteModule,
     NgSelectModule,
+    NgxDropzoneModule,
     ...components,
   ],
   providers: [BreadcrumbService, NavService, PreviousRouteService],

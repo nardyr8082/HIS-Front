@@ -6101,6 +6101,13 @@ ngp-lazy-image@0.0.6:
   dependencies:
     tslib "^2.0.0"
 
+ngx-dropzone@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-dropzone/-/ngx-dropzone-3.0.0.tgz#97a2005b419f932c34006498b4f47a8c38357840"
+  integrity sha512-rVTp/ORu7etkcwtXGtsph7sigziAr1DitnHS9JueoXPvYhhB/Ni00MuMl4MinCdU2o9Z9MWF0jzW7UrydcC71A==
+  dependencies:
+    tslib "^2.0.0"
+
 ngx-rating@0.0.9:
   version "0.0.9"
   resolved "https://registry.yarnpkg.com/ngx-rating/-/ngx-rating-0.0.9.tgz#1c673d6e597642e430f980064be8571663b0fc16"

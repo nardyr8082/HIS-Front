@@ -1,5 +1,5 @@
 export interface Configurations {
-  id: number;
+  id?: number;
   nombre_sistema?: string;
   logo_1?: string;
   separador_decimales?: string;

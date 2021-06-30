@@ -16,4 +16,12 @@ export class ConfigurationsService {
   getConfiguration(): Observable<ApiResponse<Configurations>> {
     return this.http.get<ApiResponse<Configurations>>(this.apiEndpoint);
   }
+
+  editConfiguration(data: Configurations): Observable<Configurations> {
+    return this.http.patch<Configurations>(`${this.apiEndpoint}/${data.id}/`, data);
+  }
+
+  uploadImage(data, id): Observable<any> {
+    return this.http.patch<any>(`${this.apiEndpoint}/${id}/`, data);
+  }
 }

@@ -1,8 +1,11 @@
-import { Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { DATE_FORMATS, DECIMAL_SPLITER, ItemConfiguration, MILLAR_SPLITER, TIME_FORMATS } from './../../models/configuration.config';
+import { forkJoin, Observable, of, Subscription } from 'rxjs';
 import { ConfigurationsService } from './../../services/configurations.service';
 import { Configurations } from './../../models/configurations.model';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { catchError, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-configurations',
@@ -10,35 +13,225 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./configurations.component.scss'],
 })
 export class ConfigurationsComponent implements OnInit, OnDestroy {
-  constructor(private _formBuilder: FormBuilder, private configurationService: ConfigurationsService) {}
+  constructor(private _formBuilder: FormBuilder, private configurationService: ConfigurationsService, private toastrService: ToastrService) {}
 
   configurationForm: FormGroup;
+  imagesForm: FormGroup;
   configuration: Configurations;
   subscriptions: Array<Subscription> = [];
 
+  decimalSpliter: Array<ItemConfiguration> = DECIMAL_SPLITER;
+  millarSpleiter: Array<ItemConfiguration> = MILLAR_SPLITER;
+  dateFormat: Array<ItemConfiguration> = DATE_FORMATS;
+  timeFormat: Array<ItemConfiguration> = TIME_FORMATS;
+
+  customDecimalSpliter = new FormControl(false);
+  customMillarSpliter = new FormControl(false);
+  customDateFormat = new FormControl(false);
+  customTimeFormat = new FormControl(false);
+
+  logos: File[] = [];
+  headerImage: File[] = [];
+  footerImage: File[] = [];
+
+  currentLogo: string;
+  currentHeaderImage: string;
+  currentFooterImage: string;
+
   ngOnInit(): void {
     this.getConfiguration();
-    this.buildForm();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
+  onSelectLogo(event) {
+    console.log(event);
+    this.logos.push(...event.addedFiles);
+    this.logoFormControl.setValue(this.logos);
+  }
+
+  onSelectHeaderImage(event) {
+    console.log(event);
+    this.headerImage.push(...event.addedFiles);
+    this.headerImageFormControl.setValue(this.headerImage);
+  }
+
+  onSelectFooterImage(event) {
+    console.log(event);
+    this.footerImage.push(...event.addedFiles);
+    this.footerImageFormControl.setValue(this.footerImage);
+  }
+
+  onRemoveLogo(event) {
+    console.log(event);
+    this.logos.splice(this.logos.indexOf(event), 1);
+    this.logoFormControl.setValue(this.logos);
+  }
+
+  onRemoveHeaderImage(event) {
+    console.log(event);
+    this.headerImage.splice(this.headerImage.indexOf(event), 1);
+    this.headerImageFormControl.setValue(this.headerImage);
+  }
+
+  onRemoveFooterImage(event) {
+    console.log(event);
+    this.footerImage.splice(this.footerImage.indexOf(event), 1);
+    this.footerImageFormControl.setValue(this.footerImage);
+  }
+
   getConfiguration() {
-    const sub = this.configurationService.getConfiguration();
+    const sub = this.configurationService
+      .getConfiguration()
+      .pipe(
+        map((response) => {
+          this.configuration = response.results[0] ? response.results[0] : {};
+          this.buildForm();
+        }),
+        catchError((error) => {
+          this.toastrService.error('Hubo un error al cargar la configuracón. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          return of(null);
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
   }
 
   buildForm() {
     this.configurationForm = this._formBuilder.group({
-      nombre_sistema: [this.configuration ? this.configuration.nombre_sistema : '', Validators.required],
+      nombre_sistema: [this.configuration ? this.configuration?.nombre_sistema : '', Validators.required],
+      separador_decimales: [this.configuration ? this.configuration?.separador_decimales : ''],
+      separador_miles: [this.configuration ? this.configuration?.separador_miles : ''],
+      formato_fecha: [this.configuration ? this.configuration?.formato_fecha : '', Validators.required],
+      formato_hora: [this.configuration ? this.configuration?.formato_hora : '', Validators.required],
+    });
+
+    this.currentLogo = this.configuration?.logo_1;
+    this.currentHeaderImage = this.configuration?.imagen_cabecera_informe;
+    this.currentFooterImage = this.configuration?.imagen_pie_firma_informe;
+
+    if (this.configuration?.id) {
+      this.configurationForm.addControl('id', new FormControl(this.configuration?.id));
+    }
+
+    this.imagesForm = this._formBuilder.group({
       logo_1: [this.configuration ? this.configuration.logo_1 : '', Validators.required],
-      separador_decimales: [this.configuration ? this.configuration.separador_decimales : '', Validators.required],
-      separador_miles: [this.configuration ? this.configuration.separador_miles : '', Validators.required],
-      formato_fecha: [this.configuration ? this.configuration.formato_fecha : '', Validators.required],
-      formato_hora: [this.configuration ? this.configuration.formato_hora : '', Validators.required],
       imagen_cabecera_informe: [this.configuration ? this.configuration.imagen_cabecera_informe : '', Validators.required],
       imagen_pie_firma_informe: [this.configuration ? this.configuration.imagen_pie_firma_informe : '', Validators.required],
     });
+  }
+
+  // Form Controls
+  get systemNameFormControl() {
+    return this.configurationForm?.get('nombre_sistema') as FormControl;
+  }
+
+  get decimalSpliterFormControl() {
+    return this.configurationForm?.get('separador_decimales') as FormControl;
+  }
+
+  get millarSpliterFormControl() {
+    return this.configurationForm?.get('separador_miles') as FormControl;
+  }
+
+  get dateFormatFormControl() {
+    return this.configurationForm?.get('formato_fecha') as FormControl;
+  }
+
+  get timeFormatFormControl() {
+    return this.configurationForm?.get('formato_hora') as FormControl;
+  }
+
+  get idFormControl() {
+    return this.configurationForm?.get('id') as FormControl;
+  }
+
+  get logoFormControl() {
+    return this.imagesForm?.get('logo_1') as FormControl;
+  }
+
+  get headerImageFormControl() {
+    return this.imagesForm?.get('imagen_cabecera_informe') as FormControl;
+  }
+
+  get footerImageFormControl() {
+    return this.imagesForm?.get('imagen_pie_firma_informe') as FormControl;
+  }
+
+  sendData() {
+    const config = this.configurationForm.value;
+    const id = this.idFormControl?.value;
+    const observables: Observable<any>[] = [];
+
+    const sub = this.configurationService
+      .editConfiguration(config)
+      .pipe(
+        map((response) => {
+          if (!id) {
+            observables.push(...this.checkImages(response.id));
+            forkJoin(observables)
+              .pipe(
+                map((res) => {
+                  this.toastrService.success('La configuración fue editada exitosamente', 'Felicidades');
+                  this.getConfiguration();
+                }),
+                catchError((err) => {
+                  this.toastrService.error('Hubo un error subiendo las imagenes.', 'Error');
+                  return of(null);
+                }),
+              )
+              .subscribe();
+          }
+        }),
+        catchError((error) => {
+          this.toastrService.error('Hubo un error editando la configuración.', 'Error');
+          return of(null);
+        }),
+      )
+      .subscribe();
+
+    if (id) {
+      observables.push(...this.checkImages(id));
+      forkJoin(observables)
+        .pipe(
+          map((res) => {
+            this.toastrService.success('La configuración fue editada exitosamente', 'Felicidades');
+            this.getConfiguration();
+          }),
+          catchError((err) => {
+            this.toastrService.error('Hubo un error subiendo las imagenes.', 'Error');
+            return of(null);
+          }),
+        )
+        .subscribe();
+    }
+
+    this.subscriptions.push(sub);
+  }
+
+  checkImages(id): Observable<any>[] {
+    const result: Observable<any>[] = [];
+    if (this.logos?.length > 0) {
+      result.push(this.uploadImage(this.logos[0], 'logo_1', id));
+    }
+    if (this.headerImage?.length > 0) {
+      result.push(this.uploadImage(this.headerImage[0], 'imagen_cabecera_informe', id));
+    }
+
+    if (this.footerImage?.length > 0) {
+      result.push(this.uploadImage(this.footerImage[0], 'imagen_pie_firma_informe', id));
+    }
+
+    return result;
+  }
+
+  uploadImage(file: File, fieldName: string, id) {
+    const formData = new FormData();
+    formData.append(fieldName, file);
+    formData.append('id', id);
+    return this.configurationService.uploadImage(formData, id);
   }
 }
