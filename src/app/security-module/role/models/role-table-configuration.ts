@@ -10,5 +10,10 @@ export const ROLE_TABLE_CONFIGURATION = {
       type: 'text',
       title: 'Nombre',
     },
+    {
+      name: 'perms',
+      type: 'text',
+      title: 'Permiso',
+    },
   ],
 };
