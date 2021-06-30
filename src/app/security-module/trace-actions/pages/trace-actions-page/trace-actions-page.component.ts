@@ -25,7 +25,7 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
   tableFilters: FilterTable[] = [
     {
       name: 'fecha',
-      type: 'text',
+      type: 'date',
       title: 'Fecha',
     },
     {

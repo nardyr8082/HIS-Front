@@ -15,7 +15,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { ConfirmationDialogFrontComponent } from './confirmation-dialog-front/confirmation-dialog-front.component';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { NgpImageLazyLoadModule } from 'ngp-lazy-image';
@@ -166,6 +166,6 @@ const components = [DeleteConfirmationModalComponent];
     NgxDropzoneModule,
     ...components,
   ],
-  providers: [BreadcrumbService, NavService, PreviousRouteService],
+  providers: [BreadcrumbService, NavService, PreviousRouteService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
 })
 export class SharedModule {}
