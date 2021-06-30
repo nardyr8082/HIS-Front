@@ -16,7 +16,7 @@ import { environment } from '../../../../../environments/environment';
   styleUrls: ['./user-details.component.scss'],
 })
 export class UserDetailsComponent implements OnInit, OnDestroy {
-  user: User;
+  user: any;
   userId: number;
   subscriptions: Subscription[] = [];
   timeAgo;
@@ -62,7 +62,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     const sub = this.userService
       .getUserById(userId)
       .pipe(
-        map((response: User) => {
+        map((response: any) => {
           this.user = response;
           moment.locale('es');
           this.timeAgo = moment(this.user.date_joined).fromNow(true);
