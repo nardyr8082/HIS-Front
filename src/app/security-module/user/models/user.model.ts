@@ -8,6 +8,7 @@ export interface User {
   password?: string;
   last_login?: Date;
   is_superuser?: boolean;
+  is_online?: boolean;
   username?: string;
   first_name?: string;
   last_name?: string;

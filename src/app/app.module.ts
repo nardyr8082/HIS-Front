@@ -11,6 +11,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from './core/services/translate-factory/translate-loader';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { getSpanishPaginator } from './shared/table/custom-table/spanish-paginator';
 
 @NgModule({
   imports: [
@@ -40,6 +42,7 @@ import { HttpLoaderFactory } from './core/services/translate-factory/translate-l
       useClass: HttpErrorInterceptorService,
       multi: true,
     },
+    { provide: MatPaginatorIntl, useValue: getSpanishPaginator() }
   ],
   bootstrap: [AppComponent],
 })

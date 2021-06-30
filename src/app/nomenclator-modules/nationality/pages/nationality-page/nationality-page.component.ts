@@ -24,6 +24,8 @@ export class NationalityPageComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -52,7 +54,7 @@ export class NationalityPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getNationalities(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getNationalities(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.nationalityService
       .getNationalities(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,6 +76,8 @@ export class NationalityPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getNationalities(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -108,7 +112,7 @@ export class NationalityPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getNationalities();
+                this.getNationalities(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La nacionalidad fue creada correctamente.', 'Felicidades');
               }
             }),
@@ -146,7 +150,7 @@ export class NationalityPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getNationalities();
+                this.getNationalities(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La nacionalidad fue modificada correctamente.', 'Felicidades');
               }
             }),
@@ -177,7 +181,7 @@ export class NationalityPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getNationalities();
+                this.getNationalities(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La nacionalidad fue eliminada correctamente.', 'Felicidades');
                 modalRef.close();
               }

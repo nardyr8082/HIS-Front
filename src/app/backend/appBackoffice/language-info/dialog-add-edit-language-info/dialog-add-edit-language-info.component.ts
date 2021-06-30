@@ -156,7 +156,6 @@ onSave(): void {
     ...this.languageData
   };
   this.isSaving = true;
-  console.log(data);
 
   if (!this.isEditing) {
     this.languageInfoService.createLanguageInfo(data).subscribe(

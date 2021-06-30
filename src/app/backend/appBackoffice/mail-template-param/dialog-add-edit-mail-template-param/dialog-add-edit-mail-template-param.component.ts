@@ -160,7 +160,6 @@ export class DialogAddEditMailTemplateParamComponent implements OnInit, OnDestro
       ...this.languageData
     };
     this.isSaving = true;
-    console.log(data);
 
     if (!this.isEditing) {
       this.mailTemplateParamService.createMailTemplateParam(data).subscribe(

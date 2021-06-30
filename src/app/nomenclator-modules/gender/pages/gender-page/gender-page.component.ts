@@ -24,6 +24,8 @@ export class GenderPageComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -52,7 +54,7 @@ export class GenderPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getGenders(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getGenders(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.genderService
       .getGenders(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,6 +76,8 @@ export class GenderPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getGenders(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -108,7 +112,7 @@ export class GenderPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getGenders();
+                this.getGenders(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El sexo fue creado correctamente.', 'Felicidades');
               }
             }),
@@ -146,7 +150,7 @@ export class GenderPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getGenders();
+                this.getGenders(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El sexo fue modificado correctamente.', 'Felicidades');
               }
             }),
@@ -177,7 +181,7 @@ export class GenderPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getGenders();
+                this.getGenders(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El sexo fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }

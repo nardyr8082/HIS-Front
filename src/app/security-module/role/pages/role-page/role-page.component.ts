@@ -24,6 +24,8 @@ export class RolePageComponent implements OnInit {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -52,7 +54,7 @@ export class RolePageComponent implements OnInit {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getRoles(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getRoles(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.roleService
       .getRoles(filters, sortColumn, sortDirection, page, pageSize)
@@ -86,6 +88,8 @@ export class RolePageComponent implements OnInit {
   }
 
   onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getRoles(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -120,7 +124,7 @@ export class RolePageComponent implements OnInit {
             }),
             tap((success) => {
               if (success) {
-                this.getRoles();
+                this.getRoles(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El rol fue creado correctamente.', 'Felicidades');
               }
             }),
@@ -157,7 +161,7 @@ export class RolePageComponent implements OnInit {
             }),
             tap((success) => {
               if (success) {
-                this.getRoles();
+                this.getRoles(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El rol fue modificado correctamente.', 'Felicidades');
               }
             }),
@@ -188,7 +192,7 @@ export class RolePageComponent implements OnInit {
             }),
             tap((success) => {
               if (success) {
-                this.getRoles();
+                this.getRoles(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El rol fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }

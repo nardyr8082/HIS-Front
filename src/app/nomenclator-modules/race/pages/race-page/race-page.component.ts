@@ -24,6 +24,8 @@ export class RacePageComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -52,7 +54,7 @@ export class RacePageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getRace(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getRace(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.raceService
       .getRace(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,6 +76,8 @@ export class RacePageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getRace(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -108,7 +112,7 @@ export class RacePageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getRace();
+                this.getRace(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La raza fue creada correctamente.', 'Felicidades');
               }
             }),
@@ -144,7 +148,7 @@ export class RacePageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getRace();
+                this.getRace(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La raza fue modificada correctamente.', 'Felicidades');
               }
             }),
@@ -174,7 +178,7 @@ export class RacePageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getRace();
+                this.getRace(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La raza fue eliminada correctamente.', 'Felicidades');
                 modalRef.close();
               }

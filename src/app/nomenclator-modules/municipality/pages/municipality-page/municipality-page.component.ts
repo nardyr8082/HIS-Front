@@ -24,6 +24,8 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -52,7 +54,7 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getMunicipalities(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getMunicipalities(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.municipalityService
       .getMunicipalities(filters, sortColumn, sortDirection, page, pageSize)
@@ -78,6 +80,8 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getMunicipalities(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -112,7 +116,7 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getMunicipalities();
+                this.getMunicipalities(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El distrito fue creado correctamente.', 'Felicidades');
               }
             }),
@@ -150,7 +154,7 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getMunicipalities();
+                this.getMunicipalities(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El distrito fue modificado correctamente.', 'Felicidades');
               }
             }),
@@ -181,7 +185,7 @@ export class MunicipalityPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getMunicipalities();
+                this.getMunicipalities(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El distrito fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }

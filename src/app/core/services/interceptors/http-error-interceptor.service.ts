@@ -35,7 +35,6 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
           errorMessage = error.error;
           this.refreshToken(error);
         }
-        // console.log('ErrorInterceptorService -> errorMessage', errorMessage);
         return throwError(errorMessage);
       }),
     );

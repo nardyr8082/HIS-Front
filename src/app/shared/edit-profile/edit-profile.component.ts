@@ -164,14 +164,12 @@ export class EditProfileComponent implements OnInit {
     this.spinner.show();
     this.authService.editProfile(data).subscribe(
       newProfile => {
-        console.log('TCL: EditProfileComponent -> newProfile', newProfile);
         this.loggedInUserService.setNewProfile(newProfile.data);
         this.showSnackbar.showSucces('Profile updated successfully');
         this.spinner.hide();
         this.dialogRef.close(true);
       },
       error => {
-        console.log(error);
         this.utilsService.errorHandle(error, 'User', 'Editing');
         this.spinner.hide();
       }

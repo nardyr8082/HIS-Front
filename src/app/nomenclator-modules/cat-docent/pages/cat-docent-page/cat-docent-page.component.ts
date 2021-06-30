@@ -26,6 +26,8 @@ export class CatDocentPageComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -54,7 +56,7 @@ export class CatDocentPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getCatDocent(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getCatDocent(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.catDocentService
       .getCatDocent(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,7 +76,9 @@ export class CatDocentPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-    onChangePage(page: PageEvent) {
+  onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getCatDocent(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -109,7 +113,7 @@ export class CatDocentPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getCatDocent();
+                this.getCatDocent(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La categoría docente fue creada correctamente.', 'Felicidades');
               }
             }),
@@ -145,7 +149,7 @@ export class CatDocentPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getCatDocent();
+                this.getCatDocent(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La categoría docente fue modificada correctamente.', 'Felicidades');
               }
             }),
@@ -175,7 +179,7 @@ export class CatDocentPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getCatDocent();
+                this.getCatDocent(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La categoría docente fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }

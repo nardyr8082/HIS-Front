@@ -24,6 +24,8 @@ export class SpecialtyPageComponent implements OnInit {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -52,7 +54,7 @@ export class SpecialtyPageComponent implements OnInit {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getSpecialtys(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getSpecialtys(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.genderService
       .getSpecialties(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,6 +76,8 @@ export class SpecialtyPageComponent implements OnInit {
   }
 
   onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getSpecialtys(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -108,7 +112,7 @@ export class SpecialtyPageComponent implements OnInit {
             }),
             tap((success) => {
               if (success) {
-                this.getSpecialtys();
+                this.getSpecialtys(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La especialidad fue creado correctamente.', 'Felicidades');
               }
             }),
@@ -146,7 +150,7 @@ export class SpecialtyPageComponent implements OnInit {
             }),
             tap((success) => {
               if (success) {
-                this.getSpecialtys();
+                this.getSpecialtys(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La especialidad fue modificado correctamente.', 'Felicidades');
               }
             }),
@@ -177,7 +181,7 @@ export class SpecialtyPageComponent implements OnInit {
             }),
             tap((success) => {
               if (success) {
-                this.getSpecialtys();
+                this.getSpecialtys(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La especialidad fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }

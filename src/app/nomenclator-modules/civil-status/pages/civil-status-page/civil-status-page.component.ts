@@ -25,6 +25,8 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -53,7 +55,7 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getCivilStatus(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getCivilStatus(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.civilStatusService
       .getCivilStatus(filters, sortColumn, sortDirection, page, pageSize)
@@ -73,7 +75,9 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-    onChangePage(page: PageEvent) {
+  onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getCivilStatus(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -108,7 +112,7 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getCivilStatus();
+                this.getCivilStatus(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El estado civil fue creado correctamente.', 'Felicidades');
               }
             }),
@@ -144,7 +148,7 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getCivilStatus();
+                this.getCivilStatus(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El estado civil fue modificado correctamente.', 'Felicidades');
               }
             }),
@@ -174,7 +178,7 @@ export class CivilStatusPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getCivilStatus();
+                this.getCivilStatus(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El estado civil fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }

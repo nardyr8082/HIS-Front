@@ -3,6 +3,12 @@
     <mat-card-header>
       <div class="d-flex justify-content-between align-items-center w-100">
         <div class="d-flex">
+          <mat-icon
+            [class]="user.is_online ? 'is-online' : 'is-not-online'"
+            title="Está online?"
+          >
+            fiber_manual_record
+          </mat-icon>
           <img class="img-detail-avatar mx-3" [src]="user.persona?.foto" />
           <div>
             <h3 class="title">{{ user.first_name }} {{ user.last_name }}</h3>
@@ -44,8 +50,14 @@
             <p class="my-1" *ngIf="user.persona?.nacionalidad?.descripcion">
               Nacionalidad: <b>{{ user.persona.nacionalidad.descripcion }}</b>
             </p>
+            <p class="my-1" *ngIf="user.persona?.municipio?.estado?.pais?.nombre">
+              País: <b>{{ user.persona.municipio.estado.pais.nombre }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.municipio?.estado?.nombre">
+              Provincia: <b>{{ user.persona.municipio.estado.nombre }}</b>
+            </p>
             <p class="my-1" *ngIf="user.persona?.municipio?.nombre">
-              Municipio: <b>{{ user.persona.municipio.nombre }}</b>
+              Distrito: <b>{{ user.persona.municipio.nombre }}</b>
             </p>
             <p class="my-1" *ngIf="user.profesion?.nombre">
               Profesión: <b>{{ user.profesion.nombre }}</b>

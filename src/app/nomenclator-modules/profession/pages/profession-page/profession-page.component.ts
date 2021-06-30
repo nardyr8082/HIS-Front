@@ -24,6 +24,8 @@ export class ProfessionPageComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -52,7 +54,7 @@ export class ProfessionPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getProfession(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getProfession(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.professionService
       .getProfession(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,6 +76,8 @@ export class ProfessionPageComponent implements OnInit, OnDestroy {
   }
 
   onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getProfession(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -108,7 +112,7 @@ export class ProfessionPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getProfession();
+                this.getProfession(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La profesión fue creado correctamente.', 'Felicidades');
               }
             }),
@@ -146,7 +150,7 @@ export class ProfessionPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getProfession();
+                this.getProfession(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La profesión fue modificado correctamente.', 'Felicidades');
               }
             }),
@@ -177,7 +181,7 @@ export class ProfessionPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getProfession();
+                this.getProfession(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La profesión fue eliminada correctamente.', 'Felicidades');
                 modalRef.close();
               }

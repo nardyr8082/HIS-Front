@@ -20,8 +20,6 @@ export class CompressImageService {
         var canvas = document.createElement('canvas');
         var ctx = canvas.getContext('2d');
 
-        console.log(img.height);
-        console.log(img.width);
 
         let ratio = 1;
         if (img.width > maxWidth) {
@@ -33,9 +31,6 @@ export class CompressImageService {
         // We set the dimensions at the wanted size.
         canvas.width = img.width * ratio;
         canvas.height = img.height * ratio;
-        // console.log('ratio:', ratio);
-        // console.log('width:', canvas.width);
-        // console.log('heigth:', canvas.height);
 
         // We resize the image with the canvas method drawImage();
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);

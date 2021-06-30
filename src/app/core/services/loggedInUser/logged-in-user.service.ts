@@ -69,7 +69,6 @@ export class LoggedInUserService {
     try {
       localStorage.setItem('user', dataString);
     } catch (e) {
-      console.log('Error', e);
     }
     // this.$loggedInUserUpdated.next(dataString);
   }

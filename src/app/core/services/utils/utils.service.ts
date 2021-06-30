@@ -58,7 +58,6 @@ export class UtilsService {
   }
 
   parserLanguage(item, language) {
-    // console.log(item, 'asdljhaskdgaskdgsj');
     if (!item) {
       return '-';
     }

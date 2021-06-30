@@ -55,7 +55,6 @@ export class ContactUsService {
 
 
   getContactUs(data: any): Observable<any> {
-    console.log('TCL: ContactUsService -> constructor -> data', data)
 
     if (data.constructor === Object) {
       return this.httpClient

@@ -208,7 +208,6 @@ export class DialogAddEditUserComponent implements OnInit {
         data.username = data.email;
       }
 
-      // console.log(data);
       this.userService.createUser(data).subscribe(
         (newProfile) => {
           this.shoeToastr.showSucces('Usuario creado correctamente');
@@ -216,7 +215,6 @@ export class DialogAddEditUserComponent implements OnInit {
           this.dialogRef.close(true);
         },
         (error) => {
-          console.log(error);
           // this.utilsService.errorHandle(error, 'User', 'Creating');
           this.spinner.hide();
         },
@@ -233,7 +231,6 @@ export class DialogAddEditUserComponent implements OnInit {
           this.dialogRef.close(true);
         },
         (error) => {
-          console.log(error);
           // this.utilsService.errorHandle(error, 'User', 'Editing');
           this.spinner.hide();
         },

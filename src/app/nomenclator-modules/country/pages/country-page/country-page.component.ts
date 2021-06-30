@@ -24,6 +24,8 @@ export class CountryPageComponent implements OnInit {
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
+  page = 1;
+  pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
     {
@@ -52,7 +54,7 @@ export class CountryPageComponent implements OnInit {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getCountries(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = 1, pageSize = DEFAULT_PAGE_SIZE) {
+  getCountries(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.countryService
       .getCountries(filters, sortColumn, sortDirection, page, pageSize)
@@ -74,6 +76,8 @@ export class CountryPageComponent implements OnInit {
   }
 
   onChangePage(page: PageEvent) {
+    this.page = page.pageIndex + 1;
+    this.pageSize = page.pageSize;
     this.getCountries(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
@@ -108,7 +112,7 @@ export class CountryPageComponent implements OnInit {
             }),
             tap((success) => {
               if (success) {
-                this.getCountries();
+                this.getCountries(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El país fue creado correctamente.', 'Felicidades');
               }
             }),
@@ -146,7 +150,7 @@ export class CountryPageComponent implements OnInit {
             }),
             tap((success) => {
               if (success) {
-                this.getCountries();
+                this.getCountries(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El país fue modificado correctamente.', 'Felicidades');
               }
             }),
@@ -177,7 +181,7 @@ export class CountryPageComponent implements OnInit {
             }),
             tap((success) => {
               if (success) {
-                this.getCountries();
+                this.getCountries(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El país fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }

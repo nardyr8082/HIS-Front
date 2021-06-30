@@ -66,7 +66,6 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
         ),
       ]),
     });
-    console.log(this.form.get('file').value);
   }
 
   ngOnDestroy() {
@@ -76,7 +75,6 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
 
   handleFileSelect(event) {
     const file = (event.target as HTMLInputElement).files[0];
-    console.log('FileUploaderComponent -> handleFileSelect -> file', file);
     if (!file) {
       return;
     }
@@ -134,11 +132,9 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
         (event: HttpEvent<any>) => {
           switch (event.type) {
             case HttpEventType.Sent:
-              console.log('Request has been made!');
               this.metaDataUploading.status = 'start';
               break;
             case HttpEventType.ResponseHeader:
-              console.log('Response header has been received!');
               this.metaDataUploading.status = 'uploading';
               break;
             case HttpEventType.UploadProgress:
