@@ -1,5 +1,5 @@
 export interface FilterTable {
-  type: 'text' | 'number' | 'select';
+  type: 'text' | 'number' | 'select' | 'date';
   name: string;
   title: string;
   items?: Array<ItemFilter>;
