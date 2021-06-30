@@ -51,7 +51,13 @@
               Nacionalidad: <b>{{ user.persona.nacionalidad.descripcion }}</b>
             </p>
             <p class="my-1" *ngIf="user.persona?.municipio?.nombre">
-              Municipio: <b>{{ user.persona.municipio.nombre }}</b>
+              País: <b>{{ user.pais }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.municipio?.nombre">
+              Provincia: <b>{{ user.provincia }}</b>
+            </p>
+            <p class="my-1" *ngIf="user.persona?.municipio?.nombre">
+              Distrito: <b>{{ user.persona.municipio.nombre }}</b>
             </p>
             <p class="my-1" *ngIf="user.profesion?.nombre">
               Profesión: <b>{{ user.profesion.nombre }}</b>
