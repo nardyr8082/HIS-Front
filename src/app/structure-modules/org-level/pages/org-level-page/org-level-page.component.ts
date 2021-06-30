@@ -111,13 +111,13 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
         switchMap((orgLevel: OrgLevel) =>
           this.orgLevelService.createOrgLevel(orgLevel).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al crear el Ubicación Organizacional. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al crear la Ubicación Organizacional. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getOrgLevel(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El Ubicación Organizacional fue creada correctamente.', 'Felicidades');
+                this.toastService.success('La Ubicación Organizacional fue creada correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -148,13 +148,13 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
         switchMap((orgLevel: OrgLevel) =>
           this.orgLevelService.editOrgLevel({ ...orgLevel, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el Ubicación Organizacional. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar la Ubicación Organizacional. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getOrgLevel(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El Ubicación Organizacional fue modificado correctamente.', 'Felicidades');
+                this.toastService.success('La Ubicación Organizacional fue modificada correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -169,7 +169,7 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `¿Está seguro que desea eliminar el Ubicación Organizacional: ${item.nombre}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar la Ubicación Organizacional: ${item.nombre}?`;
 
     const sub = modalComponentRef.accept
       .pipe(
@@ -178,14 +178,14 @@ export class OrgLevelPageComponent implements OnInit, OnDestroy {
           this.orgLevelService.deleteOrgLevel(item.id).pipe(
             map(() => item),
             catchError(() => {
-              this.toastService.error('Hubo un error al eliminar el Ubicación Organizacional. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al eliminar la Ubicación Organizacional. Por favor, inténtelo de nuevo más tarde.', 'Error');
               modalRef.close();
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getOrgLevel(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El Ubicación Organizacional fue eliminado correctamente.', 'Felicidades');
+                this.toastService.success('La Ubicación Organizacional fue eliminada correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),

@@ -60,9 +60,13 @@ export class OrgLevelFormComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.orgLevelForm = new FormGroup({
-      nombre: new FormControl(this.data.orgLevel ? this.data.orgLevel.nombre : '', Validators.required),
+      nombre: new FormControl(this.data.orgLevel ? this.data.orgLevel.nombre : '', [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ]+$')]),
       nivel_padre: new FormControl(this.data.orgLevel ? this.data.orgLevel.nivel_padre_id : ''),
     });
+  }
+
+  get nameControl() {
+    return this.orgLevelForm?.get('nombre') as FormControl;
   }
 
   onSubmit(data) {

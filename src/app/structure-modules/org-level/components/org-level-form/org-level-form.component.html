@@ -5,7 +5,8 @@
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Nombre:</mat-label>
       <input matInput formControlName="nombre" />
-      <mat-error *ngIf="this.orgLevelForm.controls['nombre'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="nameControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="nameControl.errors?.pattern"> {{ 'El nombre solo permite letras y espacios' }} </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Ubicación Organizacional Padre</mat-label>
@@ -19,7 +20,7 @@
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
     <button (click)="onSubmit(orgLevelForm.value)" [disabled]="!orgLevelForm.valid" mat-raised-button color="primary" class="button">
-      {{ data.orgLevel ? 'Editar' : 'Crear' }}
+      {{ data.orgLevel ? 'Aceptar' : 'Crear' }}
     </button>
   </div>
 </div>

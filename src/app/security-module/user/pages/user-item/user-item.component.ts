@@ -200,7 +200,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
           this.catDoncents = response.results;
         }),
         catchError(() => {
-          this.toastService.error('Hubo un error al obtener las categorias docentes. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          this.toastService.error('Hubo un error al obtener las categorías docentes. Por favor, inténtelo de nuevo más tarde.', 'Error');
           return of(null);
         }),
       )
@@ -216,7 +216,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
           this.catSciences = response.results;
         }),
         catchError(() => {
-          this.toastService.error('Hubo un error al obtener las categorias científicas. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          this.toastService.error('Hubo un error al obtener las categorías científicas. Por favor, inténtelo de nuevo más tarde.', 'Error');
           return of(null);
         }),
       )
