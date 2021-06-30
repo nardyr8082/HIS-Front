@@ -74,7 +74,6 @@ export class SendMailTestingComponent implements OnInit, OnDestroy {
         this.spinner.hide();
       },
       (error) => {
-        console.log(error);
         this.showToastr.showError('Error enviando el email');
         this.spinner.hide();
       },

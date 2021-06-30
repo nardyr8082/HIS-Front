@@ -82,7 +82,6 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
   }
 
   applyFilter(event: Event, filterName: string) {
-    console.log((event.target as HTMLInputElement).value, filterName);
     const filterValue = (event.target as HTMLInputElement).value;
   }
 

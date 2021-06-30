@@ -77,7 +77,6 @@ export class UserTableComponent implements OnInit {
     this.loggedInUser = this.loggedInUserService.getLoggedInUser();
     this.imageUrl = environment.imageUrl;
     this._unsubscribeAll = new Subject<any>();
-    console.log('TCL: UserTableComponent -> environment.imageUrl', this.imageUrl);
   }
 
   ngOnInit() {

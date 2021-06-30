@@ -3,6 +3,12 @@
     <mat-card-header>
       <div class="d-flex justify-content-between align-items-center w-100">
         <div class="d-flex">
+          <mat-icon
+            [class]="user.is_online ? 'is-online' : 'is-not-online'"
+            title="Está online?"
+          >
+            fiber_manual_record
+          </mat-icon>
           <img class="img-detail-avatar mx-3" [src]="user.persona?.foto" />
           <div>
             <h3 class="title">{{ user.first_name }} {{ user.last_name }}</h3>

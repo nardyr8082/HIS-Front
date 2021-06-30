@@ -146,7 +146,6 @@ export class DialogAddEditMailTemplateComponent implements OnInit, OnDestroy {
       ...this.languageData
     };
     this.isSaving = true;
-    console.log(data);
 
     if (!this.isEditing) {
       this.mailTemplateService.createMailTemplate(data).subscribe(
@@ -205,7 +204,6 @@ export class DialogAddEditMailTemplateComponent implements OnInit, OnDestroy {
         keys.push(value);
       }
     });
-    console.log(keys);
     this.keyArrays = keys;
   }
 }

@@ -97,14 +97,12 @@ export class EditarPerfilComponent implements OnInit {
     this.spinner.show();
     this.authService.editProfile(data).subscribe(
       (newProfile) => {
-        console.log('TCL: EditProfileComponent -> newProfile', newProfile);
         this.loggedInUserService.setNewProfile(newProfile.data);
         this.showToastr.showSucces('Perfil cambiado correctamente');
         this.spinner.hide();
         window.location.reload();
       },
       (error) => {
-        console.log(error);
         this.utilsService.errorHandle(error, 'User', 'Editing');
         this.spinner.hide();
       },

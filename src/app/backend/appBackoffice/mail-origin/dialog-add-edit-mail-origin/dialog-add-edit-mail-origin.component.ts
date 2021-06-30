@@ -153,7 +153,6 @@ onSave(): void {
     ...this.languageData
   };
   this.isSaving = true;
-  console.log(data);
 
   if (!this.isEditing) {
     this.mailOriginService.createMailOrigin(data).subscribe(

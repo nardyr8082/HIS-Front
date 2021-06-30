@@ -145,7 +145,6 @@ export class MailTemplateTableComponent implements OnInit, OnDestroy {
     const searchFilter = this.formFilters.value;
     this.mailTemplateService.getAllMailTemplates(this.query, searchFilter).subscribe(
       (data) => {
-        console.log('data', data);
         this.initTable(data.data);
         this.query.total = data.meta.pagination.total;
         this.selection.clear();

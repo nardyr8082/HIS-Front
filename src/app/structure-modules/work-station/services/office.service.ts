@@ -41,7 +41,6 @@ export class WorkStationService {
     return this.http.get<ApiResponse<any>>(this.apiDepartamentEndpoint);
   }
   getRole(id: number = null) {
-    console.log('mi iddddddd', id);
     let queryParams = '?';
     if (id && id != null) {
       queryParams += `pt__id=${id}`;

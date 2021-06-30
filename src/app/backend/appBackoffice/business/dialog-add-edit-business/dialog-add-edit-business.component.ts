@@ -142,7 +142,6 @@ export class DialogAddEditBusinessComponent implements OnInit, OnDestroy {
       ...this.languageData
     };
     this.isSaving = true;
-    console.log(data);
 
     if (!this.isEditing) {
       this.businessService.createBusiness(data).subscribe(
