@@ -25,7 +25,7 @@ export class TraceAccessPageComponent implements OnInit {
   tableFilters: FilterTable[] = [
     {
       name: 'fecha',
-      type: 'text',
+      type: 'date',
       title: 'Fecha',
     },
     {
