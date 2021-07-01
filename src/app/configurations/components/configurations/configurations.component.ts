@@ -3,7 +3,7 @@ import { DATE_FORMATS, DECIMAL_SPLITER, ItemConfiguration, MILLAR_SPLITER, TIME_
 import { forkJoin, Observable, of, Subscription } from 'rxjs';
 import { ConfigurationsService } from './../../services/configurations.service';
 import { Configurations } from './../../models/configurations.model';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { catchError, map } from 'rxjs/operators';
 
@@ -12,12 +12,15 @@ import { catchError, map } from 'rxjs/operators';
   templateUrl: './configurations.component.html',
   styleUrls: ['./configurations.component.scss'],
 })
-export class ConfigurationsComponent implements OnInit, OnDestroy {
+export class ConfigurationsComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private _formBuilder: FormBuilder, private configurationService: ConfigurationsService, private toastrService: ToastrService) {}
+
+  @Input() configuration: Configurations;
+  @Output() edit: EventEmitter<any> = new EventEmitter();
+  @Output() create: EventEmitter<any> = new EventEmitter();
 
   configurationForm: FormGroup;
   imagesForm: FormGroup;
-  configuration: Configurations;
   subscriptions: Array<Subscription> = [];
 
   decimalSpliter: Array<ItemConfiguration> = DECIMAL_SPLITER;
@@ -38,8 +41,10 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
   currentHeaderImage: string;
   currentFooterImage: string;
 
-  ngOnInit(): void {
-    this.getConfiguration();
+  ngOnInit(): void {}
+
+  ngOnChanges() {
+    this.buildForm();
   }
 
   ngOnDestroy() {
@@ -47,57 +52,33 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
   }
 
   onSelectLogo(event) {
-    console.log(event);
     this.logos.push(...event.addedFiles);
     this.logoFormControl.setValue(this.logos);
   }
 
   onSelectHeaderImage(event) {
-    console.log(event);
     this.headerImage.push(...event.addedFiles);
     this.headerImageFormControl.setValue(this.headerImage);
   }
 
   onSelectFooterImage(event) {
-    console.log(event);
     this.footerImage.push(...event.addedFiles);
     this.footerImageFormControl.setValue(this.footerImage);
   }
 
   onRemoveLogo(event) {
-    console.log(event);
     this.logos.splice(this.logos.indexOf(event), 1);
     this.logoFormControl.setValue(this.logos);
   }
 
   onRemoveHeaderImage(event) {
-    console.log(event);
     this.headerImage.splice(this.headerImage.indexOf(event), 1);
     this.headerImageFormControl.setValue(this.headerImage);
   }
 
   onRemoveFooterImage(event) {
-    console.log(event);
     this.footerImage.splice(this.footerImage.indexOf(event), 1);
     this.footerImageFormControl.setValue(this.footerImage);
-  }
-
-  getConfiguration() {
-    const sub = this.configurationService
-      .getConfiguration()
-      .pipe(
-        map((response) => {
-          this.configuration = response.results[0] ? response.results[0] : {};
-          this.buildForm();
-        }),
-        catchError((error) => {
-          this.toastrService.error('Hubo un error al cargar la configuracón. Por favor, inténtelo de nuevo más tarde.', 'Error');
-          return of(null);
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
   }
 
   buildForm() {
@@ -163,53 +144,16 @@ export class ConfigurationsComponent implements OnInit, OnDestroy {
 
   sendData() {
     const config = this.configurationForm.value;
-    const id = this.idFormControl?.value;
-    const observables: Observable<any>[] = [];
-
-    const sub = this.configurationService
-      .editConfiguration(config)
-      .pipe(
-        map((response) => {
-          if (!id) {
-            observables.push(...this.checkImages(response.id));
-            forkJoin(observables)
-              .pipe(
-                map((res) => {
-                  this.toastrService.success('La configuración fue editada exitosamente', 'Felicidades');
-                  this.getConfiguration();
-                }),
-                catchError((err) => {
-                  this.toastrService.error('Hubo un error subiendo las imagenes.', 'Error');
-                  return of(null);
-                }),
-              )
-              .subscribe();
-          }
-        }),
-        catchError((error) => {
-          this.toastrService.error('Hubo un error editando la configuración.', 'Error');
-          return of(null);
-        }),
-      )
-      .subscribe();
-
-    if (id) {
-      observables.push(...this.checkImages(id));
-      forkJoin(observables)
-        .pipe(
-          map((res) => {
-            this.toastrService.success('La configuración fue editada exitosamente', 'Felicidades');
-            this.getConfiguration();
-          }),
-          catchError((err) => {
-            this.toastrService.error('Hubo un error subiendo las imagenes.', 'Error');
-            return of(null);
-          }),
-        )
-        .subscribe();
+    const files = [
+      { name: 'logo_1', file: this.logos[0] },
+      { name: 'imagen_cabecera_informe', file: this.headerImage[0] },
+      { name: 'imagen_pie_firma_informe', file: this.footerImage[0] },
+    ];
+    if (this.configuration?.id) {
+      this.edit.emit({ configuration: config, files: files });
+    } else {
+      this.create.emit({ configuration: config, files: files });
     }
-
-    this.subscriptions.push(sub);
   }
 
   checkImages(id): Observable<any>[] {

@@ -71,7 +71,7 @@
               <mat-form-field class="w-100" appearance="outline" *ngIf="customTimeFormat.value == false">
                 <mat-label>Formato de Hora:</mat-label>
                 <mat-select formControlName="formato_hora">
-                  <mat-option *ngFor="let item of dateFormat" [value]="item.id">{{ item.name }}</mat-option>
+                  <mat-option *ngFor="let item of timeFormat" [value]="item.id">{{ item.name }}</mat-option>
                   <mat-option [value]="customTimeFormat.value">Personalizado</mat-option>
                 </mat-select>
                 <mat-error *ngIf="decimalSpliterFormControl?.errors?.required"> {{ 'El separador de decimales es' }} <strong>requerido</strong> </mat-error>
@@ -102,7 +102,7 @@
                   </ngx-dropzone-image-preview>
                 </ngx-dropzone>
                 <div class="w-50 h-auto ml-2">
-                  <img class="w-100 h-auto" [src]="currentLogo" [alt]="currentLogo" />
+                  <img class="w-100 h-auto" *ngIf="currentLogo" [src]="currentLogo" [alt]="currentLogo" />
                 </div>
               </div>
             </div>
@@ -123,7 +123,7 @@
                   </ngx-dropzone-image-preview>
                 </ngx-dropzone>
                 <div class="w-50 h-auto ml-2">
-                  <img class="w-100 h-auto" [src]="currentHeaderImage" [alt]="currentHeaderImage" />
+                  <img class="w-100 h-auto" *ngIf="currentHeaderImage" [src]="currentHeaderImage" [alt]="currentHeaderImage" />
                 </div>
               </div>
             </div>
@@ -144,7 +144,7 @@
                   </ngx-dropzone-image-preview>
                 </ngx-dropzone>
                 <div class="w-50 h-auto ml-2">
-                  <img class="w-100 h-auto" [src]="currentFooterImage" [alt]="currentFooterImage" />
+                  <img class="w-100 h-auto" *ngIf="currentFooterImage" [src]="currentFooterImage" [alt]="currentFooterImage" />
                 </div>
               </div>
             </div>
