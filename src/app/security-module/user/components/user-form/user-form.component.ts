@@ -69,8 +69,8 @@ export class UserFormComponent implements OnInit, OnChanges {
   buildForms() {
     this.userFormGroup = this._formBuilder.group({
       username: [this.user ? this.user.username : '', Validators.required],
-      first_name: [this.user ? this.user.first_name : '', Validators.required],
-      last_name: [this.user ? this.user.last_name : '', Validators.required],
+      first_name: [this.user ? this.user.first_name : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
+      last_name: [this.user ? this.user.last_name : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
       email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       active: [this.user ? this.user.active : true, Validators.required],
       groups: [this.user ? this.user.groups.map((item) => item.id) : [], Validators.required],
@@ -105,8 +105,8 @@ export class UserFormComponent implements OnInit, OnChanges {
       direccion: [this.person ? this.person.direccion : '', Validators.required],
       numero: [this.person ? this.person.numero : '', Validators.required],
       cod_postal: [this.person ? this.person.cod_postal : '', Validators.required],
-      nombre_madre: [this.person ? this.person.nombre_madre : '', Validators.required],
-      nombre_padre: [this.person ? this.person.nombre_padre : '', Validators.required],
+      nombre_madre: [this.person ? this.person.nombre_madre : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
+      nombre_padre: [this.person ? this.person.nombre_padre : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
       contacto_emergencia: [this.person ? this.person.contacto_emergencia : '', Validators.required],
       telefono_emergencia: [this.person ? this.person.telefono_emergencia : '', Validators.required],
       telefono_casa: [this.person ? this.person.telefono_casa : '', Validators.required],
@@ -193,6 +193,14 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   get identificationCodeControl() {
     return this.personFormGroup?.get('nro_identificacion') as FormControl;
+  }
+
+  get motherControl() {
+    return this.personFormGroup?.get('nombre_madre') as FormControl;
+  }
+
+  get fatherControl() {
+    return this.personFormGroup?.get('nombre_padre') as FormControl;
   }
 
   changeIdentificationCode(text) {}
