@@ -22,8 +22,12 @@ export class NationalityFormComponent implements OnInit {
 
   buildForm() {
     this.nationalityForm = new FormGroup({
-      descripcion: new FormControl(this.data.nationality ? this.data.nationality.descripcion : '', Validators.required),
+      descripcion: new FormControl(this.data.nationality ? this.data.nationality.descripcion : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
     });
+  }
+
+  get nameNationalityControl() {
+    return this.nationalityForm?.get('descripcion') as FormControl;
   }
 
   onSubmit(data) {
