@@ -46,9 +46,13 @@ export class OfficeFormComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.officeForm = new FormGroup({
-      nombre: new FormControl(this.data.office ? this.data.office.nombre : '', Validators.required),
+      nombre: new FormControl(this.data.office ? this.data.office.nombre : '',[ Validators.required,  Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$') ]),
       unidad: new FormControl(this.data.office ? this.data.office.unidad_id : '', Validators.required),
     });
+  }
+
+  get nameOfficeControl() {
+    return this.officeForm?.get('nombre') as FormControl;
   }
 
   onSubmit(data) {

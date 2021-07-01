@@ -22,8 +22,12 @@ export class CatScienceFormComponent implements OnInit {
 
   buildForm() {
     this.catScienceForm = new FormGroup({
-      descripcion: new FormControl(this.data.catScience ? this.data.catScience.descripcion : '', Validators.required),
+      descripcion: new FormControl(this.data.catScience ? this.data.catScience.descripcion : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
     });
+  }
+
+  get nameScienceControl() {
+    return this.catScienceForm?.get('descripcion') as FormControl;
   }
 
   onSubmit(data) {

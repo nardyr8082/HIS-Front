@@ -22,8 +22,12 @@ export class CatDocentFormComponent implements OnInit {
 
   buildForm() {
     this.catDocentForm = new FormGroup({
-      descripcion: new FormControl(this.data.catDocent ? this.data.catDocent.descripcion : '', Validators.required),
+      descripcion: new FormControl(this.data.catDocent ? this.data.catDocent.descripcion : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
     });
+  }
+
+  get nameDocentControl() {
+    return this.catDocentForm?.get('descripcion') as FormControl;
   }
 
   onSubmit(data) {

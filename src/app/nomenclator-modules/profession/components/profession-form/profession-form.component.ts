@@ -21,8 +21,12 @@ export class ProfessionFormComponent implements OnInit {
 
   buildForm() {
     this.professionForm = new FormGroup({
-      nombre: new FormControl(this.data.profession ? this.data.profession.nombre : '', Validators.required),
+      nombre: new FormControl(this.data.profession ? this.data.profession.nombre : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
     });
+  }
+
+  get nameProfessionControl() {
+    return this.professionForm?.get('nombre') as FormControl;
   }
 
   onSubmit(data) {

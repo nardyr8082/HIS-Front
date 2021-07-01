@@ -22,8 +22,12 @@ export class GenderFormComponent implements OnInit {
 
   buildForm() {
     this.genderForm = new FormGroup({
-      descripcion: new FormControl(this.data.gender ? this.data.gender.descripcion : '', Validators.required),
+      descripcion: new FormControl(this.data.gender ? this.data.gender.descripcion : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
     });
+  }
+
+  get nameGenderControl() {
+    return this.genderForm?.get('descripcion') as FormControl;
   }
 
   onSubmit(data) {

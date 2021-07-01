@@ -21,8 +21,12 @@ export class SpecialtyFormComponent implements OnInit {
 
   buildForm() {
     this.specialtyForm = new FormGroup({
-      descripcion: new FormControl(this.data.specialty ? this.data.specialty.descripcion : '', Validators.required),
+      descripcion: new FormControl(this.data.specialty ? this.data.specialty.descripcion : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
     });
+  }
+
+  get nameSpecialtyControl() {
+    return this.specialtyForm?.get('descripcion') as FormControl;
   }
 
   onSubmit(data) {

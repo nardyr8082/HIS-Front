@@ -5,14 +5,15 @@
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Descripción:</mat-label>
       <input matInput formControlName="descripcion" />
-      <mat-error *ngIf="this.catScienceForm.controls['descripcion'].invalid"> {{ 'La descripción es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="nameScienceControl.errors?.required"> {{ 'La descripción es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="nameScienceControl.errors?.pattern"> {{ 'La descripción solo permite letras y espacios' }} </mat-error>
     </mat-form-field>
   </form>
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
     <button (click)="onSubmit(catScienceForm.value)" [disabled]="!catScienceForm.valid" mat-raised-button color="primary" class="button">
-      {{ data.catScience ? 'Editar' : 'Crear' }}
+      {{ data.catScience ? 'Aceptar' : 'Crear' }}
     </button>
   </div>
 </div>

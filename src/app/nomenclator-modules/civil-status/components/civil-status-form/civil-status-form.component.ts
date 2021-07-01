@@ -22,8 +22,12 @@ export class CivilStatusFormComponent implements OnInit {
 
   buildForm() {
     this.civilStatusForm = new FormGroup({
-      descripcion: new FormControl(this.data.civilStatus ? this.data.civilStatus.descripcion : '', Validators.required),
+      descripcion: new FormControl(this.data.civilStatus ? this.data.civilStatus.descripcion : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
     })
+  }
+
+  get nameStatusControl() {
+    return this.civilStatusForm?.get('descripcion') as FormControl;
   }
 
   onSubmit(data) {
