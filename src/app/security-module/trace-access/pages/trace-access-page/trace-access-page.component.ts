@@ -78,6 +78,7 @@ export class TraceAccessPageComponent implements OnInit {
   }
 
   onChangeFilter(filters) {
+    this.filters = filters;
     this.getTraceAccess(filters, 'id', 'desc');
   }
 
