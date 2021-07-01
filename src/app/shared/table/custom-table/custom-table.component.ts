@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { DEFAULT_PAGINATION_SIZE } from 'src/app/core/models/api-response.model';
@@ -98,5 +99,11 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
 
   sortData(sort: Sort) {
     this.changeSort.emit(sort);
+  }
+
+  changeDate(filterDate, filterName) {
+    const date = moment(filterDate).format('yyyy-MM-DD').toString();
+    this.filterForm.get(filterName).setValue(date);
+    this.searchTerm.next();
   }
 }

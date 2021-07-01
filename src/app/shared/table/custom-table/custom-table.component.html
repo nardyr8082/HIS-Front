@@ -28,13 +28,8 @@
       <form [formGroup]="filterForm" class="mx-1">
         <mat-form-field class="w-100">
           <mat-label>{{ filter.title }}</mat-label>
-          <input matInput
-                 formControlName="{{ filter.name }}"
-                 [matDatepicker]="picker"
-                 readonly
-                 (dateChange)="searchTerm.next()"
-          />
-          <mat-datepicker-toggle matSuffix  [for]="picker"></mat-datepicker-toggle>
+          <input matInput formControlName="{{ filter.name }}" [matDatepicker]="picker" readonly (dateChange)="changeDate($event.value, filter.name)" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </form>
