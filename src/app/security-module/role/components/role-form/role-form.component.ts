@@ -49,13 +49,9 @@ export class RoleFormComponent implements OnInit, OnDestroy {
   buildForm() {
     const rolesIds = this.data.role ? this.data.role.permissions.map((r) => r.id) : [];
     this.roleForm = new FormGroup({
-      name: new FormControl(this.data.role ? this.data.role.name : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
+      name: new FormControl(this.data.role ? this.data.role.name : '', Validators.required),
       permissions: new FormControl(rolesIds, Validators.required),
     });
-  }
-
-  get nameRoleControl() {
-    return this.roleForm?.get('name') as FormControl;
   }
 
   onSubmit(data) {

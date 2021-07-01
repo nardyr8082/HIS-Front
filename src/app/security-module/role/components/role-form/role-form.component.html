@@ -5,9 +5,8 @@
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Nombre:</mat-label>
       <input matInput formControlName="name" />
-      <mat-error *ngIf="nameRoleControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
-      <mat-error *ngIf="nameRoleControl.errors?.pattern"> {{ 'El nombre solo permite letras y espacios' }}  </mat-error>
-   </mat-form-field>
+      <mat-error *ngIf="this.roleForm.controls['name'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Permisos</mat-label>
       <mat-select #mySelect *ngIf="permissions" formControlName="permissions" multiple>
