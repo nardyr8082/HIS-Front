@@ -21,8 +21,12 @@ export class DocTypeIdFormComponent implements OnInit {
 
   buildForm() {
     this.docTypeIdForm = new FormGroup({
-      descripcion: new FormControl(this.data.docTypeId ? this.data.docTypeId.descripcion : '', Validators.required),
+      descripcion: new FormControl(this.data.docTypeId ? this.data.docTypeId.descripcion : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
     });
+  }
+
+  get nameDocTypeControl() {
+    return this.docTypeIdForm?.get('descripcion') as FormControl;
   }
 
   onSubmit(data) {
