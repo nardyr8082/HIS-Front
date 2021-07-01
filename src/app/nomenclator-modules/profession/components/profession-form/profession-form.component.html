@@ -5,14 +5,15 @@
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Nombre:</mat-label>
       <input matInput formControlName="nombre" />
-      <mat-error *ngIf="this.professionForm.controls['nombre'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="nameProfessionControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="nameProfessionControl.errors?.pattern"> {{ 'El nombre solo permite letras y espacios' }}  </mat-error>
     </mat-form-field>
   </form>
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
     <button (click)="onSubmit(professionForm.value)" [disabled]="!professionForm.valid" mat-raised-button color="primary" class="button">
-      {{ data.profession ? 'Editar' : 'Crear' }}
+      {{ data.profession ? 'Aceptar' : 'Crear' }}
     </button>
   </div>
 </div>
