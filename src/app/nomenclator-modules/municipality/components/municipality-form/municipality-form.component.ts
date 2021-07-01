@@ -30,9 +30,13 @@ export class MunicipalityFormComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.municipalityForm = new FormGroup({
-      nombre: new FormControl(this.data.municipality ? this.data.municipality.nombre : '', Validators.required),
+      nombre: new FormControl(this.data.municipality ? this.data.municipality.nombre : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
       estado: new FormControl(this.data.municipality ? this.data.municipality.province_id : '', Validators.required),
     });
+  }
+
+  get nameMunicipalityControl() {
+    return this.municipalityForm?.get('nombre') as FormControl;
   }
 
   getProvince() {

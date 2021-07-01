@@ -5,7 +5,8 @@
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Nombre:</mat-label>
       <input matInput formControlName="nombre" />
-      <mat-error *ngIf="this.municipalityForm.controls['nombre'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="nameMunicipalityControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="nameMunicipalityControl.errors?.pattern"> {{ 'El nombre solo permite letras y espacios' }}  </mat-error>
     </mat-form-field>
     <div class="mb-4">
       <ng-select appearance="outline" class="custom w-100" placeholder="Provincia" [items]="province" bindLabel="nombre" bindValue="id" formControlName="estado">
@@ -19,7 +20,7 @@
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
     <button (click)="onSubmit(municipalityForm.value)" [disabled]="!municipalityForm.valid" mat-raised-button color="primary" class="button">
-      {{ data.municipality ? 'Editar' : 'Crear' }}
+      {{ data.municipality ? 'Aceptar' : 'Crear' }}
     </button>
   </div>
 </div>
