@@ -29,10 +29,15 @@ export class StateFormComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.stateForm = new FormGroup({
-      nombre: new FormControl(this.data.state ? this.data.state.nombre : '', Validators.required),
+      nombre: new FormControl(this.data.state ? this.data.state.nombre : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
       pais: new FormControl(this.data.state ? this.data.state.pais_id : '', Validators.required),
     });
   }
+
+  get nameStateControl() {
+    return this.stateForm?.get('nombre') as FormControl;
+  }
+
   getCountry() {
     const sub = this.countryService
       .getCountries(null, 'id', 'desc', 1, 10000)
