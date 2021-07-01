@@ -67,8 +67,12 @@ export class WorkStationFormComponent implements OnInit {
     this.workStationForm = new FormGroup({
       rol: new FormControl(this.data.workStation ? this.data.workStation.rol?.id : '', Validators.required),
       departamento: new FormControl(this.data.workStation ? this.data.workStation.departamento?.id : '', Validators.required),
-      descripcion: new FormControl(this.data.workStation ? this.data.workStation.descripcion : '', Validators.required),
+      descripcion: new FormControl(this.data.workStation ? this.data.workStation.descripcion : '',[ Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
     });
+  }
+
+  get nameWorkControl() {
+    return this.workStationForm?.get('descripcion') as FormControl;
   }
 
   onSubmit(data) {
