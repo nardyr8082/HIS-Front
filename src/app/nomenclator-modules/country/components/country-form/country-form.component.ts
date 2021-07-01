@@ -21,8 +21,12 @@ export class CountryFormComponent implements OnInit {
 
   buildForm() {
     this.countryForm = new FormGroup({
-      nombre: new FormControl(this.data.country ? this.data.country.nombre : '', Validators.required),
+      nombre: new FormControl(this.data.country ? this.data.country.nombre : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
     });
+  }
+
+  get nameCountryControl() {
+    return this.countryForm?.get('nombre') as FormControl;
   }
 
   onSubmit(data) {
