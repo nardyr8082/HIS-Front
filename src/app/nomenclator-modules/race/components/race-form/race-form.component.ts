@@ -22,8 +22,12 @@ export class RaceFormComponent implements OnInit {
 
   buildForm() {
     this.raceForm = new FormGroup({
-      descripcion: new FormControl(this.data.race ? this.data.race.descripcion : '', Validators.required),
+      descripcion: new FormControl(this.data.race ? this.data.race.descripcion : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
     });
+  }
+
+  get nameRaceControl() {
+    return this.raceForm?.get('descripcion') as FormControl;
   }
 
   onSubmit(data) {
