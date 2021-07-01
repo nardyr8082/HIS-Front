@@ -17,6 +17,10 @@ export class ConfigurationsService {
     return this.http.get<ApiResponse<Configurations>>(this.apiEndpoint);
   }
 
+  createConfiguration(data: Configurations): Observable<Configurations> {
+    return this.http.post<any>(`${this.apiEndpoint}/`, data);
+  }
+
   editConfiguration(data: Configurations): Observable<Configurations> {
     return this.http.patch<Configurations>(`${this.apiEndpoint}/${data.id}/`, data);
   }

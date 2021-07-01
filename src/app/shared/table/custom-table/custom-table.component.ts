@@ -104,6 +104,7 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
   changeDate(filterDate, filterName) {
     const date = moment(filterDate).add(1, 'days').format('yyyy-MM-DD').toString();
     this.filterForm.get(filterName).setValue(date);
+    console.log('Date', date);
     this.searchTerm.next();
   }
 }
