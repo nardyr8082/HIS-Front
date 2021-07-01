@@ -42,6 +42,11 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
         distinctUntilChanged(),
       )
       .subscribe((searchTerm) => {
+        this.filters.forEach((filter) => {
+          if (filter.type === 'date') {
+            delete searchTerm[filter.name + '___date'];
+          }
+        });
         this.changeFilter.emit(searchTerm);
       });
   }
@@ -52,7 +57,12 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
     if (this.filters) {
       this.filterForm = new FormGroup({});
       this.filters.forEach((filter) => {
-        this.filterForm.addControl(filter.name, new FormControl(''));
+        if (filter.type === 'date') {
+          this.filterForm.addControl(filter.name + '___date', new FormControl(''));
+          this.filterForm.addControl(filter.name, new FormControl(''));
+        } else {
+          this.filterForm.addControl(filter.name, new FormControl(''));
+        }
       });
     }
   }
@@ -103,8 +113,8 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
 
   changeDate(filterDate, filterName) {
     const date = moment(filterDate).format('yyyy-MM-DD').toString();
+    this.filterForm.get(filterName + '___date').setValue(filterDate);
     this.filterForm.get(filterName).setValue(date);
     this.searchTerm.next();
-    this.filterForm.get(filterName).setValue(filterDate);
   }
 }
