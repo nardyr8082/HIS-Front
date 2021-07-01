@@ -5,7 +5,8 @@
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Descripción:</mat-label>
       <input matInput formControlName="descripcion" />
-      <mat-error *ngIf="this.workStationForm.controls['descripcion'].invalid"> {{ 'La descripción es' }} <strong>requerida</strong> </mat-error>
+      <mat-error *ngIf="this.nameWorkControl.errors?.required"> {{ 'La descripción es' }} <strong>requerida</strong> </mat-error>
+      <mat-error *ngIf="this.nameWorkControl.errors?.pattern"> {{ 'La descripción solo permite letras y espacios' }} </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Rol:</mat-label>
@@ -41,7 +42,7 @@
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
     <button (click)="onSubmit(workStationForm.value)" [disabled]="!workStationForm.valid" mat-raised-button color="primary" class="button">
-      {{ data.workStation ? 'Editar' : 'Crear' }}
+      {{ data.workStation ? 'Aceptar' : 'Crear' }}
     </button>
   </div>
 </div>
