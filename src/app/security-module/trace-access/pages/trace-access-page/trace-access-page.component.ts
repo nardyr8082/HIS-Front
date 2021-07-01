@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { FilterTable } from '../../../../shared/models/table-filter.model';
@@ -14,7 +14,7 @@ import { Sort } from '@angular/material/sort';
   templateUrl: './trace-access-page.component.html',
   styleUrls: ['./trace-access-page.component.scss'],
 })
-export class TraceAccessPageComponent implements OnInit {
+export class TraceAccessPageComponent implements OnInit, OnDestroy {
   traceAccess: TraceAccess[];
   dataCount = 0;
   subscriptions: Subscription[] = [];
