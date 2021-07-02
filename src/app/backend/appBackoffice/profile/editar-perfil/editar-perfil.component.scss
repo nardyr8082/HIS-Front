@@ -1,5 +1,4 @@
-@import "../../../../../assets/scss/theme/variables";
-
+@import '../../../../../assets/scss/theme/variables';
 
 .hide-style {
   display: none;
@@ -33,8 +32,8 @@
 
   &:hover {
     #photoCameraBtn {
-      opacity: 1.0;
-      transition: opacity .5s ease;
+      opacity: 1;
+      transition: opacity 0.5s ease;
     }
   }
 
@@ -45,4 +44,10 @@
 
 .layout-form {
   max-width: 500px !important;
+}
+
+.user-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }

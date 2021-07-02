@@ -1,5 +1,5 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { AuthenticationService } from 'src/app/core/services/authentication/authentication.service';
 import { ShowToastrService } from 'src/app/core/services/show-toastr/show-toastr.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -7,6 +7,8 @@ import { UtilsService } from 'src/app/core/services/utils/utils.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LoggedInUserService } from 'src/app/core/services/loggedInUser/logged-in-user.service';
 import { UserService } from 'src/app/backend/services/user/user.service';
+import { createPasswordStrengthValidator } from 'src/app/security-module/user/validators/PasswordStrength.validator';
+import { passwordOnlyNumberValidator } from 'src/app/security-module/user/validators/PasswordOnlyNumber.validators';
 
 @Component({
   selector: 'app-change-pass',
@@ -14,6 +16,8 @@ import { UserService } from 'src/app/backend/services/user/user.service';
   styleUrls: ['./change-pass.component.scss'],
 })
 export class ChangePassComponent implements OnInit {
+  @Input() userId: number;
+  @Output() changePassword: EventEmitter<any> = new EventEmitter();
   innerWidth: any;
   passType = 'password';
   passType2 = 'password';
@@ -51,37 +55,23 @@ export class ChangePassComponent implements OnInit {
   createForm() {
     this.fromPass = this.fb.group(
       {
-        password: [null, [Validators.required, Validators.minLength(6)]],
+        password: [null, [Validators.required, Validators.minLength(8), createPasswordStrengthValidator(), passwordOnlyNumberValidator()]],
         repeat: [null, [Validators.required, Validators.minLength(6)]],
       },
       { validator: this.matchValidator.bind(this) },
     );
 
     this.form = this.fb.group({
-      currentPassword: [null, [Validators.required]],
       passwords: this.fromPass,
     });
   }
 
+  get passwordControl() {
+    return this.fromPass.get('password') as FormControl;
+  }
+
   onSubmit() {
-    this.inLoading = true;
-    this.spinner.show();
-    let data = { ...this.form.value };
-    data.password = data.passwords.password + '';
-    data.repeatPassword = data.passwords.repeat + '';
-    delete data.passwords;
-    this.userService.changePassUser(data).subscribe(
-      () => {
-        this.inLoading = false;
-        this.spinner.hide();
-        this.showToastr.showSucces('Password changed correctly', 'OK');
-        window.location.reload();
-      },
-      (error) => {
-        this.inLoading = false;
-        this.spinner.hide();
-      },
-    );
+    this.changePassword.emit({ id: this.userId, password: this.passwordControl.value });
   }
 
   matchValidator(group: FormGroup) {
