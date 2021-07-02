@@ -1,79 +1,78 @@
 <div fxLayout="row" fxLayoutAlign="start center" class="ImageLayout mt-3">
   <div fxLayout="column" fxLayoutAlign="start start" fxLayoutAlign.lt-sm="start stretch" class="mb-2">
-    <div *ngIf="loadImage" class="avatar-profile mat-elevation-z4" fxFlex="row" fxLayoutAlign="center center"
-      style="background-size: cover; background-position : center center; flex: none;"
-      [style.background-image]="this.utilsService.getSafeImage(imageAvatar)">
+    <div
+      *ngIf="loadImage"
+      class="avatar-profile mat-elevation-z4"
+      fxFlex="row"
+      fxLayoutAlign="center center"
+      style="background-size: cover; background-position: center center; flex: none"
+      [style.background-image]="utilsService.getSafeImage(imageAvatar)"
+    >
       <button id="photoCameraBtn" mat-icon-button (click)="openFileBrowser($event)">
-        <mat-icon style="color: white;" aria-label="Example icon-button with a heart icon">
-          photo_camera
-        </mat-icon>
+        <mat-icon style="color: white" aria-label="Example icon-button with a heart icon"> photo_camera </mat-icon>
       </button>
     </div>
     <div *ngIf="!loadImage" class="avatar-profile" fxFlex="row" fxLayoutAlign="center center">
-      <mat-icon class="avatar-icon">person_outline</mat-icon>
+      <img *ngIf="user.persona?.foto" class="user-avatar" [src]="user.persona?.foto" />
+      <mat-icon *ngIf="!user.persona?.foto" class="avatar-icon">person_outline</mat-icon>
 
-      <button id="photoCameraBtn" style="position: absolute;" mat-icon-button (click)="openFileBrowser($event)">
-        <mat-icon style="color: white;" aria-label="Example icon-button with a heart icon">
-          photo_camera
-        </mat-icon>
+      <button id="photoCameraBtn" style="position: absolute" mat-icon-button (click)="openFileBrowser($event)">
+        <mat-icon style="color: white" aria-label="Example icon-button with a heart icon"> photo_camera </mat-icon>
       </button>
     </div>
-    <mat-error *ngIf="showErrorImage">
-      La imagen sobrepasa los <strong>500 Kb</strong>
-    </mat-error>
-    <input type="file" class="hide-style" id="filePicker" (change)="handleFileSelect($event)">
+    <mat-error *ngIf="showErrorImage"> La imagen sobrepasa los <strong>500 Kb</strong> </mat-error>
+    <input type="file" class="hide-style" id="filePicker" (change)="handleFileSelect($event)" />
   </div>
 </div>
 
-<form [formGroup]="form">
+<form *ngIf="form" [formGroup]="form">
   <div fxLayout="column" class="layout-form" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx">
-      <span *ngIf="this.loggedInUser" class="mat-title my-2" style="font-size:24px;">
-        {{this.loggedInUser.username}}
+      <span *ngIf="user" class="mat-title my-2" style="font-size: 24px">
+        {{ user.username }}
       </span>
     </div>
     <mat-form-field appearance="outline">
-      <mat-label>{{'Nombre'}}</mat-label>
-      <input type="text" [formControl]="form.controls['name']" matInput placeholder="{{'Nombre'}}">
+      <mat-label>{{ 'Nombre' }}</mat-label>
+      <input type="text" formControlName="first_name" matInput placeholder="{{ 'Nombre' }}" />
       <mat-icon class="greyIcon" matSuffix>person</mat-icon>
-      <mat-error *ngIf="form.controls['name'].hasError('required')">
-        {{'Nombre'}} <strong>{{'is required'}}</strong>
+      <mat-error *ngIf="form.controls['first_name'].hasError('required')">
+        {{ 'Nombre' }} <strong>{{ 'es requerio' }}</strong>
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>{{'Apellidos'}}</mat-label>
-      <input type="text" matInput [formControl]="form.controls['lastName']" placeholder="{{'Lastname'}}">
+      <mat-label>{{ 'Apellidos' }}</mat-label>
+      <input type="text" matInput formControlName="last_name" placeholder="{{ 'Apellidos' }}" />
       <mat-icon class="greyIcon" matSuffix>person</mat-icon>
-      <mat-error *ngIf="form.controls['lastName'].hasError('required')">
-        {{'Apellidos'}} <strong>{{'is required'}}</strong>
+      <mat-error *ngIf="form.controls['last_name'].hasError('required')">
+        {{ 'Apellidos' }} <strong>{{ 'es requerido' }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>{{'Nombre de usuario'}}</mat-label>
-      <input type="text" matInput [formControl]="form.controls['username']" placeholder="{{'Nombre de usuario'}}">
+      <mat-label>{{ 'Nombre de usuario' }}</mat-label>
+      <input type="text" matInput formControlName="username" placeholder="{{ 'Nombre de usuario' }}" />
       <mat-error *ngIf="form.controls['username'].hasError('required')">
-        {{'Nombre de usuario'}} <strong>{{'is required'}}</strong>
+        {{ 'Nombre de usuario' }} <strong>{{ 'es requerido' }}</strong>
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>{{'Email'}}</mat-label>
-      <input type="email" matInput [formControl]="form.controls['email']" placeholder="{{'Email'}}">
+      <mat-label>{{ 'Email' }}</mat-label>
+      <input type="email" matInput formControlName="email" placeholder="{{ 'Email' }}" />
       <mat-icon class="greyIcon" matSuffix>mail</mat-icon>
       <mat-error *ngIf="form.controls['email'].hasError('required')">
-        {{'email'}} <strong>{{'is required'}}</strong>
+        {{ 'Email' }} <strong>{{ 'es requerido' }}</strong>
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>{{'Dirección'}}</mat-label>
-      <input type="text" matInput [formControl]="form.controls['address']" placeholder="{{'Dirección'}}">
+      <mat-label>{{ 'Dirección' }}</mat-label>
+      <input type="text" matInput formControlName="direccion" placeholder="{{ 'Dirección' }}" />
       <mat-icon class="greyIcon" matSuffix>my_location</mat-icon>
-      <mat-error *ngIf="form.controls['address'].hasError('required')">
-        {{'Dirección'}} <strong>{{'is required'}}</strong>
+      <mat-error *ngIf="form.controls['direccion'].hasError('required')">
+        {{ 'Dirección' }} <strong>{{ 'es requerido' }}</strong>
       </mat-error>
     </mat-form-field>
   </div>
   <button (click)="onUpdateProfile()" mat-flat-button color="primary">GUARDAR</button>
-
 </form>

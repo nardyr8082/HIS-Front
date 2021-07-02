@@ -68,8 +68,8 @@ export class LoggedInUserService {
     const dataString = JSON.stringify(resp);
     try {
       localStorage.setItem('user', dataString);
-    } catch (e) {
-    }
+      localStorage.setItem('id', resp.id);
+    } catch (e) {}
     // this.$loggedInUserUpdated.next(dataString);
   }
   public updateUserProfile(user) {
