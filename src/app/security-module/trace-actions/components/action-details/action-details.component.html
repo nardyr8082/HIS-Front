@@ -1,0 +1,40 @@
+<div *ngIf="traceAction" class="my-3">
+  <div class="d-flex justify-content-center align-items-center">
+    <h3>Traza de Acción</h3>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-md-12">
+      <p>
+        Objeto: <b>{{ traceAction.objeto }}</b>
+      </p>
+      <p>
+        Acción: <b>{{ traceAction.evento }}</b>
+      </p>
+    </div>
+    <div class="col-lg-6 col-md-12">
+      <p>
+        Usuario: <b>{{ traceAction.usuario }}</b>
+      </p>
+      <p>
+        IP: <b>{{ traceAction.ip }}</b>
+      </p>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center align-items-center mt-3">
+    <h4>Comparación:</h4>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-md-12">
+      <div class="d-flex justify-content-center align-items-center">Antes</div>
+      <div class="alert alert-danger" role="alert">
+        <pre [innerHtml]="before | prettyjson: 3"></pre>
+      </div>
+    </div>
+    <div class="col-lg-6 col-md-12">
+      <div class="d-flex justify-content-center align-items-center">Despues</div>
+      <div class="alert alert-success" role="alert">
+        <pre [innerHtml]="after | prettyjson: 3"></pre>
+      </div>
+    </div>
+  </div>
+</div>

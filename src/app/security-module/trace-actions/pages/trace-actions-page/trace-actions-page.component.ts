@@ -1,3 +1,4 @@
+import { ActionDetailsComponent } from './../../components/action-details/action-details.component';
 import { FilterResponse, FilterTable } from '../../../../shared/models/table-filter.model';
 import { ToastrService } from 'ngx-toastr';
 import { TracerActionsService } from '../../services/trace-actions.service';
@@ -8,6 +9,7 @@ import { TraceAction } from '../../models/trace-action.model';
 import { ApiResponse, DEFAULT_PAGE_SIZE, DEFAULT_PAGINATION_SIZE } from 'src/app/core/models/api-response.model';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-trace-actions-page',
@@ -19,9 +21,20 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
   dataCount = 0;
   subscriptions: Subscription[] = [];
   paginationSize = DEFAULT_PAGINATION_SIZE;
-  displayedColumns = ['fecha', 'ip', 'usuario', 'evento', 'objeto',  'data_old', 'data_new'];
-  columnsName = ['Fecha', 'IP', 'Usuario', 'Evento', 'Objeto', 'Antes', 'Después'];
+  displayedColumns = ['fecha', 'ip', 'usuario', 'evento', 'objeto'];
+  columnsName = ['Fecha', 'IP', 'Usuario', 'Evento', 'Objeto'];
   filters = {};
+
+  rowActionButtons = [
+    {
+      tooltipText: 'Detalles ',
+      icon: 'visibility',
+      color: 'primary',
+      class: 'btn-primary',
+      callback: (item) => this.openDetailForm(item),
+    },
+  ];
+
   tableFilters: FilterTable[] = [
     {
       name: 'fecha',
@@ -50,7 +63,7 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor(private traceActionService: TracerActionsService, private toastService: ToastrService) {}
+  constructor(private traceActionService: TracerActionsService, private toastService: ToastrService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getTraceActions();
@@ -89,5 +102,22 @@ export class TraceActionsPageComponent implements OnInit, OnDestroy {
 
   onChangeSort(sort: Sort) {
     this.getTraceActions(this.filters, sort.active, sort.direction);
+  }
+
+  openDetailForm(item) {
+    let dialogRef: MatDialogRef<ActionDetailsComponent, any>;
+
+    dialogRef = this.dialog.open(ActionDetailsComponent, {
+      panelClass: 'app-dialog-add-edit-business',
+      maxWidth: '1200px',
+      minWidth: '300px',
+      maxHeight: '100vh',
+      width: '100%',
+      data: {
+        action: item,
+      },
+    });
+
+    const modalComponentRef = dialogRef.componentInstance as ActionDetailsComponent;
   }
 }

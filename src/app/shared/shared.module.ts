@@ -56,6 +56,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { PrettyJsonModule } from 'angular2-prettyjson';
+import { JsonPipe } from '@angular/common';
 
 ///////////////////////////////////////////////////////////////////
 
@@ -117,6 +119,7 @@ const components = [DeleteConfirmationModalComponent];
     MatAutocompleteModule,
     NgSelectModule,
     NgxDropzoneModule,
+    PrettyJsonModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -164,6 +167,7 @@ const components = [DeleteConfirmationModalComponent];
     MatAutocompleteModule,
     NgSelectModule,
     NgxDropzoneModule,
+    PrettyJsonModule,
     ...components,
   ],
   providers: [BreadcrumbService, NavService, PreviousRouteService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
