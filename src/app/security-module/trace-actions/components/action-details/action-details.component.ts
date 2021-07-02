@@ -1,6 +1,6 @@
 import { TraceAction } from './../../models/trace-action.model';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-action-details',
@@ -16,11 +16,15 @@ export class ActionDetailsComponent implements OnInit {
   before;
   after;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<ActionDetailsComponent>) {}
 
   ngOnInit(): void {
     this.traceAction = this.data.action;
     this.before = JSON.parse(this.traceAction.data_old);
     this.after = JSON.parse(this.traceAction.data_new);
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

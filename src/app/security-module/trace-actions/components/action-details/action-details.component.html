@@ -1,6 +1,9 @@
 <div *ngIf="traceAction" class="my-3">
-  <div class="d-flex justify-content-center align-items-center">
+  <div class="d-flex justify-content-between align-items-center">
     <h3>Traza de Acción</h3>
+    <button mat-icon-button title="Cerrar" (click)="closeDialog()">
+      <mat-icon>clear</mat-icon>
+    </button>
   </div>
   <div class="row">
     <div class="col-lg-6 col-md-12">
