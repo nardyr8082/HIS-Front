@@ -8,5 +8,6 @@ import { ActionDetailsComponent } from './components/action-details/action-detai
 @NgModule({
   declarations: [TraceActionsPageComponent, ActionDetailsComponent],
   imports: [CommonModule, TraceActionsRoutingModule, SharedModule],
+  entryComponents: [ActionDetailsComponent],
 })
 export class TraceActionsModule {}

@@ -9,5 +9,6 @@ import { HealthUnitRoutingModule } from './health-unit-routing.module';
 @NgModule({
   declarations: [HealthUnitFormComponent, HealthUnitPageComponent],
   imports: [CommonModule, HealthUnitRoutingModule, SharedModule],
+  entryComponents: [HealthUnitFormComponent],
 })
 export class HealthUnitModule {}
