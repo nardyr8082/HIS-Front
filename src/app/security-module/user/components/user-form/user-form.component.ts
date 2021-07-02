@@ -98,20 +98,20 @@ export class UserFormComponent implements OnInit, OnChanges {
     this.personFormGroup = this._formBuilder.group({
       nro_identificacion: [this.person ? this.person.nro_identificacion : '', Validators.required],
       fecha_nacimiento: [fechaNacimiento, Validators.required],
-      sexo: [this.person ? this.person.sexo : '1', Validators.required],
+      sexo: [this.person ? this.person.sexo : '', Validators.required],
       tipo_doc: [this.person ? this.person.tipo_doc.id : [], Validators.required],
       nacionalidad: [this.person ? this.person.nacionalidad?.id : null, Validators.required],
       municipio: [this.person ? this.person.municipio?.id : '', Validators.required],
       direccion: [this.person ? this.person.direccion : '', Validators.required],
-      numero: [this.person ? this.person.numero : '', Validators.required],
+      numero: [this.person ? this.person.numero : '',[ Validators.required,Validators.pattern('^[0-9]+([,][0-9]+)?$')]],
       cod_postal: [this.person ? this.person.cod_postal : '', Validators.required],
       nombre_madre: [this.person ? this.person.nombre_madre : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
       nombre_padre: [this.person ? this.person.nombre_padre : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
-      contacto_emergencia: [this.person ? this.person.contacto_emergencia : '', Validators.required],
-      telefono_emergencia: [this.person ? this.person.telefono_emergencia : '', Validators.required],
-      telefono_casa: [this.person ? this.person.telefono_casa : '', Validators.required],
-      telefono_trabajo: [this.person ? this.person.telefono_trabajo : '', Validators.required],
-      telefono_movil: [this.person ? this.person.telefono_movil : '', Validators.required],
+      contacto_emergencia: [this.person ? this.person.contacto_emergencia : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
+      telefono_emergencia: [this.person ? this.person.telefono_emergencia : '',[ Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]],
+      telefono_casa: [this.person ? this.person.telefono_casa : '',[ Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]],
+      telefono_trabajo: [this.person ? this.person.telefono_trabajo : '',[ Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]],
+      telefono_movil: [this.person ? this.person.telefono_movil : '',[ Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]],
       qr_code: [this.person ? this.person.qr_code : ''],
     });
 
@@ -201,6 +201,14 @@ export class UserFormComponent implements OnInit, OnChanges {
 
   get fatherControl() {
     return this.personFormGroup?.get('nombre_padre') as FormControl;
+  }
+
+  get numberControl() {
+    return this.personFormGroup?.get('numero') as FormControl;
+  }
+
+  get municipioControl() {
+    return this.personFormGroup?.get('municipio') as FormControl;
   }
 
   changeIdentificationCode(text) {}
