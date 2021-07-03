@@ -20,7 +20,7 @@ export class AuthenticationGuard implements CanActivate {
   checkAccess(): boolean {
     const loggedInUser = this.loggedInUserService.getLoggedInUser();
     if (loggedInUser && this.loggedInUserService.isAdminUser()) {
-      this.router.navigate(['backend/perfil']);
+      this.router.navigate(['backend/dashboard']);
       return true;
     } else {
       this.authenticationService.logout();
