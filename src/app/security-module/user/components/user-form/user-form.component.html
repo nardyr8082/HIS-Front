@@ -42,7 +42,7 @@
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Nombre de usuario:</mat-label>
               <input matInput formControlName="username" />
-              <mat-error *ngIf="this.userFormGroup.controls['username'].invalid"> {{ 'El nombre de usuario es' }} <strong>requerido</strong> </mat-error>
+              <mat-error *ngIf="usernameControl.errors?.required"> {{ 'El nombre de usuario es' }} <strong>requerido</strong> </mat-error>
             </mat-form-field>
           </div>
 
@@ -254,7 +254,7 @@
               <mat-select formControlName="sexo">
                 <mat-option *ngFor="let gender of genders" [value]="gender.id">{{ gender.descripcion }}</mat-option>
               </mat-select>
-              <mat-error *ngIf="personFormGroup.controls['sexo'].invalid">Seleccione un sexo</mat-error>
+              <mat-error *ngIf="personFormGroup.controls['sexo'].errors?.required">{{'Seleccione un sexo'}}</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -308,8 +308,9 @@
               <mat-form-field class="w-100" appearance="outline">
                 <mat-label>Número:</mat-label>
                 <input matInput formControlName="numero" />
-                <mat-error *ngIf="personFormGroup.controls['numero'].errors?.required"> {{ 'El Número es ' }} <strong>requerido</strong> </mat-error>
-              </mat-form-field>
+                <mat-error *ngIf="numberControl.errors?.required"> {{ 'El número es' }} <strong>requerido</strong> </mat-error>
+                <mat-error *ngIf="numberControl.errors?.pattern"> {{ 'El número solo permite' }} <strong>dígitos</strong> </mat-error>
+               </mat-form-field>
             </div>
 
             <!-- cod_postal -->
@@ -349,6 +350,9 @@
                 <mat-error *ngIf="personFormGroup.controls['contacto_emergencia'].errors?.required">
                   {{ 'El Contacto de emergencia es ' }} <strong>requerido</strong>
                 </mat-error>
+                <mat-error *ngIf="personFormGroup.controls['contacto_emergencia'].errors?.pattern">
+                  {{ 'El Contacto de emergencia solo permite letras y espacio ' }}
+                </mat-error>
               </mat-form-field>
             </div>
 
@@ -359,6 +363,9 @@
                 <input matInput formControlName="telefono_emergencia" />
                 <mat-error *ngIf="personFormGroup.controls['telefono_emergencia'].errors?.required">
                   {{ 'El Teléfono de Emergencia es ' }} <strong>requerido</strong>
+                </mat-error>
+                <mat-error *ngIf="personFormGroup.controls['telefono_emergencia'].errors?.pattern">
+                  {{ 'El formato del teléfono de emergencia es ' }} <strong>incorrecto</strong>
                 </mat-error>
               </mat-form-field>
             </div>
@@ -371,6 +378,9 @@
                 <mat-error *ngIf="personFormGroup.controls['telefono_casa'].errors?.required">
                   {{ 'El Teléfono de casa es ' }} <strong>requerido</strong>
                 </mat-error>
+                <mat-error *ngIf="personFormGroup.controls['telefono_casa'].errors?.pattern">
+                  {{ 'El formato del teléfono de casa es ' }} <strong>incorrecto</strong>
+                </mat-error>
               </mat-form-field>
             </div>
             <!-- telefono_trabajo -->
@@ -378,8 +388,11 @@
               <mat-form-field class="w-100" appearance="outline">
                 <mat-label>Teléfono del Trabajo:</mat-label>
                 <input matInput formControlName="telefono_trabajo" />
-                <mat-error *ngIf="personFormGroup.controls['telefono_trabajo'].invalid">
+                <mat-error *ngIf="personFormGroup.controls['telefono_trabajo'].errors?.required">
                   {{ 'El Teléfono del trabajo es' }} <strong>requerido</strong>
+                </mat-error>
+                <mat-error *ngIf="personFormGroup.controls['telefono_trabajo'].errors?.pattern">
+                  {{ 'El formato del teléfono del trabajo es' }} <strong>incorrecto</strong>
                 </mat-error>
               </mat-form-field>
             </div>
@@ -389,7 +402,8 @@
               <mat-form-field class="w-100" appearance="outline">
                 <mat-label>Teléfono móvil:</mat-label>
                 <input matInput formControlName="telefono_movil" />
-                <mat-error *ngIf="personFormGroup.controls['telefono_movil'].invalid"> {{ 'El Teléfono móvil es' }} <strong>requerido</strong> </mat-error>
+                <mat-error *ngIf="personFormGroup.controls['telefono_movil'].errors?.required"> {{ 'El Teléfono móvil es' }} <strong>requerido</strong> </mat-error>
+                <mat-error *ngIf="personFormGroup.controls['telefono_movil'].errors?.pattern"> {{ 'El formato del teléfono móvil es' }} <strong>incorrecto</strong> </mat-error>
               </mat-form-field>
             </div>
             <div>

@@ -8,5 +8,6 @@ import { RoleRoutingModule } from './role-routing.module';
 @NgModule({
   declarations: [RoleFormComponent, RolePageComponent],
   imports: [CommonModule, RoleRoutingModule, SharedModule],
+  entryComponents: [RoleFormComponent],
 })
 export class RoleModule {}
