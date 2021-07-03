@@ -13,8 +13,8 @@
               <mat-label>Nombre:</mat-label>
               <input matInput formControlName="first_name" />
               <mat-error *ngIf="firstNameControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
-              <mat-error *ngIf="firstNameControl.errors?.pattern"> {{ 'El nombre solo permite letras y espacios' }}  </mat-error>
-             </mat-form-field>
+              <mat-error *ngIf="firstNameControl.errors?.pattern"> {{ 'El nombre solo permite letras y espacios' }} </mat-error>
+            </mat-form-field>
           </div>
 
           <!-- Apellidos -->
@@ -23,8 +23,8 @@
               <mat-label>Apellidos:</mat-label>
               <input matInput formControlName="last_name" />
               <mat-error *ngIf="lastNameControl.errors?.required"> {{ 'El apellido es' }} <strong>requerido</strong> </mat-error>
-              <mat-error *ngIf="lastNameControl.errors?.pattern"> {{ 'El apelido solo permite letras y espacios' }}  </mat-error>
-             </mat-form-field>
+              <mat-error *ngIf="lastNameControl.errors?.pattern"> {{ 'El apelido solo permite letras y espacios' }} </mat-error>
+            </mat-form-field>
           </div>
 
           <!-- Correo -->
@@ -227,22 +227,17 @@
           <div class="col-lg-6 col-md-12">
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Fecha de Nacimiento</mat-label>
-              <input matInput
-              formControlName="fecha_nacimiento"
-              [min]="minDate"
-              [max]="maxDate"
-              [matDatepicker]="picker"
-              />
+              <input matInput formControlName="fecha_nacimiento" [min]="minDate" [max]="maxDate" [matDatepicker]="picker" />
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
               <mat-error *ngIf="personFormGroup.controls['fecha_nacimiento'].errors?.required">
                 {{ 'La fecha de nacimiento es ' }} <strong>requerida</strong>
               </mat-error>
               <mat-error *ngIf="personFormGroup.controls['fecha_nacimiento'].errors?.matDatepickerMax">
-                {{'La fecha debe ser inferior(Mayores de 18 años)'}}
+                {{ 'La fecha debe ser inferior(Mayores de 18 años)' }}
               </mat-error>
               <mat-error *ngIf="personFormGroup.controls['fecha_nacimiento'].errors?.matDatepickerMin">
-                {{'La fecha debe ser superior(Menores de 130 años)'}}
+                {{ 'La fecha debe ser superior(Menores de 130 años)' }}
               </mat-error>
             </mat-form-field>
           </div>
@@ -254,7 +249,7 @@
               <mat-select formControlName="sexo">
                 <mat-option *ngFor="let gender of genders" [value]="gender.id">{{ gender.descripcion }}</mat-option>
               </mat-select>
-              <mat-error *ngIf="personFormGroup.controls['sexo'].errors?.required">{{'Seleccione un sexo'}}</mat-error>
+              <mat-error *ngIf="personFormGroup.controls['sexo'].errors?.required">{{ 'Seleccione un sexo' }}</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -310,7 +305,7 @@
                 <input matInput formControlName="numero" />
                 <mat-error *ngIf="numberControl.errors?.required"> {{ 'El número es' }} <strong>requerido</strong> </mat-error>
                 <mat-error *ngIf="numberControl.errors?.pattern"> {{ 'El número solo permite' }} <strong>dígitos</strong> </mat-error>
-               </mat-form-field>
+              </mat-form-field>
             </div>
 
             <!-- cod_postal -->
@@ -328,7 +323,7 @@
                 <mat-label>Nombre Madre:</mat-label>
                 <input matInput formControlName="nombre_madre" />
                 <mat-error *ngIf="motherControl.errors?.required"> {{ 'El nombre de la Madre es' }} <strong>requerido</strong> </mat-error>
-                <mat-error *ngIf="motherControl.errors?.pattern"> {{ 'El nombre de la Madre solo permite letras y espacios' }}  </mat-error>
+                <mat-error *ngIf="motherControl.errors?.pattern"> {{ 'El nombre de la Madre solo permite letras y espacios' }} </mat-error>
               </mat-form-field>
             </div>
 
@@ -338,7 +333,7 @@
                 <mat-label>Nombre del Padre:</mat-label>
                 <input matInput formControlName="nombre_padre" />
                 <mat-error *ngIf="fatherControl.errors?.required"> {{ 'El nombre del Padre es' }} <strong>requerido</strong> </mat-error>
-                <mat-error *ngIf="fatherControl.errors?.pattern"> {{ 'El nombre del Padre solo permite letras y espacios' }}  </mat-error>
+                <mat-error *ngIf="fatherControl.errors?.pattern"> {{ 'El nombre del Padre solo permite letras y espacios' }} </mat-error>
               </mat-form-field>
             </div>
 
@@ -402,8 +397,12 @@
               <mat-form-field class="w-100" appearance="outline">
                 <mat-label>Teléfono móvil:</mat-label>
                 <input matInput formControlName="telefono_movil" />
-                <mat-error *ngIf="personFormGroup.controls['telefono_movil'].errors?.required"> {{ 'El Teléfono móvil es' }} <strong>requerido</strong> </mat-error>
-                <mat-error *ngIf="personFormGroup.controls['telefono_movil'].errors?.pattern"> {{ 'El formato del teléfono móvil es' }} <strong>incorrecto</strong> </mat-error>
+                <mat-error *ngIf="personFormGroup.controls['telefono_movil'].errors?.required">
+                  {{ 'El Teléfono móvil es' }} <strong>requerido</strong>
+                </mat-error>
+                <mat-error *ngIf="personFormGroup.controls['telefono_movil'].errors?.pattern">
+                  {{ 'El formato del teléfono móvil es' }} <strong>incorrecto</strong>
+                </mat-error>
               </mat-form-field>
             </div>
             <div>
@@ -443,7 +442,7 @@
               <mat-icon class="mx-2" *ngIf="userFormGroup.controls['active'].value == false" aria-hidden="false">close</mat-icon>
             </div>
             <p class="my-2">
-              Profesión: <b>{{ professions[userFormGroup.controls['profesion']?.value]?.nombre }}</b>
+              Profesión: <b>{{ getProfession(userFormGroup.controls['profesion']?.value) }}</b>
             </p>
             <p class="my-2" *ngIf="userFormGroup.controls['groups']?.value">
               Roles: <b>{{ getRolesNames() }}</b>
@@ -471,15 +470,15 @@
             </p>
 
             <p class="my-2" *ngIf="personFormGroup.controls['sexo'].value">
-              Sexo: <b>{{ genders[personFormGroup.controls['sexo']?.value]?.descripcion }}</b>
+              Sexo: <b>{{ getGender(personFormGroup.controls['sexo'].value) }}</b>
             </p>
 
             <p class="my-2" *ngIf="personFormGroup.controls['tipo_doc'].value">
-              Tipo de Documento: <b>{{ docTypes[personFormGroup.controls['tipo_doc']?.value]?.descripcion }}</b>
+              Tipo de Documento: <b>{{ getDocType(personFormGroup.controls['tipo_doc'].value) }}</b>
             </p>
 
             <p class="my-2" *ngIf="personFormGroup.controls['nacionalidad'].value">
-              Categoría Científica: <b>{{ nationalities[personFormGroup.controls['nacionalidad']?.value]?.descripcion }}</b>
+              Nacionalidad: <b>{{ getNationality(personFormGroup.controls['nacionalidad'].value) }}</b>
             </p>
 
             <p class="my-2" *ngIf="personFormGroup.controls['direccion'].value">

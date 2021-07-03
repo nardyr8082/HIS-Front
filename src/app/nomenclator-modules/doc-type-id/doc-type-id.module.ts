@@ -8,5 +8,6 @@ import {DocTypeIdPageComponent} from './pages/doc-type-id-page/doc-type-id-page.
 @NgModule({
   declarations: [DocTypeIdFormComponent, DocTypeIdPageComponent],
   imports: [CommonModule, DocTypeIdRoutingModule, SharedModule],
+  entryComponents: [DocTypeIdFormComponent],
 })
 export class DocTypeIdModule {}

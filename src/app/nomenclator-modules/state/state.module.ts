@@ -8,5 +8,6 @@ import { StateRoutingModule } from './state-routing.module';
 @NgModule({
   declarations: [StateFormComponent, StatePageComponent],
   imports: [CommonModule, StateRoutingModule, SharedModule],
+  entryComponents: [StateFormComponent],
 })
 export class StateModule {}
