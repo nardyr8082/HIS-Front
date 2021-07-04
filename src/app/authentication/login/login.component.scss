@@ -39,16 +39,16 @@ $havanatur-color: #0d47a1;
 
     #ImgLayout {
       height: 170px;
-      width: 170px;
+      width: 425px;
 
       @media only screen and (max-width: 800px) {
         height: 140px !important;
-        width: 140px !important;
+        width: 460px !important;
       }
 
-      border-radius: 50%;
+      border-radius: 5%;
       border: solid 2.2px #bbb;
-      background-image: url('../../../assets/images/users/logo-snis.jpg');
+      background-image: url('../../../assets/images/users/login1.jpg');
       background-position: center;
       background-size: cover;
     }
