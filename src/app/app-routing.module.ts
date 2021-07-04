@@ -75,6 +75,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'blood-type',
+        loadChildren: () => import('./nomenclator-modules/blood-type/blood-type.module').then((m) => m.BloodTypeModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'specialty',
         loadChildren: () => import('./nomenclator-modules/specialty/specialty.module').then((m) => m.SpecialtyModule),
         canActivate: [BackendGuard],

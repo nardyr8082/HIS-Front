@@ -22,6 +22,7 @@ export interface Person {
   telefono_movil: string;
   email: string;
   sexo: any;
+  grupo_sanguineo: any;
   qr_code: string;
 }
 

@@ -243,7 +243,7 @@
           </div>
 
           <!-- sexo -->
-          <div class="col-lg-6 col-md-12">
+          <div class="col-lg-3 col-md-12">
             <mat-form-field class="w-100" appearance="outline">
               <mat-label>Sexo:</mat-label>
               <mat-select formControlName="sexo">
@@ -252,7 +252,17 @@
               <mat-error *ngIf="personFormGroup.controls['sexo'].errors?.required">{{ 'Seleccione un sexo' }}</mat-error>
             </mat-form-field>
           </div>
+          <div class="col-lg-3 col-md-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Grupo Sanguíneo:</mat-label>
+              <mat-select formControlName="grupo_sanguineo">
+                <mat-option *ngFor="let bloodType of bloodTypes" [value]="bloodType.id">{{ bloodType.descripcion }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
+          <!-- grupo sanguineo -->
+
 
         <div class="card p-3">
           <h5>Dirección y Contacto</h5>
@@ -471,6 +481,10 @@
 
             <p class="my-2" *ngIf="personFormGroup.controls['sexo'].value">
               Sexo: <b>{{ getGender(personFormGroup.controls['sexo'].value) }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="personFormGroup.controls['grupo_sanguineo'].value">
+              Grupo Sanguíneo: <b>{{ getBloodType(personFormGroup.controls['grupo_sanguineo'].value) }}</b>
             </p>
 
             <p class="my-2" *ngIf="personFormGroup.controls['tipo_doc'].value">
