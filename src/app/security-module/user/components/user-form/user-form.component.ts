@@ -69,8 +69,8 @@ export class UserFormComponent implements OnInit, OnChanges {
   buildForms() {
     this.userFormGroup = this._formBuilder.group({
       username: [this.user ? this.user.username : '', Validators.required],
-      first_name: [this.user ? this.user.first_name : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
-      last_name: [this.user ? this.user.last_name : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
+      first_name: [this.user ? this.user.first_name : '', [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
+      last_name: [this.user ? this.user.last_name : '', [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
       email: [this.user ? this.user.email : '', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       active: [this.user ? this.user.active : true, Validators.required],
       groups: [this.user ? this.user.groups.map((item) => item.id) : [], Validators.required],
@@ -103,15 +103,27 @@ export class UserFormComponent implements OnInit, OnChanges {
       nacionalidad: [this.person ? this.person.nacionalidad?.id : null, Validators.required],
       municipio: [this.person ? this.person.municipio?.id : '', Validators.required],
       direccion: [this.person ? this.person.direccion : '', Validators.required],
-      numero: [this.person ? this.person.numero : '',[ Validators.required,Validators.pattern('^[0-9]+([,][0-9]+)?$')]],
+      numero: [this.person ? this.person.numero : '', [Validators.required, Validators.pattern('^[0-9]+([,][0-9]+)?$')]],
       cod_postal: [this.person ? this.person.cod_postal : '', Validators.required],
-      nombre_madre: [this.person ? this.person.nombre_madre : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
-      nombre_padre: [this.person ? this.person.nombre_padre : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
-      contacto_emergencia: [this.person ? this.person.contacto_emergencia : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
-      telefono_emergencia: [this.person ? this.person.telefono_emergencia : '',[ Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]],
-      telefono_casa: [this.person ? this.person.telefono_casa : '',[ Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]],
-      telefono_trabajo: [this.person ? this.person.telefono_trabajo : '',[ Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]],
-      telefono_movil: [this.person ? this.person.telefono_movil : '',[ Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]],
+      nombre_madre: [this.person ? this.person.nombre_madre : '', [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
+      nombre_padre: [this.person ? this.person.nombre_padre : '', [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
+      contacto_emergencia: [this.person ? this.person.contacto_emergencia : '', [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
+      telefono_emergencia: [
+        this.person ? this.person.telefono_emergencia : '',
+        [Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
+      ],
+      telefono_casa: [
+        this.person ? this.person.telefono_casa : '',
+        [Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
+      ],
+      telefono_trabajo: [
+        this.person ? this.person.telefono_trabajo : '',
+        [Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
+      ],
+      telefono_movil: [
+        this.person ? this.person.telefono_movil : '',
+        [Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
+      ],
       qr_code: [this.person ? this.person.qr_code : ''],
     });
 
@@ -351,5 +363,25 @@ export class UserFormComponent implements OnInit, OnChanges {
     const currentYear = new Date().getFullYear();
     this.maxDate = new Date(currentYear - 18, 0, 1);
     this.minDate = new Date(currentYear - 100, 11, 31);
+  }
+
+  getGender(id) {
+    const gender = this.genders.find((g) => g.id == id);
+    return gender ? gender.descripcion : '';
+  }
+
+  getDocType(id) {
+    const docType = this.docTypes.find((d) => d.id == id);
+    return docType ? docType.descripcion : '';
+  }
+
+  getNationality(id) {
+    const nationality = this.nationalities.find((n) => n.id == id);
+    return nationality ? nationality.descripcion : '';
+  }
+
+  getProfession(id) {
+    const profession = this.professions.find((p) => p.id == id);
+    return profession ? profession.nombre : '';
   }
 }

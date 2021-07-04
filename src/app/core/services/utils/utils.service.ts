@@ -45,8 +45,9 @@ export class UtilsService {
     } else {
       msg = error.error.message;
     }
+    // aqui mary, creo que el que queremos editar es el ultimo else, ya yo cambie error por info, pero, la duda es si queremos que todos estos mensajes salgan como info.
     this.showToastr
-      .showError(msg, 'Error', 5000)
+      .showInfo(msg, 'Error', 5000)
       .toastRef.afterClosed()
       .subscribe((data) => {
         this.showErrorState = false;
