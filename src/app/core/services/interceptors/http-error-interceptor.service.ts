@@ -10,6 +10,7 @@ import { Router, NavigationEnd } from '@angular/router';
 @Injectable()
 export class HttpErrorInterceptorService implements HttpInterceptor {
   url = '';
+  id = '';
   constructor(
     private utilsService: UtilsService,
     private showToastr: ShowToastrService,
@@ -24,6 +25,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.id = localStorage.getItem('id');
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = '';
@@ -48,6 +50,7 @@ export class HttpErrorInterceptorService implements HttpInterceptor {
             const access = resp.access;
             const data = { access: access, refresh: refresh };
             this.loggedInUserService.updateUserToken(data);
+            localStorage.setItem('id', this.id);
             window.location.reload();
           },
           (error1) => {
