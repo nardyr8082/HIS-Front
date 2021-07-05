@@ -366,12 +366,12 @@
             <div class="col-lg-6 col-md-12">
               <mat-form-field class="w-100" appearance="outline">
                 <mat-label>Teléfono de Emergencia:</mat-label>
-                <input matInput formControlName="telefono_emergencia" value="+(240)" />
+                <input matInput formControlName="telefono_emergencia" value="+(240)" matTooltip="+(240)###-######" />
                 <mat-error *ngIf="personFormGroup.controls['telefono_emergencia'].errors?.required">
                   {{ 'El Teléfono de Emergencia es ' }} <strong>requerido</strong>
                 </mat-error>
                 <mat-error *ngIf="personFormGroup.controls['telefono_emergencia'].errors?.pattern">
-                  {{ 'El formato del teléfono de emergencia es ' }} <strong>incorrecto</strong>
+                  {{ 'El formato del teléfono de emergencia es ' }} <strong>incorrecto "+(240)###-######"</strong>
                 </mat-error>
               </mat-form-field>
             </div>
@@ -380,12 +380,12 @@
             <div class="col-lg-6 col-md-12">
               <mat-form-field class="w-100" appearance="outline">
                 <mat-label>Teléfono de casa:</mat-label>
-                <input matInput formControlName="telefono_casa" value="+(240)" />
+                <input matInput formControlName="telefono_casa" value="+(240)" matTooltip="+(240)###-######" />
                 <mat-error *ngIf="personFormGroup.controls['telefono_casa'].errors?.required">
                   {{ 'El Teléfono de casa es ' }} <strong>requerido</strong>
                 </mat-error>
                 <mat-error *ngIf="personFormGroup.controls['telefono_casa'].errors?.pattern">
-                  {{ 'El formato del teléfono de casa es ' }} <strong>incorrecto</strong>
+                  {{ 'El formato del teléfono de casa es ' }} <strong>incorrecto "+(240)###-######"</strong>
                 </mat-error>
               </mat-form-field>
             </div>
@@ -393,12 +393,12 @@
             <div class="col-lg-6 col-md-12">
               <mat-form-field class="w-100" appearance="outline">
                 <mat-label>Teléfono del Trabajo:</mat-label>
-                <input matInput formControlName="telefono_trabajo" value="+(240)" />
+                <input matInput formControlName="telefono_trabajo" value="+(240)" matTooltip="+(240)###-######" />
                 <mat-error *ngIf="personFormGroup.controls['telefono_trabajo'].errors?.required">
                   {{ 'El Teléfono del trabajo es' }} <strong>requerido</strong>
                 </mat-error>
                 <mat-error *ngIf="personFormGroup.controls['telefono_trabajo'].errors?.pattern">
-                  {{ 'El formato del teléfono del trabajo es' }} <strong>incorrecto</strong>
+                  {{ 'El formato del teléfono del trabajo es' }} <strong>incorrecto "+(240)###-######"</strong>
                 </mat-error>
               </mat-form-field>
             </div>
@@ -407,12 +407,12 @@
             <div class="col-lg-6 col-md-12">
               <mat-form-field class="w-100" appearance="outline">
                 <mat-label>Teléfono móvil:</mat-label>
-                <input matInput formControlName="telefono_movil" value="+(240)" />
+                <input matInput formControlName="telefono_movil" value="+(240)" matTooltip="+(240)###-######" />
                 <mat-error *ngIf="personFormGroup.controls['telefono_movil'].errors?.required">
                   {{ 'El Teléfono móvil es' }} <strong>requerido</strong>
                 </mat-error>
                 <mat-error *ngIf="personFormGroup.controls['telefono_movil'].errors?.pattern">
-                  {{ 'El formato del teléfono móvil es' }} <strong>incorrecto</strong>
+                  {{ 'El formato del teléfono móvil es' }} <strong>incorrecto "+(240)###-######"</strong>
                 </mat-error>
               </mat-form-field>
             </div>
