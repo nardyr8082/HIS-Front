@@ -45,16 +45,18 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   updateUser(event) {
     const { direccion, email, first_name, last_name, telefono_movil, foto } = event;
-
     const formData = new FormData();
     formData.append('id', this.user.persona.id.toString());
-    formData.append('foto', foto);
-
     const userObs = this.userService.editUser({ first_name, last_name, email, id: this.user.id });
     const personObs = this.personService.editPerson({ direccion, telefono_movil, id: this.user.persona.id });
-    const imageObs = this.personService.uploadImagePerson(formData, this.user.persona.id);
-
-    const obs: Array<Observable<any>> = [userObs, personObs, imageObs];
+    let obs: Array<Observable<any>>;
+    if (foto) {
+      formData.append('foto', foto);
+      const imageObs = this.personService.uploadImagePerson(formData, this.user.persona.id);
+       obs = [userObs, personObs, imageObs];
+    } else {
+      obs = [userObs, personObs];
+    }
     const sub = combineLatest(obs)
       .pipe(
         map((res) => {
