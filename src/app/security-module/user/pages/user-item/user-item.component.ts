@@ -25,6 +25,8 @@ import { Municipality } from 'src/app/nomenclator-modules/municipality/models/mu
 import { Profession } from 'src/app/nomenclator-modules/profession/models/profession.model';
 import { GenderService } from 'src/app/nomenclator-modules/gender/services/gender.service';
 import { Gender } from 'src/app/nomenclator-modules/gender/models/gender.model';
+import { BloodType } from '../../../../nomenclator-modules/blood-type/models/blood-type.model';
+import { BloodTypeService } from '../../../../nomenclator-modules/blood-type/services/blood-type.service';
 
 @Component({
   selector: 'app-user-item',
@@ -45,6 +47,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
   municipalities: Municipality[];
   professions: Profession[];
   genders: Gender[];
+  bloodTypes: BloodType[];
 
   subscriptions: Subscription[] = [];
 
@@ -62,6 +65,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
     private municipalityService: MunicipalityService,
     private professionService: ProfessionService,
     private genderService: GenderService,
+    private bloodTypeService: BloodTypeService,
     private router: Router,
   ) {
     this.activatedRoute.params.subscribe((params) => {
@@ -83,6 +87,7 @@ export class UserItemComponent implements OnInit, OnDestroy {
     this.getMunicipalities();
     this.getProffessions();
     this.getGenders();
+    this.getBloodTypes();
   }
 
   ngOnDestroy() {
@@ -115,6 +120,22 @@ export class UserItemComponent implements OnInit, OnDestroy {
         }),
         catchError(() => {
           this.toastService.error('Hubo un error al obtener los sexos. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          return of(null);
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+  getBloodTypes() {
+    const sub = this.bloodTypeService
+      .getBloodType({}, 'id', 'asc', 1, 10000)
+      .pipe(
+        map((response: ApiResponse<BloodType>) => {
+          this.bloodTypes = response.results;
+        }),
+        catchError(() => {
+          this.toastService.error('Hubo un error al obtener los grupos sanguíneos. Por favor, inténtelo de nuevo más tarde.', 'Error');
           return of(null);
         }),
       )

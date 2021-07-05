@@ -18,6 +18,7 @@ import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operato
 import { UserService } from '../../services/user.service';
 import { environment } from 'src/environments/environment';
 import { Gender } from 'src/app/nomenclator-modules/gender/models/gender.model';
+import { BloodType } from '../../../../nomenclator-modules/blood-type/models/blood-type.model';
 
 @Component({
   selector: 'app-user-form',
@@ -36,6 +37,7 @@ export class UserFormComponent implements OnInit, OnChanges {
   @Input() municipalities: Municipality[];
   @Input() professions: Profession[];
   @Input() genders: Gender[];
+  @Input() bloodTypes: BloodType[];
 
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
@@ -99,6 +101,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       nro_identificacion: [this.person ? this.person.nro_identificacion : '', Validators.required],
       fecha_nacimiento: [fechaNacimiento, Validators.required],
       sexo: [this.person ? this.person.sexo : '', Validators.required],
+      grupo_sanguineo: [this.person ? this.person.grupo_sanguineo : ''],
       tipo_doc: [this.person ? this.person.tipo_doc.id : [], Validators.required],
       nacionalidad: [this.person ? this.person.nacionalidad?.id : null, Validators.required],
       municipio: [this.person ? this.person.municipio?.id : '', Validators.required],
@@ -368,6 +371,11 @@ export class UserFormComponent implements OnInit, OnChanges {
   getGender(id) {
     const gender = this.genders.find((g) => g.id == id);
     return gender ? gender.descripcion : '';
+  }
+
+  getBloodType(id) {
+    const bloodType = this.bloodTypes.find((g) => g.id == id);
+    return bloodType ? bloodType.descripcion : '';
   }
 
   getDocType(id) {

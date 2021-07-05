@@ -130,6 +130,13 @@ export class NavigationService {
               display: true,
             },
             {
+              displayName: 'Grupo Sangíneo',
+              iconName: ['radio_button_unchecked'],
+              route: 'blood-type',
+              material: true,
+              display: true,
+            },
+            {
               displayName: 'Tipo Documento Id',
               iconName: ['radio_button_unchecked'],
               route: 'doc-type-id',
