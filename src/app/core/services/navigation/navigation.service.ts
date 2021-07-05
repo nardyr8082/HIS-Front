@@ -213,7 +213,29 @@ export class NavigationService {
         {
           displayName: 'Hitoria Clínica',
           iconName: ['note'],
-          route: '',
+          children: [
+            {
+              displayName: 'Historia Clínica',
+              iconName: ['radio_button_unchecked'],
+              route: 'cat-docent',
+              material: true,
+              display: true,
+            },
+            {
+              displayName: 'Crear Tabla dinamica',
+              iconName: ['radio_button_unchecked'],
+              route: '',
+              material: true,
+              display: true,
+            },
+            {
+              displayName: 'Nomenclador Tabla dinamica',
+              iconName: ['radio_button_unchecked'],
+              route: '',
+              material: true,
+              display: true,
+            },
+          ],
           material: true,
           display: true,
         },
