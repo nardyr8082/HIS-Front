@@ -62,7 +62,7 @@ export class EditarPerfilComponent implements OnInit {
       last_name: [this.user && this.user.last_name ? this.user.last_name : null, [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
       username: [this.user && this.user.username ? { value: this.user.username, disabled: true } : { value: null, disabled: true }, [Validators.required]],
       direccion: [this.user && this.user?.persona?.direccion ? this.user.persona.direccion : null, []],
-      telefono_movil: [this.user && this.user?.persona?.telefono_movil ? this.user.persona.telefono_movil : null, [Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]],
+     // telefono_movil: [this.user && this.user?.persona?.telefono_movil ? this.user.persona.telefono_movil : null, [Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]],
       email: [this.user && this.user.email ? this.user.email : null, [Validators.required, Validators.email]],
     });
 
