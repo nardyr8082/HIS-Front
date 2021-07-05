@@ -228,6 +228,13 @@ export class NavigationService {
               material: true,
               display: true,
             },
+            {
+              displayName: 'Nomenclador Tabla dinamica',
+              iconName: ['radio_button_unchecked'],
+              route: '',
+              material: true,
+              display: true,
+            },
           ],
           material: true,
           display: true,
