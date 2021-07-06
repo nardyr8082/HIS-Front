@@ -112,19 +112,19 @@ export class UserFormComponent implements OnInit, OnChanges {
       nombre_padre: [this.person ? this.person.nombre_padre : '', [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
       contacto_emergencia: [this.person ? this.person.contacto_emergencia : '', [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
       telefono_emergencia: [
-        this.person ? this.person.telefono_emergencia : '',
+        this.person ?  this.person.telefono_casa: '+(240)',
         [Validators.required, Validators.pattern('^[+]*[(]{1,2}[0-9]{1,4}[)][-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
       ],
       telefono_casa: [
-        this.person ? this.person.telefono_casa : '',
+        this.person ? this.person.telefono_casa: '+(240)',
         [Validators.required, Validators.pattern('^[+]*[(]{1,2}[0-9]{1,4}[)][-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
       ],
       telefono_trabajo: [
-        this.person ? this.person.telefono_trabajo : '',
+        this.person ?  this.person.telefono_casa: '+(240)',
         [Validators.required, Validators.pattern('^[+]*[(]{1,2}[0-9]{1,4}[)][-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
       ],
       telefono_movil: [
-        this.person ? this.person.telefono_movil : '',
+        this.person ?  this.person.telefono_casa: '+(240)',
         [Validators.required, Validators.pattern('^[+]*[(]{1,2}[0-9]{1,4}[)][-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
       ],
       qr_code: [this.person ? this.person.qr_code : ''],
