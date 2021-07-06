@@ -50,8 +50,8 @@ export class HealthUnitFormComponent implements OnInit, OnDestroy {
       nombre: new FormControl(this.data.healthUnit ? this.data.healthUnit.nombre : '',[Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$') ]),
       nivel: new FormControl(this.data.healthUnit ? this.data.healthUnit.nivel_id : '', Validators.required),
       direccion: new FormControl(this.data.healthUnit ? this.data.healthUnit.direccion : ''),
-      telefono_movil: new FormControl(this.data.healthUnit ? this.data.healthUnit.telefono_movil : '', [ Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]),
-      telefono_fijo: new FormControl(this.data.healthUnit ? this.data.healthUnit.telefono_fijo : '', [ Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]),
+      telefono_movil: new FormControl(this.data.healthUnit ? this.data.healthUnit.telefono_movil : '', [ Validators.pattern('^[+]*[(]{1,2}[0-9]{1,4}[)][-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]),
+      telefono_fijo: new FormControl(this.data.healthUnit ? this.data.healthUnit.telefono_fijo : '', [ Validators.pattern('^[+]*[(]{1,2}[0-9]{1,4}[)][-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')]),
     });
   }
 

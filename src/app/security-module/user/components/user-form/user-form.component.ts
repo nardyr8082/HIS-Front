@@ -101,7 +101,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       nro_identificacion: [this.person ? this.person.nro_identificacion : '', Validators.required],
       fecha_nacimiento: [fechaNacimiento, Validators.required],
       sexo: [this.person ? this.person.sexo : '', Validators.required],
-      grupo_sanguineo: [this.person ? this.person.grupo_sanguineo : ''],
+      grupo_sanguineo: [this.person ? this.person.grupo_sanguineo : '', Validators.required],
       tipo_doc: [this.person ? this.person.tipo_doc.id : [], Validators.required],
       nacionalidad: [this.person ? this.person.nacionalidad?.id : null, Validators.required],
       municipio: [this.person ? this.person.municipio?.id : '', Validators.required],
@@ -113,19 +113,19 @@ export class UserFormComponent implements OnInit, OnChanges {
       contacto_emergencia: [this.person ? this.person.contacto_emergencia : '', [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
       telefono_emergencia: [
         this.person ? this.person.telefono_emergencia : '',
-        [Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
+        [Validators.required, Validators.pattern('^[+]*[(]{1,2}[0-9]{1,4}[)][-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
       ],
       telefono_casa: [
         this.person ? this.person.telefono_casa : '',
-        [Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
+        [Validators.required, Validators.pattern('^[+]*[(]{1,2}[0-9]{1,4}[)][-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
       ],
       telefono_trabajo: [
         this.person ? this.person.telefono_trabajo : '',
-        [Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
+        [Validators.required, Validators.pattern('^[+]*[(]{1,2}[0-9]{1,4}[)][-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
       ],
       telefono_movil: [
         this.person ? this.person.telefono_movil : '',
-        [Validators.required, Validators.pattern('^[\\+]?[(]?[0-9]{3}[)]?[-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
+        [Validators.required, Validators.pattern('^[+]*[(]{1,2}[0-9]{1,4}[)][-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$')],
       ],
       qr_code: [this.person ? this.person.qr_code : ''],
     });

@@ -37,7 +37,10 @@
       <input type="text" formControlName="first_name" matInput placeholder="{{ 'Nombre' }}" />
       <mat-icon class="greyIcon" matSuffix>person</mat-icon>
       <mat-error *ngIf="form.controls['first_name'].hasError('required')">
-        {{ 'Nombre' }} <strong>{{ 'es requerio' }}</strong>
+        {{ 'El Nombre' }} <strong>{{ 'es requerio' }}</strong>
+      </mat-error>
+      <mat-error *ngIf="form.controls['first_name'].hasError('pattern')">
+        {{ 'El Nombre' }} <strong>{{ 'solo permite letras y espacios' }}</strong>
       </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
@@ -46,6 +49,9 @@
       <mat-icon class="greyIcon" matSuffix>person</mat-icon>
       <mat-error *ngIf="form.controls['last_name'].hasError('required')">
         {{ 'Apellidos' }} <strong>{{ 'es requerido' }}</strong>
+      </mat-error>
+      <mat-error *ngIf="form.controls['last_name'].hasError('pattern')">
+        {{ 'Los Apellidos' }} <strong>{{ 'solo permiten letras y espacios' }}</strong>
       </mat-error>
     </mat-form-field>
 
@@ -64,6 +70,9 @@
       <mat-error *ngIf="form.controls['email'].hasError('required')">
         {{ 'Email' }} <strong>{{ 'es requerido' }}</strong>
       </mat-error>
+      <mat-error *ngIf="form.controls['email'].hasError('email')">
+        {{ 'El formato del email no es' }} <strong>{{ 'correcto' }}</strong>
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>{{ 'Dirección' }}</mat-label>
@@ -74,5 +83,5 @@
       </mat-error>
     </mat-form-field>
   </div>
-  <button (click)="onUpdateProfile()" mat-flat-button color="primary">GUARDAR</button>
+  <button mat-raised-button mat-button color="primary" [disabled]="!form.valid" (click)="onUpdateProfile()" >GUARDAR</button>
 </form>
