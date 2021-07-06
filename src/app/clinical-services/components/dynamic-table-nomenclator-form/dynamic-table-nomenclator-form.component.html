@@ -4,12 +4,14 @@
   <form *ngIf="metaFieldForm" [formGroup]="metaFieldForm">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Tipo:</mat-label>
-      <input matInput formControlName="mf_datatype" />
+      <mat-select #mySelect formControlName="mf_datatype">
+        <mat-option *ngFor="let nomenclator of nomenclatorTypes" [value]="nomenclator.id">{{ nomenclator.name }}</mat-option>
+      </mat-select>
       <mat-error *ngIf="this.metaFieldForm.controls['mf_datatype'].invalid"> {{ 'El tipo es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Caracteres Válidos:</mat-label>
-      <input matInput formControlName="mf_validchars" />
+      <input matInput type="number" formControlName="mf_validchars" />
       <mat-error *ngIf="this.metaFieldForm.controls['mf_validchars'].invalid"> {{ 'Los Caracteres Válidos son' }} <strong>requeridos</strong> </mat-error>
     </mat-form-field>
   </form>

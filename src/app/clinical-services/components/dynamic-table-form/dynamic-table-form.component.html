@@ -2,16 +2,57 @@
   <h4>{{ metaTableName ? 'Editar Tabla' : 'Crear Tabla' }}</h4>
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="metaTableForm" [formGroup]="metaTableForm">
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Nombre:</mat-label>
-      <input matInput formControlName="name" />
-      <mat-error *ngIf="this.metaTableForm.controls['mtn_tablename'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
-    </mat-form-field>
+    <div class="d-flex flex-column justify-content-center align-items-center flex-wrap">
+      <mat-form-field class="w-100 mw-400" appearance="outline">
+        <mat-label>Nombre de la tabla:</mat-label>
+        <input matInput formControlName="mtn_tablename" />
+        <mat-error *ngIf="this.metaTableForm.controls['mtn_tablename']?.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+        <mat-error *ngIf="this.metaTableForm.controls['mtn_tablename']?.errors?.minlength"> {{ 'El nombre debe contener más de 4 letras' }} </mat-error>
+      </mat-form-field>
+    </div>
   </form>
+  <div class="card p-3">
+    <h5>Campos de la tabla:</h5>
+    <form *ngIf="metaFieldForm" [formGroup]="metaFieldForm">
+      <div class="d-flex flex-wrap justify-content-center align-items-center w-100">
+        <mat-form-field class="mw-400 minw-200" appearance="outline">
+          <mat-label>Nombre del campo:</mat-label>
+          <input matInput formControlName="mtf_fieldname" />
+          <mat-error *ngIf="metaFieldForm.controls['mtf_fieldname'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+        </mat-form-field>
+        <mat-form-field class="mw-400 minw-200 mx-2" appearance="outline">
+          <mat-label>Tipo de campo:</mat-label>
+          <mat-select #mySelect formControlName="mf">
+            <mat-option *ngFor="let field of metaFields" [value]="field.id">{{ field.mf_datatype }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="this.metaFieldForm.controls['mf'].invalid">Seleccione un campo</mat-error>
+        </mat-form-field>
+        <a
+          (click)="addFieldToList(metaFieldForm.value)"
+          [disabled]="!metaFieldForm.valid"
+          mat-raised-button
+          color="primary"
+          class="btn btn-primary h-100 mx-2 mb-3"
+        >
+          <mat-icon>add</mat-icon>
+        </a>
+      </div>
+    </form>
+    <b>Campos:</b>
+    <mat-selection-list class="my-4" [multiple]="false">
+      <mat-list-option *ngFor="let field of fieldsFromTable" [value]="field.mtf_fieldname">
+        <div class="d-flex justify-content-between align-items-center">
+          <p>{{ field.mtf_fieldname }}</p>
+          <a (click)="deleteFieldFromTable(field)" mat-raised-button color="warn" class="btn btn-danger h-100"> <mat-icon>delete</mat-icon> </a>
+        </div>
+      </mat-list-option>
+    </mat-selection-list>
+  </div>
+
   <mat-divider class="my-4"></mat-divider>
 
   <div class="d-flex align-items-center justify-content-end">
-    <button (click)="onSubmit()" [disabled]="!metaTableForm.valid" mat-raised-button color="primary" class="button">
+    <button (click)="onSubmit()" [disabled]="!metaTableForm.valid && fieldsFromTable.length == 0" mat-raised-button color="primary" class="button">
       {{ metaTableName ? 'Aceptar' : 'Crear' }}
     </button>
   </div>

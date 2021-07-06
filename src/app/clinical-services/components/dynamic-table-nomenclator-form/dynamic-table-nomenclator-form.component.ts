@@ -15,6 +15,19 @@ export class DynamicTableNomenclatorFormComponent implements OnInit {
   metaFieldForm: FormGroup;
   subscriptions: Subscription[] = [];
 
+  nomenclatorTypes = [
+    { id: 'varchar', name: 'varchar' },
+    { id: 'bool', name: 'bool' },
+    { id: 'float', name: 'float' },
+    { id: 'int', name: 'int' },
+    { id: 'date', name: 'date' },
+    { id: 'datetime', name: 'datetime' },
+    { id: 'time', name: 'time' },
+    { id: 'uuid', name: 'uuid' },
+    { id: 'text', name: 'text' },
+    { id: 'json', name: 'json' },
+  ];
+
   constructor(public dialogRef: MatDialogRef<DynamicTableNomenclatorFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
