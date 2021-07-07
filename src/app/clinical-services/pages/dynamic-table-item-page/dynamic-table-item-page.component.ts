@@ -111,7 +111,7 @@ export class DynamicTableItemPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  createFields(newFields, oldFields = [], id) {
+  createFields(newFields, oldFields = [], id = null) {
     const observableCreateMetaField = this.metaTableFieldService.createMultipleMetaTableField(newFields);
     const observables = [observableCreateMetaField];
 
