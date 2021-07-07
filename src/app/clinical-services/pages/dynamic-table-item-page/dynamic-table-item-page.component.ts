@@ -30,7 +30,6 @@ export class DynamicTableItemPageComponent implements OnInit, OnDestroy {
     private metaTableFieldService: MetaTableFieldService,
     private router: Router,
   ) {
-    console.log('Enter here');
     this.activatedRoute.params.subscribe((params) => {
       this.metaTableNameId = params['id'];
     });
@@ -100,7 +99,7 @@ export class DynamicTableItemPageComponent implements OnInit, OnDestroy {
       .pipe(
         map((response) => {
           const fullFields = fields.map((f) => ({ ...f, mtn: response.id }));
-          this.createFields(fullFields, [], response.id);
+          this.createFields(fullFields);
         }),
         catchError(() => {
           this.toastService.error('Hubo un error al crear la tabla. Por favor, inténtelo de nuevo más tarde.', 'Error');
@@ -111,16 +110,9 @@ export class DynamicTableItemPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  createFields(newFields, oldFields = [], id = null) {
-    const observableCreateMetaField = this.metaTableFieldService.createMultipleMetaTableField(newFields);
-    const observables = [observableCreateMetaField];
-
-    if (oldFields?.length) {
-      const observableEditMetaField = this.metaTableFieldService.editMultipleMetaTableField(oldFields, id);
-      observables.push(observableEditMetaField);
-    }
-
-    const sub = combineLatest(observables)
+  createFields(newFields) {
+    const sub = this.metaTableFieldService
+      .createMultipleMetaTableField(newFields)
       .pipe(
         map(() => {
           this.toastService.success('La tabla fue creada correctamente.', 'Felicidades');
@@ -137,19 +129,15 @@ export class DynamicTableItemPageComponent implements OnInit, OnDestroy {
   }
 
   onEdit(event) {
-    const { tableName, fields } = event;
-    console.log('tableName', tableName);
-    console.log('fields', fields);
     const sub = this.metaTableNameService
-      .editMetaTableName(tableName)
+      .editMetaTableName(event)
       .pipe(
-        map((response) => {
-          const newFields = fields.filter((f) => !f.id).map((f) => ({ ...f, mtn: response.id }));
-          const oldFields = fields.filter((f) => f.id);
-          this.createFields(newFields, oldFields);
+        map(() => {
+          this.toastService.success('La tabla fue editada correctamente.', 'Felicidades');
+          this.router.navigateByUrl('/clinical-services/meta-table');
         }),
         catchError(() => {
-          this.toastService.error('Hubo un error al crear la tabla. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          this.toastService.error('Hubo un error al editar la tabla. Por favor, inténtelo de nuevo más tarde.', 'Error');
           return of(null);
         }),
       )

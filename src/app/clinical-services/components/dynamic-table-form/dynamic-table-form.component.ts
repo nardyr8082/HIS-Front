@@ -1,16 +1,21 @@
+import { MetaTableFieldService } from './../../services/metaTableField.service';
 import { MetaTableField } from './../../models/MetaTableField/MetaTableField.model';
 import { MetaField } from './../../models/MetaField/MetaField.model';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { MetaTableName } from '../../models/MetaTable/MetaTable.model';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dynamic-table-form',
   templateUrl: './dynamic-table-form.component.html',
   styleUrls: ['./dynamic-table-form.component.scss'],
 })
-export class DynamicTableFormComponent implements OnInit, OnChanges {
+export class DynamicTableFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() metaTableName: MetaTableName;
   @Input() metaFields: MetaField[];
   @Input() metaTableFields: MetaTableField[];
@@ -23,7 +28,9 @@ export class DynamicTableFormComponent implements OnInit, OnChanges {
   metaTableForm: FormGroup;
   metaFieldForm: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) {}
+  subscriptions: Subscription[] = [];
+
+  constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, private metaTableFieldService: MetaTableFieldService) {}
 
   ngOnInit(): void {}
 
@@ -32,6 +39,10 @@ export class DynamicTableFormComponent implements OnInit, OnChanges {
     if (this.metaTableFields) {
       this.fieldsFromTable = this.metaTableFields;
     }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
   buildForm() {
@@ -54,16 +65,57 @@ export class DynamicTableFormComponent implements OnInit, OnChanges {
   }
 
   addFieldToList(field) {
-    this.fieldsFromTable.push(field);
+    if (this.metaTableName) {
+      this.createMetaTableField(this.metaTableName);
+    } else {
+      this.fieldsFromTable.push(field);
+    }
     this.clearFieldFormData();
   }
 
   deleteFieldFromTable(field) {
-    this.fieldsFromTable = this.fieldsFromTable.filter((f) => f.mtf_fieldname != field.mtf_fieldname);
+    const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
+
+    const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
+    modalComponentRef.text = `¿Está seguro que desea eliminar el campo: ${field.mtf_fieldname}?`;
+
+    const sub = modalComponentRef.accept
+      .pipe(
+        filter((accept) => accept),
+        map(() => {
+          this.fieldsFromTable = this.fieldsFromTable.filter((f) => f.mtf_fieldname != field.mtf_fieldname);
+          if (field.id) {
+            this.removeMetaTableField(field.id);
+          }
+        }),
+      )
+      .subscribe();
+
+    const sub1 = modalComponentRef.cancel.pipe(tap(() => modalRef.close())).subscribe();
+    this.subscriptions.push(sub, sub1);
   }
 
   onSubmit() {
     const data = { tableName: this.metaTableForm.value, fields: this.fieldsFromTable };
-    this.metaTableName ? this.edit.emit({ ...data }) : this.create.emit({ ...data });
+    this.metaTableName ? this.edit.emit(this.metaTableForm.value) : this.create.emit({ ...data });
+  }
+
+  removeMetaTableField(id) {
+    const sub = this.metaTableFieldService.deleteMetaTableField(id).subscribe();
+    this.subscriptions.push(sub);
+  }
+
+  createMetaTableField(metaTableName) {
+    const data = this.metaFieldForm.value;
+    data.mtn = metaTableName.id;
+    const sub = this.metaTableFieldService
+      .createMetaTableField(data)
+      .pipe(
+        map((response) => {
+          this.fieldsFromTable.push(response);
+        }),
+      )
+      .subscribe();
+    this.subscriptions.push(sub);
   }
 }
