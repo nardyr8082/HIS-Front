@@ -224,14 +224,14 @@ export class NavigationService {
             {
               displayName: 'Crear Tabla dinamica',
               iconName: ['radio_button_unchecked'],
-              route: '',
+              route: 'clinical-services/meta-table',
               material: true,
               display: true,
             },
             {
               displayName: 'Nomenclador Tabla dinamica',
               iconName: ['radio_button_unchecked'],
-              route: '',
+              route: 'clinical-services/meta-field',
               material: true,
               display: true,
             },

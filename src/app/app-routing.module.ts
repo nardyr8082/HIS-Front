@@ -136,7 +136,12 @@ const routes: Routes = [
       },
       {
         path: 'configurations',
-        loadChildren: () => import('./configurations/configurations.module').then(m => m.ConfigurationsModule),
+        loadChildren: () => import('./configurations/configurations.module').then((m) => m.ConfigurationsModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'clinical-services',
+        loadChildren: () => import('./clinical-services/clinical-services.module').then((m) => m.ClinicalServicesModule),
         canActivate: [BackendGuard],
       },
     ],
