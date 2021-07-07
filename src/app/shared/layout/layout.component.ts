@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, of } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -12,6 +12,9 @@ import { NavigationService } from 'src/app/core/services/navigation/navigation.s
 import { SpinnerLoadingService } from '../../backend/services/spinner-loading/spinner-loading.service';
 import { TranslateService } from '@ngx-translate/core';
 import { PanelNotificationsComponent } from '../common-layout-components/panel-notifications/panel-notifications.component';
+import { UserService } from './../../security-module/user/services/user.service';
+import { catchError, map } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-layout',
@@ -36,6 +39,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
   language: string;
   valueSpiner = 50;
   bufferValue = 75;
+  subsciptions: Subscription[] = [];
+  user_data: any;
 
   public flags = [
     { name: 'Español', image: 'assets/images/flags/es.svg', lang: 'es' },
@@ -62,6 +67,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
     private loggedInUserService: LoggedInUserService,
     private showToastr: ShowToastrService,
     private translateService: TranslateService,
+    private userService: UserService,
+    private toastr: ToastrService,
   ) {
     this.loggedInUser = loggedInUserService.getLoggedInUser();
     this.loggedInUser = loggedInUserService.getLoggedInUser();
@@ -90,6 +97,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
     });
 
     this.year = new Date().getFullYear();
+
+    this.user_data = JSON.parse(localStorage.getItem('user_data'));
   }
 
   logout(): void {
@@ -126,6 +135,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
     const tempFlag = JSON.parse(localStorage.getItem('language'));
     this.flag = tempFlag ? tempFlag : this.flags[0];
     this.currency = tempCurrency ? tempCurrency : this.currencies[0];
+    const userId = JSON.parse(localStorage.getItem('id'));
+    this.getUserById(userId);
   }
 
   ngOnDestroy(): void {
@@ -199,5 +210,23 @@ export class LayoutComponent implements OnInit, OnDestroy {
       return children.some((child) => child.route == url);
     }
     return false;
+  }
+
+  getUserById(id) {
+    const sub = this.userService
+      .getUserById(id)
+      .pipe(
+        map((response) => {
+          const data = JSON.stringify(response);
+          localStorage.setItem('user_data', data);
+        }),
+        catchError(() => {
+          return of(null);
+        }),
+      )
+      .subscribe();
+      console.log(localStorage);
+
+    this.subsciptions.push(sub);
   }
 }

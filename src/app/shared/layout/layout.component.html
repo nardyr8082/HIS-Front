@@ -117,11 +117,11 @@
             </mat-menu>
 
             <div fxLayout="row" class="py-1" fxLayoutAlign="start center">
-              <img class="ImageAvatar" *ngIf="!this.loggedInUser || !this.loggedInUser.avatar" src="../../../assets/images/users/profile2.png" alt="user" />
+              <img class="ImageAvatar" *ngIf="!this.loggedInUser || !this.user_data.persona.foto" src="../../../assets/images/users/profile2.png" alt="user" />
               <img
                 class="ImageAvatar"
-                *ngIf="this.loggedInUser && this.loggedInUser.avatar"
-                src="{{ userUrl + loggedInUser.avatar }}"
+                *ngIf="this.loggedInUser && this.user_data.persona.foto"
+                src="{{ user_data.persona.foto }}"
                 alt="user"
                 onerror="this.onerror=null;this.src='../../../assets/images/users/profile2.png';"
               />
