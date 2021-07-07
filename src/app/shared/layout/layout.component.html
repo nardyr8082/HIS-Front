@@ -12,10 +12,7 @@
         <mat-toolbar id="MainToolbarHeader" style="height: auto" class="w-100 mat-elevation-z8" color="primary">
           <mat-toolbar-row id="headerToolbar" class="p-3" style="height: auto !important" fxLayout="row" fxLayoutAlign="center center">
             <div class="profile-img" fxLayoutAlign="center center">
-              <img
-                style="height: 90px; width: auto; object-fit: cover; object-position: center; border-radius: 4px"
-                src="../../../assets/ico-snis.ico"
-              />
+              <img style="height: 90px; width: auto; object-fit: cover; object-position: center; border-radius: 4px" src="../../../assets/ico-snis.ico" />
             </div>
           </mat-toolbar-row>
 
@@ -117,10 +114,15 @@
             </mat-menu>
 
             <div fxLayout="row" class="py-1" fxLayoutAlign="start center">
-              <img class="ImageAvatar" *ngIf="!this.loggedInUser || !this.user_data.persona.foto" src="../../../assets/images/users/profile2.png" alt="user" />
               <img
                 class="ImageAvatar"
-                *ngIf="this.loggedInUser && this.user_data.persona.foto"
+                *ngIf="!this.loggedInUser || !this.user_data?.persona?.foto"
+                src="../../../assets/images/users/profile2.png"
+                alt="user"
+              />
+              <img
+                class="ImageAvatar"
+                *ngIf="this.loggedInUser && this.user_data?.persona?.foto"
                 src="{{ user_data.persona.foto }}"
                 alt="user"
                 onerror="this.onerror=null;this.src='../../../assets/images/users/profile2.png';"

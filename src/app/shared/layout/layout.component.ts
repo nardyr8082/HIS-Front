@@ -97,8 +97,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
     });
 
     this.year = new Date().getFullYear();
-
-    this.user_data = JSON.parse(localStorage.getItem('user_data'));
   }
 
   logout(): void {
@@ -219,13 +217,13 @@ export class LayoutComponent implements OnInit, OnDestroy {
         map((response) => {
           const data = JSON.stringify(response);
           localStorage.setItem('user_data', data);
+          this.user_data = JSON.parse(localStorage.getItem('user_data'));
         }),
         catchError(() => {
           return of(null);
         }),
       )
       .subscribe();
-      console.log(localStorage);
 
     this.subsciptions.push(sub);
   }
