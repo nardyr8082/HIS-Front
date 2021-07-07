@@ -11,8 +11,10 @@
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Caracteres Válidos:</mat-label>
-      <input matInput type="number" formControlName="mf_validchars" />
-      <mat-error *ngIf="this.metaFieldForm.controls['mf_validchars'].invalid"> {{ 'Los Caracteres Válidos son' }} <strong>requeridos</strong> </mat-error>
+      <input matInput type="number" formControlName="mf_validchars"  max="255" min="1" maxlength="3"/>
+      <mat-error *ngIf="this.metaFieldForm.controls['mf_validchars'].errors?.required"> {{ 'Los Caracteres Válidos son' }} <strong>requeridos</strong> </mat-error>
+      <mat-error *ngIf="this.metaFieldForm.controls['mf_validchars'].errors?.max"> {{ 'Máximo de 255 caracteres.' }} </mat-error>
+      <mat-error *ngIf="this.metaFieldForm.controls['mf_validchars'].errors?.min"> {{ 'Mínimo de 1 caracteres.' }} </mat-error>
     </mat-form-field>
   </form>
   <mat-divider class="my-4"></mat-divider>

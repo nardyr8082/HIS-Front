@@ -41,7 +41,7 @@ export class DynamicTableNomenclatorFormComponent implements OnInit {
   buildForm() {
     this.metaFieldForm = new FormGroup({
       mf_datatype: new FormControl(this.data.metaField ? this.data.metaField.mf_datatype : '', Validators.required),
-      mf_validchars: new FormControl(this.data.metaField ? this.data.metaField.mf_validchars : '', Validators.required),
+      mf_validchars: new FormControl(this.data.metaField ? this.data.metaField.mf_validchars : '', [Validators.required, Validators.maxLength(3), Validators.max(255), Validators.min(1)]),
     });
   }
 
