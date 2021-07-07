@@ -60,7 +60,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
     const sub = combineLatest(obs)
       .pipe(
         map((res) => {
-          this.toastrService.success('El perfil ha sido actualizado satisfactoriamente', 'Felicidades');
+          this.toastrService
+            .success('El perfil ha sido actualizado satisfactoriamente', 'Felicidades');
+            if (foto) {
+              setTimeout( function() {
+                window.location.reload();
+              }, 1500);
+            }
         }),
         catchError(() => {
           this.toastrService.error('Hubo un error actualizando el perfil', 'Error');
