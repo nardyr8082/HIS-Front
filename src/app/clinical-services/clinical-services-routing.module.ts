@@ -4,6 +4,8 @@ import { DynamicTableNomenclatorPageComponent } from './pages/dynamic-table-nome
 import { LayoutComponent } from './../shared/layout/layout.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ClinicHistoryPageComponent } from './pages/clinic-history-page/clinic-history-page.component';
+import { ClinicHistoryItemComponent } from './pages/clinic-history-item/clinic-history-item.component';
 
 const routes: Routes = [
   {
@@ -25,6 +27,18 @@ const routes: Routes = [
       {
         path: 'meta-table/edit/:id',
         component: DynamicTableItemPageComponent,
+      },
+      {
+        path: 'clinic-history',
+        component: ClinicHistoryPageComponent,
+      },
+      {
+        path: 'clinic-history/create',
+        component: ClinicHistoryItemComponent,
+      },
+      {
+        path: 'clinic-history/edit/:id',
+        component: ClinicHistoryItemComponent,
       },
     ],
   },
