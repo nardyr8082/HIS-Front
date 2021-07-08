@@ -217,7 +217,7 @@ export class NavigationService {
             {
               displayName: 'Historia Clínica',
               iconName: ['radio_button_unchecked'],
-              route: 'cat-docent',
+              route: 'clinical-services/clinic-history',
               material: true,
               display: true,
             },

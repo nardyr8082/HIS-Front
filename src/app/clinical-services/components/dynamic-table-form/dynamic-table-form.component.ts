@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } 
 import { MetaTableName } from '../../models/MetaTable/MetaTable.model';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 @Component({
