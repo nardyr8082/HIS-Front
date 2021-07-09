@@ -259,8 +259,8 @@
               <mat-label>Grupo Sanguíneo:</mat-label>
               <mat-select formControlName="grupo_sanguineo">
                 <mat-option *ngFor="let bloodType of bloodTypes" [value]="bloodType.id">{{ bloodType.descripcion }}</mat-option>
-              <mat-error *ngIf="personFormGroup.controls['grupo_sanguineo'].errors?.required">{{ 'Seleccione un sexo' }}</mat-error>
-              </mat-select>
+               </mat-select>
+               <mat-error *ngIf="personFormGroup.controls['grupo_sanguineo'].errors?.required">{{ 'Seleccione un grupo sanguíneo' }}</mat-error>
             </mat-form-field>
           </div>
         </div>
@@ -291,12 +291,14 @@
                 bindLabel="nombre"
                 bindValue="id"
                 formControlName="municipio"
+                name="municipio"
+                required
               >
               </ng-select>
               <small
                 class="text-danger error-style"
-                *ngIf="personFormGroup.controls['municipio'].errors?.required && personFormGroup.controls['municipio'].dirty"
-                >El distrito es <strong>requerido</strong></small
+                *ngIf="personFormGroup.controls['municipio'].errors?.required && (personFormGroup.controls['municipio'].touched || personFormGroup.controls['municipio'].pristine )">
+                El distrito es <strong>requerido</strong></small
               >
             </div>
 
