@@ -90,4 +90,38 @@ export class MenuListItemComponent implements OnInit, OnDestroy {
       this.isRuteChildofMy(childrenList[i], rute);
     }
   }
+  isActiveSomeChild(item) {
+    let res = false;
+    const children: any[] = item.children && item.children.length ? item.children : null;
+    const url = this.router.url.substring(1);
+    if (children) {
+      if (children.some((child) => child.route == url)) {
+        return true;
+      } else {
+        const self = this;
+        children.forEach(function(grandItem) {
+          if (self.hasGrandChild(grandItem, url)) {
+            res = true;
+          }
+        });
+      }
+    }
+    return res;
+  }
+
+  hasGrandChild(item, url) {
+    const children: any[] = item.children && item.children.length ? item.children : null;
+    if (children) {
+      if (children.some((child) => child.route == url)) {
+        return true;
+      } else {
+        const self = this;
+        children.forEach(function(grandItem) {
+          if (grandItem.children && grandItem.children.length) {
+            return self.hasGrandChild(grandItem, url);
+          }
+        });
+      }
+    }
+  }
 }
