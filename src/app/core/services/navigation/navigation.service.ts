@@ -63,7 +63,7 @@ export class NavigationService {
         {
           displayName: 'Sistema',
           iconName: ['line_style'],
-          route: 'office',
+          route: 'sistem',
           material: true,
           display: true,
         },

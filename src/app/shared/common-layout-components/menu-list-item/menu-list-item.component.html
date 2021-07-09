@@ -29,7 +29,7 @@
     </a>
     <mat-divider id="dividerNav" *ngIf="item.divider" class="my-2"></mat-divider>
     <div *ngIf="expanded">
-      <app-menu-list-item *ngFor="let child of item.children" [item]="child" [depth]="depth + 1"> </app-menu-list-item>
+      <app-menu-list-item *ngFor="let child of item.children" [item]="child" [expanded]="isActiveSomeChild(child)" [depth]="depth + 1"> </app-menu-list-item>
     </div>
   </ng-container>
   <ng-container *ngIf="item.header">
