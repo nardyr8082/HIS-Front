@@ -52,7 +52,7 @@ export class DynamicTableFormComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     this.metaFieldForm = this._formBuilder.group({
-      mtf_fieldname: ['', [Validators.required]],
+      mtf_fieldname: ['', [Validators.required, Validators.pattern('^(?!id$)')]],
       mf: ['', [Validators.required]],
     });
   }

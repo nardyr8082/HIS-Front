@@ -19,6 +19,7 @@
           <mat-label>Nombre del campo:</mat-label>
           <input matInput formControlName="mtf_fieldname" />
           <mat-error *ngIf="metaFieldForm.controls['mtf_fieldname'].invalid"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+          <mat-error *ngIf="metaFieldForm.controls['mtf_fieldname'].errors?.pattern"> {{ 'El nombre del campo no puede ser Id' }}  </mat-error>
         </mat-form-field>
         <mat-form-field class="mw-400 minw-200 mx-2" appearance="outline">
           <mat-label>Tipo de campo:</mat-label>
