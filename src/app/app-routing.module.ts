@@ -164,6 +164,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/program/program.module').then((m) => m.ProgramModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'attribute',
+        loadChildren: () => import('./stock-modules/classifiers/attribute/attribute.module').then((m) => m.AttributeModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {

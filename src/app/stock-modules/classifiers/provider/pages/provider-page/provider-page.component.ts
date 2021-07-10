@@ -44,7 +44,7 @@ export class ProviderPageComponent implements OnInit {
     },
   ];
 
-  constructor(private taxService: ProviderService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(private providerService: ProviderService, private toastService: ToastrService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getProviders();
@@ -56,7 +56,7 @@ export class ProviderPageComponent implements OnInit {
 
   getProviders(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
-    const sub = this.taxService
+    const sub = this.providerService
       .getProviders(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<Provider>) => {
@@ -105,7 +105,7 @@ export class ProviderPageComponent implements OnInit {
     const sub = modalComponentRef.create
       .pipe(
         switchMap((provider: Provider) =>
-          this.taxService.createProvider(provider).pipe(
+          this.providerService.createProvider(provider).pipe(
             catchError(() => {
               this.toastService.error('Hubo un error al crear el proveedor. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
@@ -143,7 +143,7 @@ export class ProviderPageComponent implements OnInit {
     const sub = modalComponentRef.edit
       .pipe(
         switchMap((provider: Provider) =>
-          this.taxService.editProvider({ ...provider, id: item.id }).pipe(
+          this.providerService.editProvider({ ...provider, id: item.id }).pipe(
             catchError(() => {
               this.toastService.error('Hubo un error al editar el proveedor. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
@@ -172,7 +172,7 @@ export class ProviderPageComponent implements OnInit {
       .pipe(
         filter((accept) => accept),
         switchMap(() =>
-          this.taxService.deleteProvider(item.id).pipe(
+          this.providerService.deleteProvider(item.id).pipe(
             map(() => item),
             catchError(() => {
               this.toastService.error('Hubo un error al eliminar el proveedor. Por favor, inténtelo de nuevo más tarde.', 'Error');

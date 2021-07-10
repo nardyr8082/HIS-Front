@@ -516,6 +516,13 @@ export class NavigationService {
               material: true,
               display: true,
             },
+            {
+              displayName: 'Atributo',
+              iconName: ['radio_button_unchecked'],
+              route: 'attribute',
+              material: true,
+              display: true,
+            },
           ],
           display: true,
         },
