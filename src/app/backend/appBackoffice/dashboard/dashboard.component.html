@@ -1,53 +1,18 @@
 <div class="container">
   <div class="row">
-    <mat-card style="margin: 20px" class="card">
+    <mat-card class="card" style="margin-left: 30px; max-width: 500px;">
       <mat-card-header>
-        <div mat-card-avatar class="header-image"></div>
-        <mat-card-title>Usuarios</mat-card-title>
-        <mat-card-subtitle>{{data.usersCount}}</mat-card-subtitle>
+        <mat-card-title>Estadísticas</mat-card-title>
       </mat-card-header>
-      <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
-    </mat-card>
-    <mat-card class="card">
-      <mat-card-header>
-        <div mat-card-avatar class="header-image"></div>
-        <mat-card-title>Pacientes</mat-card-title>
-        <mat-card-subtitle>{{data.pacientCount}}</mat-card-subtitle>
-      </mat-card-header>
-      <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
-    </mat-card>
-    <mat-card class="card">
-      <mat-card-header>
-        <div mat-card-avatar class="header-image"></div>
-        <mat-card-title>Niveles Organizacional</mat-card-title>
-        <mat-card-subtitle>{{data.orgLevelCount}}</mat-card-subtitle>
-      </mat-card-header>
-      <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
-    </mat-card>
-    <mat-card class="card">
-      <mat-card-header>
-        <div mat-card-avatar class="header-image"></div>
-        <mat-card-title>Unidades de Salud</mat-card-title>
-        <mat-card-subtitle>{{data.healthUnitCount}}</mat-card-subtitle>
-      </mat-card-header>
-      <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
-    </mat-card>
-    <mat-card class="card">
-      <mat-card-header>
-        <div mat-card-avatar class="header-image"></div>
-        <mat-card-title>Departamentos</mat-card-title>
-        <mat-card-subtitle>{{data.officeCount}}</mat-card-subtitle>
-      </mat-card-header>
-      <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
-    </mat-card>
-    <mat-card class="card">
-      <mat-card-header>
-        <div mat-card-avatar class="header-image"></div>
-        <mat-card-title>Puesto de trabajo</mat-card-title>
-        <mat-card-subtitle>{{data.workStationCount}}</mat-card-subtitle>
-      </mat-card-header>
-      <img  mat-card-image src="../../../../assets/images/grafico.png" alt="grafico" />
-    </mat-card>
-
+      <app-custom-table
+      *ngIf="data"
+      [data]="data"
+      [dataCount]="dataCount"
+      [displayedColumns]="configuration.displayedColumns"
+      [columnsName]="configuration.columnsName"
+      [paginationSize]="configuration.paginationSize"
+      [loading]="loading"
+      (changePage)="onChangePage($event)"
+    ></app-custom-table></mat-card>
   </div>
 </div>
