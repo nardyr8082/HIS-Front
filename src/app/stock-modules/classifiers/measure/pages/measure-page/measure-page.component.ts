@@ -166,7 +166,7 @@ export class MeasurePageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `¿Está seguro que desea eliminar la medida: ${item.descripcion}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar la medida: ${item.clave}?`;
 
     const sub = modalComponentRef.accept
       .pipe(
