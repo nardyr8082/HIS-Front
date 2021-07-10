@@ -3,6 +3,11 @@
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="measureForm" [formGroup]="measureForm">
     <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Clave:</mat-label>
+      <input matInput formControlName="clave" />
+      <mat-error *ngIf="claveMeasureControl.errors?.required"> {{ 'La clave es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
       <mat-label>Descripción:</mat-label>
       <input matInput formControlName="descripcion" />
       <mat-error *ngIf="nameMeasureControl.errors?.required"> {{ 'La descripción es' }} <strong>requerido</strong> </mat-error>
