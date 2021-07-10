@@ -1,0 +1,63 @@
+<div class="form">
+  <h4>{{ data.provider ? 'Editar Proveedor' : 'Crear Proveedor' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="providerForm" [formGroup]="providerForm">
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <!-- nombre -->
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Nombre:</mat-label>
+          <input matInput formControlName="nombre" />
+          <mat-error *ngIf="nombreControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+          <mat-error *ngIf="nombreControl.errors?.pattern"> {{ 'El nombre solo permite letras y espacios' }} </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-12">
+        <!-- descripcion -->
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Descripción:</mat-label>
+          <input matInput formControlName="descripcion" />
+          <mat-error *ngIf="descripcionControl.errors?.required"> {{ 'La descripción es' }} <strong>requerida</strong> </mat-error>
+          <mat-error *ngIf="descripcionControl.errors?.pattern"> {{ 'La descripción solo permite letras y espacios' }} </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <!-- telefono -->
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Teléfono:</mat-label>
+          <input matInput formControlName="telefono" />
+          <mat-error *ngIf="telefonoControl.errors?.required"> {{ 'El teléfono es' }} <strong>requerida</strong> </mat-error>
+          <mat-error *ngIf="telefonoControl.errors?.pattern"> {{ 'El teléfono solo permite números' }} </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-12">
+        <!-- correo -->
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Correo:</mat-label>
+          <input matInput formControlName="correo" />
+          <mat-error *ngIf="correoControl.errors?.required"> {{ 'El correo es' }} <strong>requerido</strong> </mat-error>
+          <mat-error *ngIf="correoControl.errors?.email"> {{ 'Formato de correo incorrecto' }} </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-md-12">
+        <!-- representante -->
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Representante:</mat-label>
+          <input matInput formControlName="representante" />
+          <mat-error *ngIf="representanteControl.errors?.required"> {{ 'El representante es' }} <strong>requerido</strong> </mat-error>
+          <mat-error *ngIf="representanteControl.errors?.pattern"> {{ 'El representante solo permite letras y espacios' }} </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(providerForm.value)" [disabled]="!providerForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.provider ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

@@ -155,6 +155,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'provider',
+        loadChildren: () => import('./stock-modules/classifiers/provider/provider.module').then((m) => m.ProviderModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'stock-program',
         loadChildren: () => import('./stock-modules/classifiers/program/program.module').then((m) => m.ProgramModule),
         canActivate: [BackendGuard],
