@@ -1,26 +1,26 @@
-import { MeasureService } from '../../services/measure.service';
-import { MEASURE_TABLE_CONFIGURATION } from '../../models/measure-table-configuration';
+import { ProgramService } from '../../services/program.service';
+import { PROGRAM_TABLE_CONFIGURATION } from '../../models/program-table-configuration';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { of, Subscription } from 'rxjs';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { ApiResponse, DEFAULT_PAGE_SIZE } from 'src/app/core/models/api-response.model';
-import { Measure } from '../../models/measure.model';
+import { Program } from '../../models/program.model';
 import { PageEvent } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MeasureFormComponent } from '../../components/measure-form/measure-form.component';
+import { ProgramFormComponent } from '../../components/program-form/program-form.component';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
 
 @Component({
-  selector: 'app-measure-page',
-  templateUrl: './measure-page.component.html',
-  styleUrls: ['./measure-page.component.scss'],
+  selector: 'app-program-page',
+  templateUrl: './program-page.component.html',
+  styleUrls: ['./program-page.component.scss'],
 })
-export class MeasurePageComponent implements OnInit, OnDestroy {
-  measure: Measure[];
+export class ProgramPageComponent implements OnInit, OnDestroy {
+  programs: Program[];
   dataCount = 0;
-  configuration = MEASURE_TABLE_CONFIGURATION;
+  configuration = PROGRAM_TABLE_CONFIGURATION;
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
@@ -29,38 +29,38 @@ export class MeasurePageComponent implements OnInit, OnDestroy {
 
   rowActionButtons = [
     {
-      tooltipText: 'Editar Medida',
+      tooltipText: 'Editar Sexo',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.openEditForm(item),
     },
     {
-      tooltipText: 'Eliminar Medida',
+      tooltipText: 'Eliminar Sexo',
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
-      callback: (item) => this.deleteMeasure(item),
+      callback: (item) => this.deleteProgram(item),
     },
   ];
 
-  constructor(private measureService: MeasureService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(private programService: ProgramService, private toastService: ToastrService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.getMeasures();
+    this.getPrograms();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getMeasures(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
+  getPrograms(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
-    const sub = this.measureService
-      .getMeasures(filters, sortColumn, sortDirection, page, pageSize)
+    const sub = this.programService
+      .getPrograms(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
-        map((response: ApiResponse<Measure>) => {
-          this.measure = response.results;
+        map((response: ApiResponse<Program>) => {
+          this.programs = response.results;
           this.dataCount = response.count;
           this.loading = false;
         }),
@@ -78,42 +78,42 @@ export class MeasurePageComponent implements OnInit, OnDestroy {
   onChangePage(page: PageEvent) {
     this.page = page.pageIndex + 1;
     this.pageSize = page.pageSize;
-    this.getMeasures(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getPrograms(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getMeasures(filters, 'id', 'desc');
+    this.getPrograms(filters, 'id', 'desc');
   }
 
-  createMeasure() {
-    let dialogRef: MatDialogRef<MeasureFormComponent, any>;
+  createProgram() {
+    let dialogRef: MatDialogRef<ProgramFormComponent, any>;
 
-    dialogRef = this.dialog.open(MeasureFormComponent, {
+    dialogRef = this.dialog.open(ProgramFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
       maxWidth: '500px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',
       data: {
-        measure: null,
+        program: null,
       },
     });
 
-    const modalComponentRef = dialogRef.componentInstance as MeasureFormComponent;
+    const modalComponentRef = dialogRef.componentInstance as ProgramFormComponent;
 
     const sub = modalComponentRef.create
       .pipe(
-        switchMap((measure: Measure) =>
-          this.measureService.createMeasure(measure).pipe(
+        switchMap((program: Program) =>
+          this.programService.createProgram(program).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al crear la Medida. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al crear el programa. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getMeasures(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('La medida fue creada correctamente.', 'Felicidades');
+                this.getPrograms(this.filters, 'id', 'desc', this.page, this.pageSize);
+                this.toastService.success('El programa fue creado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -125,33 +125,33 @@ export class MeasurePageComponent implements OnInit, OnDestroy {
   }
 
   openEditForm(item) {
-    let dialogRef: MatDialogRef<MeasureFormComponent, any>;
+    let dialogRef: MatDialogRef<ProgramFormComponent, any>;
 
-    dialogRef = this.dialog.open(MeasureFormComponent, {
+    dialogRef = this.dialog.open(ProgramFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
       maxWidth: '500px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',
       data: {
-        measure: item,
+        program: item,
       },
     });
 
-    const modalComponentRef = dialogRef.componentInstance as MeasureFormComponent;
+    const modalComponentRef = dialogRef.componentInstance as ProgramFormComponent;
 
     const sub = modalComponentRef.edit
       .pipe(
-        switchMap((measure: Measure) =>
-          this.measureService.editMeasure({ ...measure, id: item.id }).pipe(
+        switchMap((program: Program) =>
+          this.programService.editProgram({ ...program, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar la medida. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar el programa. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getMeasures(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('La medida fue modificada correctamente.', 'Felicidades');
+                this.getPrograms(this.filters, 'id', 'desc', this.page, this.pageSize);
+                this.toastService.success('El programa fue modificado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -162,27 +162,27 @@ export class MeasurePageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  deleteMeasure(item) {
+  deleteProgram(item) {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `¿Está seguro que desea eliminar la medida: ${item.clave}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar el programa: ${item.descripcion}?`;
 
     const sub = modalComponentRef.accept
       .pipe(
         filter((accept) => accept),
         switchMap(() =>
-          this.measureService.deleteMeasure(item.id).pipe(
+          this.programService.deleteProgram(item.id).pipe(
             map(() => item),
             catchError(() => {
-              this.toastService.error('Hubo un error al eliminar la medida. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al eliminar el programa. Por favor, inténtelo de nuevo más tarde.', 'Error');
               modalRef.close();
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getMeasures(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('La medida fue eliminada correctamente.', 'Felicidades');
+                this.getPrograms(this.filters, 'id', 'desc', this.page, this.pageSize);
+                this.toastService.success('El programa fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),
@@ -196,6 +196,6 @@ export class MeasurePageComponent implements OnInit, OnDestroy {
   }
 
   changeSort(sort: Sort) {
-    this.getMeasures(this.filters, sort.active, sort.direction);
+    this.getPrograms(this.filters, sort.active, sort.direction);
   }
 }

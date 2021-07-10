@@ -145,18 +145,23 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
-        path: 'warehouse-tax',
+        path: 'stock-tax',
         loadChildren: () => import('./stock-modules/classifiers/tax/tax.module').then((m) => m.TaxModule),
         canActivate: [BackendGuard],
       },
       {
-        path: 'measure',
+        path: 'stock-measure',
         loadChildren: () => import('./stock-modules/classifiers/measure/measure.module').then((m) => m.MeasureModule),
         canActivate: [BackendGuard],
       },
       {
         path: 'provider',
         loadChildren: () => import('./stock-modules/classifiers/provider/provider.module').then((m) => m.ProviderModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'stock-program',
+        loadChildren: () => import('./stock-modules/classifiers/program/program.module').then((m) => m.ProgramModule),
         canActivate: [BackendGuard],
       },
     ],

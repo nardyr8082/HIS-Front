@@ -4,15 +4,15 @@ import { Injectable } from '@angular/core';
 //
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../../core/models/api-response.model';
-import { Measure } from '../models/measure.model';
+import { Program } from '../models/program.model';
 
 //
 
 @Injectable({
   providedIn: 'root',
 })
-export class MeasureService {
-  private apiEndpoint = `${environment.apiUrl}alm_medida`;
+export class ProgramService {
+  private apiEndpoint = `${environment.apiUrl}alm_programa`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -25,7 +25,7 @@ export class MeasureService {
 
   constructor(private http: HttpClient) {}
 
-  getMeasures(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Measure>> {
+  getPrograms(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Program>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -33,7 +33,7 @@ export class MeasureService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<Measure>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<Program>>(this.apiEndpoint + queryParams);
   }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
@@ -70,15 +70,15 @@ export class MeasureService {
     return queryParams;
   }
 
-  createMeasure(data: Measure): Observable<Measure> {
+  createProgram(data: Program): Observable<Program> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editMeasure(data: Measure): Observable<Measure> {
-    return this.http.patch<Measure>(`${this.apiEndpoint}/${data.id}/`, data);
+  editProgram(data: Program): Observable<Program> {
+    return this.http.put<Program>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteMeasure(id: string): Observable<any> {
+  deleteProgram(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 }
