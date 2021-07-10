@@ -12,7 +12,7 @@ import { Measure } from '../models/measure.model';
   providedIn: 'root',
 })
 export class MeasureService {
-  private apiEndpoint = `${environment.apiUrl}medida`;
+  private apiEndpoint = `${environment.apiUrl}alm_medida`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
