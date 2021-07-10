@@ -97,7 +97,7 @@ export class NavigationService {
           display: true,
         },
         {
-          displayName: 'Nomencladores',
+          displayName: 'Clasificadores',
           iconName: ['build'],
           material: true,
           children: [
@@ -254,94 +254,17 @@ export class NavigationService {
           display: true,
         },
         {
-          displayName: 'Nomencladores',
+          displayName: 'Clasificadores',
           iconName: ['build'],
           material: true,
           children: [
             {
-              displayName: 'Categoria Cientifica',
+              displayName: 'Enfermedades',
               iconName: ['radio_button_unchecked'],
               route: 'cat-science',
               material: true,
               display: true,
-            },
-            {
-              displayName: 'Categoria Docente',
-              iconName: ['radio_button_unchecked'],
-              route: 'cat-docent',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Profesión',
-              iconName: ['radio_button_unchecked'],
-              route: 'profession',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Sexo',
-              iconName: ['radio_button_unchecked'],
-              route: 'gender',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Tipo Documento Id',
-              iconName: ['radio_button_unchecked'],
-              route: 'doc-type-id',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Especialidad',
-              iconName: ['radio_button_unchecked'],
-              route: 'specialty',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Estado Civil',
-              iconName: ['radio_button_unchecked'],
-              route: 'civil_status',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Nacionalidad',
-              iconName: ['radio_button_unchecked'],
-              route: 'nationality',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Raza',
-              iconName: ['radio_button_unchecked'],
-              route: 'race',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Pais',
-              iconName: ['radio_button_unchecked'],
-              route: 'country',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Provincia',
-              iconName: ['radio_button_unchecked'],
-              route: 'state',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Distrito',
-              iconName: ['radio_button_unchecked'],
-              route: 'municipality',
-              material: true,
-              display: true,
-            },
+            }
           ],
           display: true,
         },
@@ -567,6 +490,36 @@ export class NavigationService {
           children: [
             {
               displayName: 'Medida',
+              iconName: ['radio_button_unchecked'],
+              route: '',
+              material: true,
+              display: true,
+            }
+          ],
+          display: true,
+        },
+      ],
+      display: true,
+    },
+    {
+      displayName: 'Indicadores',
+      iconName: ['store'],
+      material: true,
+      children: [
+        {
+          displayName: 'Clasificadores',
+          iconName: ['build'],
+          material: true,
+          children: [
+            {
+              displayName: 'Subcategoría',
+              iconName: ['radio_button_unchecked'],
+              route: '',
+              material: true,
+              display: true,
+            },
+            {
+              displayName: 'Categoría',
               iconName: ['radio_button_unchecked'],
               route: '',
               material: true,
