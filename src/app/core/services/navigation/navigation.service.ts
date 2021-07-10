@@ -568,7 +568,7 @@ export class NavigationService {
             {
               displayName: 'Medida',
               iconName: ['radio_button_unchecked'],
-              route: '',
+              route: 'measure',
               material: true,
               display: true,
             }

@@ -144,6 +144,11 @@ const routes: Routes = [
         loadChildren: () => import('./clinical-services/clinical-services.module').then((m) => m.ClinicalServicesModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'measure',
+        loadChildren: () => import('./warehouse-modules/classifiers-module/measure/measure.module').then((m) => m.MeasureModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {

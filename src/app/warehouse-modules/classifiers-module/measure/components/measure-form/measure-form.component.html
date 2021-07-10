@@ -1,0 +1,19 @@
+<div class="form">
+  <h4>{{ data.measure ? 'Editar Medida' : 'Crear Medida' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="measureForm" [formGroup]="measureForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Descripción:</mat-label>
+      <input matInput formControlName="descripcion" />
+      <mat-error *ngIf="nameMeasureControl.errors?.required"> {{ 'La descripción es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="nameMeasureControl.errors?.pattern"> {{ 'La descripción solo permite letras y espacios' }} </mat-error>
+    </mat-form-field>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(measureForm.value)" [disabled]="!measureForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.measure ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>
