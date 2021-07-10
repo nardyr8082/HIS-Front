@@ -491,14 +491,21 @@ export class NavigationService {
             {
               displayName: 'Medida',
               iconName: ['radio_button_unchecked'],
-              route: 'measure',
+              route: 'stock-measure',
               material: true,
               display: true,
             },
             {
               displayName: 'Impuestos',
               iconName: ['radio_button_unchecked'],
-              route: 'warehouse-tax',
+              route: 'stock-tax',
+              material: true,
+              display: true,
+            },
+            {
+              displayName: 'Programa',
+              iconName: ['radio_button_unchecked'],
+              route: 'stock-program',
               material: true,
               display: true,
             }
