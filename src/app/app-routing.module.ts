@@ -146,12 +146,12 @@ const routes: Routes = [
       },
       {
         path: 'warehouse-tax',
-        loadChildren: () => import('./dir1/dir2/tax/tax.module').then((m) => m.TaxModule),
+        loadChildren: () => import('./stock-modules/classifiers/tax/tax.module').then((m) => m.TaxModule),
         canActivate: [BackendGuard],
       },
       {
         path: 'measure',
-        loadChildren: () => import('./warehouse-modules/classifiers-module/measure/measure.module').then((m) => m.MeasureModule),
+        loadChildren: () => import('./stock-modules/classifiers/measure/measure.module').then((m) => m.MeasureModule),
         canActivate: [BackendGuard],
       },
     ],
