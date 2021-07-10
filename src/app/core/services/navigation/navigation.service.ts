@@ -264,7 +264,7 @@ export class NavigationService {
               route: 'cat-science',
               material: true,
               display: true,
-            }
+            },
           ],
           display: true,
         },
@@ -501,7 +501,14 @@ export class NavigationService {
               route: 'warehouse-tax',
               material: true,
               display: true,
-            }
+            },
+            {
+              displayName: 'Proveedores',
+              iconName: ['radio_button_unchecked'],
+              route: 'provider',
+              material: true,
+              display: true,
+            },
           ],
           display: true,
         },
@@ -531,7 +538,7 @@ export class NavigationService {
               route: '',
               material: true,
               display: true,
-            }
+            },
           ],
           display: true,
         },
