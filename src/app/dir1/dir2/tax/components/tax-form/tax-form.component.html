@@ -1,0 +1,31 @@
+<div class="form">
+  <h4>{{ data.tax ? 'Editar Sexo' : 'Crear Sexo' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="taxForm" [formGroup]="taxForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Descripción:</mat-label>
+      <input matInput formControlName="descripcion" />
+      <mat-error *ngIf="nameTaxControl.errors?.required"> {{ 'La descripción es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="nameTaxControl.errors?.pattern"> {{ 'La descripción solo permite letras y espacios' }} </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Importe fijo:</mat-label>
+      <input matInput formControlName="importe_fijo" type="number"/>
+      <mat-error *ngIf="importeFTaxControl.errors?.required"> {{ 'EL importe fijo es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="importeFTaxControl.errors?.pattern"> {{ 'El importe fijo es un número' }} </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Importe proporcional:</mat-label>
+      <input matInput formControlName="importe_proporcional" type="number"/>
+      <mat-error *ngIf="importePTaxControl.errors?.required"> {{ 'El importe proporcional es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="importePTaxControl.errors?.pattern"> {{ 'El importe proporcional es un número' }} </mat-error>
+    </mat-form-field>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(taxForm.value)" [disabled]="!taxForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.tax ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

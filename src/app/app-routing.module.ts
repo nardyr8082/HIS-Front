@@ -145,6 +145,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'warehouse-tax',
+        loadChildren: () => import('./dir1/dir2/tax/tax.module').then((m) => m.TaxModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'measure',
         loadChildren: () => import('./warehouse-modules/classifiers-module/measure/measure.module').then((m) => m.MeasureModule),
         canActivate: [BackendGuard],

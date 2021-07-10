@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GenderPageComponent } from './gender-page.component';
+import { TaxFormComponent } from './tax-form.component';
 
-describe('GenderPageComponent', () => {
-  let component: GenderPageComponent;
-  let fixture: ComponentFixture<GenderPageComponent>;
+describe('TaxFormComponent', () => {
+  let component: TaxFormComponent;
+  let fixture: ComponentFixture<TaxFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GenderPageComponent],
+      declarations: [TaxFormComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GenderPageComponent);
+    fixture = TestBed.createComponent(TaxFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
