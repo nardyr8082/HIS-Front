@@ -144,6 +144,11 @@ const routes: Routes = [
         loadChildren: () => import('./clinical-services/clinical-services.module').then((m) => m.ClinicalServicesModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'warehouse-tax',
+        loadChildren: () => import('./dir1/dir2/tax/tax.module').then((m) => m.TaxModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {

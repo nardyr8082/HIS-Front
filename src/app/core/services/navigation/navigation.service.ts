@@ -494,6 +494,13 @@ export class NavigationService {
               route: '',
               material: true,
               display: true,
+            },
+            {
+              displayName: 'Impuestos',
+              iconName: ['radio_button_unchecked'],
+              route: 'warehouse-tax',
+              material: true,
+              display: true,
             }
           ],
           display: true,
