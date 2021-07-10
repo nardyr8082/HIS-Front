@@ -508,6 +508,13 @@ export class NavigationService {
               route: 'stock-program',
               material: true,
               display: true,
+            },
+            {
+              displayName: 'Operación Comercial',
+              iconName: ['radio_button_unchecked'],
+              route: 'stock-commercial-operation',
+              material: true,
+              display: true,
             }
           ],
           display: true,

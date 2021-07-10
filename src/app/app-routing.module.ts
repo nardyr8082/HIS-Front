@@ -159,6 +159,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/program/program.module').then((m) => m.ProgramModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'stock-commercial-operation',
+        loadChildren: () => import('./stock-modules/classifiers/commercial-operation/commercial-operation.module').then((m) => m.CommercialOperationModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
