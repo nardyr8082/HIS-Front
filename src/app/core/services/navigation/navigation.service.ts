@@ -556,6 +556,29 @@ export class NavigationService {
       display: true,
     },
     {
+      displayName: 'Almacen',
+      iconName: ['store'],
+      material: true,
+      children: [
+        {
+          displayName: 'Nomencladores',
+          iconName: ['build'],
+          material: true,
+          children: [
+            {
+              displayName: 'Medida',
+              iconName: ['radio_button_unchecked'],
+              route: '',
+              material: true,
+              display: true,
+            }
+          ],
+          display: true,
+        },
+      ],
+      display: true,
+    },
+    {
       displayName: 'Mi Perfil',
       iconName: ['account_circle'],
       material: true,
