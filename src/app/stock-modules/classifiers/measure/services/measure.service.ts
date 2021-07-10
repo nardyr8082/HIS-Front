@@ -75,7 +75,7 @@ export class MeasureService {
   }
 
   editMeasure(data: Measure): Observable<Measure> {
-    return this.http.put<Measure>(`${this.apiEndpoint}/${data.id}/`, data);
+    return this.http.patch<Measure>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
   deleteMeasure(id: string): Observable<any> {

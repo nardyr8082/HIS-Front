@@ -22,8 +22,8 @@ export class MeasureFormComponent implements OnInit {
 
   buildForm() {
     this.measureForm = new FormGroup({
-      descripcion: new FormControl(this.data.mesaure ? this.data.measure.descripcion : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
-      clave: new FormControl(this.data.mesaure ? this.data.measure.clave : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
+      descripcion: new FormControl(this.data.measure ? this.data.measure.descripcion : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
+      clave: new FormControl(this.data.measure ? this.data.measure.clave : '',[Validators.required ,Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]),
     });
   }
 
