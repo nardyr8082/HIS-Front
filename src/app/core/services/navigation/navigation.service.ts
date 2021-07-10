@@ -561,7 +561,7 @@ export class NavigationService {
       material: true,
       children: [
         {
-          displayName: 'Nomencladores',
+          displayName: 'Clasificadores',
           iconName: ['build'],
           material: true,
           children: [
