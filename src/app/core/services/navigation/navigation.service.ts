@@ -479,7 +479,7 @@ export class NavigationService {
       display: true,
     },
     {
-      displayName: 'Almacen',
+      displayName: 'Almacén',
       iconName: ['store'],
       material: true,
       children: [
