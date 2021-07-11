@@ -194,6 +194,11 @@ const routes: Routes = [
         loadChildren: () => import('./indicator-module/classifiers/subcategory/subcategory.module').then((m) => m.SubcategoryModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'move-type',
+        loadChildren: () => import('./stock-modules/classifiers/move-type/move-type.module').then((m) => m.MoveTypeModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {

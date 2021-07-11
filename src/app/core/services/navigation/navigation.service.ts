@@ -544,6 +544,13 @@ export class NavigationService {
               material: true,
               display: true,
             },
+            {
+              displayName: 'Tipo de Movimiento',
+              iconName: ['radio_button_unchecked'],
+              route: 'move-type',
+              material: true,
+              display: true,
+            },
           ],
           display: true,
         },

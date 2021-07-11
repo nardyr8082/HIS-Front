@@ -1,0 +1,37 @@
+<div class="form">
+  <h4>{{ data.moveType ? 'Editar Tipo de Movimiento' : 'Crear Tipo de Movimiento' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="moveTypeForm" [formGroup]="moveTypeForm">
+    <!-- Descripcion -->
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Descripción:</mat-label>
+      <input matInput formControlName="descripcion" />
+      <mat-error *ngIf="descripcionControl.errors?.required"> {{ 'La descripción es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="descripcionControl.errors?.pattern"> {{ 'La descripción solo permite letras y espacios' }} </mat-error>
+    </mat-form-field>
+
+    <!-- factor_diferencial -->
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Factor Diferencial:</mat-label>
+      <input matInput formControlName="factor_diferencial" />
+      <mat-error *ngIf="factor_diferencialControl.errors?.required"> {{ 'El factor diferencial es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="factor_diferencialControl.errors?.pattern"> {{ 'El factor diferencial solo permite' }} <strong>dígitos</strong> </mat-error>
+    </mat-form-field>
+
+    <!-- categoria -->
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Categoría:</mat-label>
+      <mat-select #mySelect formControlName="categoria">
+        <mat-option *ngFor="let category of categories$ | async" [value]="category.id">{{ category.descripcion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="categoriaControl.errors?.required"> {{ 'La categoría es' }} <strong>requerida</strong> </mat-error>
+    </mat-form-field>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(moveTypeForm.value)" [disabled]="!moveTypeForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.moveType ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

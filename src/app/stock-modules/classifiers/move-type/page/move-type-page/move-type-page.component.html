@@ -1,11 +1,11 @@
 <div class="container mt-3">
   <div class="d-flex justify-content-between align-items-center">
-    <h4>Atributos</h4>
-    <button (click)="createAttribute()" mat-raised-button color="primary" class="button">Crear Atributo</button>
+    <h4>Tipo de Movimiento</h4>
+    <button (click)="createMoveType()" mat-raised-button color="primary" class="button">Crear tipo de Movimiento</button>
   </div>
   <app-custom-table
-    *ngIf="attributes"
-    [data]="attributes"
+    *ngIf="moveTypes"
+    [data]="moveTypes"
     [dataCount]="dataCount"
     [displayedColumns]="configuration.displayedColumns"
     [columnsName]="configuration.columnsName"

@@ -42,7 +42,7 @@ import { getSpanishPaginator } from './shared/table/custom-table/spanish-paginat
       useClass: HttpErrorInterceptorService,
       multi: true,
     },
-    { provide: MatPaginatorIntl, useValue: getSpanishPaginator() }
+    { provide: MatPaginatorIntl, useValue: getSpanishPaginator() },
   ],
   bootstrap: [AppComponent],
 })
