@@ -174,6 +174,16 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/product-category/product-category.module').then((m) => m.ProductCategoryModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'indicator-category',
+        loadChildren: () => import('./indicator-module/classifiers/category/category.module').then((m) => m.CategoryModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'indicator-subcategory',
+        loadChildren: () => import('./indicator-module/classifiers/subcategory/subcategory.module').then((m) => m.SubcategoryModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {

@@ -549,14 +549,14 @@ export class NavigationService {
             {
               displayName: 'Subcategoría',
               iconName: ['radio_button_unchecked'],
-              route: '',
+              route: 'indicator-subcategory',
               material: true,
               display: true,
             },
             {
               displayName: 'Categoría',
               iconName: ['radio_button_unchecked'],
-              route: '',
+              route: 'indicator-category',
               material: true,
               display: true,
             },
