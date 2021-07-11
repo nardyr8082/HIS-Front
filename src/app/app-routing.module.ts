@@ -200,7 +200,7 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
-        path: 'invetory-state',
+        path: 'stock-invetory-state',
         loadChildren: () => import('./stock-modules/classifiers/invetory-state/invetory-state.module').then((m) => m.InvetoryStateModule),
         canActivate: [BackendGuard],
       },
