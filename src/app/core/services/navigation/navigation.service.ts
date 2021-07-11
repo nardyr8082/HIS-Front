@@ -554,7 +554,7 @@ export class NavigationService {
             {
               displayName: 'Estado de Inventario',
               iconName: ['radio_button_unchecked'],
-              route: 'stock-invetory-state',
+              route: 'stock-invetory-status',
               material: true,
               display: true,
             },
