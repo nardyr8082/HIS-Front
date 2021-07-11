@@ -174,6 +174,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/product-category/product-category.module').then((m) => m.ProductCategoryModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'stock-invoice-status',
+        loadChildren: () => import('./stock-modules/classifiers/invoice-status/invoice-status.module').then((m) => m.InvoiceStatusModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {

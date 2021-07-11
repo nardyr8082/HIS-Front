@@ -530,6 +530,13 @@ export class NavigationService {
               material: true,
               display: true,
             },
+            {
+              displayName: 'Estado Factura',
+              iconName: ['radio_button_unchecked'],
+              route: 'stock-invoice-status',
+              material: true,
+              display: true,
+            },
           ],
           display: true,
         },
