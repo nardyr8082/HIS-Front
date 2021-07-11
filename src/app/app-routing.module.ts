@@ -175,6 +175,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'stock-invoice-status',
+        loadChildren: () => import('./stock-modules/classifiers/invoice-status/invoice-status.module').then((m) => m.InvoiceStatusModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'indicator-category',
         loadChildren: () => import('./indicator-module/classifiers/category/category.module').then((m) => m.CategoryModule),
         canActivate: [BackendGuard],
