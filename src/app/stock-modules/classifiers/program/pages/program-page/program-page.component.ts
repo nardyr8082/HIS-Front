@@ -29,14 +29,14 @@ export class ProgramPageComponent implements OnInit, OnDestroy {
 
   rowActionButtons = [
     {
-      tooltipText: 'Editar Sexo',
+      tooltipText: 'Editar Programa',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.openEditForm(item),
     },
     {
-      tooltipText: 'Eliminar Sexo',
+      tooltipText: 'Eliminar Programa',
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',

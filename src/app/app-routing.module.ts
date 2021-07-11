@@ -199,6 +199,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/move-type/move-type.module').then((m) => m.MoveTypeModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'invetory-state',
+        loadChildren: () => import('./stock-modules/classifiers/invetory-state/invetory-state.module').then((m) => m.InvetoryStateModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
