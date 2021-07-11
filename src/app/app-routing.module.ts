@@ -169,6 +169,31 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/attribute/attribute.module').then((m) => m.AttributeModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'stock-commercial-operation',
+        loadChildren: () => import('./stock-modules/classifiers/commercial-operation/commercial-operation.module').then((m) => m.CommercialOperationModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'stock-product-category',
+        loadChildren: () => import('./stock-modules/classifiers/product-category/product-category.module').then((m) => m.ProductCategoryModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'stock-invoice-status',
+        loadChildren: () => import('./stock-modules/classifiers/invoice-status/invoice-status.module').then((m) => m.InvoiceStatusModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'indicator-category',
+        loadChildren: () => import('./indicator-module/classifiers/category/category.module').then((m) => m.CategoryModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'indicator-subcategory',
+        loadChildren: () => import('./indicator-module/classifiers/subcategory/subcategory.module').then((m) => m.SubcategoryModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
