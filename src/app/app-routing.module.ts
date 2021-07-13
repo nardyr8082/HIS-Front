@@ -214,6 +214,11 @@ const routes: Routes = [
         loadChildren: () => import('./clinical-services/disease/disease.module').then((m) => m.DiseaseModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'indicator-type',
+        loadChildren: () => import('./indicator-module/indicator-type/indicator-type.module').then((m) => m.IndicatorTypeModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {

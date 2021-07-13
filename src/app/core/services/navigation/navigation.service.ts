@@ -605,6 +605,13 @@ export class NavigationService {
           ],
           display: true,
         },
+        {
+          displayName: 'Tipo de Indicador',
+          iconName: ['radio_button_unchecked'],
+          route: 'indicator-type',
+          material: true,
+          display: true,
+        },
       ],
       display: true,
     },
