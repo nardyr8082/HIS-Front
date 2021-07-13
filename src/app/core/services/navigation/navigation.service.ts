@@ -235,6 +235,13 @@ export class NavigationService {
               material: true,
               display: true,
             },
+            {
+              displayName: 'Enfermedades',
+              iconName: ['radio_button_unchecked'],
+              route: 'diseases',
+              material: true,
+              display: true,
+            },
           ],
           material: true,
           display: true,

@@ -209,6 +209,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/move-status/move-status.module').then((m) => m.MoveStatusModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'diseases',
+        loadChildren: () => import('./clinical-services/disease/disease.module').then((m) => m.DiseaseModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
