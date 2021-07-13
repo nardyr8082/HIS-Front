@@ -4,15 +4,15 @@ import { Injectable } from '@angular/core';
 //
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../../core/models/api-response.model';
-import { InventoryState } from '../models/inventory-state.model';
+import { MoveStatus } from '../models/move-status.model';
 
 //
 
 @Injectable({
   providedIn: 'root',
 })
-export class InventoryStateService {
-  private apiEndpoint = `${environment.apiUrl}alm_estado_inventario`;
+export class MoveStatusService {
+  private apiEndpoint = `${environment.apiUrl}alm_estado_movimiento`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -25,7 +25,7 @@ export class InventoryStateService {
 
   constructor(private http: HttpClient) {}
 
-  getInventoryStates(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<InventoryState>> {
+  getMoveStatus(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<MoveStatus>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -33,7 +33,7 @@ export class InventoryStateService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<InventoryState>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<MoveStatus>>(this.apiEndpoint + queryParams);
   }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
@@ -70,15 +70,15 @@ export class InventoryStateService {
     return queryParams;
   }
 
-  createInventoryState(data: InventoryState): Observable<InventoryState> {
+  createMoveStatus(data: MoveStatus): Observable<MoveStatus> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editInventoryState(data: InventoryState): Observable<InventoryState> {
-    return this.http.put<InventoryState>(`${this.apiEndpoint}/${data.id}/`, data);
+  editMoveStatus(data: MoveStatus): Observable<MoveStatus> {
+    return this.http.put<MoveStatus>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteInventoryState(id: string): Observable<any> {
+  deleteMoveStatus(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 }

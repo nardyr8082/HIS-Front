@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InventoryStatePageComponent } from './inventory-state-page.component';
+import { MoveStatusPageComponent } from './move-status-page.component';
 
 describe('InventoryStatePageComponent', () => {
-  let component: InventoryStatePageComponent;
-  let fixture: ComponentFixture<InventoryStatePageComponent>;
+  let component: MoveStatusPageComponent;
+  let fixture: ComponentFixture<MoveStatusPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ InventoryStatePageComponent ]
-    })
-    .compileComponents();
+      declarations: [MoveStatusPageComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InventoryStatePageComponent);
+    fixture = TestBed.createComponent(MoveStatusPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

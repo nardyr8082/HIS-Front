@@ -204,6 +204,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/inventory-status/inventory-status.module').then((m) => m.InventoryStatusModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'move-status',
+        loadChildren: () => import('./stock-modules/classifiers/move-status/move-status.module').then((m) => m.MoveStatusModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {

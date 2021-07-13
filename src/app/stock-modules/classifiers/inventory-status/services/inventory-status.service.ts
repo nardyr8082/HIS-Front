@@ -12,7 +12,7 @@ import { InventoryStatus } from '../models/inventory-status.model';
   providedIn: 'root',
 })
 export class InventoryStatusService {
-  private apiEndpoint = `${environment.apiUrl}alm_estado_factura`;
+  private apiEndpoint = `${environment.apiUrl}alm_estado_inventario`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';

@@ -29,14 +29,14 @@ export class InventoryStatusPageComponent implements OnInit, OnDestroy {
 
   rowActionButtons = [
     {
-      tooltipText: 'Editar Estado de Factura',
+      tooltipText: 'Editar Estado de Inventario',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.openEditForm(item),
     },
     {
-      tooltipText: 'Eliminar Estado de Factura',
+      tooltipText: 'Eliminar Estado de Inventario',
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',

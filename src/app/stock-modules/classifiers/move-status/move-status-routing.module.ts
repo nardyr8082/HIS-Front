@@ -1,4 +1,4 @@
-import { InventoryStatePageComponent } from './pages/inventory-state-page/inventory-state-page.component';
+import { MoveStatusPageComponent } from './pages/move-status-page/move-status-page.component';
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: InventoryStatePageComponent,
+        component: MoveStatusPageComponent,
       },
     ],
   },
@@ -20,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class InventoryStateRoutingModule {}
+export class MoveStatusRoutingModule {}

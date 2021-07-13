@@ -552,6 +552,13 @@ export class NavigationService {
               display: true,
             },
             {
+              displayName: 'Estado de Movimiento',
+              iconName: ['radio_button_unchecked'],
+              route: 'move-status',
+              material: true,
+              display: true,
+            },
+            {
               displayName: 'Estado de Inventario',
               iconName: ['radio_button_unchecked'],
               route: 'stock-invetory-status',

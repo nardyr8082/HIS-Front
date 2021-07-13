@@ -1,6 +1,6 @@
 import { DEFAULT_PAGINATION_SIZE } from '../../../../core/models/api-response.model';
 
-export const INVENTORY_STATE_TABLE_CONFIGURATION = {
+export const MOVE_STATUS_TABLE_CONFIGURATION = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
   displayedColumns: ['descripcion'],
   columnsName: ['Descripción'],

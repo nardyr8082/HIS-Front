@@ -3,25 +3,25 @@ import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-inventory-state-form',
-  templateUrl: './inventory-state-form.component.html',
-  styleUrls: ['./inventory-state-form.component.scss'],
+  selector: 'app-move-status-form',
+  templateUrl: './move-status-form.component.html',
+  styleUrls: ['./move-status-form.component.scss'],
 })
-export class InventoryStateFormComponent implements OnInit {
+export class MoveStatusFormComponent implements OnInit {
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
-  inventoryStateForm: FormGroup;
+  moveStatusForm: FormGroup;
 
-  constructor(public dialogRef: MatDialogRef<InventoryStateFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(public dialogRef: MatDialogRef<MoveStatusFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.buildForm();
   }
 
   buildForm() {
-    this.inventoryStateForm = new FormGroup({
-      descripcion: new FormControl(this.data.inventoryState ? this.data.inventoryState.descripcion : '', [
+    this.moveStatusForm = new FormGroup({
+      descripcion: new FormControl(this.data.moveStatus ? this.data.moveStatus.descripcion : '', [
         Validators.required,
         Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$'),
       ]),
@@ -29,11 +29,11 @@ export class InventoryStateFormComponent implements OnInit {
   }
 
   get descripcionControl() {
-    return this.inventoryStateForm?.get('descripcion') as FormControl;
+    return this.moveStatusForm?.get('descripcion') as FormControl;
   }
 
   onSubmit(data) {
-    this.data.inventoryState ? this.edit.emit(data) : this.create.emit(data);
+    this.data.moveStatus ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();
   }
 

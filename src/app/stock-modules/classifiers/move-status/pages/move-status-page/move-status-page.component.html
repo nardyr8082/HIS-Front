@@ -1,11 +1,11 @@
 <div class="container mt-3">
   <div class="d-flex justify-content-between align-items-center">
-    <h4>Estado de Inventario</h4>
-    <button (click)="createInvetoryState()" mat-raised-button color="primary" class="button">Crear Estado de Inventario</button>
+    <h4>Estado de Movimiento</h4>
+    <button (click)="createMoveStatus()" mat-raised-button color="primary" class="button">Crear Estado de Movimiento</button>
   </div>
   <app-custom-table
-    *ngIf="inventoryStates"
-    [data]="inventoryStates"
+    *ngIf="movesStatus"
+    [data]="movesStatus"
     [dataCount]="dataCount"
     [displayedColumns]="configuration.displayedColumns"
     [columnsName]="configuration.columnsName"
