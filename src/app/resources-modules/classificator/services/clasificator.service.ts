@@ -4,15 +4,15 @@ import { Injectable } from '@angular/core';
 //
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response.model';
-import { ResourceAttribute } from '../models/attribute.model';
+import { Clasificator } from '../models/clasificator.model';
 
 //
 
 @Injectable({
   providedIn: 'root',
 })
-export class ResourceAttributeService {
-  private apiEndpoint = `${environment.apiUrl}aft_atributo`;
+export class ClasificatorService {
+  private apiEndpoint = `${environment.apiUrl}aft_clasificador_recurso`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -25,7 +25,7 @@ export class ResourceAttributeService {
 
   constructor(private http: HttpClient) {}
 
-  getAttributes(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<ResourceAttribute>> {
+  getClasificators(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Clasificator>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -33,7 +33,7 @@ export class ResourceAttributeService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<ResourceAttribute>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<Clasificator>>(this.apiEndpoint + queryParams);
   }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
@@ -70,15 +70,15 @@ export class ResourceAttributeService {
     return queryParams;
   }
 
-  createAttribute(data: ResourceAttribute): Observable<ResourceAttribute> {
+  createClasificator(data: Clasificator): Observable<Clasificator> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editAttribute(data: ResourceAttribute): Observable<ResourceAttribute> {
-    return this.http.put<ResourceAttribute>(`${this.apiEndpoint}/${data.id}/`, data);
+  editClasificator(data: Clasificator): Observable<Clasificator> {
+    return this.http.patch<Clasificator>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteAttribute(id: string): Observable<any> {
+  deleteClasificator(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 }
