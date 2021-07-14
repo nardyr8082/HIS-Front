@@ -1,6 +1,6 @@
+import { ResourceAttributeService } from './../../services/attribute.service';
 import { AttributeFormComponent } from './../../components/attribute-form/attribute-form.component';
 import { ToastrService } from 'ngx-toastr';
-import { AttributeService } from './../../services/attribute.service';
 import { ATTRIBUTE_TABLE_CONFIGURATION } from './../../../../stock-modules/classifiers/attribute/models/attribute-table-configuration';
 import { Attribute } from './../../../../stock-modules/classifiers/attribute/models/attribute.model';
 import { Component, OnInit } from '@angular/core';
@@ -44,7 +44,7 @@ export class AttributePageComponent implements OnInit {
     },
   ];
 
-  constructor(private attributeService: AttributeService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(private attributeService: ResourceAttributeService, private toastService: ToastrService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getAttributes();

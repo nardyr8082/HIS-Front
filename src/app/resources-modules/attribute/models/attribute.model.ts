@@ -1,4 +1,4 @@
-export interface Attribute {
+export interface ResourceAttribute {
   id?: string;
   descripcion?: string;
 }

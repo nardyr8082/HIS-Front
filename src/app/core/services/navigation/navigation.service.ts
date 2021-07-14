@@ -413,23 +413,30 @@ export class NavigationService {
       display: true,
       children: [
         {
-          displayName: 'Atributos',
+          displayName: 'Atributos de Recurso',
           iconName: ['radio_button_unchecked'],
           route: 'resource-attribute',
           material: true,
           display: true,
         },
         {
-          displayName: 'Estado',
+          displayName: 'Estado de Recurso',
           iconName: ['radio_button_unchecked'],
           route: 'resource-status',
           material: true,
           display: true,
         },
         {
-          displayName: 'Tipo',
+          displayName: 'Tipo de Recurso',
           iconName: ['radio_button_unchecked'],
           route: 'resource-type',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Clasificador',
+          iconName: ['radio_button_unchecked'],
+          route: 'resource-clasificator',
           material: true,
           display: true,
         },

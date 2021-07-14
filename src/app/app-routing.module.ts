@@ -235,6 +235,11 @@ const routes: Routes = [
         loadChildren: () => import('./resources-modules/type/type.module').then((m) => m.ResourceTypeModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'resource-clasificator',
+        loadChildren: () => import('./resources-modules/classificator/classificator.module').then((m) => m.ClassificatorModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
