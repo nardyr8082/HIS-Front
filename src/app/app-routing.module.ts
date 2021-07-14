@@ -219,6 +219,12 @@ const routes: Routes = [
         loadChildren: () => import('./indicator-module/indicator-type/indicator-type.module').then((m) => m.IndicatorTypeModule),
         canActivate: [BackendGuard],
       },
+      // Resources
+      {
+        path: 'resource-attribute',
+        loadChildren: () => import('./resources-modules/attribute/attribute.module').then((m) => m.AttributeModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {

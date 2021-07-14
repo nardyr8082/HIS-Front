@@ -407,6 +407,21 @@ export class NavigationService {
       display: true,
     },
     {
+      displayName: 'Recursos',
+      iconName: ['work'],
+      material: true,
+      display: true,
+      children: [
+        {
+          displayName: 'Atributos',
+          iconName: ['radio_button_unchecked'],
+          route: 'resource-attribute',
+          material: true,
+          display: true,
+        },
+      ],
+    },
+    {
       displayName: 'Estadísticas',
       iconName: ['equalizer'],
       material: true,
