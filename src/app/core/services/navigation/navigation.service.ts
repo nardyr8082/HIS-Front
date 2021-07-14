@@ -419,6 +419,20 @@ export class NavigationService {
           material: true,
           display: true,
         },
+        {
+          displayName: 'Estado',
+          iconName: ['radio_button_unchecked'],
+          route: 'resource-status',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Tipo',
+          iconName: ['radio_button_unchecked'],
+          route: 'resource-type',
+          material: true,
+          display: true,
+        },
       ],
     },
     {
