@@ -456,7 +456,7 @@ export class NavigationService {
         },
         {
           displayName: 'Indicadores',
-          iconName: ['blur_linear'],
+          iconName: ['short_text'],
           route: '',
           material: true,
           display: true,
@@ -609,7 +609,7 @@ export class NavigationService {
     },
     {
       displayName: 'Indicadores',
-      iconName: ['store'],
+      iconName: ['short_text'],
       material: true,
       children: [
         {
