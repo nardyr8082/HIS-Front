@@ -204,6 +204,37 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/inventory-status/inventory-status.module').then((m) => m.InventoryStatusModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'move-status',
+        loadChildren: () => import('./stock-modules/classifiers/move-status/move-status.module').then((m) => m.MoveStatusModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'diseases',
+        loadChildren: () => import('./clinical-services/disease/disease.module').then((m) => m.DiseaseModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'indicator-type',
+        loadChildren: () => import('./indicator-module/indicator-type/indicator-type.module').then((m) => m.IndicatorTypeModule),
+        canActivate: [BackendGuard],
+      },
+      // Resources
+      {
+        path: 'resource-attribute',
+        loadChildren: () => import('./resources-modules/attribute/attribute.module').then((m) => m.AttributeModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'resource-status',
+        loadChildren: () => import('./resources-modules/status/resource-status.module').then((m) => m.ResourceStatusModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'resource-type',
+        loadChildren: () => import('./resources-modules/type/type.module').then((m) => m.ResourceTypeModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {

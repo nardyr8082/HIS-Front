@@ -166,7 +166,7 @@ export class AttributePageComponent implements OnInit {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `¿Está seguro que desea eliminar el atributo: ${item.nombre}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar el atributo: ${item.descripcion}?`;
 
     const sub = modalComponentRef.accept
       .pipe(
