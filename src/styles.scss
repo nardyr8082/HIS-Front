@@ -5,7 +5,7 @@ body {
   padding: 0px;
   margin: 0px;
   min-height: 100vh;
-  font-family: 'Poppins', Helvetica, sans-serif;
+  font-family: 'Montserrat', sans-serif;;
 
   p {
     margin: 0px;
@@ -34,6 +34,7 @@ body {
 
 @import '~ngx-toastr/toastr';
 @import '~material-design-icons/iconfont/material-icons.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap');
 
 // --------Global Styles for the Project-------------- ///
 

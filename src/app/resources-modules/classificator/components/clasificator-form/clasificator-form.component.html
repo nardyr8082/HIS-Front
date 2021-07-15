@@ -1,0 +1,35 @@
+<div class="form">
+  <h4>{{ data.clasificator ? 'Editar Clasificador' : 'Crear Clasificador' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="clasificatorForm" [formGroup]="clasificatorForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Nombre:</mat-label>
+      <input matInput formControlName="nombre" />
+      <mat-error *ngIf="nombreControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="nombreControl.errors?.pattern"> {{ 'El nombre solo permite letras y espacios' }} </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Tipo de Recurso:</mat-label>
+      <mat-select #mySelect formControlName="tipo">
+        <mat-option *ngFor="let type of resourceTypes" [value]="type.id">{{ type.descripcion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="tipoControl.errors?.required"> {{ 'Seleccione un tipo de recurso' }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Atributos:</mat-label>
+      <mat-select #mySelect formControlName="atributos" multiple>
+        <button type="button" class="btn btn-primary adjust" (click)="mySelect.close()">Cerrar</button>
+        <mat-option *ngFor="let attribute of resourceAttributes" [value]="attribute.id">{{ attribute.descripcion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="atributosControl.errors?.required"> {{ 'Seleccione al menos un atributo' }} </mat-error>
+    </mat-form-field>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(clasificatorForm.value)" [disabled]="!clasificatorForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.clasificator ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

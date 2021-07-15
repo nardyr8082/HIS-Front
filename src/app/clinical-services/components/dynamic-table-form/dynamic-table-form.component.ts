@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { filter, map, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { noIdName } from '../../validator/no-id-name.validator';
 
 @Component({
   selector: 'app-dynamic-table-form',
@@ -52,14 +53,14 @@ export class DynamicTableFormComponent implements OnInit, OnChanges, OnDestroy {
     });
 
     this.metaFieldForm = this._formBuilder.group({
-      mtf_fieldname: ['', [Validators.required, Validators.pattern('^(?!id$)')]],
+      mtf_fieldname: ['', [Validators.required, noIdName()]],
       mf: ['', [Validators.required]],
     });
   }
 
   clearFieldFormData() {
     this.metaFieldForm = this._formBuilder.group({
-      mtf_fieldname: ['', [Validators.required]],
+      mtf_fieldname: ['', [Validators.required, noIdName()]],
       mf: ['', [Validators.required]],
     });
   }

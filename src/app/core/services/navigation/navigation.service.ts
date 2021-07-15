@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class NavigationService {
   navBackend: any[] = [
     {
-      displayName: 'Tablero',
+      displayName: 'Inicio',
       iconName: ['home'],
       material: true,
       route: 'backend/dashboard',
@@ -261,7 +261,7 @@ export class NavigationService {
             {
               displayName: 'Enfermedades',
               iconName: ['radio_button_unchecked'],
-              route: 'cat-science',
+              route: 'diseases',
               material: true,
               display: true,
             },
@@ -400,6 +400,42 @@ export class NavigationService {
       display: true,
     },
     {
+      displayName: 'Recursos',
+      iconName: ['work'],
+      material: true,
+      display: true,
+      children: [
+        {
+          displayName: 'Atributos de Recurso',
+          iconName: ['radio_button_unchecked'],
+          route: 'resource-attribute',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Estado de Recurso',
+          iconName: ['radio_button_unchecked'],
+          route: 'resource-status',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Tipo de Recurso',
+          iconName: ['radio_button_unchecked'],
+          route: 'resource-type',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Clasificador',
+          iconName: ['radio_button_unchecked'],
+          route: 'resource-clasificator',
+          material: true,
+          display: true,
+        },
+      ],
+    },
+    {
       displayName: 'Estadísticas',
       iconName: ['equalizer'],
       material: true,
@@ -420,7 +456,7 @@ export class NavigationService {
         },
         {
           displayName: 'Indicadores',
-          iconName: ['blur_linear'],
+          iconName: ['short_text'],
           route: '',
           material: true,
           display: true,
@@ -552,6 +588,13 @@ export class NavigationService {
               display: true,
             },
             {
+              displayName: 'Estado de Movimiento',
+              iconName: ['radio_button_unchecked'],
+              route: 'move-status',
+              material: true,
+              display: true,
+            },
+            {
               displayName: 'Estado de Inventario',
               iconName: ['radio_button_unchecked'],
               route: 'stock-invetory-status',
@@ -573,7 +616,7 @@ export class NavigationService {
     },
     {
       displayName: 'Indicadores',
-      iconName: ['store'],
+      iconName: ['short_text'],
       material: true,
       children: [
         {
@@ -592,6 +635,13 @@ export class NavigationService {
               displayName: 'Categoría',
               iconName: ['radio_button_unchecked'],
               route: 'indicator-category',
+              material: true,
+              display: true,
+            },
+            {
+              displayName: 'Tipo de Indicador',
+              iconName: ['radio_button_unchecked'],
+              route: 'indicator-type',
               material: true,
               display: true,
             },

@@ -7,30 +7,16 @@
     [mode]="isHandset ? 'over' : 'side'"
     [opened]="!isHandset"
   >
-    <div fxFlex fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
-      <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
-        <mat-toolbar id="MainToolbarHeader" style="height: auto" class="w-100 mat-elevation-z8" color="primary">
+    <div fxFlex fxLayout="column" fxLayoutAlign="start stretch " fxLayoutGap="gappx">
+      <div fxLayout="column" fxLayoutAlign="start stretch shadow" fxLayoutGap="gappx">
+        <img src="../../../assets/logo.jpg" alt="logo" style="height: 100%; width: 100%;">
+        <mat-toolbar *ngIf="false" id="MainToolbarHeader" style="height: 120px" class="w-100 mat-elevation-z8" color="primary"
+        >
           <mat-toolbar-row id="headerToolbar" class="p-3" style="height: auto !important" fxLayout="row" fxLayoutAlign="center center">
             <div class="profile-img" fxLayoutAlign="center center">
               <img style="height: 90px; width: auto; object-fit: cover; object-position: center; border-radius: 4px" src="../../../assets/ico-snis.ico" />
             </div>
           </mat-toolbar-row>
-
-          <!-- <mat-toolbar-row class="p-2" style="height: auto !important;" fxLayoutAlign="center center">
-            <span class="mat-title mb-0">Admin Dashboard</span>
-          </mat-toolbar-row> -->
-
-          <!-- <div fxLayout="row" class="w-100" fxLayoutAlign="start center" fxLayoutGap="gappx">
-
-            <div fxFlex="30" fxLayoutAlign="start center">
-              <img *ngIf="true" height="54px" src="{{'../../../../../assets/images/background/loadingBackground.jpg"
-                onerror="this.onerror=null;this.src='../../../assets/images/logo/havanatur_transparent_logo.png';" />
-            </div>
-            <div fxLayout="column"  fxFlex="70" fxLayoutAlign="start center" fxLayoutGap="gappx">
-                <span class="mat-title mb-0">{{'Agency Name'}}</span>
-            </div>
-
-          </div> -->
         </mat-toolbar>
       </div>
 
@@ -41,7 +27,7 @@
         <div class="w-100" fxFlex fxLayout="column" fxLayoutAlign="end end" fxLayoutGap="gappx">
           <footer id="NavBarFooter" class="w-100">
             <mat-toolbar style="height: 100% !important" class="w-100" color="primary">
-              <span class="mat-caption mx-auto">{{ 'Copyright' }} &copy;{{ year }}</span>
+              <span class="mat-caption mx-auto">{{ 'República Ginea Ecuatorial' }} - {{ year }}</span>
             </mat-toolbar>
           </footer>
         </div>

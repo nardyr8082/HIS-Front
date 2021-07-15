@@ -31,7 +31,7 @@ export class UserPageComponent implements OnInit, OnDestroy {
     {
       tooltipText: 'Activar o desactivar',
       icon: 'check_circle_outline',
-      color: 'warn',
+      color: 'primary',
       class: 'btn-warning',
       callback: (item) => this.disableOrEnableUser(item),
     },
