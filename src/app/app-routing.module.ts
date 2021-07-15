@@ -205,6 +205,42 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'move-status',
+        loadChildren: () => import('./stock-modules/classifiers/move-status/move-status.module').then((m) => m.MoveStatusModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'diseases',
+        loadChildren: () => import('./clinical-services/disease/disease.module').then((m) => m.DiseaseModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'indicator-type',
+        loadChildren: () => import('./indicator-module/indicator-type/indicator-type.module').then((m) => m.IndicatorTypeModule),
+        canActivate: [BackendGuard],
+      },
+      // Resources
+      {
+        path: 'resource-attribute',
+        loadChildren: () => import('./resources-modules/attribute/attribute.module').then((m) => m.AttributeModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'resource-status',
+        loadChildren: () => import('./resources-modules/status/resource-status.module').then((m) => m.ResourceStatusModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'resource-type',
+        loadChildren: () => import('./resources-modules/type/type.module').then((m) => m.ResourceTypeModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'resource-clasificator',
+        loadChildren: () => import('./resources-modules/classificator/classificator.module').then((m) => m.ClassificatorModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'stock-product-family',
         loadChildren: () => import('./stock-modules/classifiers/product-family/product-family.module').then((m) => m.ProductFamilyModule),
         canActivate: [BackendGuard],
