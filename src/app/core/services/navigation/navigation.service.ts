@@ -558,6 +558,13 @@ export class NavigationService {
               material: true,
               display: true,
             },
+            {
+              displayName: 'Familia de Producto',
+              iconName: ['radio_button_unchecked'],
+              route: 'stock-product-family',
+              material: true,
+              display: true,
+            },
           ],
           display: true,
         },

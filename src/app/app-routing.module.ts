@@ -204,6 +204,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/inventory-status/inventory-status.module').then((m) => m.InventoryStatusModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'stock-product-family',
+        loadChildren: () => import('./stock-modules/classifiers/product-family/product-family.module').then((m) => m.ProductFamilyModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
