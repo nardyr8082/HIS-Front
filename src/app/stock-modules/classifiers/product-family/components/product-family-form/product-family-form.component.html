@@ -1,0 +1,30 @@
+<div class="form">
+  <h4>{{ data.productFamily ? 'Editar Familia de Producto' : 'Crear Familia de Producto' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="productFamilyForm" [formGroup]="productFamilyForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Código:</mat-label>
+      <input matInput formControlName="codigo" />
+      <mat-error *ngIf="codeControl.errors?.required"> {{ 'El Código es' }} <strong>requerido</strong> </mat-error>
+     </mat-form-field>
+     <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Descripción:</mat-label>
+      <input matInput formControlName="descripcion" />
+      <mat-error *ngIf="descripControl.errors?.required"> {{ 'La Descripción es' }} <strong>requerido</strong> </mat-error>
+     </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Familia Producto Padre</mat-label>
+      <mat-select *ngIf="productFamilyList" formControlName="padre">
+        <mat-option value="">Seleccionar...</mat-option>
+        <mat-option *ngFor="let np of productFamilyList" [value]="np.id">{{ np.codigo }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(productFamilyForm.value)" [disabled]="!productFamilyForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.productFamily ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>
