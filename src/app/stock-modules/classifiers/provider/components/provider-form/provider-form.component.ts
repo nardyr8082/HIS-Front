@@ -30,11 +30,11 @@ export class ProviderFormComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$'),
       ]),
-      telefono: new FormControl(this.data?.provider?.telefono ? this.data?.provider.telefono : null, [
+      telefono: new FormControl(this.data?.provider?.telefono ? this.data?.provider.telefono : '+(240)', [
         Validators.required,
-        Validators.pattern('^[+-]?([0-9]*[.])?[0-9]+'),
+        Validators.pattern('^[+]*[(]{1,2}[0-9]{1,4}[)][-\\s\\.]?[0-9]{3}[-\\s\\.]?[0-9]{4,6}$'),
       ]),
-      correo: new FormControl(this.data?.provider?.correo ? this.data?.provider.correo : null, [Validators.required, Validators.email]),
+      correo: new FormControl(this.data?.provider?.correo ? this.data?.provider.correo : null, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
       representante: new FormControl(this.data?.provider?.representante ? this.data?.provider.representante : null, [
         Validators.required,
         Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$'),

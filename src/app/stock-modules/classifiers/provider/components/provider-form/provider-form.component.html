@@ -28,9 +28,9 @@
         <!-- telefono -->
         <mat-form-field class="w-100" appearance="outline">
           <mat-label>Teléfono:</mat-label>
-          <input matInput formControlName="telefono" />
+          <input matInput formControlName="telefono" matTooltip="+(240)###-######" />
           <mat-error *ngIf="telefonoControl.errors?.required"> {{ 'El teléfono es' }} <strong>requerida</strong> </mat-error>
-          <mat-error *ngIf="telefonoControl.errors?.pattern"> {{ 'El teléfono solo permite números' }} </mat-error>
+          <mat-error *ngIf="telefonoControl.errors?.pattern">  {{ 'El formato del teléfono es ' }} <strong>incorrecto "+(240)###-######"</strong> </mat-error>
         </mat-form-field>
       </div>
       <div class="col-lg-6 col-md-12">
@@ -39,7 +39,7 @@
           <mat-label>Correo:</mat-label>
           <input matInput formControlName="correo" />
           <mat-error *ngIf="correoControl.errors?.required"> {{ 'El correo es' }} <strong>requerido</strong> </mat-error>
-          <mat-error *ngIf="correoControl.errors?.email"> {{ 'Formato de correo incorrecto' }} </mat-error>
+          <mat-error *ngIf="correoControl.errors?.pattern"> {{ 'El formato del correo es' }}<strong> incorrecto</strong> </mat-error>
         </mat-form-field>
       </div>
       <div class="col-lg-6 col-md-12">
