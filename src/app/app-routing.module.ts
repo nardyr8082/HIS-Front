@@ -1,9 +1,10 @@
 import { TraceActionsModule } from './security-module/trace-actions/trace-actions.module';
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AuthenticationGuard } from './authentication/authentication.guard';
 import { BackendGuard } from './backend/backend.guard';
+import { Route } from '@angular/compiler/src/core';
 
 const routes: Routes = [
   {
@@ -253,8 +254,10 @@ const routes: Routes = [
   },
 ];
 
+export const routing: ModuleWithProviders<Route> = RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' });
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })],
+  imports: [routing],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
