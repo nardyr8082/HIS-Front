@@ -410,7 +410,7 @@ export class NavigationService {
           iconName: ['radio_button_unchecked'],
           route: 'resource-attribute',
           material: true,
-          display: true,
+          display: false,
         },
         {
           displayName: 'Estado de Recurso',
