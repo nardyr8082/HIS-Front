@@ -46,7 +46,7 @@ export class MoveTypeFormComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[0-9]+([,][0-9]+)?$'),
       ]),
-      categoria: new FormControl(this.data.moveType ? this.data.moveType.categoria : null, [Validators.required]),
+      categoria: new FormControl(this.data.moveType ? this.data.moveType.categoria_id : null, [Validators.required]),
     });
   }
 

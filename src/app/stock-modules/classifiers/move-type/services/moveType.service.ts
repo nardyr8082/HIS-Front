@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../../core/models/api-response.model';
 import { MoveType } from '../models/move-type.model';
-
+import { ProductCategory } from '../../product-category/models/product-category.model';
 //
 
 @Injectable({
@@ -13,6 +13,7 @@ import { MoveType } from '../models/move-type.model';
 })
 export class MoveTypeService {
   private apiEndpoint = `${environment.apiUrl}alm_tipo_de_movimiento`;
+  private apiEndpointC = `${environment.apiUrl}alm_categoria_producto`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -34,6 +35,9 @@ export class MoveTypeService {
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
     return this.http.get<ApiResponse<MoveType>>(this.apiEndpoint + queryParams);
+  }
+  getProductCategorys(): Observable<ApiResponse<ProductCategory>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointC);
   }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {

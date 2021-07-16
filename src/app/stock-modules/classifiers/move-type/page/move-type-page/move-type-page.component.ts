@@ -11,6 +11,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
+import { ProductCategoryService } from '../../../product-category/services/product-category.service';
 
 @Component({
   selector: 'app-move-type-page',
@@ -44,7 +45,11 @@ export class MoveTypePageComponent implements OnInit {
     },
   ];
 
-  constructor(private moveTypeService: MoveTypeService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(private moveTypeService: MoveTypeService, private toastService: ToastrService, public dialog: MatDialog,
+       private productCategoryService: ProductCategoryService,
+  ) {
+    this.getProductCategorys();
+  }
 
   ngOnInit(): void {
     this.getMoveTypes();
@@ -54,15 +59,34 @@ export class MoveTypePageComponent implements OnInit {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
+  getProductCategorys(filters = {}) {
+    this.loading = true;
+    const sub = this.productCategoryService
+    .getProductCategorys(filters, 'descripcion', 'asc', 1, 10000)
+    .pipe(
+      map((response) => {
+        this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+      }),
+    )
+    .subscribe();
+
+  this.subscriptions.push(sub);
+  }
+
   getMoveTypes(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.moveTypeService
       .getMoveTypes(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
-        map((response: ApiResponse<MoveType>) => {
-          this.moveTypes = response.results;
+        map((response: ApiResponse<any>) => {
+          this.moveTypes = response.results.map((resp) => {
+            const categoria = resp.categoria ? resp.categoria.descripcion : '';
+            const categoria_id = resp.categoria ? resp.categoria.id : '';
+            return { ...resp, categoria: categoria, categoria_id: categoria_id };
+          });
           this.dataCount = response.count;
           this.loading = false;
+          console.log(this.moveTypes);
         }),
         catchError(() => {
           this.toastService.error('Hubo un error al obtener los datos. Por favor, inténtelo de nuevo más tarde.', 'Error');
