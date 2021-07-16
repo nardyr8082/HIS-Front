@@ -2,8 +2,8 @@ import { DEFAULT_PAGINATION_SIZE } from '../../../../core/models/api-response.mo
 
 export const MOVE_TYPE_TABLE_CONFIGURATION = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['descripcion', 'factor_diferencial'],
-  columnsName: ['Descripción', 'Factor Diferencial'],
+  displayedColumns: ['descripcion', 'factor_diferencial', 'categoria__descripcion'],
+  columnsName: ['Descripción', 'Factor Diferencial', 'Categoría'],
   tableFilters: [
     {
       name: 'descripcion',
@@ -14,6 +14,12 @@ export const MOVE_TYPE_TABLE_CONFIGURATION = {
       name: 'factor_diferencial',
       type: 'text',
       title: 'Factor Diferencial',
+    },
+    {
+      name: 'categoria',
+      type: 'select',
+      items: [],
+      title: 'Categoría',
     },
   ],
 };

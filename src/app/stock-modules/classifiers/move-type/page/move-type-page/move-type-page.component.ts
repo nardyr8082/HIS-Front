@@ -1,3 +1,5 @@
+import { ProductCategoryService } from './../../../product-category/services/product-category.service';
+import { ProductCategory } from './../../../product-category/models/product-category.model';
 import { MoveTypeFormComponent } from './../../components/move-type-form/move-type-form.component';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
@@ -27,6 +29,8 @@ export class MoveTypePageComponent implements OnInit {
   page = 1;
   pageSize = DEFAULT_PAGE_SIZE;
 
+  categories: ProductCategory[];
+
   rowActionButtons = [
     {
       tooltipText: 'Editar Tipo de movimiento',
@@ -44,14 +48,34 @@ export class MoveTypePageComponent implements OnInit {
     },
   ];
 
-  constructor(private moveTypeService: MoveTypeService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(
+    private productCategoryService: ProductCategoryService,
+    private moveTypeService: MoveTypeService,
+    private toastService: ToastrService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.getMoveTypes();
+    this.getCategories();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
+  }
+
+  getCategories() {
+    const sub = this.productCategoryService
+      .getProductCategorys({}, 'id', 'asc', 1, 1000)
+      .pipe(
+        map((response) => {
+          this.categories = response.results;
+          this.configuration.tableFilters[2].items = this.categories.map((category) => ({ id: category.id, name: category.descripcion }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
   }
 
   getMoveTypes(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
@@ -60,7 +84,10 @@ export class MoveTypePageComponent implements OnInit {
       .getMoveTypes(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<MoveType>) => {
-          this.moveTypes = response.results;
+          this.moveTypes = response.results.map((res) => ({
+            ...res,
+            categoria__descripcion: res.categoria.descripcion,
+          }));
           this.dataCount = response.count;
           this.loading = false;
         }),
