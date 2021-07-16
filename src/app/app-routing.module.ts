@@ -222,11 +222,6 @@ const routes: Routes = [
       },
       // Resources
       {
-        path: 'resource-attribute',
-        loadChildren: () => import('./resources-modules/attribute/attribute.module').then((m) => m.AttributeModule),
-        canActivate: [BackendGuard],
-      },
-      {
         path: 'resource-status',
         loadChildren: () => import('./resources-modules/status/resource-status.module').then((m) => m.ResourceStatusModule),
         canActivate: [BackendGuard],
