@@ -108,6 +108,7 @@ export class UserFormComponent implements OnInit, OnChanges {
       direccion: [this.person ? this.person.direccion : '', Validators.required],
       numero: [this.person ? this.person.numero : '', [Validators.required, Validators.pattern('^[0-9]+([,][0-9]+)?$')]],
       cod_postal: [this.person ? this.person.cod_postal : '', Validators.required],
+      barrio: [this.person ? this.person.barrio : ''],
       nombre_madre: [this.person ? this.person.nombre_madre : '', [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
       nombre_padre: [this.person ? this.person.nombre_padre : '', [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
       contacto_emergencia: [this.person ? this.person.contacto_emergencia : '', [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
