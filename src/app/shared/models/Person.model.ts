@@ -24,6 +24,7 @@ export interface Person {
   sexo: any;
   grupo_sanguineo: any;
   qr_code: string;
+  barrio: string;
 }
 
 interface Item {

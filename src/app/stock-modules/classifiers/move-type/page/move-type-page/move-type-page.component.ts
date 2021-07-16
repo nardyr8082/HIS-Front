@@ -90,6 +90,7 @@ export class MoveTypePageComponent implements OnInit {
           }));
           this.dataCount = response.count;
           this.loading = false;
+          console.log(this.moveTypes);
         }),
         catchError(() => {
           this.toastService.error('Hubo un error al obtener los datos. Por favor, inténtelo de nuevo más tarde.', 'Error');
