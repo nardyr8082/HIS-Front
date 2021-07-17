@@ -11,8 +11,9 @@ export const CLASIFICATOR_TABLE_CONFIGURATION = {
       title: 'Nombre',
     },
     {
-      name: 'tipo_string',
-      type: 'text',
+      name: 'tipo',
+      type: 'select',
+      items: [],
       title: 'Tipo',
     },
     {

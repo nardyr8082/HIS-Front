@@ -13,6 +13,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { Permission, Role } from '../../../../security-module/role/models/role.model';
 import { ResourceType } from '../../../type/models/type';
+import { ResourceTypeService } from '../../../type/services/type.service';
 
 @Component({
   selector: 'app-clasificator-page',
@@ -46,12 +47,26 @@ export class ClasificatorPageComponent implements OnInit {
     },
   ];
 
-  constructor(private clasificatorService: ClasificatorService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(private typeServices: ResourceTypeService,private clasificatorService: ClasificatorService, private toastService: ToastrService, public dialog: MatDialog) {
+    this.putTypes();
+  }
 
   ngOnInit(): void {
     this.getClasificators();
   }
 
+  putTypes(filters = {}) {
+    const sub = this.typeServices
+      .getResourceTypes(filters, 'descripcion', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
