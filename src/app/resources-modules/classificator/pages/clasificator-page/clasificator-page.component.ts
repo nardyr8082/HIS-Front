@@ -11,6 +11,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
+import { Permission, Role } from '../../../../security-module/role/models/role.model';
+import { ResourceType } from '../../../type/models/type';
 
 @Component({
   selector: 'app-clasificator-page',
@@ -53,14 +55,16 @@ export class ClasificatorPageComponent implements OnInit {
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
-
   getClasificators(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.clasificatorService
       .getClasificators(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<Clasificator>) => {
-          this.clasificators = response.results;
+          this.clasificators = response.results.map((response) => {
+            const tipoString = this.getTipoString(response.tipo);
+            return { ...response, tipo_string: tipoString };
+          });
           this.dataCount = response.count;
           this.loading = false;
         }),
@@ -74,7 +78,9 @@ export class ClasificatorPageComponent implements OnInit {
 
     this.subscriptions.push(sub);
   }
-
+  getTipoString(tipos: ResourceType) {
+    return tipos.descripcion;
+  }
   onChangePage(page: PageEvent) {
     this.page = page.pageIndex + 1;
     this.pageSize = page.pageSize;

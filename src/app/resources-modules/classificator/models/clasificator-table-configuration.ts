@@ -1,9 +1,8 @@
 import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model';
-import { ResourceType } from '../../type/models/type';
 
 export const CLASIFICATOR_TABLE_CONFIGURATION = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['nombre', 'tipo', 'marca', 'modelo', 'numero_serie'],
+  displayedColumns: ['nombre', 'tipo_string', 'marca', 'modelo', 'numero_serie'],
   columnsName: ['Nombre', 'Tipo', 'Marca', 'Modelo', 'Numero Serie'],
   tableFilters: [
     {
@@ -12,8 +11,8 @@ export const CLASIFICATOR_TABLE_CONFIGURATION = {
       title: 'Nombre',
     },
     {
-      name: 'tipo',
-      type: 'ResourceType',
+      name: 'tipo_string',
+      type: 'text',
       title: 'Tipo',
     },
     {
