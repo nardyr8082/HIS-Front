@@ -1,0 +1,31 @@
+<div class="form">
+  <h4>{{ data.boxstock ? 'Editar Almacen caja' : 'Crear Almacen caja' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="boxstockForm" [formGroup]="boxstockForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Numero</mat-label>
+      <input matInput formControlName="nro" />
+      <mat-error *ngIf="numberControl.errors?.required"> {{ 'El numero es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Almacen</mat-label>
+      <mat-select #mySelect formControlName="almacen">
+        <mat-option *ngFor="let st of stock" [value]="st.id">{{ st.nombre }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="stockControl.errors?.required"> {{ 'Seleccione un almacen' }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Cajero</mat-label>
+      <input matInput formControlName="cajero" />
+      <mat-error *ngIf="cashierControl.errors?.required"> {{ 'El cajero es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(boxstockForm.value)" [disabled]="!boxstockForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.boxstock ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>
