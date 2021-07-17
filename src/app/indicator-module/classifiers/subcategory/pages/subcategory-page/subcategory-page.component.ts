@@ -215,6 +215,7 @@ export class SubcategoryPageComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
+
     const sub1 = modalComponentRef.cancel.pipe(tap(() => modalRef.close())).subscribe();
     this.subscriptions.push(sub, sub1);
   }
