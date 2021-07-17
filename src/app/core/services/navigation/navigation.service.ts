@@ -210,7 +210,7 @@ export class NavigationService {
             {
               displayName: 'Sistema',
               iconName: ['radio_button_unchecked'],
-              route: '',
+              route: 'system-manager',
               material: true,
               display: true,
             },
@@ -527,6 +527,21 @@ export class NavigationService {
       iconName: ['store'],
       material: true,
       children: [
+       {
+        displayName: 'Almacén Caja',
+        iconName: ['input'],
+        children: [
+        {
+          displayName: 'Caja',
+          iconName: ['radio_button_unchecked'],
+          route: 'stock-box',
+          material: true,
+          display: true,
+          },
+          ],
+          material: true,
+          display: true,
+        },
         {
           displayName: 'Clasificadores',
           iconName: ['build'],

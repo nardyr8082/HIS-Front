@@ -146,6 +146,16 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'system-manager',
+        loadChildren: () => import('./clinical-services/systemmanager/systemmanager.module').then((m) => m.SystemmanagerModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'stock-box',
+        loadChildren: () => import('./stock-modules/boxstock/boxstock.module').then((m) => m.BoxstockModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'stock-tax',
         loadChildren: () => import('./stock-modules/classifiers/tax/tax.module').then((m) => m.TaxModule),
         canActivate: [BackendGuard],
