@@ -1,11 +1,9 @@
 import { ResourceTypeService } from './../../../type/services/type.service';
-import { ResourceAttribute } from './../../../attribute/models/attribute.model';
 import { ResourceType } from './../../../type/models/type';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Inject, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ResourceAttributeService } from 'src/app/resources-modules/attribute/services/attribute.service';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -18,7 +16,6 @@ export class ClasificatorFormComponent implements OnInit, OnDestroy {
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
   resourceTypes: ResourceType[];
-  resourceAttributes: ResourceAttribute[];
 
   subscriptions: Subscription[] = [];
 
@@ -26,7 +23,6 @@ export class ClasificatorFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private resourceTypeService: ResourceTypeService,
-    private resourceAttributeService: ResourceAttributeService,
     public dialogRef: MatDialogRef<ClasificatorFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {}
@@ -34,7 +30,6 @@ export class ClasificatorFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.buildForm();
     this.getResourceTypes();
-    this.getResourceAttributes();
   }
 
   ngOnDestroy() {
@@ -42,7 +37,6 @@ export class ClasificatorFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    const attributes = this.data?.clasificator?.atributos ? this.data?.clasificator?.atributos.map((a) => a.id) : null;
     this.clasificatorForm = new FormGroup({
       id: new FormControl(this.data?.clasificator?.id ? this.data?.clasificator.id : null),
       nombre: new FormControl(this.data?.clasificator?.nombre ? this.data?.clasificator.nombre : null, [
@@ -50,7 +44,9 @@ export class ClasificatorFormComponent implements OnInit, OnDestroy {
         Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$'),
       ]),
       tipo: new FormControl(this.data?.clasificator?.tipo ? this.data?.clasificator.tipo.id : null, [Validators.required]),
-      atributos: new FormControl(attributes, [Validators.required]),
+      modelo: new FormControl(this.data?.clasificator?.modelo ? this.data?.clasificator.modelo : null, [Validators.required]),
+      numero_serie: new FormControl(this.data?.clasificator?.numero_serie ? this.data?.clasificator.numero_serie : null, [Validators.required]),
+      marca: new FormControl(this.data?.clasificator?.marca ? this.data?.clasificator.marca : null, [Validators.required]),
     });
   }
 
@@ -66,8 +62,16 @@ export class ClasificatorFormComponent implements OnInit, OnDestroy {
     return this.clasificatorForm.get('tipo') as FormControl;
   }
 
-  get atributosControl() {
-    return this.clasificatorForm.get('atributos') as FormControl;
+  get marcaControl() {
+    return this.clasificatorForm.get('marca') as FormControl;
+  }
+
+  get modeloControl() {
+    return this.clasificatorForm.get('modelo') as FormControl;
+  }
+
+  get numeroSerieControl() {
+    return this.clasificatorForm.get('numero_serie') as FormControl;
   }
 
   onSubmit(data) {
@@ -85,19 +89,6 @@ export class ClasificatorFormComponent implements OnInit, OnDestroy {
       .pipe(
         map((response) => {
           this.resourceTypes = response.results;
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-
-  getResourceAttributes() {
-    const sub = this.resourceAttributeService
-      .getAttributes({}, 'id', 'asc', 1, 10000)
-      .pipe(
-        map((response) => {
-          this.resourceAttributes = response.results;
         }),
       )
       .subscribe();
