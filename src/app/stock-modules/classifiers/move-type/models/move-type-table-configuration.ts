@@ -1,9 +1,9 @@
 import { TableConfiguration } from 'src/app/shared/models/table-configuration.model';
 import { DEFAULT_PAGINATION_SIZE } from '../../../../core/models/api-response.model';
 
-export const MOVE_TYPE_TABLE_CONFIGURATION : TableConfiguration = {
+export const MOVE_TYPE_TABLE_CONFIGURATION: TableConfiguration = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['descripcion', 'factor_diferencial', 'categoria'],
+  displayedColumns: ['descripcion', 'factor_diferencial', 'categoria__descripcion'],
   columnsName: ['Descripción', 'Factor Diferencial', 'Categoría'],
   tableFilters: [
     {
@@ -19,8 +19,8 @@ export const MOVE_TYPE_TABLE_CONFIGURATION : TableConfiguration = {
     {
       name: 'categoria',
       type: 'select',
-      title: 'Categoría',
       items: [],
+      title: 'Categoría',
     },
   ],
 };

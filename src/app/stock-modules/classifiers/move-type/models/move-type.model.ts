@@ -3,5 +3,5 @@ export interface MoveType {
   id?: string;
   descripcion?: string;
   factor_diferencial?: string;
-  categoria?: string;
+  categoria?: ProductCategory;
 }

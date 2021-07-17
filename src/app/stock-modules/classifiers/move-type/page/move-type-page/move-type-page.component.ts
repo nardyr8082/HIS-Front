@@ -1,3 +1,5 @@
+import { ProductCategoryService } from './../../../product-category/services/product-category.service';
+import { ProductCategory } from './../../../product-category/models/product-category.model';
 import { MoveTypeFormComponent } from './../../components/move-type-form/move-type-form.component';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
@@ -11,7 +13,6 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
-import { ProductCategoryService } from '../../../product-category/services/product-category.service';
 
 @Component({
   selector: 'app-move-type-page',
@@ -27,6 +28,8 @@ export class MoveTypePageComponent implements OnInit {
   loading = false;
   page = 1;
   pageSize = DEFAULT_PAGE_SIZE;
+
+  categories: ProductCategory[];
 
   rowActionButtons = [
     {
@@ -45,32 +48,34 @@ export class MoveTypePageComponent implements OnInit {
     },
   ];
 
-  constructor(private moveTypeService: MoveTypeService, private toastService: ToastrService, public dialog: MatDialog,
-       private productCategoryService: ProductCategoryService,
-  ) {
-    this.getProductCategorys();
-  }
+  constructor(
+    private productCategoryService: ProductCategoryService,
+    private moveTypeService: MoveTypeService,
+    private toastService: ToastrService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.getMoveTypes();
+    this.getCategories();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getProductCategorys(filters = {}) {
-    this.loading = true;
+  getCategories() {
     const sub = this.productCategoryService
-    .getProductCategorys(filters, 'descripcion', 'asc', 1, 10000)
-    .pipe(
-      map((response) => {
-        this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
-      }),
-    )
-    .subscribe();
+      .getProductCategorys({}, 'id', 'asc', 1, 1000)
+      .pipe(
+        map((response) => {
+          this.categories = response.results;
+          this.configuration.tableFilters[2].items = this.categories.map((category) => ({ id: category.id, name: category.descripcion }));
+        }),
+      )
+      .subscribe();
 
-  this.subscriptions.push(sub);
+    this.subscriptions.push(sub);
   }
 
   getMoveTypes(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
@@ -78,12 +83,11 @@ export class MoveTypePageComponent implements OnInit {
     const sub = this.moveTypeService
       .getMoveTypes(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
-        map((response: ApiResponse<any>) => {
-          this.moveTypes = response.results.map((resp) => {
-            const categoria = resp.categoria ? resp.categoria.descripcion : '';
-            const categoria_id = resp.categoria ? resp.categoria.id : '';
-            return { ...resp, categoria: categoria, categoria_id: categoria_id };
-          });
+        map((response: ApiResponse<MoveType>) => {
+          this.moveTypes = response.results.map((res) => ({
+            ...res,
+            categoria__descripcion: res.categoria.descripcion,
+          }));
           this.dataCount = response.count;
           this.loading = false;
           console.log(this.moveTypes);
