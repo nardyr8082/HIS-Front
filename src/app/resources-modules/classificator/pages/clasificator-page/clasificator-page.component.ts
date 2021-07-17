@@ -11,6 +11,9 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
+import { Permission, Role } from '../../../../security-module/role/models/role.model';
+import { ResourceType } from '../../../type/models/type';
+import { ResourceTypeService } from '../../../type/services/type.service';
 
 @Component({
   selector: 'app-clasificator-page',
@@ -44,23 +47,39 @@ export class ClasificatorPageComponent implements OnInit {
     },
   ];
 
-  constructor(private clasificatorService: ClasificatorService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(private typeServices: ResourceTypeService,private clasificatorService: ClasificatorService, private toastService: ToastrService, public dialog: MatDialog) {
+    this.putTypes();
+  }
 
   ngOnInit(): void {
     this.getClasificators();
   }
 
+  putTypes(filters = {}) {
+    const sub = this.typeServices
+      .getResourceTypes(filters, 'descripcion', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
-
   getClasificators(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.clasificatorService
       .getClasificators(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<Clasificator>) => {
-          this.clasificators = response.results;
+          this.clasificators = response.results.map((response) => {
+            const tipoString = this.getTipoString(response.tipo);
+            return { ...response, tipo_string: tipoString };
+          });
           this.dataCount = response.count;
           this.loading = false;
         }),
@@ -74,7 +93,9 @@ export class ClasificatorPageComponent implements OnInit {
 
     this.subscriptions.push(sub);
   }
-
+  getTipoString(tipos: ResourceType) {
+    return tipos.descripcion;
+  }
   onChangePage(page: PageEvent) {
     this.page = page.pageIndex + 1;
     this.pageSize = page.pageSize;

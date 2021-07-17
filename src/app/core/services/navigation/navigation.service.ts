@@ -206,7 +206,15 @@ export class NavigationService {
         {
           displayName: 'Gestionar Admisión',
           iconName: ['input'],
-          route: '',
+          children: [
+            {
+              displayName: 'Sistema',
+              iconName: ['radio_button_unchecked'],
+              route: '',
+              material: true,
+              display: true,
+            },
+          ],
           material: true,
           display: true,
         },

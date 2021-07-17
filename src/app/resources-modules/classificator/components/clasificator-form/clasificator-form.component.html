@@ -17,12 +17,19 @@
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Atributos:</mat-label>
-      <mat-select #mySelect formControlName="atributos" multiple>
-        <button type="button" class="btn btn-primary adjust" (click)="mySelect.close()">Cerrar</button>
-        <mat-option *ngFor="let attribute of resourceAttributes" [value]="attribute.id">{{ attribute.descripcion }}</mat-option>
-      </mat-select>
-      <mat-error *ngIf="atributosControl.errors?.required"> {{ 'Seleccione al menos un atributo' }} </mat-error>
+      <mat-label>Marca</mat-label>
+      <input matInput formControlName="marca" />
+      <mat-error *ngIf="marcaControl.errors?.required"> {{ 'La marca es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Modelo</mat-label>
+      <input matInput formControlName="modelo" />
+      <mat-error *ngIf="modeloControl.errors?.required"> {{ 'El modelo es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Numero Serie</mat-label>
+      <input matInput formControlName="numero_serie" />
+      <mat-error *ngIf="numeroSerieControl.errors?.required"> {{ 'El numero serie es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
   </form>
   <mat-divider class="my-4"></mat-divider>
