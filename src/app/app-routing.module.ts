@@ -220,6 +220,11 @@ const routes: Routes = [
         loadChildren: () => import('./indicator-module/indicator-type/indicator-type.module').then((m) => m.IndicatorTypeModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'variable-indicator',
+        loadChildren: () => import('./indicator-module/variable-indicator/variable-indicator.module').then((m) => m.VariableIndicatorModule),
+        canActivate: [BackendGuard],
+      },
       // Resources
       {
         path: 'resource-status',

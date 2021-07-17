@@ -17,8 +17,8 @@ export class VariableIndicatorFormComponent implements OnInit, OnDestroy {
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
-  varibleIndicatorForm: FormGroup;
-  varibleIndicator: any = [];
+  variableIndicatorForm: FormGroup;
+  variableIndicator: any = [];
   subscriptions: Subscription[] = [];
 
   constructor(public variableIndicatorService: VariableIndicatorService, public dialogRef: MatDialogRef<VariableIndicatorFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
@@ -38,7 +38,7 @@ export class VariableIndicatorFormComponent implements OnInit, OnDestroy {
       .getIndicator()
       .pipe(
         map((response: ApiResponse<any>) => {
-          this.varibleIndicator = response.results;
+          this.variableIndicator = response.results;
         }),
       )
       .subscribe();
@@ -47,18 +47,18 @@ export class VariableIndicatorFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    this.varibleIndicatorForm = new FormGroup({
+    this.variableIndicatorForm = new FormGroup({
       nombre: new FormControl(this.data.variableIndicator ? this.data.variableIndicator.nombre : '',[ Validators.required,  Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$') ]),
       SQL: new FormControl(this.data.variableIndicator ? this.data.variableIndicator.SQL : '', Validators.required),
     });
   }
 
   get nameControl() {
-    return this.varibleIndicatorForm?.get('nombre') as FormControl;
+    return this.variableIndicatorForm?.get('nombre') as FormControl;
   }
 
   get sqlControl() {
-    return this.varibleIndicatorForm?.get('SQL') as FormControl;
+    return this.variableIndicatorForm?.get('SQL') as FormControl;
   }
 
   onSubmit(data) {

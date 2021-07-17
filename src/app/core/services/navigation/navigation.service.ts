@@ -645,6 +645,13 @@ export class NavigationService {
               material: true,
               display: true,
             },
+            {
+              displayName: 'Indicador Variable',
+              iconName: ['radio_button_unchecked'],
+              route: 'variable-indicator',
+              material: true,
+              display: true,
+            },
           ],
           display: true,
         },

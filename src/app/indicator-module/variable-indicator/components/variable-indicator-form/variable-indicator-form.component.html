@@ -1,7 +1,7 @@
 <div class="form">
   <h4>{{ data.variableIndicator ? 'Editar Indicador Variable' : 'Crear Indicador Variable' }}</h4>
   <mat-divider class="my-4"></mat-divider>
-  <form *ngIf="subcategoryForm" [formGroup]="variableIndicatorForm">
+  <form *ngIf="variableIndicatorForm" [formGroup]="variableIndicatorForm">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Nombre:</mat-label>
       <input matInput formControlName="nombre" />
@@ -32,8 +32,8 @@
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
-    <button (click)="onSubmit(subcategoryForm.value)" [disabled]="!subcategoryForm.valid" mat-raised-button color="primary" class="button">
-      {{ data.subcategory ? 'Aceptar' : 'Crear' }}
+    <button (click)="onSubmit(variableIndicatorForm.value)" [disabled]="!variableIndicatorForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.variableIndicator ? 'Aceptar' : 'Crear' }}
     </button>
   </div>
 </div>
