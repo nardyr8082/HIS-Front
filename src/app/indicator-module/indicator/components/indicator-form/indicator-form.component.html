@@ -1,12 +1,11 @@
 <div class="form">
   <h4>{{ data.indicator ? 'Editar Indicador' : 'Crear Indicador' }}</h4>
   <mat-divider class="my-4"></mat-divider>
-  <form *ngIf="subcategoryForm" [formGroup]="indicatorForm">
+  <form *ngIf="indicatorForm" [formGroup]="indicatorForm">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Nombre:</mat-label>
       <input matInput formControlName="nombre" />
       <mat-error *ngIf="this.nameControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
-      <mat-error *ngIf="this.nameControl.errors?.pattern"> {{ 'El nombre solo permite letras y espacios' }}  </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Especificidad:</mat-label>
@@ -30,7 +29,7 @@
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Desgloce Específico:</mat-label>
-      <input matInput formControlName="desgloce_especifico" />
+      <input matInput formControlName="desglose_especifico" />
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Método Medición:</mat-label>
@@ -40,51 +39,50 @@
       <mat-label>Fuente Indicador:</mat-label>
       <input matInput formControlName="fuente_indicador" />
     </mat-form-field>
-    <div class="mb-4">
-      <ng-select
-        appearance="outline"
-        class="custom w-100"
-        placeholder="Subcategoría"
-        [items]="category"
-        bindLabel="descripcion"
-        bindValue="id"
-        formControlName="subcategoria"
-      >
-      </ng-select>
-      <small class="text-danger error-style" *ngIf="indicatorForm.controls['subcategoria'].errors?.required && indicatorForm.controls['subcategoria'].dirty"
-        >El campo Subcategoría es <strong>requerido</strong></small
-      >
-    </div>
-    <div class="mb-4">
-      <ng-select
-        appearance="outline"
-        class="custom w-100"
-        placeholder="Tipo Indicador"
-        [items]="category"
-        bindLabel="descripcion"
-        bindValue="id"
-        formControlName="tipo_indicador"
-      >
-      </ng-select>
-      <small class="text-danger error-style" *ngIf="indicatorForm.controls['tipo_indicador'].errors?.required && indicatorForm.controls['tipo_indicador'].dirty"
-        >El campo Tipo Indicador es <strong>requerido</strong></small
-      >
-    </div>
-    <div class="mb-4">
-      <ng-select
-        appearance="outline"
-        class="custom w-100"
-        placeholder="Frecuencia"
-        [items]="category"
-        bindLabel="descripcion"
-        bindValue="id"
-        formControlName="frecuencia"
-      >
-      </ng-select>
-      <small class="text-danger error-style" *ngIf="indicatorForm.controls['frecuencia'].errors?.required && indicatorForm.controls['frecuencia'].dirty"
-        >El campo Frecuencia es <strong>requerido</strong></small
-      >
-    </div>
+   <!-- subcategoria -->
+   <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Subcategoria"
+      [items]="subcategories"
+      bindLabel="descripcion"
+      bindValue="id"
+      formControlName="subcategoria"
+    >
+    </ng-select>
+    <small class="text-danger error-style" *ngIf="subcategoriaControl.errors?.required && frecuenciaControl.dirty"
+      >El campo categoría es <strong>requerido</strong></small
+    >
+  </div>
+   <!-- tipo indicador -->
+   <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Tipo Indicador"
+      [items]="indicatorTypes"
+      bindLabel="descripcion"
+      bindValue="id"
+      formControlName="tipo_indicador">
+    </ng-select>
+    <small class="text-danger error-style" *ngIf="tipoIndicadorControl.errors?.required && frecuenciaControl.dirty">
+      El campo tipo indicador es <strong>requerido</strong></small>
+  </div>
+   <!-- frecuencia -->
+   <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Frecuencia"
+      [items]="frequencys"
+      bindLabel="descripcion"
+      bindValue="id"
+      formControlName="frecuencia">
+    </ng-select>
+    <small class="text-danger error-style" *ngIf="frecuenciaControl.errors?.required && frecuenciaControl.dirty">
+      El campo tipo indicador es <strong>requerido</strong></small>
+  </div>
   </form>
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">

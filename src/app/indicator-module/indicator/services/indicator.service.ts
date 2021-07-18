@@ -5,6 +5,11 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../../app/core/models/api-response.model';
 import { Indicator } from '../models/indicator.model';
+import { Subcategory } from '../../classifiers/subcategory/models/subcategory.model';
+import { IndicatorType } from '../../indicator-type/models/indicator-type.model';
+import { Frequency } from '../../classifiers/frequency/models/frequency.model';
+import { FrequencyFormComponent } from '../../classifiers/frequency/components/frequency-form/frequency-form.component';
+
 
 //
 
@@ -12,7 +17,10 @@ import { Indicator } from '../models/indicator.model';
   providedIn: 'root',
 })
 export class IndicatorService {
-  private apiEndpoint = `${environment.apiUrl}ind_indicador_variable`;
+  private apiEndpoint = `${environment.apiUrl}ind_indicador`;
+  private apiEndpointSub = `${environment.apiUrl}ind_subcategoria`;
+  private apiEndpointInd = `${environment.apiUrl}ind_tipo`;
+  private apiEndpointFre = `${environment.apiUrl}ind_frecuencia`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -34,6 +42,18 @@ export class IndicatorService {
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
     return this.http.get<ApiResponse<Indicator>>(this.apiEndpoint + queryParams);
+  }
+
+  getSubcategorys(): Observable<ApiResponse<Subcategory>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointSub);
+  }
+
+  getIndicatorTypes(): Observable<ApiResponse<IndicatorType>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointInd);
+  }
+
+  getFrequency(): Observable<ApiResponse<FrequencyFormComponent>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointFre);
   }
   
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {

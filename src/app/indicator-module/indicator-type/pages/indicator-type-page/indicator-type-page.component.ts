@@ -1,5 +1,5 @@
 import { ToastrService } from 'ngx-toastr';
-import { InicatorTypeService } from './../../services/indicator-type.service';
+import { IndicatorTypeService } from './../../services/indicator-type.service';
 import { IndicatorType } from './../../models/indicator-type.model';
 import { INDICATOR_TYPE_TABLE_CONFIGURATION } from './../../models/indicator-type-table-configuration';
 import { Component, OnInit } from '@angular/core';
@@ -44,7 +44,7 @@ export class IndicatorTypePageComponent implements OnInit {
     },
   ];
 
-  constructor(private indicatorTypeService: InicatorTypeService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(private indicatorTypeService: IndicatorTypeService, private toastService: ToastrService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getIndicatorTypes();

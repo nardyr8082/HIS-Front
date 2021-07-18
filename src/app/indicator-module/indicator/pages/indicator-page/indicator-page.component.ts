@@ -1,4 +1,6 @@
 import { IndicatorService } from './../../../indicator/services/indicator.service';
+import { SubcategoryService } from '../../../classifiers/subcategory/services/subcategory.service';
+import { Subcategory } from '../../../classifiers/subcategory/models/subcategory.model';
 import { INDICATOR_TABLE_CONFIGURATION } from './../../models/indicator-table-configuration';
 import { Indicator } from './../../models/indicator.model';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -11,6 +13,10 @@ import {IndicatorFormComponent } from '../../components/indicator-form/indicator
 import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
+import { IndicatorType } from '../../../indicator-type/models/indicator-type.model';
+import { IndicatorTypeService } from '../../../indicator-type/services/indicator-type.service';
+import { Frequency } from '../../../classifiers/frequency/models/frequency.model';
+import { FrequencyService } from '../../../classifiers/frequency/services/frequency.service';
 
 @Component({
   selector: 'app-indicator-page',
@@ -45,21 +51,64 @@ export class IndicatorPageComponent implements OnInit, OnDestroy {
   ];
 
   constructor(
-    private IndicatorService: IndicatorService,
+    private indicatorService: IndicatorService,
     private toastService: ToastrService,
     public dialog: MatDialog,
-    private indicatorService: IndicatorService,
+    private subcategoryService:SubcategoryService,
+    private indicatorTypeService: IndicatorTypeService,
+    private frequencyService: FrequencyService,
   ) {
   }
 
   ngOnInit(): void {
     this.getIndicator();
+    this.getSubcategories();
+    this.getIndicatorTypes();
+    this.getFrequency();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
+  getSubcategories() {
+    const sub = this.subcategoryService
+      .getSubcategory({}, 'id', 'asc', 1, 1000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getIndicatorTypes() {
+    const sub = this.indicatorTypeService
+      .getIndicatorTypes({}, 'id', 'asc', 1, 1000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getFrequency() {
+    const sub = this.frequencyService
+      .getFrequency({}, 'id', 'asc', 1, 1000) 
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+       }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
 
   getIndicator(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
@@ -67,11 +116,15 @@ export class IndicatorPageComponent implements OnInit, OnDestroy {
       .getIndicator(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
-          this.indicator = response.results.map((resp) => {
-            const indicador = resp.indicador ? resp.indicador.nombre : '';
-            const indicador_id = resp.indicador ? resp.indicador.id : '';
-            return { ...resp, indicador: indicador, indicador_id: indicador_id };
-          });
+          this.indicator = response.results.map((res) => ({
+            ...res,
+            subcategoria_descripcion: res.subcategoria.descripcion,
+            subcategoria_id:res.subcategoria.id,
+            tipo_indicador_descripcion: res.tipo_indicador.descripcion,
+            tipo_indicador_id: res.tipo_indicador.id,
+            frecuencia_descripcion: res.frecuencia.descripcion,
+            frecuencia_id: res.frecuencia.id,
+          }));
           this.dataCount = response.count;
           this.loading = false;
         }),
@@ -107,7 +160,7 @@ export class IndicatorPageComponent implements OnInit, OnDestroy {
       maxHeight: '100vh',
       width: '100%',
       data: {
-        Indicator: null,
+        indicator: null,
       },
     });
 
@@ -116,7 +169,7 @@ export class IndicatorPageComponent implements OnInit, OnDestroy {
     const sub = modalComponentRef.create
       .pipe(
         switchMap((Indicator: Indicator) =>
-          this.IndicatorService.createIndicator(Indicator).pipe(
+          this.indicatorService.createIndicator(Indicator).pipe(
             catchError(() => {
               this.toastService.error('Hubo un error al crear el Indicador . Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
@@ -145,7 +198,7 @@ export class IndicatorPageComponent implements OnInit, OnDestroy {
       maxHeight: '100vh',
       width: '100%',
       data: {
-        Indicator: item,
+        indicator: item,
       },
     });
     const modalComponentRef = dialogRef.componentInstance as IndicatorFormComponent;
@@ -153,7 +206,7 @@ export class IndicatorPageComponent implements OnInit, OnDestroy {
     const sub = modalComponentRef.edit
       .pipe(
         switchMap((Indicator: Indicator) =>
-          this.IndicatorService.editIndicator({ ...Indicator, id: item.id }).pipe(
+          this.indicatorService.editIndicator({ ...Indicator, id: item.id }).pipe(
             catchError(() => {
               this.toastService.error('Hubo un error al editar el indicador . Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
@@ -182,7 +235,7 @@ export class IndicatorPageComponent implements OnInit, OnDestroy {
       .pipe(
         filter((accept) => accept),
         switchMap(() =>
-          this.IndicatorService.deleteIndicator(item.id).pipe(
+          this.indicatorService.deleteIndicator(item.id).pipe(
             map(() => item),
             catchError(() => {
               this.toastService.error('Hubo un error al eliminar el indicador . Por favor, inténtelo de nuevo más tarde.', 'Error');

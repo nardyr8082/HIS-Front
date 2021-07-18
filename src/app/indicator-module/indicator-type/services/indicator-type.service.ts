@@ -11,7 +11,7 @@ import { IndicatorType } from '../models/indicator-type.model';
 @Injectable({
   providedIn: 'root',
 })
-export class InicatorTypeService {
+export class IndicatorTypeService {
   private apiEndpoint = `${environment.apiUrl}ind_tipo`;
   private defaultFilter: any = {};
 

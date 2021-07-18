@@ -21,5 +21,10 @@ export const INDICATOR_TABLE_CONFIGURATION: TableConfiguration = {
       title: 'Variables',
       type: 'text',
     },
+    {
+      name: 'objetivo',
+      title: 'Objetivo',
+      type: 'text',
+    },
   ],
 };

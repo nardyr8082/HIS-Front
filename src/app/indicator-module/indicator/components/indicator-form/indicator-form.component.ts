@@ -1,12 +1,18 @@
 import { Component, ContentChild, EventEmitter, Inject, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/core/models/api-response.model';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { IndicatorService } from '../../services/indicator.service';
-import { Indicator } from '../../models/indicator.model';
+import { Subcategory } from '../../../classifiers/subcategory/models/subcategory.model';
+import { SubcategoryService } from '../../../classifiers/subcategory/services/subcategory.service';
+import { IndicatorType } from '../../../indicator-type/models/indicator-type.model';
+import { IndicatorTypeService } from '../../../indicator-type/services/indicator-type.service';
+import { Frequency } from '../../../classifiers/frequency/models/frequency.model';
+import { FrequencyService } from '../../../classifiers/frequency/services/frequency.service';
+
 
 @Component({
   selector: 'app-indicator-form',
@@ -17,14 +23,19 @@ export class IndicatorFormComponent implements OnInit, OnDestroy {
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
+  subcategories: any = [];
+  indicatorTypes: any = [];
+  frequencys: any = [];
+
   indicatorForm: FormGroup;
-  indicator: any = [];
-  subcategory : any = [];
-  indicatorType : any = [];
-  frequency : any = [];
   subscriptions: Subscription[] = [];
 
-  constructor(public indicatorService: IndicatorService, public dialogRef: MatDialogRef<IndicatorFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(public indicatorService: IndicatorService,
+      private subcategoryService: SubcategoryService,
+      private indicatorTypeService: IndicatorTypeService,
+      private frequencyService: FrequencyService,
+     public dialogRef: MatDialogRef<IndicatorFormComponent>,
+      @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -39,10 +50,10 @@ export class IndicatorFormComponent implements OnInit, OnDestroy {
 
   getSubcategory() {
     const sub = this.indicatorService
-      .getSubcategory()
+      .getSubcategorys()
       .pipe(
         map((response: ApiResponse<any>) => {
-          this.subcategory = response.results;
+          this.subcategories = response.results;
         }),
       )
       .subscribe();
@@ -52,33 +63,33 @@ export class IndicatorFormComponent implements OnInit, OnDestroy {
 
   getIndicatorTypes() {
     const sub = this.indicatorService
-      .getIndicatorTypes()
-      .pipe(
-        map((response: ApiResponse<any>) => {
-          this.indicatorType = response.results;
-        }),
-      )
-      .subscribe();
+    .getIndicatorTypes()
+    .pipe(
+      map((response: ApiResponse<any>) => {
+        this.indicatorTypes = response.results;
+      }),
+    )
+    .subscribe();
 
-    this.subscriptions.push(sub);
+  this.subscriptions.push(sub);
   }
 
   getFrequency() {
     const sub = this.indicatorService
-      .getFrequency()
-      .pipe(
-        map((response: ApiResponse<any>) => {
-          this.frequency = response.results;
-        }),
-      )
-      .subscribe();
+    .getFrequency()
+    .pipe(
+      map((response: ApiResponse<any>) => {
+        this.frequencys = response.results;
+      }),
+    )
+    .subscribe();
 
-    this.subscriptions.push(sub);
+  this.subscriptions.push(sub);
   }
 
   buildForm() {
     this.indicatorForm = new FormGroup({
-      nombre: new FormControl(this.data.indicator ? this.data.ndicator.nombre : '',[ Validators.required,  Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$') ]),
+      nombre: new FormControl(this.data.indicator ? this.data.indicator.nombre : '', Validators.required),
       especificidad: new FormControl(this.data.indicator ? this.data.indicator.especificidad : '', Validators.required),
       variables: new FormControl(this.data.indicator ? this.data.indicator.variables : '', Validators.required),
       objetivo: new FormControl(this.data.indicator ? this.data.indicator.objetivo : '', Validators.required),
@@ -95,6 +106,18 @@ export class IndicatorFormComponent implements OnInit, OnDestroy {
 
   get nameControl() {
     return this.indicatorForm?.get('nombre') as FormControl;
+  }
+
+  get subcategoriaControl() {
+    return this.indicatorForm?.get('subcategoria') as FormControl;
+  }
+
+  get tipoIndicadorControl() {
+    return this.indicatorForm?.get('tipo_indicador') as FormControl;
+  }
+
+  get frecuenciaControl() {
+    return this.indicatorForm?.get('frecuencia') as FormControl;
   }
 
   onSubmit(data) {
