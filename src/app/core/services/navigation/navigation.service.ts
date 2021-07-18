@@ -535,6 +535,20 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Inventario',
+          iconName: ['swap_vertical_circle'],
+          route: '',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Cambio Precio',
+          iconName: ['swap_vertical_circle'],
+          route: '',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Clasificadores',
           iconName: ['build'],
           material: true,
