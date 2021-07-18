@@ -186,6 +186,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'indicator',
+        loadChildren: () => import('./indicator-module/indicator/indicator.module').then((m) => m.IndicatorModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'indicator-category',
         loadChildren: () => import('./indicator-module/classifiers/category/category.module').then((m) => m.CategoryModule),
         canActivate: [BackendGuard],
@@ -193,6 +198,11 @@ const routes: Routes = [
       {
         path: 'indicator-subcategory',
         loadChildren: () => import('./indicator-module/classifiers/subcategory/subcategory.module').then((m) => m.SubcategoryModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'indicator-frequency',
+        loadChildren: () => import('./indicator-module/classifiers/frequency/frequency.module').then((m) => m.FrequencyModule),
         canActivate: [BackendGuard],
       },
       {

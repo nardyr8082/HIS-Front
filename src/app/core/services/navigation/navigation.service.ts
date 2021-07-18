@@ -628,6 +628,27 @@ export class NavigationService {
       material: true,
       children: [
         {
+          displayName: 'Indicador',
+          iconName: ['radio_button_unchecked'],
+          route: 'indicator',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Tipo de Indicador',
+          iconName: ['radio_button_unchecked'],
+          route: 'indicator-type',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Indicador Variable',
+          iconName: ['radio_button_unchecked'],
+          route: 'variable-indicator',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Clasificadores',
           iconName: ['build'],
           material: true,
@@ -647,16 +668,9 @@ export class NavigationService {
               display: true,
             },
             {
-              displayName: 'Tipo de Indicador',
+              displayName: 'Frecuencia',
               iconName: ['radio_button_unchecked'],
-              route: 'indicator-type',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Indicador Variable',
-              iconName: ['radio_button_unchecked'],
-              route: 'variable-indicator',
+              route: 'indicator-frequency',
               material: true,
               display: true,
             },
