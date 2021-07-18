@@ -67,7 +67,7 @@ export class VariableIndicatorPageComponent implements OnInit, OnDestroy {
       .getIndicator(filters, 'descripcion', 'asc', 1, 10000)
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+          this.configuration.tableFilters[2].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
         }),
       )
       .subscribe();
@@ -81,11 +81,11 @@ export class VariableIndicatorPageComponent implements OnInit, OnDestroy {
       .getVariableIndicator(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
-          this.variableIndicator = response.results.map((resp) => {
-            const indicador = resp.indicador ? resp.indicador.nombre : '';
-            const indicador_id = resp.indicador ? resp.indicador.id : '';
-            return { ...resp, indicador: indicador, indicador_id: indicador_id };
-          });
+          this.variableIndicator = response.results.map((res) => ({
+            ...res,
+            indicador_nombre: res.indicador.nombre,
+            indicador_id:res.indicador.id
+          }));
           this.dataCount = response.count;
           this.loading = false;
         }),

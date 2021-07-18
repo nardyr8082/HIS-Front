@@ -13,21 +13,20 @@
       <input matInput formControlName="SQL" />
       <mat-error *ngIf="this.sqlControl.errors?.required"> {{ 'El SQL es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
-    <div class="mb-4">
-      <ng-select
-        appearance="outline"
-        class="custom w-100"
-        placeholder="Indicador"
-        [items]="category"
-        bindLabel="nombre"
-        bindValue="id"
-        formControlName="indicador"
-      >
-      </ng-select>
-      <small class="text-danger error-style" *ngIf="variableIndicatorForm.controls['indicador'].errors?.required && variableIndicatorForm.controls['indicador'].dirty"
-        >El campo indicador es <strong>requerido</strong></small
-      >
-    </div>
+  <!-- Indicador -->
+  <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Indicador"
+      [items]="indicator"
+      bindLabel="nombre"
+      bindValue="id"
+      formControlName="indicador">
+    </ng-select>
+    <small class="text-danger error-style" *ngIf="indicatorControl.errors?.required && indicatorControl.dirty">
+      El campo indicador es <strong>requerido</strong></small>
+  </div>
   </form>
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">

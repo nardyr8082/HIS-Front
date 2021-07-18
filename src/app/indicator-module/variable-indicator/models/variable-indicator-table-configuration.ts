@@ -3,7 +3,7 @@ import { DEFAULT_PAGINATION_SIZE } from '../../../../app/core/models/api-respons
 
 export const VARIABLE_INDICATOR_TABLE_CONFIGURATION: TableConfiguration = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['nombre', 'SQL', 'indicador'],
+  displayedColumns: ['nombre', 'SQL', 'indicador_nombre'],
   columnsName: ['Nombre', 'SQL', 'Indicador'],
   tableFilters: [
     {
@@ -17,7 +17,7 @@ export const VARIABLE_INDICATOR_TABLE_CONFIGURATION: TableConfiguration = {
       title: 'SQL',
     },
     {
-      name: 'indicador',
+      name: 'indicador_nombre',
       title: 'Indicador',
       type: 'select',
       items: [],
