@@ -527,18 +527,10 @@ export class NavigationService {
       iconName: ['store'],
       material: true,
       children: [
-       {
-        displayName: 'Almacén Caja',
-        iconName: ['input'],
-        children: [
         {
           displayName: 'Caja',
-          iconName: ['radio_button_unchecked'],
+          iconName: ['swap_vertical_circle'],
           route: 'stock-box',
-          material: true,
-          display: true,
-          },
-          ],
           material: true,
           display: true,
         },
