@@ -210,7 +210,7 @@ export class NavigationService {
             {
               displayName: 'Sistema',
               iconName: ['radio_button_unchecked'],
-              route: '',
+              route: 'system-manager',
               material: true,
               display: true,
             },
@@ -527,6 +527,27 @@ export class NavigationService {
       iconName: ['store'],
       material: true,
       children: [
+        {
+          displayName: 'Caja',
+          iconName: ['swap_vertical_circle'],
+          route: 'stock-box',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Inventario',
+          iconName: ['swap_vertical_circle'],
+          route: '',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Cambio Precio',
+          iconName: ['swap_vertical_circle'],
+          route: '',
+          material: true,
+          display: true,
+        },
         {
           displayName: 'Clasificadores',
           iconName: ['build'],

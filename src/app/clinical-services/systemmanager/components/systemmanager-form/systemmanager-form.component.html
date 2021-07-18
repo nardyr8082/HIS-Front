@@ -1,0 +1,20 @@
+<div class="form">
+  <h4>{{ data.systemmanager ? 'Editar Gestión Admisión' : 'Crear Gestión Admisión' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="systemmanagerForm" [formGroup]="systemmanagerForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Descripcion</mat-label>
+      <input matInput formControlName="descripcion" maxlength="255"/>
+      <mat-error *ngIf="descriptionControl.errors?.required"> {{ 'La descripción es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="descriptionControl.errors?.maxlength"> {{ 'La descripción es' }} <strong>no puede ser mayor de 255 caracteres</strong> </mat-error>
+    </mat-form-field>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(systemmanagerForm.value)" [disabled]="!systemmanagerForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.systemmanager ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>
+
