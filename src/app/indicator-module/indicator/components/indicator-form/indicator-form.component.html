@@ -4,8 +4,9 @@
   <form *ngIf="indicatorForm" [formGroup]="indicatorForm">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Nombre:</mat-label>
-      <input matInput formControlName="nombre" />
+      <input matInput formControlName="nombre" maxlength="2147483647" />
       <mat-error *ngIf="this.nameControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="this.nameControl.errors?.pattern"> {{ 'El nombre solo permite' }} <strong>números</strong> </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Especificidad:</mat-label>
