@@ -2,7 +2,7 @@ import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model
 
 export const Boxstock_TABLE_CONFIGURATION = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['nro', 'cajero', 'almacen'],
+  displayedColumns: ['nro', 'cajero', 'almacen_string'],
   columnsName: ['Numero', 'Cajero', 'Almacen'],
   tableFilters: [
     {

@@ -203,3 +203,4 @@ export class BoxstockPageComponent implements OnInit {
     this.getBoxstock(this.filters, sort.active, sort.direction);
   }
 }
+

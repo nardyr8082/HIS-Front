@@ -33,7 +33,7 @@ export class SystemmanagerFormComponent implements OnInit, OnDestroy {
   buildForm() {
     this.systemmanagerForm = new FormGroup({
       id: new FormControl(this.data?.systemmanager?.id ? this.data?.systemmanager.id : null),
-      descripcion: new FormControl(this.data?.systemmanager?.descripcion ? this.data?.systemmanager.descripcion : null, [Validators.required]),
+      descripcion: new FormControl(this.data?.systemmanager?.descripcion ? this.data?.systemmanager.descripcion : null, [Validators.required, (Validators.maxLength(255))]),
     });
   }
 

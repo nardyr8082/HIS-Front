@@ -4,8 +4,9 @@
   <form *ngIf="boxstockForm" [formGroup]="boxstockForm">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Numero</mat-label>
-      <input matInput formControlName="nro" />
+      <input matInput formControlName="nro" maxlength="20"/>
       <mat-error *ngIf="numberControl.errors?.required"> {{ 'El numero es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="numberControl.errors?.maxlength"> {{ 'El numero es' }} <strong>no puede tener más de 20 caracteres</strong> </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Almacen</mat-label>
@@ -17,8 +18,11 @@
 
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Cajero</mat-label>
-      <input matInput formControlName="cajero" />
+      <input matInput formControlName="cajero" maxlength="20"/>
       <mat-error *ngIf="cashierControl.errors?.required"> {{ 'El cajero es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="cashierControl.errors?.min"> {{ 'El cajero es' }} <strong>debe ser positivo</strong> </mat-error>
+      <mat-error *ngIf="cashierControl.errors?.maxlength"> {{ 'El cajero es' }} <strong>no puede tener más de 20 caracteres</strong> </mat-error>
+      <mat-error *ngIf="cashierControl.errors?.isDecimal"> {{ 'El cajero es' }} <strong>solo números enteros</strong> </mat-error>
     </mat-form-field>
   </form>
   <mat-divider class="my-4"></mat-divider>
