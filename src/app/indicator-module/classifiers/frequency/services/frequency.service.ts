@@ -75,7 +75,7 @@ export class FrequencyService {
   }
 
   editFrequency(data: Frequency): Observable<Frequency> {
-    return this.http.put<Frequency>(`${this.apiEndpoint}/${data.id}/`, data);
+    return this.http.patch<Frequency>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
   deleteFrequency(id: string): Observable<any> {
