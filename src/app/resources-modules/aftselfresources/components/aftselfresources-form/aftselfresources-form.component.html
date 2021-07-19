@@ -7,10 +7,12 @@
       <input matInput formControlName="nro_inventario" maxlength="50"/>
       <mat-error *ngIf="inventoryNumberControl.errors?.required"> {{ 'El numero de inventario es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <!--<mat-label>Activo</mat-label>-->
+
+    <!--<mat-form-field class="w-100" appearance="outline">
+      <mat-label>Activo</mat-label>-->
       <mat-checkbox checked="false" formControlName="activo">Activo</mat-checkbox>
-    </mat-form-field>
+    <!--</mat-form-field>-->
+
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Estado</mat-label>
       <mat-select #mySelect formControlName="id_estado">
