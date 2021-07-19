@@ -414,11 +414,11 @@ export class NavigationService {
       display: true,
       children: [
         {
-          displayName: 'Atributos de Recurso',
+          displayName: 'Recurso Propio',
           iconName: ['radio_button_unchecked'],
-          route: 'resource-attribute',
+          route: 'resource-self',
           material: true,
-          display: false,
+          display: true,
         },
         {
           displayName: 'Estado de Recurso',
