@@ -4,7 +4,7 @@
   <form *ngIf="boxstockForm" [formGroup]="boxstockForm">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Numero</mat-label>
-      <input matInput formControlName="nro" maxlength="20"/>
+      <input matInput formControlName="nro" maxlength="20" />
       <mat-error *ngIf="numberControl.errors?.required"> {{ 'El número es' }} <strong>requerido</strong> </mat-error>
       <mat-error *ngIf="numberControl.errors?.maxlength"> {{ 'El número es' }} <strong>no puede tener más de 20 caracteres</strong> </mat-error>
       <mat-error *ngIf="numberControl.errors?.notAvailable"> {{ 'El número ' }} <strong>ya existe</strong> </mat-error>
@@ -12,14 +12,14 @@
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Almacen</mat-label>
       <mat-select #mySelect formControlName="almacen">
-        <mat-option *ngFor="let st of stock" [value]="st.id">{{ st.id }}</mat-option>
+        <mat-option *ngFor="let st of stock" [value]="st.id">{{ st.nombre }}</mat-option>
       </mat-select>
       <mat-error *ngIf="stockControl.errors?.required"> {{ 'Seleccione un almacen' }} </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Cajero</mat-label>
-      <input matInput formControlName="cajero" maxlength="20"/>
+      <input matInput formControlName="cajero" maxlength="20" />
       <mat-error *ngIf="cashierControl.errors?.required"> {{ 'El cajero es' }} <strong>requerido</strong> </mat-error>
       <mat-error *ngIf="cashierControl.errors?.min"> {{ 'El cajero es' }} <strong>debe ser positivo</strong> </mat-error>
       <mat-error *ngIf="cashierControl.errors?.maxlength"> {{ 'El cajero es' }} <strong>no puede tener más de 20 caracteres</strong> </mat-error>
