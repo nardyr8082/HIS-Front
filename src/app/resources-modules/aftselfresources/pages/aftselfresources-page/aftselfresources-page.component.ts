@@ -24,7 +24,7 @@ import { Clasificator } from '../../../classificator/models/clasificator.model';
   styleUrls: ['./aftselfresources-page.component.scss'],
 })
 export class AftselfresourcesPageComponent implements OnInit {
-  aftselfresources: Aftselfresources[];
+  aftselfresources: any[];
   dataCount = 0;
   configuration = Aftselfresources_TABLE_CONFIGURATION;
   subscriptions: Subscription[] = [];
@@ -50,7 +50,12 @@ export class AftselfresourcesPageComponent implements OnInit {
     },
   ];
 
-  constructor(private typeServices: ResourceTypeService, private aftselfresourcesService: AftselfresourcesService, private toastService: ToastrService, public dialog: MatDialog) {
+  constructor(
+    private typeServices: ResourceTypeService,
+    private aftselfresourcesService: AftselfresourcesService,
+    private toastService: ToastrService,
+    public dialog: MatDialog,
+  ) {
     this.putTypes();
   }
 
@@ -84,7 +89,13 @@ export class AftselfresourcesPageComponent implements OnInit {
             const recursoString = this.getResourcesString(response.id_recurso);
             const departamentoString = this.getOfficeString(response.id_departamento);
             const pacienteString = this.getPatientString(response.paciente);
-            return { ...response, id_estado_string: estadoString, id_recurso_string: recursoString, id_departamento_string: departamentoString, paciente: pacienteString };
+            return {
+              ...response,
+              id_estado_string: estadoString,
+              id_recurso_string: recursoString,
+              id_departamento_string: departamentoString,
+              paciente: pacienteString,
+            };
           });
           this.dataCount = response.count;
           this.loading = false;

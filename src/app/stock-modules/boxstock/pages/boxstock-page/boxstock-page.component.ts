@@ -77,7 +77,7 @@ export class BoxstockPageComponent implements OnInit {
     this.subscriptions.push(sub);
   }
   getBoxstockString(stock: Stock) {
-    return stock.nombre;
+    return stock.id;
   }
   onChangePage(page: PageEvent) {
     this.page = page.pageIndex + 1;

@@ -1,7 +1,7 @@
 export interface Boxstock {
   id?: string;
-  nro?: number;
-  cajero?: string;
+  nro?: string;
+  cajero?: number;
   almacen?: Stock;
   almacen_string?: string;
 }

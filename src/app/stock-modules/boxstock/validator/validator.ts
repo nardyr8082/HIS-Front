@@ -1,4 +1,6 @@
 import { AbstractControl } from "@angular/forms";
+import { BoxstockService } from '../services/boxstock.service';
+import { map } from 'rxjs/operators';
 export class MyValidation{
   static isNumberInt(control: AbstractControl){
     const value = control.value;
@@ -20,7 +22,7 @@ export class MyValidation{
   static isDecimal(control: AbstractControl){
     let value = control.value;
     if (value == null || value == ''){
-      return {isDecimal: true};
+      return {isDecimal: false};
     }
     else{
       if(value.length > 2){
@@ -48,4 +50,15 @@ export class MyValidation{
   }
   return null;
 }
+  static validateFieldNumber(boxstockService: BoxstockService){
+    return(control: AbstractControl) => {
+      const value = control.value;
+      return boxstockService.checkNumber(value)
+      .pipe(
+        map( response => {
+          return response.isNumberAvailable ? null : { notAvailable: true };
+        })
+      );
+    };
+  }
 }
