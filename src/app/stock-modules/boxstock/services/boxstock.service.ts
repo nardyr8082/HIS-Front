@@ -2,9 +2,10 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 //
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response.model';
 import { Boxstock } from '../models/boxstock.model';
+import { delay } from 'rxjs/operators';
 
 //
 
@@ -80,5 +81,8 @@ export class BoxstockService {
 
   deleteBoxstock(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
+  }
+  checkNumber(num: string){
+    return of({isNumberAvailable: num !== 'tito'}).pipe(delay(500));
   }
 }

@@ -1,4 +1,6 @@
 import { AbstractControl } from "@angular/forms";
+import { BoxstockService } from '../services/boxstock.service';
+import { map } from 'rxjs/operators';
 export class MyValidation{
   static isNumberInt(control: AbstractControl){
     const value = control.value;
@@ -48,4 +50,16 @@ export class MyValidation{
   }
   return null;
 }
+  static validateFieldNumber(boxstockService: BoxstockService){
+    return(control: AbstractControl) => {
+      const value = control.value;
+      return boxstockService.checkNumber(value)
+      .pipe(
+        map( response => {
+          console.log('mira mi response: ', response);
+          return response.isNumberAvailable ? null : { notAvailable: true };
+        })
+      );
+    };
+  }
 }

@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { Stock } from '../../models/boxstock.model';
 import { StockService } from '../../services/stock.service';
 import { MyValidation } from '../../validator/validator';
+import { BoxstockService } from '../../services/boxstock.service';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class BoxstockFormComponent implements OnInit, OnDestroy {
 
   constructor(
     private getStockService: StockService,
+    private boxstockService: BoxstockService,
     public dialogRef: MatDialogRef<BoxstockFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {}
@@ -42,7 +44,7 @@ export class BoxstockFormComponent implements OnInit, OnDestroy {
     this.boxstockForm = new FormGroup({
       id: new FormControl(this.data?.boxstock?.id ? this.data?.boxstock.id : null),
       almacen: new FormControl(this.data?.boxstock?.almacen ? this.data?.boxstock.almacen.id : null, [Validators.required]),
-      nro: new FormControl(this.data?.boxstock?.nro ? this.data?.boxstock.nro : null, [Validators.required, (Validators.maxLength(20))]),
+      nro: new FormControl(this.data?.boxstock?.nro ? this.data?.boxstock.nro : null, [Validators.required, (Validators.maxLength(20))], MyValidation.validateFieldNumber(this.boxstockService)),
       cajero: new FormControl(this.data?.boxstock?.cajero ? this.data?.boxstock.cajero : null, [Validators.required, (Validators.maxLength(20)), (Validators.min(1)), MyValidation.isDecimal]),
     });
   }

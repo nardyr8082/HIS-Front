@@ -5,13 +5,14 @@
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Numero</mat-label>
       <input matInput formControlName="nro" maxlength="20"/>
-      <mat-error *ngIf="numberControl.errors?.required"> {{ 'El numero es' }} <strong>requerido</strong> </mat-error>
-      <mat-error *ngIf="numberControl.errors?.maxlength"> {{ 'El numero es' }} <strong>no puede tener más de 20 caracteres</strong> </mat-error>
+      <mat-error *ngIf="numberControl.errors?.required"> {{ 'El número es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="numberControl.errors?.maxlength"> {{ 'El número es' }} <strong>no puede tener más de 20 caracteres</strong> </mat-error>
+      <mat-error *ngIf="numberControl.errors?.notAvailable"> {{ 'El número ' }} <strong>ya existe</strong> </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Almacen</mat-label>
       <mat-select #mySelect formControlName="almacen">
-        <mat-option *ngFor="let st of stock" [value]="st.id">{{ st.nombre }}</mat-option>
+        <mat-option *ngFor="let st of stock" [value]="st.id">{{ st.id }}</mat-option>
       </mat-select>
       <mat-error *ngIf="stockControl.errors?.required"> {{ 'Seleccione un almacen' }} </mat-error>
     </mat-form-field>
