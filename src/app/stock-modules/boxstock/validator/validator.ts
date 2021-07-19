@@ -22,7 +22,7 @@ export class MyValidation{
   static isDecimal(control: AbstractControl){
     let value = control.value;
     if (value == null || value == ''){
-      return {isDecimal: true};
+      return {isDecimal: false};
     }
     else{
       if(value.length > 2){
@@ -56,7 +56,6 @@ export class MyValidation{
       return boxstockService.checkNumber(value)
       .pipe(
         map( response => {
-          console.log('mira mi response: ', response);
           return response.isNumberAvailable ? null : { notAvailable: true };
         })
       );
