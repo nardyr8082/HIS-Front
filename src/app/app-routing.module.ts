@@ -271,11 +271,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/product-family/product-family.module').then((m) => m.ProductFamilyModule),
         canActivate: [BackendGuard],
       },
-      {
-        path: 'patient',
-        loadChildren: () => import('./patient/patient.module').then((m) => m.PatientModule),
-        canActivate: [BackendGuard],
-      },
+      // {
+      //   path: 'patient',
+      //   loadChildren: () => import('./patient/patient.module').then((m) => m.PatientModule),
+      //   canActivate: [BackendGuard],
+      // },
     ],
   },
   {
