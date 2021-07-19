@@ -25,6 +25,13 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Pacientes',
+          iconName: ['supervisor_account'],
+          route: 'patient',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Entidades',
           iconName: ['domain'],
           material: true,
