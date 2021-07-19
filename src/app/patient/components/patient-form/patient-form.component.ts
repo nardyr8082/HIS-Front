@@ -130,7 +130,6 @@ export class PatientFormComponent implements OnInit {
             .getQRCode(formData)
             .pipe(
               map((response) => {
-                console.log('response', response);
                 this.patientFormGroupStep2.setControl('qr_code', new FormControl(response.qrCode));
               }),
             )
