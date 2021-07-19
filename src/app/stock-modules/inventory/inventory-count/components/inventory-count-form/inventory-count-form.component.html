@@ -1,0 +1,49 @@
+<div class="form">
+  <h4>{{ data.inventoryCount ? 'Editar Conteo de Inventario' : 'Crear Conteo de Inventario' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="inventoryCountForm" [formGroup]="inventoryCountForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Cantidad Real:</mat-label>
+      <input matInput formControlName="conteo_cant_real" />
+   </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Cantidad Máquina:</mat-label>
+      <input matInput formControlName="cantidad_maquina" />
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Imprte Máquina:</mat-label>
+      <input matInput formControlName="importe_maquina" />
+    </mat-form-field>
+  <!-- Inventario -->
+  <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Inventario"
+      [items]="inventario"
+      bindLabel="nombre"
+      bindValue="id"
+      formControlName="inventario">
+    </ng-select>
+  </div>
+   <!-- Existencia -->
+   <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Existencia"
+      [items]="existencia"
+      bindLabel="nombre"
+      bindValue="id"
+      formControlName="inventario">
+    </ng-select>
+  </div>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(inventoryCountForm.value)" [disabled]="!inventoryCountForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.inventoryCount ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>
