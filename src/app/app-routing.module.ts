@@ -252,6 +252,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'resource-self',
+        loadChildren: () => import('./resources-modules/aftselfresources/aftselfresources.module').then((m) => m.AftselfresourcesModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'resource-type',
         loadChildren: () => import('./resources-modules/type/type.module').then((m) => m.ResourceTypeModule),
         canActivate: [BackendGuard],
