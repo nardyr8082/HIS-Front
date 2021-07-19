@@ -544,8 +544,17 @@ export class NavigationService {
         {
           displayName: 'Inventario',
           iconName: ['swap_vertical_circle'],
-          route: '',
           material: true,
+          children: [
+            {
+              displayName: 'Diferencia',
+              iconName: ['swap_vertical_circle'],
+              route: 'warehouse-inventory-difference',
+              material: true,
+              display: true
+
+            }
+          ],
           display: true,
         },
         {

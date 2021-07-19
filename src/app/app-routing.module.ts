@@ -221,6 +221,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'warehouse-inventory-difference',
+        loadChildren: () => import('./stock-modules/warehouse-inventory-difference/warehouse-inventory-difference.module').then((m) => m.WarehouseInventoryDifferenceModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'stock-invetory-status',
         loadChildren: () => import('./stock-modules/classifiers/inventory-status/inventory-status.module').then((m) => m.InventoryStatusModule),
         canActivate: [BackendGuard],
