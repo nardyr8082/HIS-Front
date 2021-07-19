@@ -6,7 +6,6 @@ import { map } from 'rxjs/operators';
 import { ApiResponse } from '../../../../../core/models/api-response.model';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { InventoryCountService } from '../../services/inventory-count.service';
-import { Indicator } from 'src/app/indicator-module/indicator/models/indicator.model';
 
 @Component({
   selector: 'app-inventory-count-form',
@@ -14,19 +13,20 @@ import { Indicator } from 'src/app/indicator-module/indicator/models/indicator.m
   styleUrls: ['./inventory-count-form.component.scss'],
 })
 export class InventoryCountFormComponent implements OnInit, OnDestroy {
-  indicatores$: Observable<Indicator[]>;
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
   inventoryCountForm: FormGroup;
-  indicator: any = [];
+  existencia: any = [];
+  inventario: any = [];
   subscriptions: Subscription[] = [];
 
   constructor(public inventoryCountService: InventoryCountService, public dialogRef: MatDialogRef<InventoryCountFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.buildForm();
-    this.getIndicator();
+    this.getExistencia();
+    this.getInventario();
 
   }
 
@@ -34,12 +34,26 @@ export class InventoryCountFormComponent implements OnInit, OnDestroy {
     this.subscriptions;
   }
 
-  getIndicator() {
+  getExistencia() {
     const sub = this.inventoryCountService
-      .getIndicator()
+      .getExistencia()
       .pipe(
         map((response: ApiResponse<any>) => {
-          this.indicator = response.results;
+          this.existencia = response.results;
+          console.log(this.existencia);
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getInventario() {
+    const sub = this.inventoryCountService
+      .getInventario()
+      .pipe(
+        map((response: ApiResponse<any>) => {
+          this.inventario = response.results;
         }),
       )
       .subscribe();
@@ -49,12 +63,28 @@ export class InventoryCountFormComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.inventoryCountForm = new FormGroup({
-      conteo_cant_real: new FormControl(this.data.inventoryCount ? this.data.inventoryCount.conteo_cant_real : '',[ Validators.required,  Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$') ]),
+      conteo_cant_real: new FormControl(this.data.inventoryCount ? this.data.inventoryCount.conteo_cant_real : ''),
       cantidad_maquina: new FormControl(this.data.inventoryCount ? this.data.inventoryCount.cantidad_maquina : '', Validators.required),
       importe_maquina: new FormControl(this.data.inventoryCount ? this.data.inventoryCount.importe_maquina : '', Validators.required),
       inventario: new FormControl(this.data.inventoryCount ? this.data.inventoryCount.inventario_id : '', Validators.required),
       existencia: new FormControl(this.data.inventoryCount ? this.data.inventoryCount.existencia_id : '', Validators.required),
     });
+  }
+
+  get cantMaquinaControl() {
+    return this.inventoryCountForm?.get('cantidad_maquina') as FormControl;
+  }
+
+  get importMaquinaControl() {
+    return this.inventoryCountForm?.get('importe_maquina') as FormControl;
+  }
+
+  get inventarioControl() {
+    return this.inventoryCountForm?.get('inventario') as FormControl;
+  }
+
+  get existenciaControl() {
+    return this.inventoryCountForm?.get('existencia') as FormControl;
   }
 
   onSubmit(data) {

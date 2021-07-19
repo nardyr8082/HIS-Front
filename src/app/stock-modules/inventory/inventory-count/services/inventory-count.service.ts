@@ -5,15 +5,15 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../../../app/core/models/api-response.model';
 import { InventoryCount } from '../models/inventory-count.model';
-import { Indicator } from '../../indicator/models/indicator.model';
 //
 
 @Injectable({
   providedIn: 'root',
 })
 export class InventoryCountService {
-  private apiEndpoint = `${environment.apiUrl}ind_indicador_variable`;
-  private apiEndpointC = `${environment.apiUrl}ind_indicador`;
+  private apiEndpoint = `${environment.apiUrl}alm_inventario_conteo`;
+  private apiEndpointInv = `${environment.apiUrl}alm_inventario`;
+  private apiEndpointExi = `${environment.apiUrl}alm_existencia`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -36,8 +36,12 @@ export class InventoryCountService {
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
     return this.http.get<ApiResponse<InventoryCount>>(this.apiEndpoint + queryParams);
   }
-  getIndicator(): Observable<ApiResponse<Indicator>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointC);
+  getInventario(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointInv);
+  }
+
+  getExistencia(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointExi);
   }
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
     let queryParams = '';
@@ -73,15 +77,15 @@ export class InventoryCountService {
     return queryParams;
   }
 
-  createVariableIndicator(data: VariableIndicator): Observable<VariableIndicator> {
+  createInventoryCount(data: InventoryCount): Observable<InventoryCount> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editVariableIndicator(data: VariableIndicator): Observable<VariableIndicator> {
-    return this.http.patch<VariableIndicator>(`${this.apiEndpoint}/${data.id}/`, data);
+  editInventoryCount(data: InventoryCount): Observable<InventoryCount> {
+    return this.http.patch<InventoryCount>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteVariableIndicator(id: string): Observable<any> {
+  deleteInventoryCount(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 }

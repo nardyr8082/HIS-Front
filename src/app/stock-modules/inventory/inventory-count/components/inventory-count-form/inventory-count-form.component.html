@@ -9,10 +9,12 @@
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Cantidad Máquina:</mat-label>
       <input matInput formControlName="cantidad_maquina" />
+      <mat-error *ngIf="this.cantMaquinaControl.errors?.required"> {{ 'La cantidad en máquina es' }} <strong>requerido</strong>  </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Imprte Máquina:</mat-label>
+      <mat-label>Importe Máquina:</mat-label>
       <input matInput formControlName="importe_maquina" />
+      <mat-error *ngIf="this.importMaquinaControl.errors?.required"> {{ 'El importe en máquina es' }} <strong>requerido</strong>  </mat-error>
     </mat-form-field>
   <!-- Inventario -->
   <div class="mb-4">
@@ -21,10 +23,12 @@
       class="custom w-100"
       placeholder="Inventario"
       [items]="inventario"
-      bindLabel="nombre"
+      bindLabel="numero"
       bindValue="id"
       formControlName="inventario">
     </ng-select>
+    <small class="text-danger error-style" *ngIf="inventarioControl.errors?.required && inventarioControl.dirty">
+      El campo inventario es <strong>requerido</strong></small>
   </div>
    <!-- Existencia -->
    <div class="mb-4">
@@ -33,10 +37,12 @@
       class="custom w-100"
       placeholder="Existencia"
       [items]="existencia"
-      bindLabel="nombre"
+      bindLabel="cantidad"
       bindValue="id"
-      formControlName="inventario">
+      formControlName="existencia">
     </ng-select>
+    <small class="text-danger error-style" *ngIf="existenciaControl.errors?.required && existenciaControl.dirty">
+      El campo existencia es <strong>requerido</strong></small>
   </div>
   </form>
   <mat-divider class="my-4"></mat-divider>

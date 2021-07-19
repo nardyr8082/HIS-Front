@@ -10,4 +10,4 @@ import { InventoryCountFormComponent } from './components/inventory-count-form/i
   imports: [CommonModule, InventoryCountRoutingModule, SharedModule],
   entryComponents: [InventoryCountFormComponent],
 })
-export class InventoryModuleModule {}
+export class InventoryCountModule {}

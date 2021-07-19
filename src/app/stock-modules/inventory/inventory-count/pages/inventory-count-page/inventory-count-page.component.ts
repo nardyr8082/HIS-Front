@@ -48,9 +48,9 @@ export class InventoryCountPageComponent implements OnInit, OnDestroy {
     private inventoryCountService: InventoryCountService,
     private toastService: ToastrService,
     public dialog: MatDialog,
-    private indicatorService: IndicatorService,
   ) {
-    this.getIndicator();
+    this.getExistencia();
+    this.getInventario();
   }
 
   ngOnInit(): void {
@@ -61,12 +61,25 @@ export class InventoryCountPageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getIndicator(filters = {}) {
-    const sub = this.indicatorService
-      .getIndicator(filters, 'descripcion', 'asc', 1, 10000)
+  getExistencia(filters = {}) {
+    const sub = this.inventoryCountService
+      .getExistencia()
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[2].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.cantidad }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getInventario(filters = {}) {
+    const sub = this.inventoryCountService
+      .getInventario()
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[3].items = response.results.map((res) => ({ id: res.id, name: res.numero }));
         }),
       )
       .subscribe();
@@ -82,8 +95,10 @@ export class InventoryCountPageComponent implements OnInit, OnDestroy {
         map((response: ApiResponse<any>) => {
           this.inventoryCount = response.results.map((res) => ({
             ...res,
-            indicador_nombre: res.indicador.nombre,
-            indicador_id:res.indicador.id
+            inventario_num: res.inventario.numero,
+            inventario_id:res.inventario.id,
+            existencia_cantidad: res.existencia.cantidad,
+            existencia_id:res.existencia.id
           }));
           this.dataCount = response.count;
           this.loading = false;
@@ -189,13 +204,13 @@ export class InventoryCountPageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `¿Está seguro que desea eliminar el Conteo de Inventario: ${item.nombre}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar el Conteo de Inventario?`;
 
     const sub = modalComponentRef.accept
       .pipe(
         filter((accept) => accept),
         switchMap(() =>
-          this.indicatorService.deleteInventoryCount(item.id).pipe(
+          this.inventoryCountService.deleteInventoryCount(item.id).pipe(
             map(() => item),
             catchError(() => {
               this.toastService.error('Hubo un error al eliminar el Conteo de Inventario. Por favor, inténtelo de nuevo más tarde.', 'Error');

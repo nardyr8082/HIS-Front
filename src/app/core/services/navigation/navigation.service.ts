@@ -549,6 +549,13 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Conteo Inventario',
+          iconName: ['swap_vertical_circle'],
+          route: 'inventory-count',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Cambio Precio',
           iconName: ['swap_vertical_circle'],
           route: '',
