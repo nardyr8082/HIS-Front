@@ -1,0 +1,501 @@
+<div class="container">
+  <mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="patientFormGroupStep1">
+      <form *ngIf="patientFormGroupStep1" [formGroup]="patientFormGroupStep1">
+        <ng-template matStepLabel>Información Básica</ng-template>
+        <div class="my-3 d-flex justify-content-center align-items-center">
+          <h4>Información Básica</h4>
+        </div>
+        <div class="row">
+          <!-- Nombre -->
+          <div class="col-lg-6 col-md-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Nombre:</mat-label>
+              <input matInput formControlName="nombre" />
+              <mat-error *ngIf="nombreFormControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+              <mat-error *ngIf="nombreFormControl.errors?.pattern"> {{ 'El nombre solo permite letras y espacios' }} </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Apellidos -->
+          <div class="col-lg-6 col-md-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Apellidos:</mat-label>
+              <input matInput formControlName="apellidos" />
+              <mat-error *ngIf="apellidosFormControl.errors?.required"> {{ 'El apellido es' }} <strong>requerido</strong> </mat-error>
+              <mat-error *ngIf="apellidosFormControl.errors?.pattern"> {{ 'El apellido solo permite letras y espacios' }} </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Código de identificación -->
+          <div class="col-lg-6 col-md-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Código de identificación:</mat-label>
+              <input matInput formControlName="nro_identificacion" />
+              <mat-error *ngIf="nro_identificacionFormControl.errors?.required"> {{ 'El código de identificación es' }} <strong>requerido</strong> </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Correo -->
+          <div class="col-lg-6 col-md-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Correo:</mat-label>
+              <input type="email" matInput formControlName="email" />
+              <mat-error *ngIf="emailFormControl.errors?.required"> {{ 'El correo es' }} <strong>requerido</strong> </mat-error>
+              <mat-error *ngIf="emailFormControl.errors?.pattern"> {{ 'El formato de correo es' }} <strong>incorrecto</strong> </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- estado_civil -->
+          <div class="col-lg-6 col-md-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Estado Civil:</mat-label>
+              <mat-select #mySelect formControlName="estado_civil">
+                <mat-option *ngFor="let status of civilStatus" [value]="status.id">{{ status.descripcion }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="estado_civilFormControl.errors?.required">Seleccione un Estado Civil</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- raza -->
+          <div class="col-lg-6 col-md-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Raza:</mat-label>
+              <mat-select #mySelect formControlName="raza">
+                <mat-option *ngFor="let race of races" [value]="race.id">{{ race.descripcion }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="razaFormControl.errors?.required">Seleccione una Raza</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- sexo -->
+          <div class="col-lg-6 col-md-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Sexo:</mat-label>
+              <mat-select formControlName="sexo">
+                <mat-option *ngFor="let gender of genders" [value]="gender.id">{{ gender.descripcion }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="sexoFormControl.errors?.required">{{ 'Seleccione un sexo' }}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- ocupacion -->
+          <div class="col-lg-6 col-md-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Ocupación:</mat-label>
+              <input matInput formControlName="ocupacion" />
+              <mat-error *ngIf="ocupacionFormControl.errors?.required"> {{ 'La Ocupación es' }} <strong>requerida</strong> </mat-error>
+              <mat-error *ngIf="ocupacionFormControl.errors?.pattern"> {{ 'La Ocupación solo permite letras y espacios' }} </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- tipo_doc -->
+          <div class="col-lg-6 col-md-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Tipo de Documento:</mat-label>
+              <mat-select formControlName="tipo_doc">
+                <mat-option *ngFor="let doc of docTypes" [value]="doc.id">{{ doc.descripcion }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="tipo_docFormControl.errors?.required">Seleccione un Documento</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- grupo_sanguineo -->
+          <div class="col-lg-6 col-md-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Grupo Sanguineo:</mat-label>
+              <mat-select formControlName="grupo_sanguineo">
+                <mat-option *ngFor="let doc of bloodTypes" [value]="doc.id">{{ doc.descripcion }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="grupo_sanguineoFormControl.errors?.required">Seleccione un Grupo sanguineo</mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Fecha de Nacimiento -->
+          <div class="col-lg-6 col-md-12">
+            <mat-form-field class="w-100" appearance="outline">
+              <mat-label>Fecha de Nacimiento</mat-label>
+              <input matInput formControlName="fecha_nacimiento" [min]="minDate" [max]="maxDate" [matDatepicker]="picker" />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-error *ngIf="fecha_nacimientoFormControl.errors?.required"> {{ 'La fecha de nacimiento es ' }} <strong>requerida</strong> </mat-error>
+              <mat-error *ngIf="fecha_nacimientoFormControl.errors?.matDatepickerMax">
+                {{ 'La fecha debe ser inferior(Mayores de 18 años)' }}
+              </mat-error>
+              <mat-error *ngIf="fecha_nacimientoFormControl.errors?.matDatepickerMin">
+                {{ 'La fecha debe ser superior(Menores de 130 años)' }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button color="primary" mat-raised-button matStepperNext>Siguiente</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="patientFormGroupStep2" label="Informácion personal y de contacto">
+      <form *ngIf="patientFormGroupStep2" [formGroup]="patientFormGroupStep2">
+        <ng-template matStepLabel>Informácion personal y de contacto</ng-template>
+        <div class="my-3 d-flex justify-content-center align-items-center">
+          <h4>Informácion personal y de contacto</h4>
+        </div>
+        <div class="row">
+          <div class="d-flex justify-content-center my-3">
+            <div fxLayout="column" fxLayoutAlign="start start" fxLayoutAlign.lt-sm="start stretch" class="mb-2">
+              <div
+                *ngIf="loadImage"
+                class="avatar-profile mat-elevation-z4"
+                fxFlex="row"
+                fxLayoutAlign="center center"
+                style="background-size: cover; background-position: center center; flex: none"
+                [style.background-image]="this.utilsService.getSafeImage(imageAvatar)"
+              >
+                <button id="photoCameraBtn" mat-icon-button (click)="openFileBrowser($event)">
+                  <mat-icon style="color: white" aria-label="Example icon-button with a heart icon"> photo_camera </mat-icon>
+                </button>
+              </div>
+              <div *ngIf="!loadImage" class="avatar-profile" fxFlex="row" fxLayoutAlign="center center">
+                <img *ngIf="patient?.foto" class="user-avatar" [src]="patient.foto" />
+                <mat-icon *ngIf="!patient?.foto" class="avatar-icon">person_outline</mat-icon>
+
+                <button id="photoCameraBtn" style="position: absolute" mat-icon-button (click)="openFileBrowser($event)">
+                  <mat-icon style="color: white" aria-label="Example icon-button with a heart icon"> photo_camera </mat-icon>
+                </button>
+              </div>
+              <mat-error *ngIf="showErrorImage"> La imagen sobrepasa los <strong>500 Kb</strong> </mat-error>
+              <input type="file" class="hide-style" id="filePicker" (change)="handleFileSelect($event)" />
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-3">
+          <h5>Dirección y Contacto</h5>
+          <div class="row" *ngIf="patientFormGroupStep2" [formGroup]="patientFormGroupStep2">
+            <!-- nacionalidad -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Nacionalidad:</mat-label>
+                <mat-select formControlName="nacionalidad">
+                  <mat-option *ngFor="let nationality of nationalities" [value]="nationality.id">{{ nationality.descripcion }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="nacionalidadFormControl.errors?.required"> {{ 'La nacionalidad es ' }} <strong>requerida</strong> </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- municipio -->
+            <div class="col-lg-6 col-md-12">
+              <ng-select
+                appearance="outline"
+                class="custom w-100"
+                placeholder="Distrito:"
+                [items]="municipalities"
+                bindLabel="nombre"
+                bindValue="id"
+                formControlName="municipio"
+                name="municipio"
+                required
+              >
+              </ng-select>
+              <small
+                class="text-danger error-style"
+                *ngIf="municipioFormControl.errors?.required && (municipioFormControl.touched || municipioFormControl.pristine)"
+              >
+                El distrito es <strong>requerido</strong></small
+              >
+            </div>
+
+            <!-- direccion -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Dirección:</mat-label>
+                <input matInput formControlName="direccion" />
+                <mat-error *ngIf="direccionFormControl.errors?.required"> {{ 'La dirección es' }} <strong>requerida</strong> </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- numero -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Número:</mat-label>
+                <input matInput formControlName="numero" />
+                <mat-error *ngIf="numeroFormControl.errors?.required"> {{ 'El número es' }} <strong>requerido</strong> </mat-error>
+                <mat-error *ngIf="numeroFormControl.errors?.pattern"> {{ 'El número solo permite' }} <strong>dígitos</strong> </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- cod_postal -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Código Postal:</mat-label>
+                <input matInput formControlName="cod_postal" />
+                <mat-error *ngIf="cod_postalFormControl.errors?.required"> {{ 'El Código Postal es ' }} <strong>requerido</strong> </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- nombre_madre -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Nombre Madre:</mat-label>
+                <input matInput formControlName="nombre_madre" />
+                <mat-error *ngIf="nombre_madreFormControl.errors?.required"> {{ 'El nombre de la Madre es' }} <strong>requerido</strong> </mat-error>
+                <mat-error *ngIf="nombre_madreFormControl.errors?.pattern"> {{ 'El nombre de la Madre solo permite letras y espacios' }} </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- nombre_padre -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Nombre del Padre:</mat-label>
+                <input matInput formControlName="nombre_padre" />
+                <mat-error *ngIf="nombre_padreFormControl.errors?.required"> {{ 'El nombre del Padre es' }} <strong>requerido</strong> </mat-error>
+                <mat-error *ngIf="nombre_padreFormControl.errors?.pattern"> {{ 'El nombre del Padre solo permite letras y espacios' }} </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- contacto_emergencia -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Contacto de emergencia:</mat-label>
+                <input matInput formControlName="contacto_emergencia" />
+                <mat-error *ngIf="contacto_emergenciaFormControl.errors?.required">
+                  {{ 'El Contacto de emergencia es ' }} <strong>requerido</strong>
+                </mat-error>
+                <mat-error *ngIf="contacto_emergenciaFormControl.errors?.pattern">
+                  {{ 'El Contacto de emergencia solo permite letras y espacio ' }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- telefono_emergencia -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Teléfono de Emergencia:</mat-label>
+                <input matInput formControlName="telefono_emergencia" matTooltip="+(240)###-######" />
+                <mat-error *ngIf="telefono_emergenciaFormControl.errors?.required">
+                  {{ 'El Teléfono de Emergencia es ' }} <strong>requerido</strong>
+                </mat-error>
+                <mat-error *ngIf="telefono_emergenciaFormControl.errors?.pattern">
+                  {{ 'El formato del teléfono de emergencia es ' }} <strong>incorrecto "+(240)###-######"</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- telefono_casa -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Teléfono de casa:</mat-label>
+                <input matInput formControlName="telefono_casa" matTooltip="+(240)###-######" />
+                <mat-error *ngIf="telefono_casaFormControl.errors?.required"> {{ 'El Teléfono de casa es ' }} <strong>requerido</strong> </mat-error>
+                <mat-error *ngIf="telefono_casaFormControl.errors?.pattern">
+                  {{ 'El formato del teléfono de casa es ' }} <strong>incorrecto "+(240)###-######"</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <!-- telefono_trabajo -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Teléfono del Trabajo:</mat-label>
+                <input matInput formControlName="telefono_trabajo" matTooltip="+(240)###-######" />
+                <mat-error *ngIf="telefono_trabajoFormControl.errors?.required"> {{ 'El Teléfono del trabajo es' }} <strong>requerido</strong> </mat-error>
+                <mat-error *ngIf="telefono_trabajoFormControl.errors?.pattern">
+                  {{ 'El formato del teléfono del trabajo es' }} <strong>incorrecto "+(240)###-######"</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- telefono_movil -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Teléfono móvil:</mat-label>
+                <input matInput formControlName="telefono_movil" matTooltip="+(240)###-######" />
+                <mat-error *ngIf="telefono_movilFormControl.errors?.required"> {{ 'El Teléfono móvil es' }} <strong>requerido</strong> </mat-error>
+                <mat-error *ngIf="telefono_movilFormControl.errors?.pattern">
+                  {{ 'El formato del teléfono móvil es' }} <strong>incorrecto "+(240)###-######"</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- seg_social -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Seguridad Social:</mat-label>
+                <input matInput formControlName="seg_social" />
+                <mat-error *ngIf="seg_socialFormControl.errors?.required"> {{ 'La seguridad social es ' }} <strong>requerida</strong> </mat-error>
+                <mat-error *ngIf="seg_socialFormControl.errors?.pattern">
+                  {{ 'La seguridad social solo permite letras y espacio ' }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- nota_factura -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Nota de Factura:</mat-label>
+                <input matInput formControlName="nota_factura" />
+                <mat-error *ngIf="nota_facturaFormControl.errors?.required"> {{ 'La Nota de Factura es ' }} <strong>requerida</strong> </mat-error>
+                <mat-error *ngIf="nota_facturaFormControl.errors?.pattern">
+                  {{ 'La Nota de Factura solo permite letras y espacio ' }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- fecha_defuncion -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Fecha de Defunción</mat-label>
+                <input matInput formControlName="fecha_defuncion" [matDatepicker]="picker1" />
+                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+                <mat-error *ngIf="fecha_defuncionFormControl.errors?.required"> {{ 'La Fecha de Defunción es ' }} <strong>requerida</strong> </mat-error>
+              </mat-form-field>
+            </div>
+
+            <!-- motivo_defuncion -->
+            <div class="col-lg-6 col-md-12">
+              <mat-form-field class="w-100" appearance="outline">
+                <mat-label>Motivo de Defunción:</mat-label>
+                <input matInput formControlName="motivo_defuncion" />
+                <mat-error *ngIf="motivo_defuncionFormControl.errors?.required"> {{ 'El Motivo de Defunción es ' }} <strong>requerido</strong> </mat-error>
+                <mat-error *ngIf="motivo_defuncionFormControl.errors?.pattern">
+                  {{ 'El Motivo de Defunción solo permite letras y espacio ' }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <div class="d-flex justify-content-between">
+                <button color="primary" mat-raised-button matStepperPrevious>Atrás</button>
+                <button color="primary" mat-raised-button matStepperNext>Siguiente</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Confirmación</ng-template>
+      <div class="my-3 d-flex justify-content-center align-items-center">
+        <h4>Confirme los datos del paciente</h4>
+      </div>
+      <div *ngIf="patientFormGroupStep1 && patientFormGroupStep2" class="row">
+        <div class="col-lg-6 col-md-12">
+          <h5>Información Básica</h5>
+          <div class="card p-3">
+            <p class="my-2">
+              Nombre: <b>{{ nombreFormControl.value }}</b>
+            </p>
+            <p class="my-2">
+              Apellidos: <b>{{ apellidosFormControl.value }}</b>
+            </p>
+            <p class="my-2">
+              Correo: <b>{{ emailFormControl.value }}</b>
+            </p>
+            <p class="my-2">
+              Número de Identificación: <b>{{ nro_identificacionFormControl.value }}</b>
+            </p>
+            <p class="my-2">
+              EstadoCivil: <b>{{ getItemValue(estado_civilFormControl.value, civilStatus)?.descripcion }}</b>
+            </p>
+            <p class="my-2">
+              Raza: <b>{{ getItemValue(razaFormControl.value, races)?.descripcion }}</b>
+            </p>
+            <p class="my-2">
+              Sexo: <b>{{ getItemValue(sexoFormControl.value, genders)?.descripcion }}</b>
+            </p>
+
+            <p class="my-2">
+              Fecha de Nacimiento: <b>{{ fecha_nacimientoFormControl.value | date: 'dd/MM/yyyy' }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="grupo_sanguineoFormControl.value">
+              Grupo Sanguíneo: <b>{{ getItemValue(grupo_sanguineoFormControl.value, bloodTypes)?.descripcion }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="tipo_docFormControl.value">
+              Tipo de Documento: <b>{{ getItemValue(tipo_docFormControl.value, docTypes)?.descripcion }}</b>
+            </p>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-md-12">
+          <h5>Información Personal y de contacto</h5>
+          <div class="card p-3">
+            <p class="my-2" *ngIf="nacionalidadFormControl.value">
+              Nacionalidad: <b>{{ getItemValue(nacionalidadFormControl.value, nationalities)?.descripcion }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="direccionFormControl.value">
+              Dirección: <b>{{ direccionFormControl.value }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="numeroFormControl.value">
+              Número: <b>{{ numeroFormControl.value }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="cod_postalFormControl.value">
+              Código Postal: <b>{{ cod_postalFormControl.value }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="nombre_madreFormControl.value">
+              Nombre de la madre: <b>{{ nombre_madreFormControl.value }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="nombre_padreFormControl.value">
+              Nombre del Padre: <b>{{ nombre_padreFormControl.value }}</b>
+            </p>
+            <p class="my-2" *ngIf="contacto_emergenciaFormControl.value">
+              Contacto de emergencia: <b>{{ contacto_emergenciaFormControl.value }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="telefono_emergenciaFormControl.value">
+              Télefono de emergencia: <b>{{ telefono_emergenciaFormControl.value }}</b>
+            </p>
+            <p class="my-2" *ngIf="telefono_casaFormControl.value">
+              Télefono de la Casa: <b>{{ telefono_casaFormControl.value }}</b>
+            </p>
+            <p class="my-2" *ngIf="telefono_trabajoFormControl.value">
+              Télefono del Trabajo: <b>{{ telefono_trabajoFormControl.value }}</b>
+            </p>
+            <p class="my-2" *ngIf="telefono_movilFormControl.value">
+              Télefono Móvil: <b>{{ telefono_movilFormControl.value }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="seg_socialFormControl.value">
+              Seguridad Social: <b>{{ seg_socialFormControl.value }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="nota_facturaFormControl.value">
+              Nota de Factura: <b>{{ nota_facturaFormControl.value }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="fecha_defuncionFormControl.value">
+              Fecha de Defunción: <b>{{ fecha_defuncionFormControl.value | date: 'dd/MM/yyyy' }}</b>
+            </p>
+
+            <p class="my-2" *ngIf="motivo_defuncionFormControl.value">
+              Motivo de Defunción: <b>{{ motivo_defuncionFormControl.value }}</b>
+            </p>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end" *ngIf="qr_codeFormControl?.value">
+          <img class="qr-image" [src]="apiUrl + qr_codeFormControl?.value" [alt]="apiUrl + qr_codeFormControl?.value" />
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-between mt-3">
+        <button color="primary" mat-raised-button matStepperPrevious>Atras</button>
+        <button
+          *ngIf="patientFormGroupStep1 && patientFormGroupStep2"
+          color="primary"
+          mat-raised-button
+          mat-button
+          [disabled]="!patientFormGroupStep1.valid || !patientFormGroupStep2.valid"
+          (click)="sendData()"
+        >
+          {{ patient ? 'Aceptar' : 'Crear' }}
+        </button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

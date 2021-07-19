@@ -1,0 +1,54 @@
+@import '../../../../assets/scss/theme/variables';
+
+.hide-style {
+  display: none;
+}
+
+.avatar-profile {
+  position: relative;
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  flex: none !important;
+  background-color: #eee;
+  color: #ccecfc;
+  border: 3px solid $theme-main !important;
+
+  .avatar-icon {
+    font-size: 100px;
+    height: 100px;
+    width: 100px;
+  }
+
+  #photoCameraBtn {
+    opacity: 0;
+
+    mat-icon {
+      font-size: 30px;
+      height: 30px;
+      width: 30px;
+    }
+  }
+
+  &:hover {
+    #photoCameraBtn {
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+  }
+
+  button {
+    position: absolute;
+  }
+}
+
+.qr-image {
+  width: 150px;
+  height: auto;
+}
+
+.user-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
