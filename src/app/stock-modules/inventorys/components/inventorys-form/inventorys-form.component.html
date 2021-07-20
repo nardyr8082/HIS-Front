@@ -1,0 +1,70 @@
+<div class="form">
+  <h4>{{ data.inventorys ? 'Editar Inventario' : 'Crear Inventario' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="inventorysForm" [formGroup]="inventorysForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Numero:</mat-label>
+      <input matInput formControlName="numero" />
+      <mat-error *ngIf="numberControl.errors?.required"> {{ 'La numero es' }} <strong>requerido</strong>  </mat-error>
+   </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Fecha Inicio:</mat-label>
+      <input matInput formControlName="fecha_inicio" />
+      <mat-error *ngIf="datestartControl.errors?.required"> {{ 'La fecha de inicio es' }} <strong>requerido</strong>  </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Fecha Fin:</mat-label>
+      <input matInput formControlName="fecha_fin" />
+      <mat-error *ngIf="dateendControl.errors?.required"> {{ 'La fecha de fin es' }} <strong>requerido</strong>  </mat-error>
+    </mat-form-field>
+  <!-- user -->
+  <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Usuario"
+      [items]="usuario"
+      bindLabel="username"
+      bindValue="id"
+      formControlName="usuario">
+    </ng-select>
+    <small class="text-danger error-style" *ngIf="userControl.errors?.required && userControl.dirty">
+      El campo usuario es <strong>requerido</strong></small>
+  </div>
+   <!-- Almacen -->
+   <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Almacen"
+      [items]="almacen"
+      bindLabel="nombre"
+      bindValue="id"
+      formControlName="almacen">
+    </ng-select>
+    <small class="text-danger error-style" *ngIf="stockControl.errors?.required && stockControl.dirty">
+      El campo almacen es <strong>requerido</strong></small>
+  </div>
+    <!-- Estado -->
+    <div class="mb-4">
+      <ng-select
+        appearance="outline"
+        class="custom w-100"
+        placeholder="Estado"
+        [items]="estado"
+        bindLabel="descripcion"
+        bindValue="id"
+        formControlName="estado">
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="statusControl.errors?.required && statusControl.dirty">
+        El campo estado es <strong>requerido</strong></small>
+    </div>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(inventorysForm.value)" [disabled]="!inventorysForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.inventorys ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

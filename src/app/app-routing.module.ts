@@ -176,6 +176,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'stock-inventory',
+        loadChildren: () => import('./stock-modules/inventorys/inventorys.module').then((m) => m.InventorysModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'attribute',
         loadChildren: () => import('./stock-modules/classifiers/attribute/attribute.module').then((m) => m.AttributeModule),
         canActivate: [BackendGuard],

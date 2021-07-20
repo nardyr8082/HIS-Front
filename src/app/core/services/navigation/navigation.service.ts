@@ -560,6 +560,14 @@ export class NavigationService {
               material: true,
               display: true
 
+            },
+            {
+              displayName: 'Inventario',
+              iconName: ['swap_vertical_circle'],
+              route: 'stock-inventory',
+              material: true,
+              display: true
+
             }
           ],
           display: true,
