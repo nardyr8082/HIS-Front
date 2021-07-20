@@ -1,7 +1,7 @@
 import { TableConfiguration } from '../../../shared/models/table-configuration.model';
 import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model';
 
-export const WAREHOUSELOT_TABLE_CONFIGURATION: TableConfiguration = {
+export const WAREHOUSE_PRODUCT_TABLE_CONFIGURATION: TableConfiguration = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
   displayedColumns: ['codigo', 'descripcion', 'activo', 'unidad_medida', 'familia', 'impuesto', 'programa'],
   columnsName: ['Codigo', 'Descripcion', 'Activo', 'Unidad medida', 'Familia', 'Impuesto', 'Programa'],

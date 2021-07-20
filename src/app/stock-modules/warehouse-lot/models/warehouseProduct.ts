@@ -1,4 +1,4 @@
-export interface warehouseLot {
+export interface warehouseProduct {
   id?: string;
   codigo?: number;
   descripcion?: string;
