@@ -535,6 +535,13 @@ export class NavigationService {
       material: true,
       children: [
         {
+          displayName: 'Existencia',
+          iconName: ['swap_vertical_circle'],
+          route: 'existence',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Caja',
           iconName: ['swap_vertical_circle'],
           route: 'stock-box',
@@ -544,11 +551,20 @@ export class NavigationService {
         {
           displayName: 'Inventario',
           iconName: ['swap_vertical_circle'],
-          route: '',
           material: true,
+          children: [
+            {
+              displayName: 'Diferencia',
+              iconName: ['swap_vertical_circle'],
+              route: 'warehouse-inventory-difference',
+              material: true,
+              display: true
+
+            }
+          ],
           display: true,
         },
-        {
+	{
           displayName: 'Conteo Inventario',
           iconName: ['swap_vertical_circle'],
           route: 'inventory-count',

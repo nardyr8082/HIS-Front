@@ -1,0 +1,43 @@
+import { TableConfiguration } from '../../../../../src/app/shared/models/table-configuration.model';
+import { DEFAULT_PAGINATION_SIZE } from '../../../../app/core/models/api-response.model';
+
+export const EXISTENCE_TABLE_CONFIGURATION: TableConfiguration = {
+  paginationSize: DEFAULT_PAGINATION_SIZE,
+  displayedColumns: ['cantidad', 'importe', 'almacen', 'unidad_medida', 'categoria'],
+  columnsName: ['Cantidad', 'Importe', 'Almacen', 'Unidad medida', 'Categoria'],
+
+  tableFilters: [
+
+    {
+      name: 'cantidad',
+      title: 'Cantidad',
+      type: 'number',
+
+    },
+    {
+      name: 'importe',
+      title: 'Importe',
+      type: 'number',
+
+    },
+    {
+      name: 'almacen',
+      type: 'select',
+      title: 'Almacen',
+      items: [],
+    },
+    {
+      name: 'unidad_medida',
+      title: 'Unidad medida',
+      type: 'select',
+      items: []
+    },
+    {
+      name: 'categoria',
+      title: 'Categoria',
+      type: 'select',
+      items: []
+    }
+
+  ]
+};
