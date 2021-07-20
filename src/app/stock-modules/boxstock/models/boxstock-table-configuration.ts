@@ -17,7 +17,8 @@ export const Boxstock_TABLE_CONFIGURATION = {
     },
     {
       name: 'almacen',
-      type: 'text',
+      type: 'select',
+      items: [],
       title: 'Almacen',
     }
   ],

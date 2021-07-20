@@ -11,6 +11,7 @@ import { Boxstock, Stock } from '../../models/boxstock.model';
 import { Boxstock_TABLE_CONFIGURATION } from '../../models/boxstock-table-configuration';
 import { BoxstockService } from '../../services/boxstock.service';
 import { BoxstockFormComponent } from '../../components/boxstock-form/boxstock-form.component';
+import { StockService } from '../../services/stock.service';
 
 @Component({
   selector: 'app-boxstock-page',
@@ -44,7 +45,9 @@ export class BoxstockPageComponent implements OnInit {
     },
   ];
 
-  constructor(private boxstockService: BoxstockService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(private stockService: StockService, private boxstockService: BoxstockService, private toastService: ToastrService, public dialog: MatDialog) {
+    this.putStock();
+  }
 
   ngOnInit(): void {
     this.getBoxstock();
@@ -52,6 +55,18 @@ export class BoxstockPageComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
+  }
+  putStock(filters = {}) {
+    const sub = this.stockService
+      .getStock(filters, 'descripcion', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[2].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
   }
   getBoxstock(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
@@ -77,7 +92,7 @@ export class BoxstockPageComponent implements OnInit {
     this.subscriptions.push(sub);
   }
   getBoxstockString(stock: Stock) {
-    return stock.id;
+    return stock.nombre;
   }
   onChangePage(page: PageEvent) {
     this.page = page.pageIndex + 1;
