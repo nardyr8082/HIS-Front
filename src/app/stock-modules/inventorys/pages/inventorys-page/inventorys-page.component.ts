@@ -198,7 +198,7 @@ export class InventorysPageComponent implements OnInit, OnDestroy {
         switchMap((inventorys: Inventorys) =>
           this.inventorysService.editInventorys({ ...inventorys, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el conteo de inventario. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar el Inventario. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {

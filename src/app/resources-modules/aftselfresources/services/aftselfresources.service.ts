@@ -13,6 +13,10 @@ import { Aftselfresources } from '../models/aftselfresources.model';
 })
 export class AftselfresourcesService {
   private apiEndpoint = `${environment.apiUrl}aft_recurso_propio`;
+  private apiEndpointStatus = `${environment.apiUrl}aft_estado_recurso`;
+  private apiEndpointOffice = `${environment.apiUrl}departamento`;
+  private apiEndpointPatient = `${environment.apiUrl}paciente`;
+  private apiEndpointCla = `${environment.apiUrl}aft_clasificador_recurso`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -35,7 +39,18 @@ export class AftselfresourcesService {
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
     return this.http.get<ApiResponse<Aftselfresources>>(this.apiEndpoint + queryParams);
   }
-
+  getStatus(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointStatus);
+  }
+  getClassificator(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointCla);
+  }
+  getOffice(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointOffice);
+  }
+  getPatient(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointPatient);
+  }
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
     let queryParams = '';
 

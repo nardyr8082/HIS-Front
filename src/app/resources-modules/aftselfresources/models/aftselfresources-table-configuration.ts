@@ -1,9 +1,8 @@
 import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model';
-
 export const Aftselfresources_TABLE_CONFIGURATION = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['nro_inventario', 'activo', 'id_estado_string', 'id_recurso_string', 'id_departamento_string', 'paciente_string'],
-  columnsName: ['Número Inventario', 'Activo', 'Estado', 'Recurso', 'Departamento', 'Paciente'],
+  displayedColumns: ['nro_inventario', 'activo', 'id_recurso_nombre', 'id_departamento_nombre', 'paciente_nombre', 'id_estado_descripcion'],
+  columnsName: ['Número Inventario', 'Activo', 'Recurso', 'Departamento', 'Paciente', 'Estado'],
   tableFilters: [
     {
       name: 'nro_inventario',
@@ -14,12 +13,6 @@ export const Aftselfresources_TABLE_CONFIGURATION = {
       name: 'activo',
       type: 'text',
       title: 'Activo',
-    },
-    {
-      name: 'id_estado',
-      type: 'select',
-      items: [],
-      title: 'Estado',
     },
     {
       name: 'id_recurso',
@@ -38,6 +31,12 @@ export const Aftselfresources_TABLE_CONFIGURATION = {
       type: 'select',
       items: [],
       title: 'Paciente',
+    },
+    {
+      name: 'id_estado',
+      type: 'select',
+      items: [],
+      title: 'Estado',
     }
   ],
 };
