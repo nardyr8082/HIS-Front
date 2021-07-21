@@ -40,6 +40,16 @@
                 categoria es <strong>requerido</strong></small>
         </div>
 
+        <!-- Lote -->
+        <div class="mb-4">
+            <ng-select appearance="outline" class="custom w-100" placeholder="Lote" [items]="lote"
+                bindLabel="descripcion" bindValue="id" formControlName="lote">
+            </ng-select>
+            <small class="text-danger error-style" *ngIf="loteControl.errors?.required">El
+                Lote es <strong>requerido</strong></small>
+        </div>
+
+
     </form>
     <mat-divider class="my-4"></mat-divider>
     <div class="d-flex align-items-center justify-content-end">

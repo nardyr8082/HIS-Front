@@ -1,21 +1,14 @@
-import { Office } from '../../../structure-modules/office/models/office.model';
-import { ResourceStatus } from '../../status/models/resource-status.model';
-import { Clasificator } from '../../classificator/models/clasificator.model';
 import { Race } from '../../../nomenclator-modules/race/models/race.model';
 import { CivilStatus } from '../../../nomenclator-modules/civil-status/models/civil-status.model';
 
 export interface Aftselfresources {
   id?: string;
   nro_inventario?: string;
-  activo?: boolean;
-  id_estado?: ResourceStatus;
-  id_recurso?: Clasificator;
-  id_departamento?: Office;
-  paciente?: Patient;
-  id_estado_string?: string;
-  id_recurso_string?: string;
-  id_departamento_string?: string;
-  paciente_string?: string;
+  activo?: string;
+  id_estado?: number;
+  id_recurso?: number;
+  id_departamento?: number;
+  paciente?: number;
 }
 
 export interface Patient {

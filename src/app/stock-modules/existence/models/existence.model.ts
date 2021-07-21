@@ -5,6 +5,7 @@ export interface Existence {
   almacen?: string;
   unidad_medida?: string;
   categoria?: string;
+  lote?: string;
 
 
 }

@@ -1,11 +1,11 @@
 <div class="container mt-3">
   <div class="d-flex justify-content-between align-items-center">
-    <h4>Recurso Propio</h4>
-    <button (click)="createAftselfresources()" mat-raised-button color="primary" class="button">Crear Recurso Propio</button>
+    <h4>Inventario</h4>
+    <button (click)="createInventorys()" mat-raised-button color="primary" class="button">Crear Inventario</button>
   </div>
   <app-custom-table
-    *ngIf="aftselfresources"
-    [data]="aftselfresources"
+    *ngIf="inventorys"
+    [data]="inventorys"
     [dataCount]="dataCount"
     [displayedColumns]="configuration.displayedColumns"
     [columnsName]="configuration.columnsName"

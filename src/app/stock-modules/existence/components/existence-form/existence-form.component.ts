@@ -10,6 +10,7 @@ import { ProductCategory } from 'src/app/stock-modules/classifiers/product-categ
 import { ProductCategoryService } from 'src/app/stock-modules/classifiers/product-category/services/product-category.service';
 import { MeasureService } from 'src/app/stock-modules/classifiers/measure/services/measure.service';
 import { StockService } from 'src/app/stock-modules/boxstock/services/stock.service';
+import { WarehouseLotService } from 'src/app/stock-modules/warehouse-lot/services/warehouse-lot.service';
 @Component({
   selector: 'app-existence-form',
   templateUrl: './existence-form.component.html',
@@ -22,6 +23,7 @@ export class ExistenceFormComponent implements OnInit {
   productCategory: any = [];
   almacenes: any = [];
   unidad_medida: any = [];
+  lote: any = [];
 
   existenceForm: FormGroup;
 
@@ -31,6 +33,7 @@ export class ExistenceFormComponent implements OnInit {
     private productCategoryService: ProductCategoryService,
     private measureService: MeasureService,
     private stockService: StockService,
+    private warehouseLotService: WarehouseLotService,
 
     public dialogRef: MatDialogRef<ExistenceFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -40,6 +43,7 @@ export class ExistenceFormComponent implements OnInit {
     this.getProductCategory();
     this.getMeasure();
     this.getStocks();
+    this.getWarehouseLot();
   }
   ngOnDestroy() {
     this.subscriptions;
@@ -52,7 +56,7 @@ export class ExistenceFormComponent implements OnInit {
       .pipe(
         map((response: ApiResponse<any>) => {
           this.productCategory = response.results;
-          console.log(this.productCategory);
+
         }),
       )
       .subscribe();
@@ -66,7 +70,7 @@ export class ExistenceFormComponent implements OnInit {
       .pipe(
         map((response: ApiResponse<any>) => {
           this.unidad_medida = response.results;
-          console.log(this.unidad_medida);
+
         }),
       )
       .subscribe();
@@ -79,12 +83,25 @@ export class ExistenceFormComponent implements OnInit {
       .pipe(
         map((response: ApiResponse<any>) => {
           this.almacenes = response.results;
-          console.log(this.almacenes);
+
         }),
       )
       .subscribe();
     this.subscriptions.push(sub);
   }
+
+  getWarehouseLot() {
+    const sub = this.warehouseLotService
+      .getWarehouseLot({}, 'id', 'asc', 1, 1000)
+      .pipe(
+        map((response: ApiResponse<any>) => {
+          this.lote = response.results;
+
+        }),
+      )
+      .subscribe();
+    this.subscriptions.push(sub);
+  };
 
   buildForm() {
     this.existenceForm = new FormGroup({
@@ -93,6 +110,7 @@ export class ExistenceFormComponent implements OnInit {
       almacen: new FormControl(this.data.existence ? this.data.existence.almacen : '', Validators.required),
       unidad_medida: new FormControl(this.data.existence ? this.data.existence.unidad_medida : '', Validators.required),
       categoria: new FormControl(this.data.existence ? this.data.existence.categoria : '', Validators.required),
+      lote: new FormControl(this.data.existence ? this.data.existence.lote : '', Validators.required)
 
     });
   }
@@ -113,6 +131,9 @@ export class ExistenceFormComponent implements OnInit {
   }
   get categoriaControl() {
     return this.existenceForm?.get('categoria') as FormControl;
+  }
+  get loteControl() {
+    return this.existenceForm?.get('lote') as FormControl;
   }
 
   onSubmit(data) {

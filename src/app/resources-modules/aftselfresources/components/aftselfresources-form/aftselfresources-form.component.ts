@@ -1,18 +1,10 @@
-import { ResourceTypeService } from './../../../type/services/type.service';
-import { ResourceType } from './../../../type/models/type';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Inject, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ResourceStatus } from '../../../status/models/resource-status.model';
-import { Clasificator } from '../../../classificator/models/clasificator.model';
-import { Office } from '../../../../structure-modules/office/models/office.model';
-import { Patient } from '../../models/aftselfresources.model';
-import { ResourceStatusService } from '../../../status/services/resource-status.service';
-import { ClasificatorService } from '../../../classificator/services/clasificator.service';
-import { OfficeService } from '../../../../structure-modules/office/services/office.service';
-import { PatientService } from '../../services/patient.service';
+import { ApiResponse } from '../../../../core/models/api-response.model';
+import { AftselfresourcesService } from '../../services/aftselfresources.service';
 
 @Component({
   selector: 'app-aftselfresources-form',
@@ -23,79 +15,110 @@ export class AftselfresourcesFormComponent implements OnInit, OnDestroy {
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
-  resourceTypes: ResourceType[];
-  status: ResourceStatus[];
-  clasificator: Clasificator[];
-  office: Office[];
-  patient: Patient[];
-
+  aftselfresourcesForm: FormGroup;
+  id_estado: any = [];
+  id_recurso: any = [];
+  id_departamento: any = [];
+  paciente: any = [];
   subscriptions: Subscription[] = [];
 
-  aftselfresourcesForm: FormGroup;
-
-  constructor(
-    private resourceTypeService: ResourceTypeService,
-    private statusService: ResourceStatusService,
-    private clasificatorService: ClasificatorService,
-    private officeService: OfficeService,
-    private patientService: PatientService,
-    public dialogRef: MatDialogRef<AftselfresourcesFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-  ) {}
+  constructor(public aftselfresourcesService: AftselfresourcesService, public dialogRef: MatDialogRef<AftselfresourcesFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.buildForm();
-    this.getResourceStatus();
-    this.getClasificator();
     this.getOffice();
+    this.getStatus();
     this.getPatient();
-    this.getResourceTypes();
+    this.getClassificator();
+
   }
 
   ngOnDestroy() {
-    this.subscriptions.forEach((s) => s.unsubscribe());
+    this.subscriptions;
+  }
+  getClassificator() {
+    const sub = this.aftselfresourcesService
+      .getClassificator()
+      .pipe(
+        map((response: ApiResponse<any>) => {
+          this.id_recurso = response.results;
+          console.log(this.id_recurso);
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+  getStatus() {
+    const sub = this.aftselfresourcesService
+      .getStatus()
+      .pipe(
+        map((response: ApiResponse<any>) => {
+          this.id_estado = response.results;
+          console.log(this.id_estado);
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+  getOffice() {
+    const sub = this.aftselfresourcesService
+      .getOffice()
+      .pipe(
+        map((response: ApiResponse<any>) => {
+          this.id_departamento = response.results;
+          console.log(this.id_departamento);
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getPatient() {
+    const sub = this.aftselfresourcesService
+      .getPatient()
+      .pipe(
+        map((response: ApiResponse<any>) => {
+          this.paciente = response.results;
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
   }
 
   buildForm() {
     this.aftselfresourcesForm = new FormGroup({
-      id: new FormControl(this.data?.aftselfresources?.id ? this.data?.aftselfresources.id : null),
-      nro_inventario: new FormControl(this.data?.aftselfresources?.nro_inventario ? this.data?.aftselfresources.nro_inventario : null, [
-        Validators.required
-      ]),
-      activo: new FormControl(this.data?.aftselfresources?.activo ? this.data?.aftselfresources.activo : null),
-      id_estado: new FormControl(this.data?.aftselfresources?.id_estado ? this.data?.aftselfresources.id_estado : null, [Validators.required]),
-      id_recurso: new FormControl(this.data?.aftselfresources?.id_recurso ? this.data?.aftselfresources.id_recurso : null, [Validators.required]),
-      id_departamento: new FormControl(this.data?.aftselfresources?.id_departamento ? this.data?.aftselfresources.id_departamento : null, [Validators.required]),
-      paciente: new FormControl(this.data?.aftselfresources?.paciente ? this.data?.aftselfresources.paciente : null),
+      nro_inventario: new FormControl(this.data.aftselfresources ? this.data.aftselfresources.nro_inventario : '', Validators.required),
+      activo: new FormControl(this.data.aftselfresources ? this.data.aftselfresources.activo : ''),
+      id_estado: new FormControl(this.data.aftselfresources ? this.data.aftselfresources.id_estado_id : '', Validators.required),
+      id_recurso: new FormControl(this.data.aftselfresources ? this.data.aftselfresources.id_recurso_id : '', Validators.required),
+      id_departamento: new FormControl(this.data.aftselfresources ? this.data.aftselfresources.id_departamento_id : '', Validators.required),
+      paciente: new FormControl(this.data.aftselfresources ? this.data.aftselfresources.paciente_id : '', Validators.required),
     });
   }
-
-  get idControl() {
-    return this.aftselfresourcesForm.get('id') as FormControl;
+  get numberControl() {
+    return this.aftselfresourcesForm?.get('nro_inventario') as FormControl;
   }
-
-  get inventoryNumberControl() {
-    return this.aftselfresourcesForm.get('nro_inventario') as FormControl;
-  }
-
   get activeControl() {
-    return this.aftselfresourcesForm.get('activo') as FormControl;
+    return this.aftselfresourcesForm?.get('activo') as FormControl;
   }
 
   get statusControl() {
-    return this.aftselfresourcesForm.get('id_estado') as FormControl;
+    return this.aftselfresourcesForm?.get('id_estado') as FormControl;
   }
 
-  get clasificatorControl() {
-    return this.aftselfresourcesForm.get('id_recurso') as FormControl;
+  get classificatorControl() {
+    return this.aftselfresourcesForm?.get('id_recurso') as FormControl;
   }
 
   get officeControl() {
-    return this.aftselfresourcesForm.get('id_departamento') as FormControl;
+    return this.aftselfresourcesForm?.get('id_departamento') as FormControl;
   }
-
   get patientControl() {
-    return this.aftselfresourcesForm.get('paciente') as FormControl;
+    return this.aftselfresourcesForm?.get('paciente') as FormControl;
   }
 
   onSubmit(data) {
@@ -105,66 +128,5 @@ export class AftselfresourcesFormComponent implements OnInit, OnDestroy {
 
   onCancel() {
     this.dialogRef.close();
-  }
-
-  getResourceTypes() {
-    const sub = this.resourceTypeService
-      .getResourceTypes({}, 'id', 'asc', 1, 10000)
-      .pipe(
-        map((response) => {
-          this.resourceTypes = response.results;
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-  getResourceStatus() {
-    const sub = this.statusService
-      .getResourceStatuss({}, 'id', 'asc', 1, 10000)
-      .pipe(
-        map((response) => {
-          this.status = response.results;
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-  getClasificator() {
-    const sub = this.clasificatorService
-      .getClasificators({}, 'id', 'asc', 1, 10000)
-      .pipe(
-        map((response) => {
-          this.clasificator = response.results;
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-  getOffice() {
-    const sub = this.officeService
-      .getOffice({}, 'id', 'asc', 1, 10000)
-      .pipe(
-        map((response) => {
-          this.office = response.results;
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-  getPatient() {
-    const sub = this.patientService
-      .getPatient({}, 'id', 'asc', 1, 10000)
-      .pipe(
-        map((response) => {
-          this.patient = response.results;
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
   }
 }

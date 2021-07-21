@@ -1,22 +1,17 @@
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-//
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../../../core/models/api-response.model';
-import { Aftselfresources } from '../models/aftselfresources.model';
-
-//
+import { ApiResponse } from '../../../../app/core/models/api-response.model';
+import { warehouseLot } from '../models/warehouseLot';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class AftselfresourcesService {
-  private apiEndpoint = `${environment.apiUrl}aft_recurso_propio`;
-  private apiEndpointStatus = `${environment.apiUrl}aft_estado_recurso`;
-  private apiEndpointOffice = `${environment.apiUrl}departamento`;
-  private apiEndpointPatient = `${environment.apiUrl}paciente`;
-  private apiEndpointCla = `${environment.apiUrl}aft_clasificador_recurso`;
+export class WarehouseLotService {
+  private apiEndpoint = `${environment.apiUrl}alm_lote`;
+  private apiEndpointAlmProducto = `${environment.apiUrl}alm_producto`;
+
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -26,10 +21,10 @@ export class AftselfresourcesService {
   private defaultPage: number = 0;
 
   private defaultPageSize: number = 10;
+  constructor(private http: HttpClient) { }
 
-  constructor(private http: HttpClient) {}
 
-  getAftselfresources(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Aftselfresources>> {
+  getWarehouseLot(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<warehouseLot>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -37,20 +32,13 @@ export class AftselfresourcesService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<Aftselfresources>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<warehouseLot>>(this.apiEndpoint + queryParams);
   }
-  getStatus(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointStatus);
-  }
-  getClassificator(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointCla);
-  }
-  getOffice(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointOffice);
-  }
-  getPatient(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointPatient);
-  }
+
+  /* getAlmProduct(): {
+    
+  } */
+
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
     let queryParams = '';
 
@@ -60,7 +48,6 @@ export class AftselfresourcesService {
         queryParams += `${property}=${filters[property]}`;
       }
     }
-
     if (sortColumn) {
       let ordering = '';
 
@@ -85,15 +72,20 @@ export class AftselfresourcesService {
     return queryParams;
   }
 
-  createAftselfresources(data: Aftselfresources): Observable<Aftselfresources> {
+  createWarehouseLot(data: warehouseLot): Observable<warehouseLot> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editAftselfresources(data: Aftselfresources): Observable<Aftselfresources> {
-    return this.http.patch<Aftselfresources>(`${this.apiEndpoint}/${data.id}/`, data);
+  editWarehouseLot(data: warehouseLot): Observable<warehouseLot> {
+
+    return this.http.patch<warehouseLot>(`${this.apiEndpoint}/${data.id}/`, data);
+
   }
 
-  deleteAftselfresources(id: string): Observable<any> {
+  deleteWarehouseLot(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
+
 }
+
+

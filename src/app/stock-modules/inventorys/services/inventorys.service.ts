@@ -1,22 +1,20 @@
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 //
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../../../core/models/api-response.model';
-import { Aftselfresources } from '../models/aftselfresources.model';
-
+import { ApiResponse } from '../../../../app/core/models/api-response.model';
+import { Inventorys } from '../models/inventorys.model';
 //
 
 @Injectable({
   providedIn: 'root',
 })
-export class AftselfresourcesService {
-  private apiEndpoint = `${environment.apiUrl}aft_recurso_propio`;
-  private apiEndpointStatus = `${environment.apiUrl}aft_estado_recurso`;
-  private apiEndpointOffice = `${environment.apiUrl}departamento`;
-  private apiEndpointPatient = `${environment.apiUrl}paciente`;
-  private apiEndpointCla = `${environment.apiUrl}aft_clasificador_recurso`;
+export class InventorysService {
+  private apiEndpoint = `${environment.apiUrl}alm_inventario`;
+  private apiEndpointStatus = `${environment.apiUrl}alm_estado_inventario`;
+  private apiEndpointStock = `${environment.apiUrl}alm_almacen`;
+  private apiEndpointUser = `${environment.apiUrl}usuario`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -29,7 +27,7 @@ export class AftselfresourcesService {
 
   constructor(private http: HttpClient) {}
 
-  getAftselfresources(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Aftselfresources>> {
+  getInventorys(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Inventorys>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -37,19 +35,16 @@ export class AftselfresourcesService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<Aftselfresources>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<Inventorys>>(this.apiEndpoint + queryParams);
+  }
+  getStock(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointStock);
   }
   getStatus(): Observable<ApiResponse<any>> {
     return this.http.get<ApiResponse<any>>(this.apiEndpointStatus);
   }
-  getClassificator(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointCla);
-  }
-  getOffice(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointOffice);
-  }
-  getPatient(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointPatient);
+  getUser(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointUser);
   }
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
     let queryParams = '';
@@ -85,15 +80,15 @@ export class AftselfresourcesService {
     return queryParams;
   }
 
-  createAftselfresources(data: Aftselfresources): Observable<Aftselfresources> {
+  createInventorys(data: Inventorys): Observable<Inventorys> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editAftselfresources(data: Aftselfresources): Observable<Aftselfresources> {
-    return this.http.patch<Aftselfresources>(`${this.apiEndpoint}/${data.id}/`, data);
+  editInventorys(data: Inventorys): Observable<Inventorys> {
+    return this.http.patch<Inventorys>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteAftselfresources(id: string): Observable<any> {
+  deleteInventorys(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 }

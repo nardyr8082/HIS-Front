@@ -7,16 +7,10 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
-import { ResourceType } from '../../../type/models/type';
-import { ResourceTypeService } from '../../../type/services/type.service';
 import { Aftselfresources, Patient } from '../../models/aftselfresources.model';
 import { Aftselfresources_TABLE_CONFIGURATION } from '../../models/aftselfresources-table-configuration';
 import { AftselfresourcesService } from '../../services/aftselfresources.service';
 import { AftselfresourcesFormComponent } from '../../components/aftselfresources-form/aftselfresources-form.component';
-import { Status } from 'tslint/lib/runner';
-import { ResourceStatus } from '../../../status/models/resource-status.model';
-import { Office } from '../../../../structure-modules/office/models/office.model';
-import { Clasificator } from '../../../classificator/models/clasificator.model';
 
 @Component({
   selector: 'app-aftselfresources-page',
@@ -24,7 +18,7 @@ import { Clasificator } from '../../../classificator/models/clasificator.model';
   styleUrls: ['./aftselfresources-page.component.scss'],
 })
 export class AftselfresourcesPageComponent implements OnInit {
-  aftselfresources: any[];
+  aftselfresources: Aftselfresources[];
   dataCount = 0;
   configuration = Aftselfresources_TABLE_CONFIGURATION;
   subscriptions: Subscription[] = [];
@@ -51,52 +45,91 @@ export class AftselfresourcesPageComponent implements OnInit {
   ];
 
   constructor(
-    private typeServices: ResourceTypeService,
     private aftselfresourcesService: AftselfresourcesService,
     private toastService: ToastrService,
     public dialog: MatDialog,
   ) {
-    this.putTypes();
+    this.getOffice();
+    this.getPatient();
+    this.getClassificator();
+    this.getStatus();
   }
 
   ngOnInit(): void {
     this.getAftselfresources();
   }
 
-  putTypes(filters = {}) {
-    const sub = this.typeServices
-      .getResourceTypes(filters, 'descripcion', 'asc', 1, 10000)
+  ngOnDestroy() {
+    this.subscriptions.forEach((s) => s.unsubscribe());
+  }
+  getClassificator(filters = {}) {
+    const sub = this.aftselfresourcesService
+      .getClassificator()
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+          this.configuration.tableFilters[2].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
         }),
       )
       .subscribe();
 
     this.subscriptions.push(sub);
   }
-  ngOnDestroy() {
-    this.subscriptions.forEach((s) => s.unsubscribe());
+  getOffice(filters = {}) {
+    const sub = this.aftselfresourcesService
+      .getOffice()
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[3].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
   }
+  getPatient(filters = {}) {
+    const sub = this.aftselfresourcesService
+      .getPatient()
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getStatus(filters = {}) {
+    const sub = this.aftselfresourcesService
+      .getStatus()
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+
   getAftselfresources(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.aftselfresourcesService
       .getAftselfresources(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
-        map((response: ApiResponse<Aftselfresources>) => {
-          this.aftselfresources = response.results.map((response) => {
-            const estadoString = this.getStatusString(response.id_estado);
-            const recursoString = this.getResourcesString(response.id_recurso);
-            const departamentoString = this.getOfficeString(response.id_departamento);
-            const pacienteString = this.getPatientString(response.paciente);
-            return {
-              ...response,
-              id_estado_string: estadoString,
-              id_recurso_string: recursoString,
-              id_departamento_string: departamentoString,
-              paciente: pacienteString,
-            };
-          });
+        map((response: ApiResponse<any>) => {
+          this.aftselfresources = response.results.map((res) => ({
+            ...res,
+            id_recurso_nombre: res.id_recurso.nombre,
+            id_recurso_id: res.id_recurso.id,
+            id_departamento_nombre: res.id_departamento.nombre,
+            id_departamento_id: res.id_departamento.id,
+            paciente_nombre: res.paciente.nombre,
+            paciente_id: res.paciente.id,
+            id_estado_descripcion: res.id_estado.descripcion,
+            id_estado_id: res.id_estado.id,
+          }));
           this.dataCount = response.count;
           this.loading = false;
         }),
@@ -110,18 +143,7 @@ export class AftselfresourcesPageComponent implements OnInit {
 
     this.subscriptions.push(sub);
   }
-  getStatusString(status: ResourceStatus) {
-    return status.id;
-  }
-  getResourcesString(clasificator: Clasificator) {
-    return clasificator.id;
-  }
-  getOfficeString(office: Office) {
-    return office.id;
-  }
-  getPatientString(patient: Patient) {
-    return patient.id;
-  }
+
   onChangePage(page: PageEvent) {
     this.page = page.pageIndex + 1;
     this.pageSize = page.pageSize;
@@ -154,13 +176,13 @@ export class AftselfresourcesPageComponent implements OnInit {
         switchMap((aftselfresources: Aftselfresources) =>
           this.aftselfresourcesService.createAftselfresources(aftselfresources).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al crear el Recurso Propio. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al crear el recurso propio. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getAftselfresources(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El Recurso Propio fue creado correctamente.', 'Felicidades');
+                this.toastService.success('El recurso propio fue creado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -184,7 +206,6 @@ export class AftselfresourcesPageComponent implements OnInit {
         aftselfresources: item,
       },
     });
-
     const modalComponentRef = dialogRef.componentInstance as AftselfresourcesFormComponent;
 
     const sub = modalComponentRef.edit
@@ -192,13 +213,13 @@ export class AftselfresourcesPageComponent implements OnInit {
         switchMap((aftselfresources: Aftselfresources) =>
           this.aftselfresourcesService.editAftselfresources({ ...aftselfresources, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el Recurso Propio. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar el recurso propio. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getAftselfresources(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El Recurso Propio fue modificado correctamente.', 'Felicidades');
+                this.toastService.success('El recurso propio fue modificado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -213,7 +234,7 @@ export class AftselfresourcesPageComponent implements OnInit {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `¿Está seguro que desea eliminar el Recurso Propio: ${item.nombre}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar el Recurso Propio?`;
 
     const sub = modalComponentRef.accept
       .pipe(
@@ -242,7 +263,7 @@ export class AftselfresourcesPageComponent implements OnInit {
     this.subscriptions.push(sub, sub1);
   }
 
-  changeSort(sort: Sort) {
+  onChangeSort(sort: Sort) {
     this.getAftselfresources(this.filters, sort.active, sort.direction);
   }
 }
