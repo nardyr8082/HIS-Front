@@ -725,6 +725,13 @@ export class NavigationService {
               material: true,
               display: true,
             },
+            {
+              displayName: 'Subprograma',
+              iconName: ['radio_button_unchecked'],
+              route: 'subprogram',
+              material: true,
+              display: true,
+            },
           ],
           display: true,
         },
