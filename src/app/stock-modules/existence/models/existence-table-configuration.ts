@@ -3,8 +3,8 @@ import { DEFAULT_PAGINATION_SIZE } from '../../../../app/core/models/api-respons
 
 export const EXISTENCE_TABLE_CONFIGURATION: TableConfiguration = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['cantidad', 'importe', 'almacen', 'unidad_medida', 'categoria'],
-  columnsName: ['Cantidad', 'Importe', 'Almacen', 'Unidad medida', 'Categoria'],
+  displayedColumns: ['cantidad', 'importe', 'almacen', 'unidad_medida', 'categoria', 'lote'],
+  columnsName: ['Cantidad', 'Importe', 'Almacen', 'Unidad medida', 'Categoria', 'Lote'],
 
   tableFilters: [
 
@@ -35,6 +35,12 @@ export const EXISTENCE_TABLE_CONFIGURATION: TableConfiguration = {
     {
       name: 'categoria',
       title: 'Categoria',
+      type: 'select',
+      items: []
+    },
+    {
+      name: 'lote',
+      title: 'Lote',
       type: 'select',
       items: []
     }
