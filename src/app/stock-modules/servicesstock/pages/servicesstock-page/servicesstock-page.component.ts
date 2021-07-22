@@ -7,20 +7,20 @@ import { ApiResponse, DEFAULT_PAGE_SIZE } from '../../../../core/models/api-resp
 import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from '../../../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
-import { Pricechanges_TABLE_CONFIGURATION } from '../../models/pricechanges-table-configuration';
-import { Pricechanges } from '../../models/pricechanges.model';
-import { PricechangesService } from '../../services/pricechanges.service';
-import { PricechangesFormComponent } from '../../components/pricechanges-form/pricechanges-form.component';
+import { Servicesstock } from '../../models/servicesstock.model';
+import { Servicesstock_TABLE_CONFIGURATION } from '../../models/servicesstock-table-configuration';
+import { ServicesstockFormComponent } from '../../components/servicesstock-form/servicesstock-form.component';
+import { ServicesstockService } from '../../services/servicesstock.service';
 
 @Component({
-  selector: 'app-pricechanges-page',
-  templateUrl: './pricechanges-page.component.html',
-  styleUrls: ['./pricechanges-page.component.scss'],
+  selector: 'app-servicesstock-page',
+  templateUrl: './servicesstock-page.component.html',
+  styleUrls: ['./servicesstock-page.component.scss'],
 })
-export class PricechangesPageComponent implements OnInit, OnDestroy {
-  pricechanges: Pricechanges[];
+export class ServicesstockPageComponent implements OnInit, OnDestroy {
+  servicesstock: Servicesstock[];
   dataCount = 0;
-  configuration = Pricechanges_TABLE_CONFIGURATION;
+  configuration = Servicesstock_TABLE_CONFIGURATION;
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
@@ -40,28 +40,29 @@ export class PricechangesPageComponent implements OnInit, OnDestroy {
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
-      callback: (item) => this.deletePricechanges(item),
+      callback: (item) => this.deleteServicesstock(item),
     },
   ];
 
   constructor(
-    private pricechangesService: PricechangesService,
+    private servicesstockService: ServicesstockService,
     private toastService: ToastrService,
     public dialog: MatDialog,
   ) {
-    this.getLote();
+    this.getOffice();
+    this.getImpuesto();
     this.getUser();
   }
 
   ngOnInit(): void {
-    this.getPricechanges();
+    this.getServicesstock();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
   getUser(filters = {}) {
-    const sub = this.pricechangesService
+    const sub = this.servicesstockService
       .getUser()
       .pipe(
         map((response) => {
@@ -72,12 +73,25 @@ export class PricechangesPageComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(sub);
   }
-  getLote(filters = {}) {
-    const sub = this.pricechangesService
-      .getLote()
+  getOffice(filters = {}) {
+    const sub = this.servicesstockService
+      .getOffice()
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+          this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getImpuesto(filters = {}) {
+    const sub = this.servicesstockService
+      .getImpuesto()
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[3].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
         }),
       )
       .subscribe();
@@ -86,18 +100,20 @@ export class PricechangesPageComponent implements OnInit, OnDestroy {
   }
 
 
-  getPricechanges(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
+  getServicesstock(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
-    const sub = this.pricechangesService
-      .getPricechanges(filters, sortColumn, sortDirection, page, pageSize)
+    const sub = this.servicesstockService
+      .getServicesstock(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
-          this.pricechanges = response.results.map((res) => ({
+          this.servicesstock = response.results.map((res) => ({
             ...res,
-            lote_codigo: res.lote.codigo,
-            lote_id: res.lote.id,
+            impuesto_descripcion: res.impuesto.descripcion,
+            impuesto_id: res.impuesto.id,
             usuario_username: res.usuario.username,
             usuario_id: res.usuario.id,
+            departamento_nombre: res.departamento.nombre,
+            departamento_id: res.departamento.id,
           }));
           this.dataCount = response.count;
           this.loading = false;
@@ -116,41 +132,41 @@ export class PricechangesPageComponent implements OnInit, OnDestroy {
   onChangePage(page: PageEvent) {
     this.page = page.pageIndex + 1;
     this.pageSize = page.pageSize;
-    this.getPricechanges(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getServicesstock(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getPricechanges(filters, 'id', 'desc');
+    this.getServicesstock(filters, 'id', 'desc');
   }
 
-  createPricechanges() {
-    let dialogRef: MatDialogRef<PricechangesFormComponent, any>;
+  createServicesstock() {
+    let dialogRef: MatDialogRef<ServicesstockFormComponent, any>;
 
-    dialogRef = this.dialog.open(PricechangesFormComponent, {
+    dialogRef = this.dialog.open(ServicesstockFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
       maxWidth: '500px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',
       data: {
-        pricechanges: null,
+        servicesstock: null,
       },
     });
 
-    const modalComponentRef = dialogRef.componentInstance as PricechangesFormComponent;
+    const modalComponentRef = dialogRef.componentInstance as ServicesstockFormComponent;
 
     const sub = modalComponentRef.create
       .pipe(
-        switchMap((pricechanges: Pricechanges) =>
-          this.pricechangesService.createPricechanges(pricechanges).pipe(
+        switchMap((servicesstock: Servicesstock) =>
+          this.servicesstockService.createServicesstock(servicesstock).pipe(
             catchError(() => {
               this.toastService.error('Hubo un error al crear el Cambio Precio. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getPricechanges(this.filters, 'id', 'desc', this.page, this.pageSize);
+                this.getServicesstock(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El Cambio Precio fue creado correctamente.', 'Felicidades');
               }
             }),
@@ -163,31 +179,31 @@ export class PricechangesPageComponent implements OnInit, OnDestroy {
   }
 
   openEditForm(item) {
-    let dialogRef: MatDialogRef<PricechangesFormComponent, any>;
+    let dialogRef: MatDialogRef<ServicesstockFormComponent, any>;
 
-    dialogRef = this.dialog.open(PricechangesFormComponent, {
+    dialogRef = this.dialog.open(ServicesstockFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
       maxWidth: '500px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',
       data: {
-        pricechanges: item,
+        servicesstock: item,
       },
     });
-    const modalComponentRef = dialogRef.componentInstance as PricechangesFormComponent;
+    const modalComponentRef = dialogRef.componentInstance as ServicesstockFormComponent;
 
     const sub = modalComponentRef.edit
       .pipe(
-        switchMap((pricechanges: Pricechanges) =>
-          this.pricechangesService.editPricechanges({ ...pricechanges, id: item.id }).pipe(
+        switchMap((servicesstock: Servicesstock) =>
+          this.servicesstockService.editServicesstock({ ...servicesstock, id: item.id }).pipe(
             catchError(() => {
               this.toastService.error('Hubo un error al editar el Cambio Precio. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getPricechanges(this.filters, 'id', 'desc', this.page, this.pageSize);
+                this.getServicesstock(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El Cambio Precio fue modificado correctamente.', 'Felicidades');
               }
             }),
@@ -199,7 +215,7 @@ export class PricechangesPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  deletePricechanges(item) {
+  deleteServicesstock(item) {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
@@ -209,7 +225,7 @@ export class PricechangesPageComponent implements OnInit, OnDestroy {
       .pipe(
         filter((accept) => accept),
         switchMap(() =>
-          this.pricechangesService.deletePricechanges(item.id).pipe(
+          this.servicesstockService.deleteServicesstock(item.id).pipe(
             map(() => item),
             catchError(() => {
               this.toastService.error('Hubo un error al eliminar el Cambio Precio. Por favor, inténtelo de nuevo más tarde.', 'Error');
@@ -218,7 +234,7 @@ export class PricechangesPageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getPricechanges(this.filters, 'id', 'desc', this.page, this.pageSize);
+                this.getServicesstock(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('El Cambio Precio fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
@@ -233,6 +249,6 @@ export class PricechangesPageComponent implements OnInit, OnDestroy {
   }
 
   onChangeSort(sort: Sort) {
-    this.getPricechanges(this.filters, sort.active, sort.direction);
+    this.getServicesstock(this.filters, sort.active, sort.direction);
   }
 }

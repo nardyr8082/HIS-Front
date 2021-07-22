@@ -1,28 +1,41 @@
 <div class="form">
-  <h4>{{ data.pricechanges ? 'Editar Cambio Precio' : 'Crear Cambio Precio' }}</h4>
+  <h4>{{ data.servicesstock ? 'Editar Servicio Almacen' : 'Crear Servicio Almacen' }}</h4>
   <mat-divider class="my-4"></mat-divider>
-  <form *ngIf="pricechangesForm" [formGroup]="pricechangesForm">
+  <form *ngIf="servicesstockForm" [formGroup]="servicesstockForm">
+    <!-- codigo": "micubs",
+    "nombre": "dios",
+    "precio": 20.0,
+    "impuesto": 1,
+    "usuario": 1,
+    "departamento -->
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Fecha:</mat-label>
-      <input matInput formControlName="fecha" />
-      <mat-error *ngIf="dateControl.errors?.required"> {{ 'La fecha es' }} <strong>requerido</strong>  </mat-error>
+      <mat-label>Codigo:</mat-label>
+      <input matInput formControlName="codigo" />
+      <mat-error *ngIf="codecControl.errors?.required"> {{ 'La codigo es' }} <strong>requerido</strong>  </mat-error>
    </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Precio Viejo:</mat-label>
-      <input matInput formControlName="precio_viejo" />
-      <mat-error *ngIf="oldpriceControl.errors?.required"> {{ 'El precio viejo es' }} <strong>requerido</strong>  </mat-error>
+      <mat-label>Precio:</mat-label>
+      <input matInput formControlName="precio" />
+      <mat-error *ngIf="priceControl.errors?.required"> {{ 'El precio  es' }} <strong>requerido</strong>  </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Precio Nuevo:</mat-label>
-      <input matInput formControlName="precio_nuevo" />
-      <mat-error *ngIf="newpriceControl.errors?.required"> {{ 'El precio nuevo es' }} <strong>requerido</strong>  </mat-error>
+      <mat-label>Nombre:</mat-label>
+      <input matInput formControlName="nombre" />
+      <mat-error *ngIf="nameControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong>  </mat-error>
     </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Comentario</mat-label>
-      <input matInput formControlName="comentario" />
-      <mat-error *ngIf="comentaryControl.errors?.required"> {{ 'El comentario es' }} <strong>requerido</strong>  </mat-error>
-    </mat-form-field>
-  <!-- user -->
+    <div class="mb-4">
+      <ng-select
+        appearance="outline"
+        class="custom w-100"
+        placeholder="Impuesto"
+        [items]="impuesto"
+        bindLabel="descripcion"
+        bindValue="id"
+        formControlName="impuesto">
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="impuestoControl.errors?.required && impuestoControl.dirty">
+        El campo impuesto es <strong>requerido</strong></small>
+    </div>  <!-- user -->
   <div class="mb-4">
     <ng-select
       appearance="outline"
@@ -41,21 +54,21 @@
     <ng-select
       appearance="outline"
       class="custom w-100"
-      placeholder="Lote"
-      [items]="lote"
-      bindLabel="codigo"
+      placeholder="Departamento"
+      [items]="departamento"
+      bindLabel="nombre"
       bindValue="id"
-      formControlName="lote">
+      formControlName="departamento">
     </ng-select>
-    <small class="text-danger error-style" *ngIf="loteControl.errors?.required && stockControl.dirty">
-      El campo lote es <strong>requerido</strong></small>
+    <small class="text-danger error-style" *ngIf="officeControl.errors?.required && officeControl.dirty">
+      El campo departamento es <strong>requerido</strong></small>
   </div>
   </form>
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
-    <button (click)="onSubmit(pricechangesForm.value)" [disabled]="!pricechangesForm.valid" mat-raised-button color="primary" class="button">
-      {{ data.pricechanges ? 'Aceptar' : 'Crear' }}
+    <button (click)="onSubmit(servicesstockForm.value)" [disabled]="!servicesstockForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.servicesstock ? 'Aceptar' : 'Crear' }}
     </button>
   </div>
 </div>

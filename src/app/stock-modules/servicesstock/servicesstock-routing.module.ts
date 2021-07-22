@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from '../../../app/shared/layout/layout.component';
-import { PricechangesPageComponent } from './pages/pricechanges-page/pricechanges-page.component';
+import { ServicesstockPageComponent } from './pages/servicesstock-page/servicesstock-page.component';
 
 const routes: Routes = [
   {
@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: PricechangesPageComponent,
+        component: ServicesstockPageComponent,
       },
     ],
   },
@@ -20,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PricechangesRoutingModule {}
+export class ServicesstockRoutingModule {}

@@ -1,39 +1,40 @@
 import { TableConfiguration } from '../../../../../src/app/shared/models/table-configuration.model';
 import { DEFAULT_PAGINATION_SIZE } from '../../../../app/core/models/api-response.model';
-export const Pricechanges_TABLE_CONFIGURATION: TableConfiguration = {
+export const Servicesstock_TABLE_CONFIGURATION: TableConfiguration = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['fecha', 'precio_viejo', 'precio_nuevo', 'comentario', 'lote_codigo', 'usuario_username'],
-  columnsName: ['Fecha', 'Precio Viejo', 'Precio Nuevo', 'Comentario', 'Lote', 'Usuario'],
+  displayedColumns: ['codigo', 'nombre', 'precio', 'impuesto_descripcion', 'usuario_username', 'departamento_nombre'],
+  columnsName: ['Codigo', 'Nombre', 'Precio', 'Impuesto', 'Usuario', 'Departamento'],
   tableFilters: [
     {
-      name: 'fecha',
+      name: 'codigo',
       type: 'text',
-      title: 'Fecha',
+      title: 'Codigo',
     },
     {
-      name: 'precio_viejo',
+      name: 'nombre',
       type: 'text',
-      title: 'Precio Viejo',
+      title: 'Nombre',
     },
     {
-      name: 'precio_nuevo',
-      title: 'Precio Nuevo',
-      type: 'text',
-    },
-    {
-      name: 'comentario',
-      title: 'Comentario',
+      name: 'precio',
+      title: 'Precio',
       type: 'text',
     },
     {
-      name: 'lote',
-      title: 'Lote',
+      name: 'impuesto',
+      title: 'Impuesto',
       type: 'select',
       items: [],
     },
     {
       name: 'usuario',
       title: 'Usuario',
+      type: 'select',
+      items: [],
+    },
+    {
+      name: 'departamento',
+      title: 'Departamento',
       type: 'select',
       items: [],
     },

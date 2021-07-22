@@ -1,11 +1,11 @@
 <div class="container mt-3">
   <div class="d-flex justify-content-between align-items-center">
-    <h4>Cambio Precio</h4>
-    <button (click)="createPricechanges()" mat-raised-button color="primary" class="button">Crear Cambio Precio</button>
+    <h4>Servicio Almacen</h4>
+    <button (click)="createServicesstock()" mat-raised-button color="primary" class="button">Servicio Almacen</button>
   </div>
   <app-custom-table
-    *ngIf="pricechanges"
-    [data]="pricechanges"
+    *ngIf="servicesstock"
+    [data]="servicesstock"
     [dataCount]="dataCount"
     [displayedColumns]="configuration.displayedColumns"
     [columnsName]="configuration.columnsName"

@@ -549,6 +549,13 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Servicio',
+          iconName: ['swap_vertical_circle'],
+          route: 'stock-services',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Inventario',
           iconName: ['swap_vertical_circle'],
           material: true,

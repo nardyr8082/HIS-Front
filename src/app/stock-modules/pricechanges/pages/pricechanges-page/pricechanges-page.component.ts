@@ -77,7 +77,7 @@ export class PricechangesPageComponent implements OnInit, OnDestroy {
       .getLote()
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.codigo }));
         }),
       )
       .subscribe();

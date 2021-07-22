@@ -1,10 +1,10 @@
-export interface Pricechanges {
+export interface Servicesstock {
   id: number;
-  fecha?: string;
-  precio_viejo?: number,
-  precio_nuevo?: number;
-  comentario?: string;
-  lote?: number;
+  codigo?: string;
+  nombre?: string;
+  precio?: number;
+  impuesto?: number;
   usuario?: number;
+  departamento?: number;
 }
 

@@ -4,16 +4,17 @@ import { Injectable } from '@angular/core';
 //
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../../app/core/models/api-response.model';
-import { Pricechanges } from '../models/pricechanges.model';
+import { Servicesstock } from '../models/servicesstock.model';
 //
 
 @Injectable({
   providedIn: 'root',
 })
-export class PricechangesService {
-  private apiEndpoint = `${environment.apiUrl}alm_cambio_precio`;
+export class ServicesstockService {
+  private apiEndpoint = `${environment.apiUrl}alm_servicio`;
   private apiEndpointUser = `${environment.apiUrl}usuario`;
-  private apiEndpointLote = `${environment.apiUrl}alm_lote`;
+  private apiEndpointOff = `${environment.apiUrl}departamento`;
+  private apiEndpointImp = `${environment.apiUrl}alm_impuesto`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -26,7 +27,7 @@ export class PricechangesService {
 
   constructor(private http: HttpClient) {}
 
-  getPricechanges(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Pricechanges>> {
+  getServicesstock(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Servicesstock>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -34,10 +35,13 @@ export class PricechangesService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<Pricechanges>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<Servicesstock>>(this.apiEndpoint + queryParams);
   }
-  getLote(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointLote);
+  getOffice(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointOff);
+  }
+  getImpuesto(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointImp);
   }
   getUser(): Observable<ApiResponse<any>> {
     return this.http.get<ApiResponse<any>>(this.apiEndpointUser);
@@ -76,15 +80,15 @@ export class PricechangesService {
     return queryParams;
   }
 
-  createPricechanges(data: Pricechanges): Observable<Pricechanges> {
+  createServicesstock(data: Servicesstock): Observable<Servicesstock> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editPricechanges(data: Pricechanges): Observable<Pricechanges> {
-    return this.http.patch<Pricechanges>(`${this.apiEndpoint}/${data.id}/`, data);
+  editServicesstock(data: Servicesstock): Observable<Servicesstock> {
+    return this.http.patch<Servicesstock>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deletePricechanges(id: string): Observable<any> {
+  deleteServicesstock(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 }

@@ -1,15 +1,14 @@
 import { SharedModule } from '../../shared/shared.module';
 import { NgModule } from '@angular/core';
+import { ServicesstockFormComponent } from './components/servicesstock-form/servicesstock-form.component';
+import { ServicesstockRoutingModule } from './servicesstock-routing.module';
+import { ServicesstockPageComponent } from './pages/servicesstock-page/servicesstock-page.component';
 import { CommonModule } from '@angular/common';
-import { PricechangesFormComponent } from './components/pricechanges-form/pricechanges-form.component';
-import { PricechangesRoutingModule } from './pricechanges-routing.module';
-import { PricechangesPageComponent } from './pages/pricechanges-page/pricechanges-page.component';
-
 
 
 @NgModule({
-  declarations: [PricechangesFormComponent, PricechangesPageComponent],
-  imports: [CommonModule, PricechangesRoutingModule, SharedModule],
-  entryComponents: [PricechangesFormComponent],
+  declarations: [ServicesstockFormComponent, ServicesstockPageComponent],
+  imports: [CommonModule, ServicesstockRoutingModule, SharedModule],
+  entryComponents: [ServicesstockFormComponent],
 })
-export class PricechangesModule {}
+export class ServicesstockModule {}
