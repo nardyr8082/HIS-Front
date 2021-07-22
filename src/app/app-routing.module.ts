@@ -237,7 +237,8 @@ const routes: Routes = [
       },
       {
         path: 'warehouse-inventory-difference',
-        loadChildren: () => import('./stock-modules/warehouse-inventory-difference/warehouse-inventory-difference.module').then((m) => m.WarehouseInventoryDifferenceModule),
+        loadChildren: () =>
+          import('./stock-modules/warehouse-inventory-difference/warehouse-inventory-difference.module').then((m) => m.WarehouseInventoryDifferenceModule),
         canActivate: [BackendGuard],
       },
       {
@@ -304,6 +305,11 @@ const routes: Routes = [
       {
         path: 'patient',
         loadChildren: () => import('./patient/patient.module').then((m) => m.PatientModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'stock-state-appointment',
+        loadChildren: () => import('./stock-modules/stock-state-appointment/stock-state-appointment.module').then((m) => m.StockStateAppointmentModule),
         canActivate: [BackendGuard],
       },
     ],
