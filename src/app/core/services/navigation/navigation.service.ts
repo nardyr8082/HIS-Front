@@ -582,7 +582,7 @@ export class NavigationService {
         {
           displayName: 'Cambio Precio',
           iconName: ['swap_vertical_circle'],
-          route: '',
+          route: 'change-price',
           material: true,
           display: true,
         },
