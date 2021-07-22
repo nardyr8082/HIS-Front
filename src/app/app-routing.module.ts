@@ -265,6 +265,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/inventory/inventory-count/inventory-count.module').then((m) => m.InventoryCountModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'subprogram',
+        loadChildren: () => import('./indicator-module/classifiers/subprogram/subprogram.module').then((m) => m.SubprogramModule),
+        canActivate: [BackendGuard],
+      },
       // Resources
       {
         path: 'resource-status',

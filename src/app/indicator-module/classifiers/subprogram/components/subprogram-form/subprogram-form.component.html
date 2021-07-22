@@ -1,0 +1,54 @@
+<div class="form">
+  <h4>{{ data.subprogram ? 'Editar Programa' : 'Crear Programa' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="subprogramForm" [formGroup]="subprogramForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Descripcion:</mat-label>
+      <input matInput formControlName="descripcion" />
+      <mat-error *ngIf="this.descripcionControl.errors?.required"> {{ 'La descripcion es' }} <strong>requerido</strong>  </mat-error>
+   </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Config:</mat-label>
+      <input matInput formControlName="config" />
+      <mat-error *ngIf="this.configControl.errors?.required"> {{ 'La Config es' }} <strong>requerido</strong>  </mat-error>
+    </mat-form-field>
+  <!-- Programa -->
+  <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Programa"
+      [items]="programa"
+      notFoundText="No se encontraron elementos"
+      bindLabel="descripcion"
+      bindValue="id"
+      formControlName="programa">
+    </ng-select>
+    <small class="text-danger error-style" *ngIf="programaControl.errors?.required && programaControl.dirty">
+      El campo programa es <strong>requerido</strong></small>
+  </div>
+   <!-- Indicador -->
+   <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Indicador"
+      [items]="indicador"
+      notFoundText="No se encontraron elementos"
+      [multiple]="true"
+      bindLabel="nombre"
+      bindValue="id"
+      formControlName="indicador">
+    </ng-select>
+    <small class="text-danger error-style" *ngIf="indicadorControl.errors?.required && indicadorControl.dirty">
+      El campo indicador es <strong>requerido</strong></small>
+  </div>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(subprogramForm.value)" [disabled]="!subprogramForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.subprogram ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

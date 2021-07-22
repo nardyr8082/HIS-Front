@@ -6,7 +6,8 @@ import { Nationality } from 'src/app/nomenclator-modules/nationality/models/nati
 
 interface Item {
   id: number;
-  name: string;
+  name?: string;
+  descripcion?: string;
 }
 
 export interface Patient {

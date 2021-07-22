@@ -79,7 +79,7 @@ export class PatientFormComponent implements OnInit {
       sexo: [this.patient ? this.patient.sexo.id : null, Validators.required],
       ocupacion: [this.patient ? this.patient.ocupacion : null, [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
       tipo_doc: [this.patient ? this.patient.tipo_doc.id : null, Validators.required],
-      grupo_sanguineo: [this.patient ? this.patient.grupo_sanguineo.id : null, [Validators.required]],
+      grupo_sanguineo: [this.patient ? this.patient?.grupo_sanguineo?.id : null, [Validators.required]],
       identificador_paciente: [this.patient ? this.patient.identificador_paciente : null],
       fecha_nacimiento: [fechaNacimiento, Validators.required],
     });
@@ -140,8 +140,11 @@ export class PatientFormComponent implements OnInit {
   }
 
   getFormattedDate(apiDate: string) {
-    const arrayDate = apiDate.split('-');
-    return new Date(parseInt(arrayDate[0]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[2]));
+    if (apiDate) {
+      const arrayDate = apiDate.split('-');
+      return new Date(parseInt(arrayDate[0]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[2]));
+    }
+    return null;
   }
 
   // FORMS CONTROLS
