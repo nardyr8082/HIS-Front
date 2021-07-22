@@ -1,1 +1,118 @@
-<p>patient-details works!</p>
+<div class="container my-3" *ngIf="patient">
+  <mat-card class="w-100">
+    <mat-card-header>
+      <div class="d-flex align-items-center w-100">
+        <img class="img-detail-avatar mx-3" [src]="patient.foto" />
+        <div>
+          <h3 class="title">{{ patient.nombre }} {{ patient.apellidos }}</h3>
+        </div>
+      </div>
+      <div>
+        <button (click)="goBack()" mat-fab color="primary" aria-label="Back icon">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+    </mat-card-header>
+    <mat-divider class="my-3"></mat-divider>
+    <mat-card-content>
+      <div class="row mt-5">
+        <div class="col-lg-6 col-sm-12">
+          <h4>Datos Personales</h4>
+          <div class="card p-3">
+            <p class="my-1" *ngIf="patient.nro_identificacion">
+              Número de Identificación: <b>{{ patient.nro_identificacion }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.email">
+              Correo: <b>{{ patient.email }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.tipo_doc.descripcion">
+              Tipo de documento: <b>{{ patient.tipo_doc.descripcion }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.fecha_nacimiento">
+              Fecha de Nacimiento: <b>{{ patient.fecha_nacimiento | date: 'dd/MM/yyyy' }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.sexo?.descripcion">
+              Sexo: <b>{{ patient.sexo.descripcion }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.grupo_sanguineo.descripcion">
+              Grupo Sanguíneo: <b>{{ patient.grupo_sanguineo.descripcion }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.nacionalidad.descripcion">
+              Nacionalidad: <b>{{ patient.nacionalidad.descripcion }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.municipio.nombre">
+              Distrito: <b>{{ patient.municipio.nombre }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.seg_social">
+              Seguridad Social: <b>{{ patient.seg_social }}</b>
+            </p>
+
+            <p class="my-1" *ngIf="patient.nota_factura">
+              Nota de Factura: <b>{{ patient.nota_factura }}</b>
+            </p>
+
+            <p class="my-1" *ngIf="patient.fecha_defuncion">
+              Fecha de defunción: <b>{{ patient.fecha_defuncion | date: 'dd/MM/yyyy' }}</b>
+            </p>
+
+            <p class="my-1" *ngIf="patient.motivo_defuncion">
+              Motivo de defunción: <b>{{ patient.motivo_defuncion }}</b>
+            </p>
+
+            <p class="my-1" *ngIf="patient.ocupacion">
+              Ocupación: <b>{{ patient.ocupacion }}</b>
+            </p>
+
+            <p class="my-1" *ngIf="patient.raza">
+              Raza: <b>{{ patient.raza.descripcion }}</b>
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+          <h4>Datos de Contacto</h4>
+          <div class="card p-3">
+            <p class="my-1" *ngIf="patient.direccion">
+              Dirección: <b>{{ patient.direccion }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.barrio">
+              Barrrio: <b>{{ patient.barrio }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.numero">
+              Número: <b>{{ patient.numero }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.cod_postal">
+              Código Postal: <b>{{ patient.cod_postal }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.nombre_madre">
+              Nombre de la Madre: <b>{{ patient.nombre_madre }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.nombre_padre">
+              Nombre del Padre: <b>{{ patient.nombre_padre }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.contacto_emergencia">
+              Contacto de emergencia: <b>{{ patient.contacto_emergencia }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.telefono_emergencia">
+              Teléfono de emergencia: <b>{{ patient.telefono_emergencia }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.telefono_casa">
+              Teléfono de casa: <b>{{ patient.telefono_casa }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.telefono_trabajo">
+              Teléfono del trabajo: <b>{{ patient.telefono_trabajo }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.telefono_movil">
+              Teléfono Movil: <b>{{ patient.telefono_movil }}</b>
+            </p>
+            <p class="my-1" *ngIf="patient.telefono_casa">
+              Teléfono de casa: <b>{{ patient.telefono_casa }}</b>
+            </p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end" *ngIf="patient.qr_code">
+          <img class="qr-image" [src]="apiUrl + patient.qr_code" [alt]="apiUrl + patient.qr_code" />
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
