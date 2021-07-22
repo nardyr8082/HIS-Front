@@ -265,6 +265,11 @@ const routes: Routes = [
         loadChildren: () => import('./indicator-module/classifiers/subprogram/subprogram.module').then((m) => m.SubprogramModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'facture',
+        loadChildren: () => import('./stock-modules/facture/facture.module').then((m) => m.FactureModule),
+        canActivate: [BackendGuard],
+      },
       // Resources
       {
         path: 'resource-status',
