@@ -31,7 +31,6 @@ export class FactureFormComponent implements OnInit, OnDestroy {
     this.getEstado();
     this.getOperacion();
     this.getComercial();
-
   }
 
   ngOnDestroy() {
@@ -79,11 +78,11 @@ export class FactureFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    const fechaEmision = this.facture ? this.getFormattedDate(this.facture.fecha_emision) : '';
-    const fechaEntrega = this.facture ? this.getFormattedDate(this.facture.fecha_entrega) : '';
+    const fechaEmision = this.facture ? this.getFormattedDate(this.facture.fecha_emision) : null;
+    const fechaEntrega = this.facture ? this.getFormattedDate(this.facture.fecha_entrega) : null;
     this.factureForm = new FormGroup({
-      fecha_emision: [fechaEmision, Validators.required],
-      fecha_entrega: [fechaEntrega, Validators.required],
+      fecha_emision: new FormControl(fechaEmision, [Validators.required]),
+      fecha_entrega: new FormControl(fechaEntrega, [Validators.required]),
       nro_factura: new FormControl(this.data.facture ? this.data.facture.nro_factura : ''),
       importe_total: new FormControl(this.data.facture ? this.data.facture.importe_total : '', Validators.required),
       descuento: new FormControl(this.data.facture ? this.data.facture.descuento : ''),
