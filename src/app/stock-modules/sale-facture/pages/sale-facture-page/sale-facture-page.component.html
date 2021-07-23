@@ -4,7 +4,7 @@
     <button (click)="createSaleFacture()" mat-raised-button color="primary" class="button">Crear Factura de Venta</button>
   </div>
   <app-custom-table
-    *ngIf="salaFacture"
+    *ngIf="saleFacture"
     [data]="saleFacture"
     [dataCount]="dataCount"
     [displayedColumns]="configuration.displayedColumns"

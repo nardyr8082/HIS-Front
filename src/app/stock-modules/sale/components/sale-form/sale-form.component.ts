@@ -97,7 +97,7 @@ export class SaleFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    const fecha = this.sale ? this.getFormattedDate(this.sale.fecha) : '';
+    const fecha = this.data.sale ? this.getFormattedDate(this.data.sale.fecha) : '';
     this.saleForm = new FormGroup({
       fecha:  new FormControl(fecha, [Validators.required]),
       numero: new FormControl(this.data.sale ? this.data.sale.numero : '', Validators.required),
@@ -157,7 +157,7 @@ export class SaleFormComponent implements OnInit, OnDestroy {
       const sale = this.saleForm.value;
       const dateFormat = moment(sale.fecha);
       sale.fecha = dateFormat.format('yyyy-MM-DD');
-      this.sale ? this.edit.emit( sale ) : this.create.emit( sale );
+      this.data.sale ? this.edit.emit( sale ) : this.create.emit( sale );
       this.dialogRef.close();
     } else {
       this.toastrService.error('Por favor revise los formularios, quedan campos requeridos sin llenar', 'Error');
