@@ -5,20 +5,20 @@
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Código</mat-label>
       <input matInput formControlName="codigo" maxlength="50" />
-      <!--<mat-error *ngIf="codecControl.errors?.required"> {{ 'El código es' }} <strong>requerido</strong> </mat-error>-->
+      <mat-error *ngIf="codecControl.errors?.required"> {{ 'El código es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="nombre" maxlength="20" />
-      <!--<mat-error *ngIf="nameControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>-->
+      <mat-error *ngIf="nameControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Precio</mat-label>
       <input matInput formControlName="precio" maxlength="20" />
-      <!--<mat-error *ngIf="priceControl.errors?.required"> {{ 'El precio es' }} <strong>requerido</strong> </mat-error>
-      <mat-error *ngIf="priceControl.errors?.isDecimal"> {{ 'El precio es' }} <strong>solo números enteros o decimales</strong> </mat-error>-->
+      <mat-error *ngIf="priceControl.errors?.required"> {{ 'El precio es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="priceControl.errors?.isDecimal"> {{ 'El precio es' }} <strong>solo números enteros o decimales</strong> </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
@@ -26,7 +26,7 @@
       <mat-select #mySelect formControlName="impuesto">
         <mat-option *ngFor="let tax of impuesto" [value]="tax.id">{{ tax.descripcion }}</mat-option>
       </mat-select>
-      <!--<mat-error *ngIf="taxControl.errors?.required"> {{ 'Seleccione un impuesto' }} </mat-error>-->
+      <mat-error *ngIf="taxControl.errors?.required"> {{ 'Seleccione un impuesto' }} </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
@@ -34,7 +34,7 @@
       <mat-select #mySelect formControlName="usuario">
         <mat-option *ngFor="let user of usuario" [value]="user.id">{{ user.username }}</mat-option>
       </mat-select>
-      <!--<mat-error *ngIf="userControl.errors?.required"> {{ 'Seleccione un usuario' }} </mat-error>-->
+      <mat-error *ngIf="userControl.errors?.required"> {{ 'Seleccione un usuario' }} </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
@@ -42,7 +42,7 @@
       <mat-select #mySelect formControlName="departamento" multiple>
         <mat-option *ngFor="let office of departamento" [value]="office.id">{{ office.nombre }}</mat-option>
       </mat-select>
-      <!--<mat-error *ngIf="officeControl.errors?.required"> {{ 'Seleccione un departamento' }} </mat-error>-->
+      <mat-error *ngIf="officeControl.errors?.required"> {{ 'Seleccione un departamento' }} </mat-error>
     </mat-form-field>
 
   </form>

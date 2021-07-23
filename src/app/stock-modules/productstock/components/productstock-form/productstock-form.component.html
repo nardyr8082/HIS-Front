@@ -1,0 +1,68 @@
+<div class="form">
+  <h4>{{ data.productstock ? 'Editar Almacen Producto' : 'Crear Almacen Producto' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="productstockForm" [formGroup]="productstockForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Código</mat-label>
+      <input matInput formControlName="codigo" maxlength="10" />
+      <mat-error *ngIf="codecControl.errors?.required"> {{ 'El código es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Descripción</mat-label>
+      <input matInput formControlName="descripcion" maxlength="50" />
+      <mat-error *ngIf="descriptionControl.errors?.required"> {{ 'La descripción es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+
+    <mat-checkbox checked="false" formControlName="activo">Activo</mat-checkbox>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Unidad Medida</mat-label>
+      <mat-select #mySelect formControlName="unidad_medida">
+        <mat-option *ngFor="let st of measure" [value]="st.id">{{ st.descripcion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="measureControl.errors?.required"> {{ 'Seleccione una Unidad Medida' }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Familia</mat-label>
+      <mat-select #mySelect formControlName="familia">
+        <mat-option *ngFor="let st of family" [value]="st.id">{{ st.descripcion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="familyControl.errors?.required"> {{ 'Seleccione una familia' }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Impuesto</mat-label>
+      <mat-select #mySelect formControlName="impuesto">
+        <mat-option *ngFor="let st of tax" [value]="st.id">{{ st.descripcion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="taxControl.errors?.required"> {{ 'Seleccione un impuesto' }} </mat-error>
+    </mat-form-field>
+    
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Programa</mat-label>
+      <mat-select #mySelect formControlName="programa">
+        <mat-option *ngFor="let st of program" [value]="st.id">{{ st.descripcion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="programControl.errors?.required"> {{ 'Seleccione un programa' }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Atributos</mat-label>
+      <mat-select #mySelect formControlName="atributos" multiple>
+        <mat-option *ngFor="let at of attribute" [value]="at.id">{{ at.descripcion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="attributeControl.errors?.required"> {{ 'Seleccione un atributo' }} </mat-error>
+    </mat-form-field>
+
+    
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(productstockForm.value)" [disabled]="!productstockForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.productstock ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>
