@@ -168,6 +168,10 @@ export class PurchaseFormComponent implements OnInit, OnDestroy {
     return this.purchaseForm?.get('tipo_de_movimiento') as FormControl;
   }
 
+  get proveedorControl() {
+    return this.purchaseForm?.get('proveedor') as FormControl;
+  }
+
   sendData() {
     if (this.purchaseForm.valid) {
       const purchase = this.purchaseForm.value;

@@ -99,6 +99,22 @@
           El campo tipo de movimineto es <strong>requerido</strong></small>
       </div>
     </div>
+    <div class="col-lg-4 col-md-12">
+      <!-- Proveedor -->
+      <div class="mb-4">
+        <ng-select
+          appearance="outline"
+          class="custom w-100"
+          placeholder="Proveedor"
+          [items]="proveedor"
+          bindLabel="nombre"
+          bindValue="id"
+          formControlName="proveedor">
+        </ng-select>
+        <small class="text-danger error-style" *ngIf="proveedorControl.errors?.required && proveedorControl.dirty">
+          El campo proveedor es <strong>requerido</strong></small>
+      </div>
+    </div>
     </div>
   </form>
   <mat-divider class="my-4"></mat-divider>
