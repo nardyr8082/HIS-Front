@@ -1,0 +1,95 @@
+<div class="form">
+  <h4>{{ data.sale ? 'Editar Venta' : 'Crear Venta' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="saleForm" [formGroup]="saleForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Número:</mat-label>
+      <input matInput formControlName="numero" />
+      <mat-error *ngIf="this.numeroControl.errors?.required"> {{ 'El número es' }} <strong>requerido</strong>  </mat-error>
+   </mat-form-field>
+   <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Número Control:</mat-label>
+    <input matInput formControlName="nro_control" />
+    <mat-error *ngIf="this.nro_controlControl.errors?.required"> {{ 'El número de control es' }} <strong>requerido</strong>  </mat-error>
+  </mat-form-field>
+    <div class="col-lg-6 col-md-12">
+      <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Fecha</mat-label>
+        <input matInput formControlName="fecha" [matDatepicker]="picker" />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="fechaControl.errors?.required">
+          {{ 'La fecha es ' }} <strong>requerida</strong>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Comentario:</mat-label>
+      <input matInput formControlName="comentarios" />
+      <mat-error *ngIf="this.comentarioControl.errors?.required"> {{ 'Los comentarios son' }} <strong>requerido</strong>  </mat-error>
+    </mat-form-field>
+  <!-- Almacén -->
+  <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Almacen"
+      [items]="almacen"
+      bindLabel="nombre"
+      bindValue="id"
+      formControlName="almacen">
+    </ng-select>
+    <small class="text-danger error-style" *ngIf="almacenControl.errors?.required && almacenControl.dirty">
+      El campo almacen es <strong>requerido</strong></small>
+  </div>
+   <!-- Estado -->
+   <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Estado"
+      [items]="estado"
+      bindLabel="descripcion"
+      bindValue="id"
+      formControlName="estado">
+    </ng-select>
+    <small class="text-danger error-style" *ngIf="estadoControl.errors?.required && estadoControl.dirty">
+      El campo estado es <strong>requerido</strong></small>
+  </div>
+     <!-- Usuario -->
+     <div class="mb-4">
+      <ng-select
+        appearance="outline"
+        class="custom w-100"
+        placeholder="Usuario"
+        [items]="usuario"
+        bindLabel="first_name"
+        bindValue="id"
+        formControlName="usuario">
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="usuarioControl.errors?.required && usuarioControl.dirty">
+        El campo usuario es <strong>requerido</strong></small>
+    </div>
+      <!-- Tipo Movimiento -->
+      <div class="mb-4">
+        <ng-select
+          appearance="outline"
+          class="custom w-100"
+          placeholder="Tipo Movimiento"
+          [items]="tipo_movimiento"
+          bindLabel="descripcion"
+          bindValue="id"
+          formControlName="tipo_de_movimiento">
+        </ng-select>
+        <small class="text-danger error-style" *ngIf="tipo_movControl.errors?.required && tipo_movControl.dirty">
+          El campo tipo de movimineto es <strong>requerido</strong></small>
+      </div>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(saleForm.value)" [disabled]="!saleForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.sale ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>
