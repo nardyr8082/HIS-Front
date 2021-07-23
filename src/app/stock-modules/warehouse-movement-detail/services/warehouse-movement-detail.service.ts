@@ -3,14 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../../app/core/models/api-response.model';
-import { WarehouseLot } from '../models/warehouseLot';
+import { WarehouseMovementDetail } from '../models/warehouse-movement-detail.model';
+import { Measure } from '../../classifiers/measure/models/measure.model';
+import { warehouseProduct } from '../../warehouse-lot/models/warehouseProduct';
+import { WarehouseMove } from '../models/warehouse-move.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class WarehouseLotService {
-  private apiEndpoint = `${environment.apiUrl}alm_lote`;
-  private apiEndpointAlmProducto = `${environment.apiUrl}alm_producto`;
+export class WarehouseMovementDetailService {
+  private apiEndpoint = `${environment.apiUrl}alm_detalle_movimiento`;
+  private apiEndpointMeasure = `${environment.apiUrl}alm_medida`;
+  private apiEndpointWareHouseProduct = `${environment.apiUrl}alm_producto`;
+  private apiEndpointMovement = `${environment.apiUrl}alm_movimiento`;
 
   private defaultFilter: any = {};
 
@@ -21,10 +26,10 @@ export class WarehouseLotService {
   private defaultPage: number = 0;
 
   private defaultPageSize: number = 10;
+
   constructor(private http: HttpClient) { }
 
-
-  getWarehouseLot(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<WarehouseLot>> {
+  getWarehouseMovementDetail(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<WarehouseMovementDetail>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -32,12 +37,19 @@ export class WarehouseLotService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<WarehouseLot>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<WarehouseMovementDetail>>(this.apiEndpoint + queryParams);
+  }
+  getMeasure(): Observable<ApiResponse<Measure>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointMeasure);
   }
 
-  /* getAlmProduct(): {
-    
-  } */
+  getWarehouseProduct(): Observable<ApiResponse<warehouseProduct>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointWareHouseProduct);
+  }
+
+  getMovement(): Observable<ApiResponse<WarehouseMove>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointMovement);
+  }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
     let queryParams = '';
@@ -48,6 +60,7 @@ export class WarehouseLotService {
         queryParams += `${property}=${filters[property]}`;
       }
     }
+
     if (sortColumn) {
       let ordering = '';
 
@@ -72,20 +85,16 @@ export class WarehouseLotService {
     return queryParams;
   }
 
-  createWarehouseLot(data: WarehouseLot): Observable<WarehouseLot> {
+  createWarehouseMovementDetail(data: WarehouseMovementDetail): Observable<WarehouseMovementDetail> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editWarehouseLot(data: WarehouseLot): Observable<WarehouseLot> {
-
-    return this.http.patch<WarehouseLot>(`${this.apiEndpoint}/${data.id}/`, data);
-
+  editWarehouseMovementDetail(data: WarehouseMovementDetail): Observable<WarehouseMovementDetail> {
+    return this.http.patch<WarehouseMovementDetail>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteWarehouseLot(id: string): Observable<any> {
+  deleteWarehouseMovementDetail(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 
 }
-
-

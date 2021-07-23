@@ -51,9 +51,9 @@ export const WAREHOUSELOT_TABLE_CONFIGURATION: TableConfiguration = {
       name: 'producto',
       title: 'Producto',
       type: 'select',
-      items:[]
-      
-    }
+      items: []
 
-  ]
+    },
+
+  ],
 };
