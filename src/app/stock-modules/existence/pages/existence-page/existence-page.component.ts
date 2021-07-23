@@ -107,12 +107,13 @@ export class ExistencePageComponent implements OnInit {
         map((response: ApiResponse<any>) => {
           this.existence = response.results.map((res) => ({
             ...res,
-            existence_id: res.existence.id,
-            existence_cantidad: res.existence.cantidad,
-            existence_importe: res.existence.importe,
-            existence_almacen: res.almacen.descripcion,
-            existence_unidad_medida: res.unidad_medida.descripcion,
-            existence_categoria: res.categoria.descripcion,
+            id: res.id,
+            cantidad: res.cantidad,
+            importe: res.importe,
+            almacen: res.almacen.nombre,
+            unidad_medida: res.unidad_medida.descripcion,
+            categoria: res.categoria.descripcion,
+            lote: res.lote.codigo,
 
           }));
 
