@@ -1,17 +1,18 @@
-import { environment } from '../../../../../src/environments/environment';
+import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+//
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../../../../app/core/models/api-response.model';
-import { WarehouseLot } from '../models/warehouseLot';
+import { ApiResponse } from '../../../core/models/api-response.model';
+import { BatchDistribution } from '../models/batch-distribution.model';
+
+//
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class WarehouseLotService {
-  private apiEndpoint = `${environment.apiUrl}alm_lote`;
-  private apiEndpointAlmProducto = `${environment.apiUrl}alm_producto`;
-
+export class BatchDistributionService {
+  private apiEndpoint = `${environment.apiUrl}alm_distribucion_lote`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -21,10 +22,10 @@ export class WarehouseLotService {
   private defaultPage: number = 0;
 
   private defaultPageSize: number = 10;
-  constructor(private http: HttpClient) { }
 
+  constructor(private http: HttpClient) {}
 
-  getWarehouseLot(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<WarehouseLot>> {
+  getBatchDistribution(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<BatchDistribution>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -32,12 +33,8 @@ export class WarehouseLotService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<WarehouseLot>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<BatchDistribution>>(this.apiEndpoint + queryParams);
   }
-
-  /* getAlmProduct(): {
-    
-  } */
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
     let queryParams = '';
@@ -48,6 +45,7 @@ export class WarehouseLotService {
         queryParams += `${property}=${filters[property]}`;
       }
     }
+
     if (sortColumn) {
       let ordering = '';
 
@@ -72,20 +70,15 @@ export class WarehouseLotService {
     return queryParams;
   }
 
-  createWarehouseLot(data: WarehouseLot): Observable<WarehouseLot> {
+  createBatchDistribution(data: BatchDistribution): Observable<BatchDistribution> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editWarehouseLot(data: WarehouseLot): Observable<WarehouseLot> {
-
-    return this.http.patch<WarehouseLot>(`${this.apiEndpoint}/${data.id}/`, data);
-
+  editBatchDistribution(data: BatchDistribution): Observable<BatchDistribution> {
+    return this.http.patch<BatchDistribution>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteWarehouseLot(id: string): Observable<any> {
+  deleteBatchDistribution(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
-
 }
-
-
