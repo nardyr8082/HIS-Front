@@ -1,0 +1,33 @@
+<div class="form">
+  <h4>{{ data.factureService ? 'Editar Distribución de Lote' : 'Crear Distribución de Lote' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="factureServiceForm" [formGroup]="factureServiceForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Cantidad</mat-label>
+      <input type="number" matInput formControlName="cantidad" />
+      <mat-error *ngIf="cantidadControl.errors?.required"> {{ 'La cantidad es ' }} <strong>requerida</strong> </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Servicio</mat-label>
+      <mat-select #mySelect formControlName="servicio">
+        <mat-option *ngFor="let service of services" [value]="service.id">{{ service.nombre }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="servicioControl.errors?.required"> {{ 'Seleccione un servicio' }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Factura</mat-label>
+      <mat-select #mySelect formControlName="factura">
+        <mat-option *ngFor="let facture of factures" [value]="facture.id">{{ facture.nro_factura }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="facturaControl.errors?.required"> {{ 'La factura es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(factureServiceForm.value)" [disabled]="!factureServiceForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.factureService ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

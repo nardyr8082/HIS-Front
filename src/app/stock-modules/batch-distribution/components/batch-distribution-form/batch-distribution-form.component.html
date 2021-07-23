@@ -20,7 +20,7 @@
       <mat-select #mySelect formControlName="detalle_movimiento">
         <mat-option *ngFor="let lote of lotes" [value]="lote.id">{{ lote.codigo }}</mat-option>
       </mat-select>
-      <mat-error *ngIf="detalle_movimientoControl.errors?.required"> {{ 'El cajero es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="detalle_movimientoControl.errors?.required"> {{ 'El detalle de movimiento es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
   </form>
   <mat-divider class="my-4"></mat-divider>

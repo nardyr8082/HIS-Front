@@ -242,11 +242,12 @@ const routes: Routes = [
       },
       {
         path: 'warehouse-inventory-difference',
-        loadChildren: () =>import('./stock-modules/warehouse-inventory-difference/warehouse-inventory-difference.module').then((m) => m.WarehouseInventoryDifferenceModule),
-	canActivate: [BackendGuard],
-	},
-	
-	{
+        loadChildren: () =>
+          import('./stock-modules/warehouse-inventory-difference/warehouse-inventory-difference.module').then((m) => m.WarehouseInventoryDifferenceModule),
+        canActivate: [BackendGuard],
+      },
+
+      {
         path: 'warehouse-movement-detail',
         loadChildren: () => import('./stock-modules/warehouse-movement-detail/warehouse-movement-detail.module').then((m) => m.WarehouseMovementDetailModule),
         canActivate: [BackendGuard],
@@ -335,6 +336,11 @@ const routes: Routes = [
       {
         path: 'batch-distribution',
         loadChildren: () => import('./stock-modules/batch-distribution/batch-distribution.module').then((m) => m.BatchDistributionModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'facture-service',
+        loadChildren: () => import('./stock-modules/facture-service/facture-service.module').then((m) => m.FactureServiceModule),
         canActivate: [BackendGuard],
       },
     ],

@@ -1,10 +1,10 @@
 import { WarehouseLotService } from './../../../warehouse-lot/services/warehouse-lot.service';
-import { warehouseLot } from './../../../warehouse-lot/models/warehouseLot';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map } from 'rxjs/operators';
+import { WarehouseLot } from 'src/app/stock-modules/warehouse-lot/models/warehouseLot';
 
 @Component({
   selector: 'app-batch-distribution-form',
@@ -15,7 +15,7 @@ export class BatchDistributionFormComponent implements OnInit {
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
-  lotes: warehouseLot[];
+  lotes: WarehouseLot[];
 
   subscriptions: Subscription[] = [];
 
@@ -38,10 +38,10 @@ export class BatchDistributionFormComponent implements OnInit {
 
   buildForm() {
     this.batchDistributionForm = new FormGroup({
-      id: new FormControl(this.data?.Almacencaja?.id ? this.data?.batchDistribution.id : null),
+      id: new FormControl(this.data?.batchDistribution?.id ? this.data?.batchDistribution.id : null),
       cant_por_lote: new FormControl(this.data?.batchDistribution?.cant_por_lote ? this.data?.batchDistribution.cant_por_lote : null, [Validators.required]),
       lote: new FormControl(this.data?.batchDistribution?.lote ? this.data?.batchDistribution.lote.id : null, [Validators.required]),
-      detalle_movimiento: new FormControl(this.data?.batchDistribution?.detalle_movimiento ? this.data?.batchDistribution.detalle_movimiento.id : 1, [
+      detalle_movimiento: new FormControl(this.data?.batchDistribution?.detalle_movimiento ? this.data?.batchDistribution.detalle_movimiento.id : null, [
         Validators.required,
       ]),
     });

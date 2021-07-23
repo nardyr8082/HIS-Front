@@ -1,5 +1,4 @@
 import { WarehouseLotService } from 'src/app/stock-modules/warehouse-lot/services/warehouse-lot.service';
-import { warehouseLot } from './../../../warehouse-lot/models/warehouseLot';
 import { DeleteConfirmationModalComponent } from './../../../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { BatchDistributionFormComponent } from './../../components/batch-distribution-form/batch-distribution-form.component';
 import { ApiResponse } from './../../../../core/models/api-response.model';
