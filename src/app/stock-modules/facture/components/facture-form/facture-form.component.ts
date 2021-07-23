@@ -26,10 +26,12 @@ export class FactureFormComponent implements OnInit, OnDestroy {
   comercial: any = [];
   subscriptions: Subscription[] = [];
 
-  constructor(public factureService: FactureService,
+  constructor(
+    public factureService: FactureService,
     private toastrService: ToastrService,
-     public dialogRef: MatDialogRef<FactureFormComponent>,
-      @Inject(MAT_DIALOG_DATA) public data: any) {}
+    public dialogRef: MatDialogRef<FactureFormComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -48,7 +50,6 @@ export class FactureFormComponent implements OnInit, OnDestroy {
       .pipe(
         map((response: ApiResponse<any>) => {
           this.estado = response.results;
-          console.log(this.estado);
         }),
       )
       .subscribe();
@@ -83,8 +84,8 @@ export class FactureFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    const fechaEmision = this.facture ? this.getFormattedDate(this.facture.fecha_emision) : '';
-    const fechaEntrega = this.facture ? this.getFormattedDate(this.facture.fecha_entrega) : '';
+    const fechaEmision = this.data.facture ? this.getFormattedDate(this.data.facture.fecha_emision) : '';
+    const fechaEntrega = this.data.facture ? this.getFormattedDate(this.data.facture.fecha_entrega) : '';
     this.factureForm = new FormGroup({
       fecha_emision: new FormControl(fechaEmision, [Validators.required]),
       fecha_entrega: new FormControl(fechaEntrega, [Validators.required]),
@@ -148,7 +149,7 @@ export class FactureFormComponent implements OnInit, OnDestroy {
       const dateFormat1 = moment(facture.fecha_entrega);
       facture.fecha_emision = dateFormat.format('yyyy-MM-DD');
       facture.fecha_entrega = dateFormat1.format('yyyy-MM-DD');
-      this.facture ? this.edit.emit( facture ) : this.create.emit( facture );
+      this.data.facture ? this.edit.emit(facture) : this.create.emit(facture);
       this.dialogRef.close();
     } else {
       this.toastrService.error('Por favor revise los formularios, quedan campos requeridos sin llenar', 'Error');

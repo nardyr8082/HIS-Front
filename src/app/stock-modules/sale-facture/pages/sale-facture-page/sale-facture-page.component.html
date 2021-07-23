@@ -1,0 +1,20 @@
+<div class="container mt-3">
+  <div class="d-flex justify-content-between align-items-center">
+    <h4>Factura de Venta</h4>
+    <button (click)="createSaleFacture()" mat-raised-button color="primary" class="button">Crear Factura de Venta</button>
+  </div>
+  <app-custom-table
+    *ngIf="saleFacture"
+    [data]="saleFacture"
+    [dataCount]="dataCount"
+    [displayedColumns]="configuration.displayedColumns"
+    [columnsName]="configuration.columnsName"
+    [paginationSize]="configuration.paginationSize"
+    [filters]="configuration.tableFilters"
+    [rowActionButtons]="rowActionButtons"
+    [loading]="loading"
+    (changePage)="onChangePage($event)"
+    (changeFilter)="onChangeFilter($event)"
+    (changeSort)="onChangeSort($event)"
+  ></app-custom-table>
+</div>

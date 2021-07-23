@@ -44,11 +44,7 @@ export class FacturePageComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor(
-    private factureService: FactureService,
-    private toastService: ToastrService,
-    public dialog: MatDialog,
-  ) {
+  constructor(private factureService: FactureService, private toastService: ToastrService, public dialog: MatDialog) {
     this.getEstado();
   }
 
@@ -81,10 +77,10 @@ export class FacturePageComponent implements OnInit, OnDestroy {
         map((response: ApiResponse<any>) => {
           this.facture = response.results.map((res) => ({
             ...res,
-            operacion_comercial_id:res.operacion_comercial.id,
+            operacion_comercial_id: res.operacion_comercial.id,
             estado_id: res.estado.id,
             estado_descrip: res.estado.descripcion,
-            comercial_id:res.comercial.id
+            comercial_id: res.comercial.id,
           }));
           this.dataCount = response.count;
           this.loading = false;
@@ -154,7 +150,7 @@ export class FacturePageComponent implements OnInit, OnDestroy {
 
     dialogRef = this.dialog.open(FactureFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
-      maxWidth: '500px',
+      maxWidth: '1000px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',

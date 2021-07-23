@@ -251,6 +251,12 @@ const routes: Routes = [
           import('./stock-modules/warehouse-inventory-difference/warehouse-inventory-difference.module').then((m) => m.WarehouseInventoryDifferenceModule),
         canActivate: [BackendGuard],
       },
+
+      {
+        path: 'warehouse-movement-detail',
+        loadChildren: () => import('./stock-modules/warehouse-movement-detail/warehouse-movement-detail.module').then((m) => m.WarehouseMovementDetailModule),
+        canActivate: [BackendGuard],
+      },
       {
         path: 'stock-invetory-status',
         loadChildren: () => import('./stock-modules/classifiers/inventory-status/inventory-status.module').then((m) => m.InventoryStatusModule),
@@ -291,11 +297,26 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/facture/facture.module').then((m) => m.FactureModule),
         canActivate: [BackendGuard],
       },
-      //{
-        //path: 'sale',
-        //loadChildren: () => import('./stock-modules/sale/sale.module').then((m) => m.SaleModule),
-        //canActivate: [BackendGuard],
-      //},
+      {
+        path: 'sale',
+        loadChildren: () => import('./stock-modules/sale/sale.module').then((m) => m.SaleModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'sale-facture',
+        loadChildren: () => import('./stock-modules/sale-facture/sale-facture.module').then((m) => m.SaleFactureModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'purchase',
+        loadChildren: () => import('./stock-modules/purchase/purchase.module').then((m) => m.PurchaseModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'purchase-facture',
+        loadChildren: () => import('./stock-modules/purchase-facture/purchase-facture.module').then((m) => m.PurchaseFactureModule),
+        canActivate: [BackendGuard],
+      },
       // Resources
       {
         path: 'resource-status',
@@ -330,6 +351,16 @@ const routes: Routes = [
       {
         path: 'stock-state-appointment',
         loadChildren: () => import('./stock-modules/stock-state-appointment/stock-state-appointment.module').then((m) => m.StockStateAppointmentModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'batch-distribution',
+        loadChildren: () => import('./stock-modules/batch-distribution/batch-distribution.module').then((m) => m.BatchDistributionModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'facture-service',
+        loadChildren: () => import('./stock-modules/facture-service/facture-service.module').then((m) => m.FactureServiceModule),
         canActivate: [BackendGuard],
       },
     ],

@@ -1,0 +1,20 @@
+<div class="container mt-3">
+  <div class="d-flex justify-content-between align-items-center">
+    <h4>Venta</h4>
+    <button (click)="createSale()" mat-raised-button color="primary" class="button">Crear Venta</button>
+  </div>
+  <app-custom-table
+    *ngIf="sale"
+    [data]="sale"
+    [dataCount]="dataCount"
+    [displayedColumns]="configuration.displayedColumns"
+    [columnsName]="configuration.columnsName"
+    [paginationSize]="configuration.paginationSize"
+    [filters]="configuration.tableFilters"
+    [rowActionButtons]="rowActionButtons"
+    [loading]="loading"
+    (changePage)="onChangePage($event)"
+    (changeFilter)="onChangeFilter($event)"
+    (changeSort)="onChangeSort($event)"
+  ></app-custom-table>
+</div>

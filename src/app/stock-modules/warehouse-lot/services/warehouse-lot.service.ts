@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../../app/core/models/api-response.model';
-import { warehouseLot } from '../models/warehouseLot';
+import { WarehouseLot } from '../models/warehouseLot';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +24,7 @@ export class WarehouseLotService {
   constructor(private http: HttpClient) { }
 
 
-  getWarehouseLot(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<warehouseLot>> {
+  getWarehouseLot(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<WarehouseLot>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -32,7 +32,7 @@ export class WarehouseLotService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<warehouseLot>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<WarehouseLot>>(this.apiEndpoint + queryParams);
   }
 
   /* getAlmProduct(): {
@@ -72,13 +72,13 @@ export class WarehouseLotService {
     return queryParams;
   }
 
-  createWarehouseLot(data: warehouseLot): Observable<warehouseLot> {
+  createWarehouseLot(data: WarehouseLot): Observable<WarehouseLot> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editWarehouseLot(data: warehouseLot): Observable<warehouseLot> {
+  editWarehouseLot(data: WarehouseLot): Observable<WarehouseLot> {
 
-    return this.http.patch<warehouseLot>(`${this.apiEndpoint}/${data.id}/`, data);
+    return this.http.patch<WarehouseLot>(`${this.apiEndpoint}/${data.id}/`, data);
 
   }
 
