@@ -287,9 +287,9 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       //{
-        //path: 'sale',
-        //loadChildren: () => import('./stock-modules/sale/sale.module').then((m) => m.SaleModule),
-        //canActivate: [BackendGuard],
+      //path: 'sale',
+      //loadChildren: () => import('./stock-modules/sale/sale.module').then((m) => m.SaleModule),
+      //canActivate: [BackendGuard],
       //},
       // Resources
       {
@@ -325,6 +325,11 @@ const routes: Routes = [
       {
         path: 'stock-state-appointment',
         loadChildren: () => import('./stock-modules/stock-state-appointment/stock-state-appointment.module').then((m) => m.StockStateAppointmentModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'batch-distribution',
+        loadChildren: () => import('./stock-modules/batch-distribution/batch-distribution.module').then((m) => m.BatchDistributionModule),
         canActivate: [BackendGuard],
       },
     ],

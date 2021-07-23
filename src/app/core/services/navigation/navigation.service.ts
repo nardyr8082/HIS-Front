@@ -584,6 +584,13 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Distribucion de Lote',
+          iconName: ['swap_vertical_circle'],
+          route: 'batch-distribution',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Inventario',
           iconName: ['swap_vertical_circle'],
           material: true,

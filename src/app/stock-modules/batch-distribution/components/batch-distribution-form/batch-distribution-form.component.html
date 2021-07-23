@@ -1,0 +1,33 @@
+<div class="form">
+  <h4>{{ data.batchDistribution ? 'Editar Distribución de Lote' : 'Crear Distribución de Lote' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="batchDistributionForm" [formGroup]="batchDistributionForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Cantidad por Lote</mat-label>
+      <input type="number" matInput formControlName="cant_por_lote" />
+      <mat-error *ngIf="cant_por_loteControl.errors?.required"> {{ 'La cantidad por lote es ' }} <strong>requerida</strong> </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Lote</mat-label>
+      <mat-select #mySelect formControlName="lote">
+        <mat-option *ngFor="let lote of lotes" [value]="lote.id">{{ lote.codigo }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="loteControl.errors?.required"> {{ 'Seleccione un lote' }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Detalle de Movimiento</mat-label>
+      <mat-select #mySelect formControlName="detalle_movimiento">
+        <mat-option *ngFor="let lote of lotes" [value]="lote.id">{{ lote.codigo }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="detalle_movimientoControl.errors?.required"> {{ 'El cajero es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(batchDistributionForm.value)" [disabled]="!batchDistributionForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.batchDistribution ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>
