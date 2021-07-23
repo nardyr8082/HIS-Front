@@ -695,6 +695,13 @@ export class NavigationService {
               display: true,
             },
             {
+              displayName: 'Detalle Movimiento',
+              iconName: ['radio_button_unchecked'],
+              route: 'warehouse-movement-detail',
+              material: true,
+              display: true,
+            },
+            {
               displayName: 'Estado de Movimiento',
               iconName: ['radio_button_unchecked'],
               route: 'move-status',

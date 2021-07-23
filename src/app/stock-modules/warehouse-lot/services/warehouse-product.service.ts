@@ -96,17 +96,17 @@ export class WarehouseProductService {
     return queryParams;
   }
 
-  createWarehouseLot(data: warehouseProduct): Observable<warehouseProduct> {
+  createWarehouseProduct(data: warehouseProduct): Observable<warehouseProduct> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editWarehouseLot(data: warehouseProduct): Observable<warehouseProduct> {
+  editWarehouseProduct(data: warehouseProduct): Observable<warehouseProduct> {
 
     return this.http.patch<warehouseProduct>(`${this.apiEndpoint}/${data.id}/`, data);
 
   }
 
-  deleteWarehouseLot(id: string): Observable<any> {
+  deleteWarehouseProduct(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 

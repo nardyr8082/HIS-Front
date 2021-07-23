@@ -200,7 +200,7 @@ export class ExistencePageComponent implements OnInit {
       maxHeight: '100vh',
       width: '100%',
       data: {
-        indicator: item,
+        existence: item,
       },
     });
 

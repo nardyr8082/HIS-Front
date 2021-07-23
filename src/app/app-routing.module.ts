@@ -242,8 +242,13 @@ const routes: Routes = [
       },
       {
         path: 'warehouse-inventory-difference',
-        loadChildren: () =>
-          import('./stock-modules/warehouse-inventory-difference/warehouse-inventory-difference.module').then((m) => m.WarehouseInventoryDifferenceModule),
+        loadChildren: () =>import('./stock-modules/warehouse-inventory-difference/warehouse-inventory-difference.module').then((m) => m.WarehouseInventoryDifferenceModule),
+	canActivate: [BackendGuard],
+	},
+	
+	{
+        path: 'warehouse-movement-detail',
+        loadChildren: () => import('./stock-modules/warehouse-movement-detail/warehouse-movement-detail.module').then((m) => m.WarehouseMovementDetailModule),
         canActivate: [BackendGuard],
       },
       {
