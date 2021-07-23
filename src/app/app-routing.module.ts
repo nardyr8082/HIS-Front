@@ -186,6 +186,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'stock-product',
+        loadChildren: () => import('./stock-modules/productstock/productstock.module').then((m) => m.ProductstockModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'change-price',
         loadChildren: () => import('./stock-modules/pricechanges/pricechanges.module').then((m) => m.PricechangesModule),
         canActivate: [BackendGuard],

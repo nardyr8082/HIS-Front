@@ -549,6 +549,13 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Producto',
+          iconName: ['swap_vertical_circle'],
+          route: 'stock-product',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Factura',
           iconName: ['swap_vertical_circle'],
           route: 'facture',
