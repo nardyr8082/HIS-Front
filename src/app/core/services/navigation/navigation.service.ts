@@ -556,9 +556,23 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Servicio',
+          iconName: ['swap_vertical_circle'],
+          route: 'stock-services',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Venta',
           iconName: ['swap_vertical_circle'],
           route: 'sale',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Estado de cita',
+          iconName: ['swap_vertical_circle'],
+          route: 'stock-state-appointment',
           material: true,
           display: true,
         },
@@ -572,21 +586,19 @@ export class NavigationService {
               iconName: ['swap_vertical_circle'],
               route: 'warehouse-inventory-difference',
               material: true,
-              display: true
-
+              display: true,
             },
             {
               displayName: 'Inventario',
               iconName: ['swap_vertical_circle'],
               route: 'stock-inventory',
               material: true,
-              display: true
-
-            }
+              display: true,
+            },
           ],
           display: true,
         },
-	{
+        {
           displayName: 'Conteo Inventario',
           iconName: ['swap_vertical_circle'],
           route: 'inventory-count',
@@ -596,7 +608,7 @@ export class NavigationService {
         {
           displayName: 'Cambio Precio',
           iconName: ['swap_vertical_circle'],
-          route: '',
+          route: 'change-price',
           material: true,
           display: true,
         },

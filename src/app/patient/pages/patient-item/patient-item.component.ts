@@ -263,13 +263,14 @@ export class PatientItemComponent implements OnInit {
   }
 
   onEdit(item) {
-    const editPatient: Observable<any> = this.editPatient(item);
+    const { foto, ...patient } = item;
+    const editPatient: Observable<any> = this.editPatient(patient);
     const observables: Observable<any>[] = [editPatient];
 
-    if (item.foto) {
+    if (foto) {
       const formData = new FormData();
       formData.append('id', item.id);
-      formData.append('foto', item.foto);
+      formData.append('foto', foto);
       const uploadImageObservable = this.patientService.uploadImagePatient(formData, item.id);
       observables.push(uploadImageObservable);
     }
