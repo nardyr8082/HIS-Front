@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -82,6 +82,7 @@ export class ServicesstockFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
+    const servicesstockIds = this.data.servicesstock ? this.data.servicesstock.departamento.map((r) => r.id) : [];
     this.servicesstockForm = new FormGroup({
       id: new FormControl(this.data?.servicesstock?.id ? this.data?.servicesstock.id : null),
       codigo: new FormControl(this.data?.servicesstock?.codigo ? this.data?.servicesstock.codigo : null, Validators.required),
@@ -89,7 +90,7 @@ export class ServicesstockFormComponent implements OnInit, OnDestroy {
       precio: new FormControl(this.data?.servicesstock?.precio ? this.data?.servicesstock.precio : null, [Validators.required, MyValidation.isDecimal]),
       impuesto: new FormControl(this.data?.servicesstock?.impuesto ? this.data?.servicesstock.impuesto.id : null, Validators.required),
       usuario: new FormControl(this.data?.servicesstock?.usuario ? this.data?.servicesstock.usuario.id : null, Validators.required),
-      departamento: new FormControl(this.data?.servicesstock?.departamento ? this.data?.servicesstock.departamento.id : null, Validators.required),
+      departamento: new FormControl(servicesstockIds, Validators.required),
     });
   }
   get idControl() {
