@@ -301,6 +301,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/purchase/purchase.module').then((m) => m.PurchaseModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'purchase-facture',
+        loadChildren: () => import('./stock-modules/purchase-facture/purchase-facture.module').then((m) => m.PurchaseFactureModule),
+        canActivate: [BackendGuard],
+      },
       // Resources
       {
         path: 'resource-status',
