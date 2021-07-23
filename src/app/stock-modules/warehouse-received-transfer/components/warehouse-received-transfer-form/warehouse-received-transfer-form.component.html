@@ -1,0 +1,33 @@
+<div class="form">
+    <h4>{{ data.warehouseReceivedTransfer ? 'Editar Transferencia' : 'Crear Transferencia' }}</h4>
+    <mat-divider class="my-4"></mat-divider>
+    <form *ngIf="WarehouseReceivedTransferForm" [formGroup]="WarehouseReceivedTransferForm">
+
+        <!-- Movimiento -->
+        <div class="mb-4">
+            <ng-select appearance="outline" class="custom w-100" placeholder="Movimiento" [items]="move"
+                bindLabel="comentario" bindValue="id" formControlName="movimiento">
+            </ng-select>
+            <small class="text-danger error-style" *ngIf="movimientoControl.errors?.required">El campo movimiento es
+                <strong>requerido</strong></small>
+        </div>
+
+        <!-- Movimiento origen -->
+        <div class="mb-4">
+            <ng-select appearance="outline" class="custom w-100" placeholder="Movimiento origen" [items]="move"
+                bindLabel="comentario" bindValue="id" formControlName="movimiento_origen">
+            </ng-select>
+            <small class="text-danger error-style" *ngIf="movimiento_origenControl.errors?.required">El campo movimiento
+                origen es
+                <strong>requerido</strong></small>
+        </div>
+    </form>
+    <mat-divider class="my-4"></mat-divider>
+    <div class="d-flex align-items-center justify-content-end">
+        <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+        <button (click)="onSubmit(WarehouseReceivedTransferForm.value)"
+            [disabled]="!WarehouseReceivedTransferForm.valid" mat-raised-button color="primary" class="button">
+            {{ data.warehouseReceivedTransfer ? 'Aceptar' : 'Crear' }}
+        </button>
+    </div>
+</div>

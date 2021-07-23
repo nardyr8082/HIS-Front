@@ -354,6 +354,10 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'warehouse-received-transfer',
+        loadChildren: () => import('./stock-modules/warehouse-received-transfer/warehouse-received-transfer.module').then((m) => m.WarehouseReceivedTransferModule),
+        canActivate: [BackendGuard],
+      },{
         path: 'batch-distribution',
         loadChildren: () => import('./stock-modules/batch-distribution/batch-distribution.module').then((m) => m.BatchDistributionModule),
         canActivate: [BackendGuard],

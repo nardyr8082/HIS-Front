@@ -655,6 +655,14 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Transferencia',
+          iconName: ['swap_vertical_circle'],
+          route: 'warehouse-received-transfer',
+          material: true,
+          display: true,
+        },
+
+        {
           displayName: 'Clasificadores',
           iconName: ['build'],
           material: true,
