@@ -556,6 +556,13 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Venta',
+          iconName: ['swap_vertical_circle'],
+          route: 'sale',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Inventario',
           iconName: ['swap_vertical_circle'],
           material: true,

@@ -7,7 +7,7 @@ export interface Facture {
   descuento?: number;
   arancel?: number;
   comentarios?: string;
-  operacion_comercial?: number;
-  estado?: number;
-  comercial?: number;
+  operacion_comercial?: string;
+  estado?: string;
+  comercial?: string;
 }
