@@ -156,6 +156,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'stock-stock',
+        loadChildren: () => import('./stock-modules/stock/stock.module').then((m) => m.StockModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'stock-tax',
         loadChildren: () => import('./stock-modules/classifiers/tax/tax.module').then((m) => m.TaxModule),
         canActivate: [BackendGuard],
