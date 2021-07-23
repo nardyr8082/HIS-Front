@@ -281,11 +281,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/facture/facture.module').then((m) => m.FactureModule),
         canActivate: [BackendGuard],
       },
-      {
-        path: 'sale',
-        loadChildren: () => import('./stock-modules/sale/sale.module').then((m) => m.SaleModule),
-        canActivate: [BackendGuard],
-      },
+      //{
+        //path: 'sale',
+        //loadChildren: () => import('./stock-modules/sale/sale.module').then((m) => m.SaleModule),
+        //canActivate: [BackendGuard],
+      //},
       // Resources
       {
         path: 'resource-status',
