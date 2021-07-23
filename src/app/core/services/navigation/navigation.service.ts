@@ -577,9 +577,16 @@ export class NavigationService {
           display: true,
         },
         {
-          displayName: 'Facture de Venta',
+          displayName: 'Factura de Venta',
           iconName: ['swap_vertical_circle'],
           route: 'sale-facture',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Compra',
+          iconName: ['swap_vertical_circle'],
+          route: 'purchase',
           material: true,
           display: true,
         },
