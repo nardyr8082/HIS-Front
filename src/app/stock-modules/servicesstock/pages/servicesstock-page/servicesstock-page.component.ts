@@ -11,6 +11,11 @@ import { Servicesstock } from '../../models/servicesstock.model';
 import { Servicesstock_TABLE_CONFIGURATION } from '../../models/servicesstock-table-configuration';
 import { ServicesstockFormComponent } from '../../components/servicesstock-form/servicesstock-form.component';
 import { ServicesstockService } from '../../services/servicesstock.service';
+import { Permission} from '../../../../security-module/role/models/role.model';
+import { Office } from '../../../../structure-modules/office/models/office.model';
+import { User } from '../../../../security-module/user/models/user.model';
+import { Tax } from '../../../classifiers/tax/models/tax.model';
+
 
 @Component({
   selector: 'app-servicesstock-page',
@@ -29,14 +34,14 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
 
   rowActionButtons = [
     {
-      tooltipText: 'Editar Cambio Precio',
+      tooltipText: 'Editar Servicio Almacén',
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.openEditForm(item),
     },
     {
-      tooltipText: 'Eliminar Cambio Precio',
+      tooltipText: 'Eliminar Servicio Almacén',
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
@@ -44,15 +49,7 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor(
-    private servicesstockService: ServicesstockService,
-    private toastService: ToastrService,
-    public dialog: MatDialog,
-  ) {
-    this.getOffice();
-    this.getImpuesto();
-    this.getUser();
-  }
+  constructor(private servicesstockService: ServicesstockService, private toastService: ToastrService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.getServicesstock();
@@ -61,44 +58,6 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
-  getUser(filters = {}) {
-    const sub = this.servicesstockService
-      .getUser()
-      .pipe(
-        map((response) => {
-          this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id, name: res.username }));
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-  getOffice(filters = {}) {
-    const sub = this.servicesstockService
-      .getOffice()
-      .pipe(
-        map((response) => {
-          this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-
-  getImpuesto(filters = {}) {
-    const sub = this.servicesstockService
-      .getImpuesto()
-      .pipe(
-        map((response) => {
-          this.configuration.tableFilters[3].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-
 
   getServicesstock(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
@@ -106,20 +65,19 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
       .getServicesstock(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
-          this.servicesstock = response.results.map((res) => ({
-            ...res,
-            impuesto_descripcion: res.impuesto.descripcion,
-            impuesto_id: res.impuesto.id,
-            usuario_username: res.usuario.username,
-            usuario_id: res.usuario.id,
-            departamento_nombre: res.departamento.nombre,
-            departamento_id: res.departamento.id,
-          }));
+          console.log('QUE !!!: ', response);
+          this.servicesstock = response.results.map((res) => {
+            console.log('YA !!!: ', res);
+            const departamento_string = this.getOfficeString(res.departamento);
+            const impuesto_string = this.getTaxstring(res.impuesto);
+            const usuario_string = this.getUserString(res.usuario);
+            return { ...res, impuesto_string: impuesto_string, usuario_string: usuario_string, departamento_string: departamento_string  };
+          });
           this.dataCount = response.count;
           this.loading = false;
         }),
         catchError(() => {
-          this.toastService.error('Hubo un error al obtener los datos. Por favor, inténtelo de nuevo más tarde.', 'Error');
+          this.toastService.error('Hubo OJO!!! un error al obtener los datos. Por favor, inténtelo de nuevo más tarde.', 'Error');
           this.loading = false;
           return null;
         }),
@@ -127,6 +85,22 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
       .subscribe();
 
     this.subscriptions.push(sub);
+  }
+
+  getOfficeString(office: Office[]) {
+    let departamento_string = '';
+    office.forEach((off) => {
+      departamento_string = departamento_string.concat(`${off.nombre}, `);
+    });
+    return departamento_string.substring(0, departamento_string.length - 2);
+  }
+
+  getUserString(user: any) {
+    return user.username;
+  }
+
+  getTaxstring(imp: any) {
+    return imp.descripcion;
   }
 
   onChangePage(page: PageEvent) {
@@ -161,13 +135,13 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
         switchMap((servicesstock: Servicesstock) =>
           this.servicesstockService.createServicesstock(servicesstock).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al crear el Cambio Precio. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al crear el servicio almacén. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getServicesstock(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El Cambio Precio fue creado correctamente.', 'Felicidades');
+                this.toastService.success('El servicio almacén fue creado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -198,13 +172,13 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
         switchMap((servicesstock: Servicesstock) =>
           this.servicesstockService.editServicesstock({ ...servicesstock, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el Cambio Precio. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar el servicio almacén. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getServicesstock(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El Cambio Precio fue modificado correctamente.', 'Felicidades');
+                this.toastService.success('El rol fue modificado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -219,7 +193,7 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `¿Está seguro que desea eliminar el Cambio Precio?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar el servicio alamcén: ${item.nombre}?`;
 
     const sub = modalComponentRef.accept
       .pipe(
@@ -228,14 +202,14 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
           this.servicesstockService.deleteServicesstock(item.id).pipe(
             map(() => item),
             catchError(() => {
-              this.toastService.error('Hubo un error al eliminar el Cambio Precio. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al eliminar el servicio almacén. Por favor, inténtelo de nuevo más tarde.', 'Error');
               modalRef.close();
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getServicesstock(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El Cambio Precio fue eliminado correctamente.', 'Felicidades');
+                this.toastService.success('El servicio almacén fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),

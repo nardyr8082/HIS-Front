@@ -5,7 +5,13 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from '../../../../core/models/api-response.model';
 import { ServicesstockService } from '../../services/servicesstock.service';
-
+import { Office } from '../../../../structure-modules/office/models/office.model';
+import { OfficeService } from '../../../../structure-modules/office/services/office.service';
+import { User } from '../../../../security-module/user/models/user.model';
+import { Tax } from '../../../classifiers/tax/models/tax.model';
+import { UserService } from '../../../../security-module/user/services/user.service';
+import { TaxService } from '../../../classifiers/tax/services/tax.service';
+import { MyValidation } from '../../../boxstock/validator/validator';
 
 @Component({
   selector: 'app-servicesstock-form',
@@ -17,42 +23,30 @@ export class ServicesstockFormComponent implements OnInit, OnDestroy {
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
   servicesstockForm: FormGroup;
-  usuario: any = [];
-  impuesto: any = [];
-  departamento: any = [];
   subscriptions: Subscription[] = [];
 
-  constructor(public servicesstockService: ServicesstockService, public dialogRef: MatDialogRef<ServicesstockFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  departamento: Office[];
+  usuario: User[];
+  impuesto: Tax[];
+
+  constructor(private departamentoService: OfficeService, private usuarioService: UserService, private impuestoService: TaxService, public dialogRef: MatDialogRef<ServicesstockFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
-    this.buildForm();
     this.getOffice();
-    this.getImpuesto();
+    this.getTax();
     this.getUser();
-
+    this.buildForm();
   }
 
   ngOnDestroy() {
     this.subscriptions;
   }
 
-  getUser() {
-    const sub = this.servicesstockService
-      .getUser()
-      .pipe(
-        map((response: ApiResponse<any>) => {
-          this.usuario = response.results;
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
   getOffice() {
-    const sub = this.servicesstockService
-      .getOffice()
+    const sub = this.departamentoService
+      .getOffice({}, 'id', 'asc', 1, 10000)
       .pipe(
-        map((response: ApiResponse<any>) => {
+        map((response: ApiResponse<Office>) => {
           this.departamento = response.results;
         }),
       )
@@ -60,11 +54,25 @@ export class ServicesstockFormComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(sub);
   }
-  getImpuesto() {
-    const sub = this.servicesstockService
-      .getImpuesto()
+
+  getUser() {
+    const sub = this.usuarioService
+      .getUsers({}, 'id', 'asc', 1, 10000)
       .pipe(
-        map((response: ApiResponse<any>) => {
+        map((response: ApiResponse<User>) => {
+          this.usuario = response.results;
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getTax() {
+    const sub = this.impuestoService
+      .getTaxs({}, 'id', 'asc', 1, 10000)
+      .pipe(
+        map((response: ApiResponse<Tax>) => {
           this.impuesto = response.results;
         }),
       )
@@ -75,36 +83,39 @@ export class ServicesstockFormComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.servicesstockForm = new FormGroup({
-      codigo: new FormControl(this.data.servicesstock ? this.data.servicesstock.codigo : '', Validators.required),
-      nombre: new FormControl(this.data.servicesstock ? this.data.servicesstock.nombre : '', Validators.required),
-      precio: new FormControl(this.data.servicesstock ? this.data.servicesstock.precio : '', Validators.required),
-      impuesto: new FormControl(this.data.servicesstock ? this.data.servicesstock.impuesto_id : '', Validators.required),
-      usuario: new FormControl(this.data.servicesstock ? this.data.servicesstock.usuario_id : '', Validators.required),
-      departamento: new FormControl(this.data.servicesstock ? this.data.servicesstock.departamento_id : '', Validators.required),
+      id: new FormControl(this.data?.servicesstock?.id ? this.data?.servicesstock.id : null),
+      codigo: new FormControl(this.data?.servicesstock?.codigo ? this.data?.servicesstock.codigo : null, Validators.required),
+      nombre: new FormControl(this.data?.servicesstock?.nombre ? this.data?.servicesstock.nombre : null, Validators.required),
+      precio: new FormControl(this.data?.servicesstock?.precio ? this.data?.servicesstock.precio : null, [Validators.required, MyValidation.isDecimal]),
+      impuesto: new FormControl(this.data?.servicesstock?.impuesto ? this.data?.servicesstock.impuesto.id : null, Validators.required),
+      usuario: new FormControl(this.data?.servicesstock?.usuario ? this.data?.servicesstock.usuario.id : null, Validators.required),
+      departamento: new FormControl(this.data?.servicesstock?.departamento ? this.data?.servicesstock.departamento.id : null, Validators.required),
     });
   }
-  get codecControl() {
-    return this.servicesstockForm?.get('codigo') as FormControl;
+  get idControl() {
+    return this.servicesstockForm.get('id') as FormControl;
   }
+
+  get codecControl() {
+    return this.servicesstockForm.get('codigo') as FormControl;
+  }
+
   get nameControl() {
-    return this.servicesstockForm?.get('nombre') as FormControl;
+    return this.servicesstockForm.get('nombre') as FormControl;
   }
 
   get priceControl() {
-    return this.servicesstockForm?.get('precio') as FormControl;
+    return this.servicesstockForm.get('precio') as FormControl;
   }
-
-  get impuestoControl() {
-    return this.servicesstockForm?.get('impuestp') as FormControl;
+  get taxControl() {
+    return this.servicesstockForm.get('impuesto') as FormControl;
   }
-
   get userControl() {
-    return this.servicesstockForm?.get('usuario') as FormControl;
+    return this.servicesstockForm.get('usuario') as FormControl;
   }
   get officeControl() {
-    return this.servicesstockForm?.get('departamento') as FormControl;
+    return this.servicesstockForm.get('departamento') as FormControl;
   }
-
   onSubmit(data) {
     this.data.servicesstock ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();

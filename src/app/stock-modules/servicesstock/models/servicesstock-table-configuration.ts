@@ -1,14 +1,15 @@
 import { TableConfiguration } from '../../../../../src/app/shared/models/table-configuration.model';
-import { DEFAULT_PAGINATION_SIZE } from '../../../../app/core/models/api-response.model';
-export const Servicesstock_TABLE_CONFIGURATION: TableConfiguration = {
+import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model';
+
+export const Servicesstock_TABLE_CONFIGURATION = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['codigo', 'nombre', 'precio', 'impuesto_descripcion', 'usuario_username', 'departamento_nombre'],
-  columnsName: ['Codigo', 'Nombre', 'Precio', 'Impuesto', 'Usuario', 'Departamento'],
+  displayedColumns: ['codigo', 'nombre', 'precio', 'impuesto_string', 'usuario_string', 'departamento_string'],
+  columnsName: ['Código', 'Nombre', 'Precio', 'Impuesto', 'Usuario', 'Departamento'],
   tableFilters: [
     {
       name: 'codigo',
       type: 'text',
-      title: 'Codigo',
+      title: 'Código',
     },
     {
       name: 'nombre',
@@ -17,14 +18,13 @@ export const Servicesstock_TABLE_CONFIGURATION: TableConfiguration = {
     },
     {
       name: 'precio',
-      title: 'Precio',
       type: 'text',
+      title: 'Precio',
     },
     {
       name: 'impuesto',
+      type: 'text',
       title: 'Impuesto',
-      type: 'select',
-      items: [],
     },
     {
       name: 'usuario',

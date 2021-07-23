@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../../app/core/models/api-response.model';
 import { Servicesstock } from '../models/servicesstock.model';
+
 //
 
 @Injectable({
@@ -12,9 +13,6 @@ import { Servicesstock } from '../models/servicesstock.model';
 })
 export class ServicesstockService {
   private apiEndpoint = `${environment.apiUrl}alm_servicio`;
-  private apiEndpointUser = `${environment.apiUrl}usuario`;
-  private apiEndpointOff = `${environment.apiUrl}departamento`;
-  private apiEndpointImp = `${environment.apiUrl}alm_impuesto`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -27,7 +25,7 @@ export class ServicesstockService {
 
   constructor(private http: HttpClient) {}
 
-  getServicesstock(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Servicesstock>> {
+  getServicesstock(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<any>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -35,17 +33,9 @@ export class ServicesstockService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<Servicesstock>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<any>>(this.apiEndpoint + queryParams);
   }
-  getOffice(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointOff);
-  }
-  getImpuesto(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointImp);
-  }
-  getUser(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointUser);
-  }
+
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
     let queryParams = '';
 
