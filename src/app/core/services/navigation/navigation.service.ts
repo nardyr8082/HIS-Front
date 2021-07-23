@@ -570,6 +570,13 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Facture de Venta',
+          iconName: ['swap_vertical_circle'],
+          route: 'sale-facture',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Estado de cita',
           iconName: ['swap_vertical_circle'],
           route: 'stock-state-appointment',

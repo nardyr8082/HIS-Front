@@ -1,7 +1,7 @@
 import { TableConfiguration } from 'src/app/shared/models/table-configuration.model';
 import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model';
 
-export const FACTURE_TABLE_CONFIGURATION: TableConfiguration = {
+export const SALE_FACTURE_TABLE_CONFIGURATION: TableConfiguration = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
   displayedColumns: ['nro_factura', 'fecha_emision', 'fecha_entrega', 'importe_total', 'estado_descrip'],
   columnsName: ['Nro. Factura', 'Fecha Emisión', 'Fecha Entrega','Importe Total', 'Estado'],

@@ -1,4 +1,4 @@
-export interface Facture {
+export interface SaleFacture {
   id: number;
   nro_factura?: number;
   fecha_emision?: string;
@@ -10,4 +10,5 @@ export interface Facture {
   operacion_comercial?: string;
   estado?: string;
   comercial?: string;
+  venta?: string;
 }

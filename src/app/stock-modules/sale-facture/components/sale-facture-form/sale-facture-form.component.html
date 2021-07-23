@@ -1,7 +1,7 @@
 <div class="form">
-  <h4>{{ data.facture ? 'Editar Factura' : 'Crear Factura' }}</h4>
+  <h4>{{ data.saleFacture ? 'Editar Factura de Venta' : 'Crear Factura de Venta' }}</h4>
   <mat-divider class="my-4"></mat-divider>
-  <form *ngIf="factureForm" [formGroup]="factureForm">
+  <form *ngIf="saleFactureForm" [formGroup]="saleFactureForm">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Número Factura:</mat-label>
       <input matInput formControlName="nro_factura" />
@@ -89,12 +89,26 @@
       <small class="text-danger error-style" *ngIf="comercialControl.errors?.required && comercialControl.dirty">
         El campo comercial es <strong>requerido</strong></small>
     </div>
+  <!-- Venta -->
+  <div class="mb-4">
+   <ng-select
+     appearance="outline"
+     class="custom w-100"
+     placeholder="Venta"
+     [items]="venta"
+     bindLabel="numero"
+     bindValue="id"
+     formControlName="venta">
+   </ng-select>
+   <small class="text-danger error-style" *ngIf="ventaControl.errors?.required && ventaControl.dirty">
+     El campo venta es <strong>requerido</strong></small>
+ </div>
   </form>
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
-    <button color="primary" mat-raised-button mat-button [disabled]="!factureForm.valid" (click)="sendData()">
-      {{ data.facture ? 'Aceptar' : 'Crear' }}
+    <button color="primary" mat-raised-button mat-button [disabled]="!saleFactureForm.valid" (click)="sendData()">
+      {{ data.saleFacture ? 'Aceptar' : 'Crear' }}
     </button>
   </div>
 </div>

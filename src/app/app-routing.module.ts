@@ -286,6 +286,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/sale/sale.module').then((m) => m.SaleModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'sale-facture',
+        loadChildren: () => import('./stock-modules/sale-facture/sale-facture.module').then((m) => m.SaleFactureModule),
+        canActivate: [BackendGuard],
+      },
       // Resources
       {
         path: 'resource-status',

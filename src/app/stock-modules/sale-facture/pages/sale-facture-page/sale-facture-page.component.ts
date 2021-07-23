@@ -1,26 +1,26 @@
-import { FactureService } from './../../services/facture.service';
-import { FACTURE_TABLE_CONFIGURATION } from './../../models/facture-table-configuration';
-import { Facture } from './../../models/facture.model';
+import { SaleFactureService } from './../../services/sale-facture.service';
+import { SALE_FACTURE_TABLE_CONFIGURATION } from './../../models/sale-facture-table-configuration';
+import { SaleFacture } from './../../models/sale-facture.model';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { of, Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { ApiResponse, DEFAULT_PAGE_SIZE } from '../../../../core/models/api-response.model';
-import { FactureFormComponent } from '../../components/facture-form/facture-form.component';
+import { SaleFactureFormComponent } from '../../components/sale-facture-form/sale-facture-form.component';
 import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from '../../../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
 
 @Component({
-  selector: 'app-facture-page',
-  templateUrl: './facture-page.component.html',
-  styleUrls: ['./facture-page.component.scss'],
+  selector: 'app-sale-facture-page',
+  templateUrl: './sale-facture-page.component.html',
+  styleUrls: ['./sale-facture-page.component.scss'],
 })
-export class FacturePageComponent implements OnInit, OnDestroy {
-  facture: Facture[];
+export class SaleFacturePageComponent implements OnInit, OnDestroy {
+  salefacture: SaleFacture[];
   dataCount = 0;
-  configuration = FACTURE_TABLE_CONFIGURATION;
+  configuration = SALE_FACTURE_TABLE_CONFIGURATION;
   subscriptions: Subscription[] = [];
   filters = {};
   loading = false;
@@ -40,12 +40,12 @@ export class FacturePageComponent implements OnInit, OnDestroy {
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
-      callback: (item) => this.deleteFacture(item),
+      callback: (item) => this.deleteSaleFacture(item),
     },
   ];
 
   constructor(
-    private factureService: FactureService,
+    private salefactureService: SaleFactureService,
     private toastService: ToastrService,
     public dialog: MatDialog,
   ) {
@@ -53,7 +53,7 @@ export class FacturePageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.getFacture();
+    this.getSaleFacture();
   }
 
   ngOnDestroy() {
@@ -61,7 +61,7 @@ export class FacturePageComponent implements OnInit, OnDestroy {
   }
 
   getEstado(filters = {}) {
-    const sub = this.factureService
+    const sub = this.salefactureService
       .getEstado()
       .pipe(
         map((response) => {
@@ -73,18 +73,19 @@ export class FacturePageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  getFacture(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
+  getSaleFacture(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
-    const sub = this.factureService
-      .getFacture(filters, sortColumn, sortDirection, page, pageSize)
+    const sub = this.salefactureService
+      .getSaleFacture(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
-          this.facture = response.results.map((res) => ({
+          this.salefacture = response.results.map((res) => ({
             ...res,
             operacion_comercial_id:res.operacion_comercial.id,
             estado_id: res.estado.id,
             estado_descrip: res.estado.descripcion,
-            comercial_id:res.comercial.id
+            comercial_id:res.comercial.id,
+            venta_id: res.venta.id
           }));
           this.dataCount = response.count;
           this.loading = false;
@@ -103,41 +104,41 @@ export class FacturePageComponent implements OnInit, OnDestroy {
   onChangePage(page: PageEvent) {
     this.page = page.pageIndex + 1;
     this.pageSize = page.pageSize;
-    this.getFacture(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
+    this.getSaleFacture(this.filters, 'id', 'desc', page.pageIndex + 1, page.pageSize);
   }
 
   onChangeFilter(filters) {
     this.filters = filters;
-    this.getFacture(filters, 'id', 'desc');
+    this.getSaleFacture(filters, 'id', 'desc');
   }
 
-  createFacture() {
-    let dialogRef: MatDialogRef<FactureFormComponent, any>;
+  createSaleFacture() {
+    let dialogRef: MatDialogRef<SaleFactureFormComponent, any>;
 
-    dialogRef = this.dialog.open(FactureFormComponent, {
+    dialogRef = this.dialog.open(SaleFactureFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
       maxWidth: '500px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',
       data: {
-        facture: null,
+        salefacture: null,
       },
     });
 
-    const modalComponentRef = dialogRef.componentInstance as FactureFormComponent;
+    const modalComponentRef = dialogRef.componentInstance as SaleFactureFormComponent;
 
     const sub = modalComponentRef.create
       .pipe(
-        switchMap((facture: Facture) =>
-          this.factureService.createFacture(facture).pipe(
+        switchMap((salefacture: SaleFacture) =>
+          this.salefactureService.createSaleFacture(salefacture).pipe(
             catchError(() => {
               this.toastService.error('Hubo un error al crear la Factura. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getFacture(this.filters, 'id', 'desc', this.page, this.pageSize);
+                this.getSaleFacture(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La Factura fue creada correctamente.', 'Felicidades');
               }
             }),
@@ -150,31 +151,31 @@ export class FacturePageComponent implements OnInit, OnDestroy {
   }
 
   openEditForm(item) {
-    let dialogRef: MatDialogRef<FactureFormComponent, any>;
+    let dialogRef: MatDialogRef<SaleFactureFormComponent, any>;
 
-    dialogRef = this.dialog.open(FactureFormComponent, {
+    dialogRef = this.dialog.open(SaleFactureFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
       maxWidth: '500px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',
       data: {
-        facture: item,
+        salefacture: item,
       },
     });
-    const modalComponentRef = dialogRef.componentInstance as FactureFormComponent;
+    const modalComponentRef = dialogRef.componentInstance as SaleFactureFormComponent;
 
     const sub = modalComponentRef.edit
       .pipe(
-        switchMap((facture: Facture) =>
-          this.factureService.editFacture({ ...facture, id: item.id }).pipe(
+        switchMap((salefacture: SaleFacture) =>
+          this.salefactureService.editSaleFacture({ ...salefacture, id: item.id }).pipe(
             catchError(() => {
               this.toastService.error('Hubo un error al editar la factura. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
-                this.getFacture(this.filters, 'id', 'desc', this.page, this.pageSize);
+                this.getSaleFacture(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La Factura fue modificada correctamente.', 'Felicidades');
               }
             }),
@@ -186,7 +187,7 @@ export class FacturePageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  deleteFacture(item) {
+  deleteSaleFacture(item) {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
@@ -196,7 +197,7 @@ export class FacturePageComponent implements OnInit, OnDestroy {
       .pipe(
         filter((accept) => accept),
         switchMap(() =>
-          this.factureService.deleteFacture(item.id).pipe(
+          this.salefactureService.deleteSaleFacture(item.id).pipe(
             map(() => item),
             catchError(() => {
               this.toastService.error('Hubo un error al eliminar la Factura. Por favor, inténtelo de nuevo más tarde.', 'Error');
@@ -205,7 +206,7 @@ export class FacturePageComponent implements OnInit, OnDestroy {
             }),
             tap((success) => {
               if (success) {
-                this.getFacture(this.filters, 'id', 'desc', this.page, this.pageSize);
+                this.getSaleFacture(this.filters, 'id', 'desc', this.page, this.pageSize);
                 this.toastService.success('La Factura fue eliminada correctamente.', 'Felicidades');
                 modalRef.close();
               }
@@ -220,6 +221,6 @@ export class FacturePageComponent implements OnInit, OnDestroy {
   }
 
   onChangeSort(sort: Sort) {
-    this.getFacture(this.filters, sort.active, sort.direction);
+    this.getSaleFacture(this.filters, sort.active, sort.direction);
   }
 }

@@ -4,17 +4,18 @@ import { Injectable } from '@angular/core';
 //
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response.model';
-import { Facture } from '../models/facture.model';
+import { SaleFacture } from '../models/sale-facture.model';
 //
 
 @Injectable({
   providedIn: 'root',
 })
-export class FactureService {
-  private apiEndpoint = `${environment.apiUrl}alm_factura`;
+export class SaleFactureService {
+  private apiEndpoint = `${environment.apiUrl}alm_factura_venta`;
   private apiEndpointEst = `${environment.apiUrl}alm_estado_factura`;
   private apiEndpointCom = `${environment.apiUrl}usuario`;
   private apiEndpointOpe = `${environment.apiUrl}alm_operacion_comercial`;
+  private apiEndpointVen = `${environment.apiUrl}alm_venta`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -27,7 +28,7 @@ export class FactureService {
 
   constructor(private http: HttpClient) {}
 
-  getFacture(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Facture>> {
+  getSaleFacture(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<SaleFacture>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -35,7 +36,7 @@ export class FactureService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<Facture>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<SaleFacture>>(this.apiEndpoint + queryParams);
   }
   getEstado(): Observable<ApiResponse<any>> {
     return this.http.get<ApiResponse<any>>(this.apiEndpointEst);
@@ -47,6 +48,10 @@ export class FactureService {
 
   getOperacion(): Observable<ApiResponse<any>> {
     return this.http.get<ApiResponse<any>>(this.apiEndpointOpe);
+  }
+
+  getVenta(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointVen);
   }
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
     let queryParams = '';
@@ -82,15 +87,15 @@ export class FactureService {
     return queryParams;
   }
 
-  createFacture(data: Facture): Observable<Facture> {
+  createSaleFacture(data: SaleFacture): Observable<SaleFacture> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editFacture(data: Facture): Observable<Facture> {
-    return this.http.patch<Facture>(`${this.apiEndpoint}/${data.id}/`, data);
+  editSaleFacture(data: SaleFacture): Observable<SaleFacture> {
+    return this.http.patch<SaleFacture>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteFacture(id: string): Observable<any> {
+  deleteSaleFacture(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 }

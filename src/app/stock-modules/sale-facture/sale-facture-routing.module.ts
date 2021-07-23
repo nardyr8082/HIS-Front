@@ -1,4 +1,4 @@
-import { FacturePageComponent } from './pages/facture-page/facture-page.component';
+import { SaleFacturePageComponent } from './pages/sale-facture-page/sale-facture-page.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LayoutComponent } from '../../shared/layout/layout.component';
@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: FacturePageComponent,
+        component: SaleFacturePageComponent,
       },
     ],
   },
@@ -20,4 +20,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class FactureRoutingModule {}
+export class SaleFactureRoutingModule {}
