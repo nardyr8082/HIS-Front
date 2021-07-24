@@ -86,7 +86,12 @@ export class BoxstockService {
   checkNumber(num: string) {
     return this.http.get<any>(this.apiEndpoint).pipe(
       map((res) => {
+        console.log('la url es: ', this.apiEndpoint);
         const miarre = res.results.filter((valores) => valores.nro === num);
+        console.log('valor de miarre:', miarre);
+        if (miarre.length == 1) {
+          console.log('valor de miarre ID:', miarre[0].id);
+        }
         return { isNumberAvailable: miarre.length !== 1 };
       }),
     );
