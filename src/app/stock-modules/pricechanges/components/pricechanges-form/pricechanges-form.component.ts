@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from '../../../../core/models/api-response.model';
 import { PricechangesService } from '../../services/pricechanges.service';
+import { ValidationPrinceChanges } from '../../validator/validator';
 
 
 @Component({
@@ -64,9 +65,9 @@ export class PricechangesFormComponent implements OnInit, OnDestroy {
   buildForm() {
     this.pricechangesForm = new FormGroup({
       fecha: new FormControl(this.data.pricechanges ? this.data.pricechanges.fecha : '', Validators.required),
-      precio_viejo: new FormControl(this.data.pricechanges ? this.data.pricechanges.precio_viejo : '', Validators.required),
-      precio_nuevo: new FormControl(this.data.pricechanges ? this.data.pricechanges.precio_nuevo : '', Validators.required),
-      comentario: new FormControl(this.data.pricechanges ? this.data.pricechanges.comentario : '', Validators.required),
+      precio_viejo: new FormControl(this.data.pricechanges ? this.data.pricechanges.precio_viejo : '', [Validators.required, ValidationPrinceChanges.isDecimalFijo172]),
+      precio_nuevo: new FormControl(this.data.pricechanges ? this.data.pricechanges.precio_nuevo : '', [Validators.required, ValidationPrinceChanges.isDecimalFijo172]),
+      comentario: new FormControl(this.data.pricechanges ? this.data.pricechanges.comentario : ''),
       lote: new FormControl(this.data.pricechanges ? this.data.pricechanges.lote_id : '', Validators.required),
       usuario: new FormControl(this.data.pricechanges ? this.data.pricechanges.usuario_id : '', Validators.required),
     });

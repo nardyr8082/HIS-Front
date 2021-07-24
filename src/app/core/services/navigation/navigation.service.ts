@@ -563,13 +563,6 @@ export class NavigationService {
           display: true,
         },
         {
-          displayName: 'Devolución Proveedores',
-          iconName: ['swap_vertical_circle'],
-          route: 'return-suplier',
-          material: true,
-          display: true,
-        },
-        {
           displayName: 'Producto',
           iconName: ['swap_vertical_circle'],
           route: 'stock-product',
