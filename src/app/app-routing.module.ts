@@ -161,6 +161,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'return-suplier',
+        loadChildren: () => import('./stock-modules/suplierreturn/suplierreturn.module').then((m) => m.SuplierreturnModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'stock-tax',
         loadChildren: () => import('./stock-modules/classifiers/tax/tax.module').then((m) => m.TaxModule),
         canActivate: [BackendGuard],

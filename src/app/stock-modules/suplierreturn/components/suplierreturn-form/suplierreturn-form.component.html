@@ -1,0 +1,78 @@
+<div class="form">
+  <h4>{{ data.suplierreturn ? 'Editar Devolución Proveedores' : 'Crear Devolución Proveedores' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="suplierreturnForm" [formGroup]="suplierreturnForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Fecha</mat-label>
+      <input matInput formControlName="fecha" maxlength="20" />
+      <mat-error *ngIf="dateControl.errors?.required"> {{ 'El fecha es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Numero</mat-label>
+      <input matInput formControlName="numero" maxlength="20" />
+      <mat-error *ngIf="numberControl.errors?.required"> {{ 'El numero es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Comentario</mat-label>
+      <input matInput formControlName="comentario" maxlength="20" />
+      <mat-error *ngIf="comentaryControl.errors?.required"> {{ 'El comentario es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Control Numero</mat-label>
+      <input matInput formControlName="nro_control" maxlength="20" />
+      <mat-error *ngIf="controlnumberControl.errors?.required"> {{ 'El control numero es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Almacen</mat-label>
+      <mat-select #mySelect formControlName="almacen">
+        <mat-option *ngFor="let st of stock" [value]="st.id">{{ st.nombre }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="stockControl.errors?.required"> {{ 'Seleccione un almacen' }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Estado</mat-label>
+      <mat-select #mySelect formControlName="estado">
+        <mat-option *ngFor="let st of movestatus" [value]="st.id">{{ st.descripcion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="movestatusControl.errors?.required"> {{ 'Seleccione un estado movimiento' }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Tipo Movimiento</mat-label>
+      <mat-select #mySelect formControlName="tipo_de_movimiento">
+        <mat-option *ngFor="let st of movetype" [value]="st.id">{{ st.descripcion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="movestypeControl.errors?.required"> {{ 'Seleccione un tipo movimiento' }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Usuario</mat-label>
+      <mat-select #mySelect formControlName="usuario">
+        <mat-option *ngFor="let st of user" [value]="st.id">{{ st.username }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="userControl.errors?.required"> {{ 'Seleccione un usuario' }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Proveedor</mat-label>
+      <mat-select #mySelect formControlName="proveedor">
+        <mat-option *ngFor="let st of provider" [value]="st.id">{{ st.descripcion }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="providerControl.errors?.required"> {{ 'Seleccione un proveedor' }} </mat-error>
+    </mat-form-field>
+
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(suplierreturnForm.value)" [disabled]="!suplierreturnForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.suplierreturn ? 'Aceptar' : 'Crear' }}
+    </button>
+
+  </div>
+</div>
