@@ -598,6 +598,13 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Transferecia recibida',
+          iconName: ['swap_vertical_circle'],
+          route: 'transfer-recived',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Inventario',
           iconName: ['swap_vertical_circle'],
           material: true,

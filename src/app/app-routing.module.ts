@@ -343,6 +343,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/facture-service/facture-service.module').then((m) => m.FactureServiceModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'transfer-recived',
+        loadChildren: () => import('./stock-modules/transfer-recived-stock/transfer-recived-stock.module').then((m) => m.TransferRecivedStockModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
