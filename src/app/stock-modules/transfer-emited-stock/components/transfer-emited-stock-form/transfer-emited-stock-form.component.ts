@@ -57,11 +57,11 @@ export class TranferEmitedStockFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    const fechaNacimiento = this.data?.transferEmited ? this.getFormattedDate(this.data?.transferEmited.fecha) : '';
+    const fecha = this.data?.transferEmited ? this.getFormattedDate(this.data?.transferEmited.fecha) : '';
 
     this.tranferEmitedForm = new FormGroup({
       id: new FormControl(this.data?.transferEmited?.id ? this.data?.transferEmited?.id : null),
-      fecha: new FormControl(fechaNacimiento, [Validators.required]),
+      fecha: new FormControl(fecha, [Validators.required]),
       numero: new FormControl(this.data?.transferEmited?.numero ? this.data?.transferEmited?.numero : null, [Validators.required]),
       comentario: new FormControl(this.data?.transferEmited?.comentario ? this.data?.transferEmited?.comentario : null, [Validators.required]),
       nro_control: new FormControl(this.data?.transferEmited?.nro_control ? this.data?.transferEmited?.nro_control : null, [Validators.required]),
