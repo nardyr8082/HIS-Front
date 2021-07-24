@@ -640,9 +640,9 @@ export class NavigationService {
           display: true,
         },
         {
-          displayName: 'Transferecia recibida',
+          displayName: 'Transferecia emitida',
           iconName: ['swap_vertical_circle'],
-          route: 'transfer-recived',
+          route: 'transfer-emited',
           material: true,
           display: true,
         },

@@ -1,4 +1,4 @@
-import { TranferRecivedStockPageComponent } from './pages/tranfer-recived-stock-page/tranfer-recived-stock-page.component';
+import { TranferEmitedStockPageComponent } from './pages/transfer-emited-stock-page/transfer-emited-stock-page.component';
 
 import { LayoutComponent } from '../../shared/layout/layout.component';
 
@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: TranferRecivedStockPageComponent,
+        component: TranferEmitedStockPageComponent,
       },
     ],
   },
@@ -26,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class TranferRecivedStockRoutingModule {}
+export class TranferEmitedStockRoutingModule {}

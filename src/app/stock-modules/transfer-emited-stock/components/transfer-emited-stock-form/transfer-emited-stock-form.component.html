@@ -1,0 +1,102 @@
+<div class="form">
+  <h4>{{ data.transferEmited ? 'Editar Transferencia recibida' : 'Crear Transferencia recibida' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="tranferEmitedForm" [formGroup]="tranferEmitedForm">
+    <div class="row">
+      <!-- Fecha  -->
+      <div class="col-lg-6 col-md-12">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Fecha</mat-label>
+          <input matInput formControlName="fecha" [matDatepicker]="picker" />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="fechaControl.errors?.required"> {{ 'La fecha es ' }} <strong>requerida</strong> </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- numero -->
+      <div class="col-lg-6 col-md-12">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Número:</mat-label>
+          <input type="number" matInput formControlName="numero" />
+          <mat-error *ngIf="numeroControl.errors?.required"> {{ 'El número es' }} <strong>requerido</strong> </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- comentario -->
+      <div class="col-lg-6 col-md-12">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Comentario:</mat-label>
+          <input matInput formControlName="comentario" />
+          <mat-error *ngIf="comentarioControl.errors?.required"> {{ 'El comentario es' }} <strong>requerido</strong> </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- nro_control -->
+      <div class="col-lg-6 col-md-12">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Número de Control:</mat-label>
+          <input matInput formControlName="nro_control" />
+          <mat-error *ngIf="nro_controlControl.errors?.required"> {{ 'El número de control es' }} <strong>requerido</strong> </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-12">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Almacén origen</mat-label>
+          <mat-select #mySelect formControlName="almacen">
+            <mat-option *ngFor="let item of stocks" [value]="item.id">{{ item.nombre }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="almacenControl.errors?.required"> {{ 'Seleccione un Almacén' }} </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-12">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Almacén destino</mat-label>
+          <mat-select #mySelect formControlName="almacen_destino">
+            <mat-option *ngFor="let item of stocks" [value]="item.id">{{ item.nombre }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="almacen_destinoControl.errors?.required"> {{ 'Seleccione un Almacén' }} </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-12">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Estado</mat-label>
+          <mat-select #mySelect formControlName="estado">
+            <mat-option *ngFor="let item of statuses" [value]="item.id">{{ item.descripcion }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="estadoControl.errors?.required"> {{ 'Seleccione un estado' }} </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-12">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Tipo de movimiento</mat-label>
+          <mat-select #mySelect formControlName="tipo_de_movimiento">
+            <mat-option *ngFor="let item of moveTypes" [value]="item.id">{{ item.descripcion }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="tipo_de_movimientoControl.errors?.required"> {{ 'Seleccione un tipo de movimiento' }} </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="col-lg-6 col-md-12">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Usuario</mat-label>
+          <mat-select #mySelect formControlName="usuario">
+            <mat-option *ngFor="let item of users" [value]="item.id">{{ item.first_name + ' ' + item.last_name }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="usuarioControl.errors?.required"> {{ 'Seleccione un tipo de movimiento' }} </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(tranferEmitedForm.value)" [disabled]="!tranferEmitedForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.transferEmited ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>
