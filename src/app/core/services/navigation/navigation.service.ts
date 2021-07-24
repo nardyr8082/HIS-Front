@@ -535,6 +535,13 @@ export class NavigationService {
       material: true,
       children: [
         {
+          displayName: 'Lote',
+          iconName: ['swap_vertical_circle'],
+          route: 'lotwarehouse',
+          material: true,
+          display: true
+        },
+        {
           displayName: 'Existencia',
           iconName: ['swap_vertical_circle'],
           route: 'existence',

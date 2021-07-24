@@ -250,13 +250,22 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/move-type/move-type.module').then((m) => m.MoveTypeModule),
         canActivate: [BackendGuard],
       },
+       {
+        path: 'lotwarehouse',
+        loadChildren: () => import('./stock-modules/warehouse-lot/warehouse-lot.module').then((m) => m.WarehouseLotModule),
+        canActivate: [BackendGuard],
+      },
       {
         path: 'warehouse-inventory-difference',
         loadChildren: () =>
           import('./stock-modules/warehouse-inventory-difference/warehouse-inventory-difference.module').then((m) => m.WarehouseInventoryDifferenceModule),
         canActivate: [BackendGuard],
       },
-
+      {
+        path: 'existence',
+        loadChildren: () => import('./stock-modules/existence/existence.module').then((m) => m.ExistenceModule),
+        canActivate: [BackendGuard],
+      },
       {
         path: 'warehouse-movement-detail',
         loadChildren: () => import('./stock-modules/warehouse-movement-detail/warehouse-movement-detail.module').then((m) => m.WarehouseMovementDetailModule),
@@ -364,6 +373,7 @@ const routes: Routes = [
           import('./stock-modules/warehouse-received-transfer/warehouse-received-transfer.module').then((m) => m.WarehouseReceivedTransferModule),
         canActivate: [BackendGuard],
       },
+      
       {
         path: 'batch-distribution',
         loadChildren: () => import('./stock-modules/batch-distribution/batch-distribution.module').then((m) => m.BatchDistributionModule),
