@@ -633,6 +633,13 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Transferecia recibida',
+          iconName: ['swap_vertical_circle'],
+          route: 'transfer-recived',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Inventario',
           iconName: ['swap_vertical_circle'],
           material: true,
@@ -668,6 +675,14 @@ export class NavigationService {
           material: true,
           display: true,
         },
+        {
+          displayName: 'Transferencia',
+          iconName: ['swap_vertical_circle'],
+          route: 'warehouse-received-transfer',
+          material: true,
+          display: true,
+        },
+
         {
           displayName: 'Clasificadores',
           iconName: ['build'],

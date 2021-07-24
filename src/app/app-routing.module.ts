@@ -359,6 +359,10 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'warehouse-received-transfer',
+        loadChildren: () => import('./stock-modules/warehouse-received-transfer/warehouse-received-transfer.module').then((m) => m.WarehouseReceivedTransferModule),
+        canActivate: [BackendGuard],
+      },{
         path: 'batch-distribution',
         loadChildren: () => import('./stock-modules/batch-distribution/batch-distribution.module').then((m) => m.BatchDistributionModule),
         canActivate: [BackendGuard],
@@ -366,6 +370,11 @@ const routes: Routes = [
       {
         path: 'facture-service',
         loadChildren: () => import('./stock-modules/facture-service/facture-service.module').then((m) => m.FactureServiceModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'transfer-recived',
+        loadChildren: () => import('./stock-modules/transfer-recived-stock/transfer-recived-stock.module').then((m) => m.TransferRecivedStockModule),
         canActivate: [BackendGuard],
       },
     ],
