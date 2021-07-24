@@ -584,6 +584,27 @@ export class NavigationService {
           display: true,
         },
         {
+          displayName: 'Factura de Venta',
+          iconName: ['swap_vertical_circle'],
+          route: 'sale-facture',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Compra',
+          iconName: ['swap_vertical_circle'],
+          route: 'purchase',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Factura de Compra',
+          iconName: ['swap_vertical_circle'],
+          route: 'purchase-facture',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Estado de cita',
           iconName: ['swap_vertical_circle'],
           route: 'stock-state-appointment',
@@ -640,6 +661,14 @@ export class NavigationService {
           material: true,
           display: true,
         },
+        {
+          displayName: 'Transferencia',
+          iconName: ['swap_vertical_circle'],
+          route: 'warehouse-received-transfer',
+          material: true,
+          display: true,
+        },
+
         {
           displayName: 'Clasificadores',
           iconName: ['build'],

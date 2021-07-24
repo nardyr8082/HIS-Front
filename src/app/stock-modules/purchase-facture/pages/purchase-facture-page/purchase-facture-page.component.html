@@ -1,11 +1,11 @@
 <div class="container mt-3">
   <div class="d-flex justify-content-between align-items-center">
-    <h4>Almacén Caja</h4>
-    <button (click)="createBoxstock()" mat-raised-button color="primary" class="button">Crear Almacén Caja</button>
+    <h4>Factura de Compra</h4>
+    <button (click)="createPurchaseFacture()" mat-raised-button color="primary" class="button">Crear Factura de Compra</button>
   </div>
   <app-custom-table
-    *ngIf="boxstock"
-    [data]="boxstock"
+    *ngIf="purchaseFacture"
+    [data]="purchaseFacture"
     [dataCount]="dataCount"
     [displayedColumns]="configuration.displayedColumns"
     [columnsName]="configuration.columnsName"
@@ -15,6 +15,6 @@
     [loading]="loading"
     (changePage)="onChangePage($event)"
     (changeFilter)="onChangeFilter($event)"
-    (changeSort)="changeSort($event)"
+    (changeSort)="onChangeSort($event)"
   ></app-custom-table>
 </div>

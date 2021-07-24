@@ -156,6 +156,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'stock-stock',
+        loadChildren: () => import('./stock-modules/stock/stock.module').then((m) => m.StockModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'stock-tax',
         loadChildren: () => import('./stock-modules/classifiers/tax/tax.module').then((m) => m.TaxModule),
         canActivate: [BackendGuard],
@@ -292,11 +297,26 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/facture/facture.module').then((m) => m.FactureModule),
         canActivate: [BackendGuard],
       },
-      //{
-      //path: 'sale',
-      //loadChildren: () => import('./stock-modules/sale/sale.module').then((m) => m.SaleModule),
-      //canActivate: [BackendGuard],
-      //},
+      {
+        path: 'sale',
+        loadChildren: () => import('./stock-modules/sale/sale.module').then((m) => m.SaleModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'sale-facture',
+        loadChildren: () => import('./stock-modules/sale-facture/sale-facture.module').then((m) => m.SaleFactureModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'purchase',
+        loadChildren: () => import('./stock-modules/purchase/purchase.module').then((m) => m.PurchaseModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'purchase-facture',
+        loadChildren: () => import('./stock-modules/purchase-facture/purchase-facture.module').then((m) => m.PurchaseFactureModule),
+        canActivate: [BackendGuard],
+      },
       // Resources
       {
         path: 'resource-status',
@@ -334,6 +354,10 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'warehouse-received-transfer',
+        loadChildren: () => import('./stock-modules/warehouse-received-transfer/warehouse-received-transfer.module').then((m) => m.WarehouseReceivedTransferModule),
+        canActivate: [BackendGuard],
+      },{
         path: 'batch-distribution',
         loadChildren: () => import('./stock-modules/batch-distribution/batch-distribution.module').then((m) => m.BatchDistributionModule),
         canActivate: [BackendGuard],
