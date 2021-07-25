@@ -1,3 +1,4 @@
+import { WarehouseReceivedTransferService } from './../../../warehouse-received-transfer/services/warehouse-received-transfer.service';
 import { DeleteConfirmationModalComponent } from './../../../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { ApiResponse, DEFAULT_PAGE_SIZE } from './../../../../core/models/api-response.model';
 import { ToastrService } from 'ngx-toastr';
@@ -44,7 +45,12 @@ export class TranferEmitedStockPageComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor(private transferEmitedStockService: TransferEmitedService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(
+    private transferEmitedStockService: TransferEmitedService,
+    private recivedTransferService: WarehouseReceivedTransferService,
+    private toastService: ToastrService,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnInit(): void {
     this.getTransferEmitedStock();
@@ -109,11 +115,19 @@ export class TranferEmitedStockPageComponent implements OnInit, OnDestroy {
               this.toastService.error('Hubo un error al crear la Transferencia Emitida. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
-            tap((success) => {
-              if (success) {
-                this.getTransferEmitedStock(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('La Transferencia Emitida fue creado correctamente.', 'Felicidades');
-              }
+            tap((res) => {
+              const recivedTransfer = res;
+              recivedTransfer.almacen = res.almacen_destino;
+              recivedTransfer.transferencia_origen = res.id;
+              this.recivedTransferService
+                .createWarehouseReceivedTransfer(recivedTransfer)
+                .pipe(
+                  map(() => {
+                    this.getTransferEmitedStock(this.filters, 'id', 'desc', this.page, this.pageSize);
+                    this.toastService.success('La Transferencia Emitida fue creado correctamente.', 'Felicidades');
+                  }),
+                )
+                .subscribe();
             }),
           ),
         ),

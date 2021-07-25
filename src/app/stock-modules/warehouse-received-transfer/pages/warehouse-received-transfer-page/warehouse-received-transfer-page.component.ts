@@ -1,3 +1,4 @@
+import { TransferEmitedService } from './../../../transfer-emited-stock/services/transfer-emited-stock.service';
 import { WAREHOUSE_RECEIVED_TRANSFER_TABLE_CONFIGURATION } from './../../models/warehouse-received-transfer-table-configuration';
 import { WarehouseReceivedTransferService } from '../../services/warehouse-received-transfer.service';
 import { WarehouseReceivedTransferFormComponent } from '../../components/warehouse-received-transfer-form/warehouse-received-transfer-form.component';
@@ -12,11 +13,10 @@ import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
 
-
 @Component({
   selector: 'app-warehouse-received-transfer-page',
   templateUrl: './warehouse-received-transfer-page.component.html',
-  styleUrls: ['./warehouse-received-transfer-page.component.scss']
+  styleUrls: ['./warehouse-received-transfer-page.component.scss'],
 })
 export class WarehouseReceivedTransferPageComponent implements OnInit {
   warehouseReceivedTransfer: WarehouseReceivedTransfer[];
@@ -45,14 +45,21 @@ export class WarehouseReceivedTransferPageComponent implements OnInit {
     },
   ];
 
-
-
   constructor(
     private warehouseReceivedTransferService: WarehouseReceivedTransferService,
+    private transferEmitedService: TransferEmitedService,
     private toastService: ToastrService,
     public dialog: MatDialog,
-
-  ) { }
+  ) {
+    this.transferEmitedService
+      .getTransferEmitedStock({}, 'id', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[3].items = response.results.map((res) => ({ id: res.id, name: res.nro_control }));
+        }),
+      )
+      .subscribe();
+  }
 
   ngOnInit(): void {
     this.getWarehouseReceivedTransfer();
@@ -70,14 +77,8 @@ export class WarehouseReceivedTransferPageComponent implements OnInit {
         map((response: ApiResponse<any>) => {
           this.warehouseReceivedTransfer = response.results.map((res) => ({
             ...res,
-            id: res.id,
-            movimiento: res.movimiento.comentario,
-            movimiento_id: res.movimiento.id,
-            movimiento_origen: res.movimiento_origen.comentario,
-            movimiento_origen_id: res.movimiento_origen.id,
-
+            transferencia_origen_string: res.transferencia_origen?.nro_control,
           }));
-          console.log(response);
           this.dataCount = response.count;
           this.loading = false;
         }),
@@ -107,7 +108,7 @@ export class WarehouseReceivedTransferPageComponent implements OnInit {
 
     dialogRef = this.dialog.open(WarehouseReceivedTransferFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
-      maxWidth: '500px',
+      maxWidth: '1000px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',
@@ -143,7 +144,7 @@ export class WarehouseReceivedTransferPageComponent implements OnInit {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `¿Está seguro que desea eliminar la Transferencia : ${item.movimiento}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar la Transferencia seleccionada?`;
 
     const sub = modalComponentRef.accept
       .pipe(
@@ -175,5 +176,4 @@ export class WarehouseReceivedTransferPageComponent implements OnInit {
   onChangeSort(sort: Sort) {
     this.getWarehouseReceivedTransfer(this.filters, sort.active, sort.direction);
   }
-
 }
