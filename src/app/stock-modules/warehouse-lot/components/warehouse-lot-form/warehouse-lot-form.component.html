@@ -1,0 +1,71 @@
+<div class="form">
+    <h4>{{ data.warehouseLot ? 'Editar Almacén Lote' : 'Crear Almacén Lote' }}</h4>
+    <mat-divider class="my-4"></mat-divider>
+    <form *ngIf="warehouseLotForm" [formGroup]="warehouseLotForm">
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Codigo:</mat-label>
+            <input matInput formControlName="codigo" />
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Codigo barra venta:</mat-label>
+            <input matInput formControlName="codigo_barra_venta" />
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Precio costo:</mat-label>
+            <input matInput type="number" formControlName="precio_costo" />
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Precio venta:</mat-label>
+            <input matInput type="number" formControlName="precio_venta" />
+        </mat-form-field>
+
+        <!-- Fecha fabricacion -->
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Fecha fabricacion</mat-label>
+            <input matInput formControlName="fecha_fabricacion" [matDatepicker]="picker" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <!-- Fecha vencimiento -->
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Fecha vencimiento</mat-label>
+            <input matInput formControlName="fecha_vencimiento" [matDatepicker]="picker1" />
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+
+        <div class="col-12">
+            <div class="w-100">
+                <mat-checkbox formControlName="retenido">Retenido</mat-checkbox>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="w-100">
+                <mat-checkbox formControlName="vencido">Vencido</mat-checkbox>
+            </div>
+        </div>
+        <mat-divider class="my-4"></mat-divider>
+        <div class="mb-4">
+            <ng-select appearance="outline" class="custom w-100" placeholder="Producto" [items]="warehouseProduct"
+                bindLabel="descripcion" bindValue="id" formControlName="producto">
+            </ng-select>
+            <small class="text-danger error-style" *ngIf="productoControl.errors?.required && productoControl.dirty">
+                El campo Producto es <strong>requerido</strong></small>
+        </div>
+    </form>
+    <mat-divider class="my-4"></mat-divider>
+
+    <div class="d-flex align-items-center justify-content-end">
+        <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+        <button (click)="onSubmit(warehouseLotForm.value)" [disabled]="!warehouseLotForm.valid" mat-raised-button
+            color="primary" class="button">
+            {{ data.warehouseLot ? 'Aceptar' : 'Crear' }}
+        </button>
+    </div>
+</div>

@@ -4,15 +4,15 @@ import { Injectable } from '@angular/core';
 //
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response.model';
-import { TransferRecivedStock } from '../models/transfer-recived-stock.model';
+import { TransferEmitedStock } from '../models/transfer-emited-stock.model';
 
 //
 
 @Injectable({
   providedIn: 'root',
 })
-export class TransferRecivedService {
-  private apiEndpoint = `${environment.apiUrl}alm_transf_recibida_almacen`;
+export class TransferEmitedService {
+  private apiEndpoint = `${environment.apiUrl}alm_tranf_emitida_almacen`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -25,13 +25,7 @@ export class TransferRecivedService {
 
   constructor(private http: HttpClient) {}
 
-  getTransferRecivedStock(
-    filter: any,
-    sortColumn: string,
-    sortDirection: string,
-    page: number,
-    pageSize: number,
-  ): Observable<ApiResponse<TransferRecivedStock>> {
+  getTransferEmitedStock(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<TransferEmitedStock>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -39,7 +33,7 @@ export class TransferRecivedService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<TransferRecivedStock>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<TransferEmitedStock>>(this.apiEndpoint + queryParams);
   }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
@@ -76,15 +70,15 @@ export class TransferRecivedService {
     return queryParams;
   }
 
-  createTransferRecivedStock(data: TransferRecivedStock): Observable<TransferRecivedStock> {
+  createTransferEmitedStock(data: TransferEmitedStock): Observable<TransferEmitedStock> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editTransferRecivedStock(data: TransferRecivedStock): Observable<TransferRecivedStock> {
-    return this.http.patch<TransferRecivedStock>(`${this.apiEndpoint}/${data.id}/`, data);
+  editTransferEmitedStock(data: TransferEmitedStock): Observable<TransferEmitedStock> {
+    return this.http.patch<TransferEmitedStock>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteTransferRecivedStock(id: string): Observable<any> {
+  deleteTransferEmitedStock(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 }

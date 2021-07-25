@@ -535,6 +535,13 @@ export class NavigationService {
       material: true,
       children: [
         {
+          displayName: 'Lote',
+          iconName: ['swap_vertical_circle'],
+          route: 'lotwarehouse',
+          material: true,
+          display: true
+        },
+        {
           displayName: 'Existencia',
           iconName: ['swap_vertical_circle'],
           route: 'existence',
@@ -633,13 +640,6 @@ export class NavigationService {
           display: true,
         },
         {
-          displayName: 'Transferecia recibida',
-          iconName: ['swap_vertical_circle'],
-          route: 'transfer-recived',
-          material: true,
-          display: true,
-        },
-        {
           displayName: 'Inventario',
           iconName: ['swap_vertical_circle'],
           material: true,
@@ -676,7 +676,14 @@ export class NavigationService {
           display: true,
         },
         {
-          displayName: 'Transferencia',
+          displayName: 'Transferecia Emitida',
+          iconName: ['swap_vertical_circle'],
+          route: 'transfer-emited',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Transferencia Recibida',
           iconName: ['swap_vertical_circle'],
           route: 'warehouse-received-transfer',
           material: true,

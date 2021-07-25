@@ -75,7 +75,8 @@ export class WarehouseInventoryDifferenceFormComponent implements OnInit {
   }
 
   onSubmit(data) {
-    this.data.warehouseInventoryDifference ? this.edit.emit(data) : this.create.emit(data);
+    console.log(data)
+    this.data.conteo ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();
   }
 

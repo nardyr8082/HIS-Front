@@ -72,9 +72,10 @@ export class WarehouseInventoryDifferencePageComponent implements OnInit, OnDest
           this.wareHouseInventoryDif = response.results.map((res) => ({
             ...res,
 
-            ware_house_inventory_id: res.ware_house_inventory.id,
-            ware_house_inventory_dif_cantidad: res.ware_house_inventory.dif_cantidad,
-            ware_house_inventory_dif_importe: res.ware_house_inventory_dif_importe
+            id: res.id,
+            dif_cantidad: res.dif_cantidad,
+            dif_importe: res.dif_importe,
+            conteo: res.conteo.id
 
           }));
 
