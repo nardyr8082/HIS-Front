@@ -18,7 +18,7 @@
         <!-- almacen -->
         <div class="mb-4">
             <ng-select appearance="outline" class="custom w-100" placeholder="Almacen" [items]="almacenes"
-                bindLabel="descripcion" bindValue="id" formControlName="almacen">
+                bindLabel="nombre" bindValue="id" formControlName="almacen">
             </ng-select>
             <small class="text-danger error-style" *ngIf="almacenControl.errors?.required">El
                 campo almacen es <strong>requerido</strong></small>
@@ -42,8 +42,8 @@
 
         <!-- Lote -->
         <div class="mb-4">
-            <ng-select appearance="outline" class="custom w-100" placeholder="Lote" [items]="lote"
-                bindLabel="descripcion" bindValue="id" formControlName="lote">
+            <ng-select appearance="outline" class="custom w-100" placeholder="Lote" [items]="lote" bindLabel="codigo"
+                bindValue="id" formControlName="lote">
             </ng-select>
             <small class="text-danger error-style" *ngIf="loteControl.errors?.required">El
                 Lote es <strong>requerido</strong></small>

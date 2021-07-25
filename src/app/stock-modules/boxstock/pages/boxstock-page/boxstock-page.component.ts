@@ -185,7 +185,7 @@ export class BoxstockPageComponent implements OnInit {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `¿Está seguro que desea eliminar el Almacen caja: ${item.nombre}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar el Almacen caja: ${item.nro}?`;
 
     const sub = modalComponentRef.accept
       .pipe(

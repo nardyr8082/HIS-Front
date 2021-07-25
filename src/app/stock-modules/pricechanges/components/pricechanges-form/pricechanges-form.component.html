@@ -5,22 +5,25 @@
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Fecha:</mat-label>
       <input matInput formControlName="fecha" />
+      <!--<input matInput formControlName="fecha" [matDatepicker]="picker" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>-->
       <mat-error *ngIf="dateControl.errors?.required"> {{ 'La fecha es' }} <strong>requerido</strong>  </mat-error>
    </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Precio Viejo:</mat-label>
-      <input matInput formControlName="precio_viejo" />
+      <input matInput formControlName="precio_viejo" maxlength="20"/>
       <mat-error *ngIf="oldpriceControl.errors?.required"> {{ 'El precio viejo es' }} <strong>requerido</strong>  </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Precio Nuevo:</mat-label>
-      <input matInput formControlName="precio_nuevo" />
+      <input matInput formControlName="precio_nuevo" maxlength="20"/>
       <mat-error *ngIf="newpriceControl.errors?.required"> {{ 'El precio nuevo es' }} <strong>requerido</strong>  </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Comentario</mat-label>
-      <input matInput formControlName="comentario" />
-      <mat-error *ngIf="comentaryControl.errors?.required"> {{ 'El comentario es' }} <strong>requerido</strong>  </mat-error>
+      <input matInput formControlName="comentario" maxlength="255"/>
+      <!--<mat-error *ngIf="comentaryControl.errors?.required"> {{ 'El comentario es' }} <strong>requerido</strong>  </mat-error>-->
     </mat-form-field>
   <!-- user -->
   <div class="mb-4">

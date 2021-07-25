@@ -535,6 +535,13 @@ export class NavigationService {
       material: true,
       children: [
         {
+          displayName: 'Lote',
+          iconName: ['swap_vertical_circle'],
+          route: 'lotwarehouse',
+          material: true,
+          display: true
+        },
+        {
           displayName: 'Existencia',
           iconName: ['swap_vertical_circle'],
           route: 'existence',
@@ -545,6 +552,20 @@ export class NavigationService {
           displayName: 'Caja',
           iconName: ['swap_vertical_circle'],
           route: 'stock-box',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Almacén',
+          iconName: ['swap_vertical_circle'],
+          route: 'stock-stock',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Devolución Proveedores',
+          iconName: ['swap_vertical_circle'],
+          route: 'return-suplier',
           material: true,
           display: true,
         },
@@ -654,6 +675,21 @@ export class NavigationService {
           material: true,
           display: true,
         },
+        {
+          displayName: 'Transferecia Emitida',
+          iconName: ['swap_vertical_circle'],
+          route: 'transfer-emited',
+          material: true,
+          display: true,
+        },
+        {
+          displayName: 'Transferencia Recibida',
+          iconName: ['swap_vertical_circle'],
+          route: 'warehouse-received-transfer',
+          material: true,
+          display: true,
+        },
+
         {
           displayName: 'Clasificadores',
           iconName: ['build'],

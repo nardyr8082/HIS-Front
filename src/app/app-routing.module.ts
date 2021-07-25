@@ -156,6 +156,16 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'stock-stock',
+        loadChildren: () => import('./stock-modules/stock/stock.module').then((m) => m.StockModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'return-suplier',
+        loadChildren: () => import('./stock-modules/suplierreturn/suplierreturn.module').then((m) => m.SuplierreturnModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'stock-tax',
         loadChildren: () => import('./stock-modules/classifiers/tax/tax.module').then((m) => m.TaxModule),
         canActivate: [BackendGuard],
@@ -240,13 +250,22 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/move-type/move-type.module').then((m) => m.MoveTypeModule),
         canActivate: [BackendGuard],
       },
+       {
+        path: 'lotwarehouse',
+        loadChildren: () => import('./stock-modules/warehouse-lot/warehouse-lot.module').then((m) => m.WarehouseLotModule),
+        canActivate: [BackendGuard],
+      },
       {
         path: 'warehouse-inventory-difference',
         loadChildren: () =>
           import('./stock-modules/warehouse-inventory-difference/warehouse-inventory-difference.module').then((m) => m.WarehouseInventoryDifferenceModule),
         canActivate: [BackendGuard],
       },
-
+      {
+        path: 'existence',
+        loadChildren: () => import('./stock-modules/existence/existence.module').then((m) => m.ExistenceModule),
+        canActivate: [BackendGuard],
+      },
       {
         path: 'warehouse-movement-detail',
         loadChildren: () => import('./stock-modules/warehouse-movement-detail/warehouse-movement-detail.module').then((m) => m.WarehouseMovementDetailModule),
@@ -349,6 +368,13 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'warehouse-received-transfer',
+        loadChildren: () =>
+          import('./stock-modules/warehouse-received-transfer/warehouse-received-transfer.module').then((m) => m.WarehouseReceivedTransferModule),
+        canActivate: [BackendGuard],
+      },
+      
+      {
         path: 'batch-distribution',
         loadChildren: () => import('./stock-modules/batch-distribution/batch-distribution.module').then((m) => m.BatchDistributionModule),
         canActivate: [BackendGuard],
@@ -356,6 +382,11 @@ const routes: Routes = [
       {
         path: 'facture-service',
         loadChildren: () => import('./stock-modules/facture-service/facture-service.module').then((m) => m.FactureServiceModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'transfer-emited',
+        loadChildren: () => import('./stock-modules/transfer-emited-stock/transfer-emited-stock.module').then((m) => m.TransferEmitedStockModule),
         canActivate: [BackendGuard],
       },
     ],

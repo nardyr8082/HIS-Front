@@ -3,7 +3,7 @@
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="boxstockForm" [formGroup]="boxstockForm">
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Numero</mat-label>
+      <mat-label>Número</mat-label>
       <input matInput formControlName="nro" maxlength="20" />
       <mat-error *ngIf="numberControl.errors?.required"> {{ 'El número es' }} <strong>requerido</strong> </mat-error>
       <mat-error *ngIf="numberControl.errors?.maxlength"> {{ 'El número es' }} <strong>no puede tener más de 20 caracteres</strong> </mat-error>
@@ -19,11 +19,9 @@
 
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Cajero</mat-label>
-      <input matInput formControlName="cajero" maxlength="20" />
+      <input matInput formControlName="cajero" maxlength="18" />
       <mat-error *ngIf="cashierControl.errors?.required"> {{ 'El cajero es' }} <strong>requerido</strong> </mat-error>
-      <mat-error *ngIf="cashierControl.errors?.min"> {{ 'El cajero es' }} <strong>debe ser positivo</strong> </mat-error>
-      <mat-error *ngIf="cashierControl.errors?.maxlength"> {{ 'El cajero es' }} <strong>no puede tener más de 20 caracteres</strong> </mat-error>
-      <mat-error *ngIf="cashierControl.errors?.isDecimal"> {{ 'El cajero es' }} <strong>solo números enteros</strong> </mat-error>
+      <mat-error *ngIf="cashierControl.errors?.min || cashierControl.errors?.maxlength || cashierControl.errors?.isNumberInt"> {{ 'El cajero ' }} <strong>soporta solo números positivos de no más 20 cifras</strong> </mat-error>
     </mat-form-field>
   </form>
   <mat-divider class="my-4"></mat-divider>

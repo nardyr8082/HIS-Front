@@ -1,0 +1,51 @@
+<div class="form">
+  <h4>{{ data.stock ? 'Editar Almacén' : 'Crear Almacén' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="stockForm" [formGroup]="stockForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Código</mat-label>
+      <input matInput formControlName="codigo" maxlength="10" />
+      <mat-error *ngIf="codecControl.errors?.required"> {{ 'El código es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="codecControl.errors?.notAvailable"> {{ 'El código ' }} <strong>ya existe</strong> </mat-error>
+    </mat-form-field>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre" maxlength="100" />
+      <mat-error *ngIf="nameControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+    <mat-checkbox  formControlName="activo">Activo</mat-checkbox>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="direccion" maxlength="100" />
+      <!--<mat-error *ngIf="addressControl.errors?.required"> {{ 'La dirección es' }} <strong>requerido</strong> </mat-error>-->
+    </mat-form-field>
+    <mat-checkbox  formControlName="punto_de_venta">Punto Venta</mat-checkbox>
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Jefe Almacén</mat-label>
+      <mat-select #mySelect formControlName="jefe_almacen">
+        <mat-option *ngFor="let st of user" [value]="st.id">{{ st.username }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="bossstockControl.errors?.required"> {{ 'Seleccione un jefe almacén' }} </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Departamento</mat-label>
+      <mat-select #mySelect formControlName="departamento">
+        <mat-option *ngFor="let st of office" [value]="st.id">{{ st.nombre }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="officeControl.errors?.required"> {{ 'Seleccione un departamento' }} </mat-error>
+    </mat-form-field>
+
+
+
+
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(stockForm.value)" [disabled]="!stockForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.stock ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

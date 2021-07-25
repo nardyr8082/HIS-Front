@@ -44,8 +44,8 @@ export class BoxstockFormComponent implements OnInit, OnDestroy {
     this.boxstockForm = new FormGroup({
       id: new FormControl(this.data?.boxstock?.id ? this.data?.boxstock.id : null),
       almacen: new FormControl(this.data?.boxstock?.almacen ? this.data?.boxstock.almacen.id : null, [Validators.required]),
-      nro: new FormControl(this.data?.boxstock?.nro ? this.data?.boxstock.nro : null, [Validators.required, (Validators.maxLength(20))], MyValidation.validateFieldNumber(this.boxstockService)),
-      cajero: new FormControl(this.data?.boxstock?.cajero ? this.data?.boxstock.cajero : null, [Validators.required, (Validators.maxLength(20)), (Validators.min(1)), MyValidation.isDecimal]),
+      nro: new FormControl(this.data?.boxstock?.nro ? this.data?.boxstock.nro : null, [Validators.required, (Validators.maxLength(18))], MyValidation.validateFieldNumber(this.boxstockService, this.data?.boxstock?.id)),
+      cajero: new FormControl(this.data?.boxstock?.cajero ? this.data?.boxstock.cajero : null, [Validators.required, (Validators.maxLength(20)), (Validators.min(1)), MyValidation.isNumberInt]),
     });
   }
 

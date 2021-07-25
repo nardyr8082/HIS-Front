@@ -3,9 +3,11 @@
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="productstockForm" [formGroup]="productstockForm">
     <mat-form-field class="w-100" appearance="outline">
+      <strong> {{ existo }} </strong>
       <mat-label>Código</mat-label>
       <input matInput formControlName="codigo" maxlength="10" />
       <mat-error *ngIf="codecControl.errors?.required"> {{ 'El código es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="codecControl.errors?.notAvailable"> {{ 'El número ' }} <strong>ya existe</strong> </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">

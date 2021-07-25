@@ -83,10 +83,18 @@ export class BoxstockService {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 
-  checkNumber(num: string) {
+
+  checkNumber(num: string, id: any) {
     return this.http.get<any>(this.apiEndpoint).pipe(
       map((res) => {
         const miarre = res.results.filter((valores) => valores.nro === num);
+        if (miarre.length == 1) {
+          console.log('Primero ', miarre);
+          if (miarre[0].id === id) {
+            return { isNumberAvailable: true };
+          }
+          return { isNumberAvailable: false };
+        }
         return { isNumberAvailable: miarre.length !== 1 };
       }),
     );

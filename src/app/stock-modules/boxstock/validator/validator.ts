@@ -6,16 +6,19 @@ export class MyValidation{
     const value = control.value;
     let num = "0123456789";
     let isnum = false;
+    if (value == null || value == ''){
+      return {isNumberInt: false};
+    }
     if(value != null && value != ''){
       for(let i = 0; i < value.length; i++) {
         if (num.indexOf(value[i]) == -1) {
-          return {isNumber: true};
+          return {isNumberInt: true};
         }
       }
       return null;
     }
     else{
-      return {isNumber: true};
+      return {isNumberInt: true};
     }
     return null;
   }
@@ -50,12 +53,14 @@ export class MyValidation{
   }
   return null;
 }
-  static validateFieldNumber(boxstockService: BoxstockService){
+  static validateFieldNumber( boxstockService: BoxstockService, id: any) {
     return(control: AbstractControl) => {
       const value = control.value;
-      return boxstockService.checkNumber(value)
+      return boxstockService.checkNumber(value, id)
       .pipe(
         map( response => {
+          console.log('mira aqui: ', response);
+          //vlor true para que no de error
           return response.isNumberAvailable ? null : { notAvailable: true };
         })
       );
