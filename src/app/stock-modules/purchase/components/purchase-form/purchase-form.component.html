@@ -41,14 +41,14 @@
     <ng-select
       appearance="outline"
       class="custom w-100"
-      placeholder="Almacen"
+      placeholder="Almacén"
       [items]="almacen"
       bindLabel="nombre"
       bindValue="id"
       formControlName="almacen">
     </ng-select>
     <small class="text-danger error-style" *ngIf="almacenControl.errors?.required && almacenControl.dirty">
-      El campo almacen es <strong>requerido</strong></small>
+      El campo almacén es <strong>requerido</strong></small>
   </div>
 </div>
 <div class="col-lg-4 col-md-12">

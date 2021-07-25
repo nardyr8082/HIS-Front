@@ -87,6 +87,7 @@ export class MoveTypePageComponent implements OnInit {
           this.moveTypes = response.results.map((res) => ({
             ...res,
             categoria__descripcion: res.categoria.descripcion,
+            categoria_id: res.categoria.id,
           }));
           this.dataCount = response.count;
           this.loading = false;
