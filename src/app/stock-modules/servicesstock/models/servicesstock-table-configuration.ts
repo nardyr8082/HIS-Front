@@ -3,8 +3,8 @@ import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model
 
 export const Servicesstock_TABLE_CONFIGURATION = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['codigo', 'nombre', 'precio', 'impuesto_string', 'usuario_string', 'departamento_string'],
-  columnsName: ['Código', 'Nombre', 'Precio', 'Impuesto', 'Usuario', 'Departamento'],
+  displayedColumns: ['codigo', 'nombre', 'precio', 'impuesto_string', 'departamento_string', 'usuario_string'],
+  columnsName: ['Código', 'Nombre', 'Precio', 'Impuesto', 'Departamento', 'Usuario'],
   tableFilters: [
     {
       name: 'codigo',
@@ -27,14 +27,13 @@ export const Servicesstock_TABLE_CONFIGURATION = {
       title: 'Impuesto',
     },
     {
-      name: 'usuario',
-      title: 'Usuario',
-      type: 'select',
-      items: [],
-    },
-    {
       name: 'departamento',
       title: 'Departamento',
+      type: 'text',
+    },
+    {
+      name: 'usuario',
+      title: 'Usuario',
       type: 'select',
       items: [],
     },

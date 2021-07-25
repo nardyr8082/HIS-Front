@@ -3,12 +3,12 @@ import { DEFAULT_PAGINATION_SIZE } from '../../../../app/core/models/api-respons
 export const Inventorys_TABLE_CONFIGURATION: TableConfiguration = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
   displayedColumns: ['numero', 'fecha_inicio', 'fecha_fin', 'usuario_username', 'almacen_descripcion', 'estado_desc'],
-  columnsName: ['Numero', 'Fecha Inicio', 'Fecha Fin', 'Usuario', 'Almacen', 'Estado'],
+  columnsName: ['Número', 'Fecha Inicio', 'Fecha Fin', 'Usuario', 'Almacén', 'Estado'],
   tableFilters: [
     {
       name: 'numero',
       type: 'text',
-      title: 'Numero',
+      title: 'Número',
     },
     {
       name: 'fecha_inicio',
@@ -28,7 +28,7 @@ export const Inventorys_TABLE_CONFIGURATION: TableConfiguration = {
     },
     {
       name: 'almacen',
-      title: 'Almacen',
+      title: 'Almacén',
       type: 'select',
       items: [],
     },

@@ -3,9 +3,9 @@
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="inventorysForm" [formGroup]="inventorysForm">
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Numero:</mat-label>
+      <mat-label>Número:</mat-label>
       <input matInput formControlName="numero" />
-      <mat-error *ngIf="numberControl.errors?.required"> {{ 'La numero es' }} <strong>requerido</strong>  </mat-error>
+      <mat-error *ngIf="numberControl.errors?.required"> {{ 'La número es' }} <strong>requerido</strong>  </mat-error>
    </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Fecha Inicio:</mat-label>
@@ -43,7 +43,7 @@
       formControlName="almacen">
     </ng-select>
     <small class="text-danger error-style" *ngIf="stockControl.errors?.required && stockControl.dirty">
-      El campo almacen es <strong>requerido</strong></small>
+      El campo almacén es <strong>requerido</strong></small>
   </div>
     <!-- Estado -->
     <div class="mb-4">

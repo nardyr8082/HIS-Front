@@ -126,13 +126,13 @@ export class BoxstockPageComponent implements OnInit {
         switchMap((boxstock: Boxstock) =>
           this.boxstockService.createBoxstock(boxstock).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al crear el Almacen caja. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al crear el Almacén Caja. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getBoxstock(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El Almacen caja fue creado correctamente.', 'Felicidades');
+                this.toastService.success('El Almacén Caja fue creado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -164,13 +164,13 @@ export class BoxstockPageComponent implements OnInit {
         switchMap((boxstock: Boxstock) =>
           this.boxstockService.editBoxstock({ ...boxstock, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el Almacen caja. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar el Almacén Caja. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getBoxstock(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El Almacen caja fue modificado correctamente.', 'Felicidades');
+                this.toastService.success('El Almacén Caja fue modificado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -185,7 +185,7 @@ export class BoxstockPageComponent implements OnInit {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
-    modalComponentRef.text = `¿Está seguro que desea eliminar el Almacen caja: ${item.nro}?`;
+    modalComponentRef.text = `¿Está seguro que desea eliminar el Almacén Caja: ${item.nro}?`;
 
     const sub = modalComponentRef.accept
       .pipe(
@@ -194,14 +194,14 @@ export class BoxstockPageComponent implements OnInit {
           this.boxstockService.deleteBoxstock(item.id).pipe(
             map(() => item),
             catchError(() => {
-              this.toastService.error('Hubo un error al eliminar el Almacen caja. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al eliminar el Almacén Caja. Por favor, inténtelo de nuevo más tarde.', 'Error');
               modalRef.close();
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getBoxstock(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El almacen caja fue eliminado correctamente.', 'Felicidades');
+                this.toastService.success('El Almacén Caja fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),

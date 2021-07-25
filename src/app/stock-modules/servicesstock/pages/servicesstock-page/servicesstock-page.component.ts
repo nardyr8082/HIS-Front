@@ -11,10 +11,8 @@ import { Servicesstock } from '../../models/servicesstock.model';
 import { Servicesstock_TABLE_CONFIGURATION } from '../../models/servicesstock-table-configuration';
 import { ServicesstockFormComponent } from '../../components/servicesstock-form/servicesstock-form.component';
 import { ServicesstockService } from '../../services/servicesstock.service';
-import { Permission} from '../../../../security-module/role/models/role.model';
 import { Office } from '../../../../structure-modules/office/models/office.model';
-import { User } from '../../../../security-module/user/models/user.model';
-import { Tax } from '../../../classifiers/tax/models/tax.model';
+
 
 
 @Component({
@@ -135,13 +133,13 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
         switchMap((servicesstock: Servicesstock) =>
           this.servicesstockService.createServicesstock(servicesstock).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al crear el servicio almacén. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al crear el Servicio Almacén. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getServicesstock(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El servicio almacén fue creado correctamente.', 'Felicidades');
+                this.toastService.success('El Servicio Almacén fue creado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -172,13 +170,13 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
         switchMap((servicesstock: Servicesstock) =>
           this.servicesstockService.editServicesstock({ ...servicesstock, id: item.id }).pipe(
             catchError(() => {
-              this.toastService.error('Hubo un error al editar el servicio almacén. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al editar el Servicio Almacén. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getServicesstock(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El rol fue modificado correctamente.', 'Felicidades');
+                this.toastService.success('El Servicio Almacén fue modificado correctamente.', 'Felicidades');
               }
             }),
           ),
@@ -202,14 +200,14 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
           this.servicesstockService.deleteServicesstock(item.id).pipe(
             map(() => item),
             catchError(() => {
-              this.toastService.error('Hubo un error al eliminar el servicio almacén. Por favor, inténtelo de nuevo más tarde.', 'Error');
+              this.toastService.error('Hubo un error al eliminar el Servicio Almacén. Por favor, inténtelo de nuevo más tarde.', 'Error');
               modalRef.close();
               return of(null);
             }),
             tap((success) => {
               if (success) {
                 this.getServicesstock(this.filters, 'id', 'desc', this.page, this.pageSize);
-                this.toastService.success('El servicio almacén fue eliminado correctamente.', 'Felicidades');
+                this.toastService.success('El Servicio Almacén fue eliminado correctamente.', 'Felicidades');
                 modalRef.close();
               }
             }),

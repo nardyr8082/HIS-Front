@@ -13,7 +13,7 @@ export interface Productstock {
   familia?: ProductFamily;
   impuesto?: Tax;
   programa?: Program;
-  atributos?: Attribute;
+  atributos?: Array<Attribute>;
   unidad_medida_string?: string;
   familia_string?: string;
   impuesto_string?: string;
