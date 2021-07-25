@@ -319,7 +319,7 @@ export class NavigationService {
           material: true,
           display: true,
         },
-        {
+ /*        {
           displayName: 'Nomencladores',
           iconName: ['build'],
           material: true,
@@ -410,7 +410,7 @@ export class NavigationService {
             },
           ],
           display: true,
-        },
+        }, */
       ],
       display: true,
     },
@@ -435,7 +435,7 @@ export class NavigationService {
           display: true,
         },
         {
-          displayName: 'Tipo de Recurso',
+          displayName: 'Tipo de Recursos',
           iconName: ['radio_button_unchecked'],
           route: 'resource-type',
           material: true,
@@ -731,7 +731,7 @@ export class NavigationService {
               display: true,
             },
             {
-              displayName: 'Atributo',
+              displayName: 'Atributos',
               iconName: ['radio_button_unchecked'],
               route: 'attribute',
               material: true,
@@ -773,7 +773,7 @@ export class NavigationService {
               display: true,
             },
             {
-              displayName: 'Estado de Inventario',
+              displayName: 'Estado de Inventarios',
               iconName: ['radio_button_unchecked'],
               route: 'stock-invetory-status',
               material: true,
