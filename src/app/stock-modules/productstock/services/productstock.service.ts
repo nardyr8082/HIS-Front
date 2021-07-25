@@ -14,6 +14,7 @@ import { Productstock } from '../models/productstock.model';
 })
 export class ProductstockService {
   private apiEndpoint = `${environment.apiUrl}alm_producto`;
+  private existo = false;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -82,11 +83,19 @@ export class ProductstockService {
   deleteProductstock(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
-
-  checkNumber(num: string) {
+  getReal() {
+    return this.http.get<any>(this.apiEndpoint);
+  }
+  checkNumber(num: string, id: any) {
     return this.http.get<any>(this.apiEndpoint).pipe(
       map((res) => {
-        const miarre = res.results.filter((valores) => valores.nro === num);
+        const miarre = res.results.filter((valores) => valores.codigo === num);
+        if (miarre.length == 1) {
+          if (miarre[0].id === id){
+            return { isNumberAvailable: true };
+          }
+          return { isNumberAvailable: false };
+        }
         return { isNumberAvailable: miarre.length !== 1 };
       }),
     );

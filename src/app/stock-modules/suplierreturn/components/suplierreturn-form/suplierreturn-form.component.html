@@ -4,8 +4,10 @@
   <form *ngIf="suplierreturnForm" [formGroup]="suplierreturnForm">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Fecha</mat-label>
-      <input matInput formControlName="fecha" maxlength="20" />
-      <mat-error *ngIf="dateControl.errors?.required"> {{ 'El fecha es' }} <strong>requerido</strong> </mat-error>
+      <input matInput formControlName="fecha" [matDatepicker]="picker" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="dateControl.errors?.required"> {{ 'La fecha es' }} <strong>requerida</strong> </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">

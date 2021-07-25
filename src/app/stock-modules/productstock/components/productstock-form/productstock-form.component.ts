@@ -14,6 +14,9 @@ import { Program } from '../../../classifiers/program/models/program.model';
 import { ProductFamilyService } from '../../../classifiers/product-family/services/product-family.service';
 import { Attribute } from '../../../classifiers/attribute/models/attribute.model';
 import { AttributeService } from '../../../classifiers/attribute/services/attribute.service';
+import { environment } from '../../../../../environments/environment';
+import { ValidationProductStock } from '../../validator/validator';
+
 
 
 
@@ -26,13 +29,14 @@ import { AttributeService } from '../../../classifiers/attribute/services/attrib
 export class ProductstockFormComponent implements OnInit, OnDestroy {
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
-
+  private apiEndpoint = `${environment.apiUrl}alm_producto`;
   measure: Measure[];
   family: ProductFamily[];
   tax: Tax[];
   program: Program[];
   attribute: Attribute[];
   subscriptions: Subscription[] = [];
+  existo: boolean;
 
   productstockForm: FormGroup;
 
@@ -54,6 +58,7 @@ export class ProductstockFormComponent implements OnInit, OnDestroy {
     this.getTax();
     this.getProgram();
     this.getAttribute();
+
   }
 
   ngOnDestroy() {
@@ -65,7 +70,7 @@ export class ProductstockFormComponent implements OnInit, OnDestroy {
     this.productstockForm = new FormGroup({
       id: new FormControl(this.data?.productstock?.id ? this.data?.productstock.id : null),
       descripcion: new FormControl(this.data?.productstock?.descripcion ? this.data?.productstock.descripcion : null, Validators.required),
-      codigo: new FormControl(this.data?.productstock?.codigo ? this.data?.productstock.codigo : null, Validators.required),
+      codigo: new FormControl(this.data?.productstock?.codigo ? this.data?.productstock.codigo : null, [Validators.required], ValidationProductStock.validateFieldCodec( this.productstockService, this.data?.productstock?.id)),
       activo: new FormControl(this.data.productstock ? this.data.productstock.activo : false),
       unidad_medida: new FormControl(this.data?.productstock?.unidad_medida ? this.data?.productstock.unidad_medida.id : null, Validators.required),
       familia: new FormControl(this.data?.productstock?.unidad_medida ? this.data?.productstock.familia.id : null, Validators.required),
@@ -75,6 +80,30 @@ export class ProductstockFormComponent implements OnInit, OnDestroy {
     });
   }
 
+
+
+ getExist() {
+   const num = this.productstockForm.controls.codigo.value;
+   const id = this.productstockForm.controls.id.value;
+   /*this.productstockService.getReal().subscribe( data => {
+     console.log('por fin los data: ', data);
+     const value = data;
+     console.log('por fin los data 1: ', value.results);
+     const miarre = data.results.filter((valores) => valores.codigo === num);
+     if (miarre.length === 0)
+       this.existo = false;
+     else if ( miarre.length == 1) {
+       if (miarre[0].id === id) {
+         this.existo = false;
+       }
+       this.existo = true;
+     }
+     else {
+       this.existo = true;
+     }
+   });*/
+   return true;
+ }
   get idControl() {
     return this.productstockForm.get('id') as FormControl;
   }

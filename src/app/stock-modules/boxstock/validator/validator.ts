@@ -53,10 +53,10 @@ export class MyValidation{
   }
   return null;
 }
-  static validateFieldNumber(boxstockService: BoxstockService){
+  static validateFieldNumber( boxstockService: BoxstockService, id: any) {
     return(control: AbstractControl) => {
       const value = control.value;
-      return boxstockService.checkNumber(value)
+      return boxstockService.checkNumber(value, id)
       .pipe(
         map( response => {
           console.log('mira aqui: ', response);

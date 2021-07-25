@@ -6,8 +6,8 @@ export interface Stock {
   codigo?: string;
   nombre?: string;
   direccion?: string;
-  activo?: boolean;
-  punto_de_venta?: boolean;
+  activo?: string;
+  punto_de_venta?: string;
   jefe_almacen?: User;
   departamento?: Office;
   jefe_almacen_string?: string;

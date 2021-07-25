@@ -6,20 +6,21 @@
       <mat-label>Código</mat-label>
       <input matInput formControlName="codigo" maxlength="10" />
       <mat-error *ngIf="codecControl.errors?.required"> {{ 'El código es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="codecControl.errors?.notAvailable"> {{ 'El código ' }} <strong>ya existe</strong> </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Nombre</mat-label>
       <input matInput formControlName="nombre" maxlength="100" />
       <mat-error *ngIf="nameControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
-    <mat-checkbox checked="true" formControlName="activo">Activo</mat-checkbox>
+    <mat-checkbox  formControlName="activo">Activo</mat-checkbox>
 
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Dirección</mat-label>
       <input matInput formControlName="direccion" maxlength="100" />
-      <mat-error *ngIf="addressControl.errors?.required"> {{ 'La dirección es' }} <strong>requerido</strong> </mat-error>
+      <!--<mat-error *ngIf="addressControl.errors?.required"> {{ 'La dirección es' }} <strong>requerido</strong> </mat-error>-->
     </mat-form-field>
-    <mat-checkbox checked="true" formControlName="punto_de_venta">Punto Venta</mat-checkbox>
+    <mat-checkbox  formControlName="punto_de_venta">Punto Venta</mat-checkbox>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Jefe Almacén</mat-label>
       <mat-select #mySelect formControlName="jefe_almacen">

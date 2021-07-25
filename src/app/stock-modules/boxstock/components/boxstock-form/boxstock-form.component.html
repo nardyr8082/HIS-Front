@@ -3,7 +3,7 @@
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="boxstockForm" [formGroup]="boxstockForm">
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Numero</mat-label>
+      <mat-label>Número</mat-label>
       <input matInput formControlName="nro" maxlength="20" />
       <mat-error *ngIf="numberControl.errors?.required"> {{ 'El número es' }} <strong>requerido</strong> </mat-error>
       <mat-error *ngIf="numberControl.errors?.maxlength"> {{ 'El número es' }} <strong>no puede tener más de 20 caracteres</strong> </mat-error>

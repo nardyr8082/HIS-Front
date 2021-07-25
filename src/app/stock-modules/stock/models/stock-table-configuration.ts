@@ -3,7 +3,7 @@ import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model
 export const Stock_TABLE_CONFIGURATION = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
   displayedColumns: ['codigo', 'nombre', 'jefe_almacen_string', 'departamento_string', 'direccion', 'activo', 'punto_de_venta'],
-  columnsName: ['Código', 'Nombre', 'Usuario', 'Departamento', 'Dirección', 'Activo', 'Punto Venta'],
+  columnsName: ['Código', 'Nombre', 'Jefe Almacén', 'Departamento', 'Dirección', 'Activo', 'Punto Venta'],
   tableFilters: [
     {
       name: 'codigo',
@@ -16,10 +16,10 @@ export const Stock_TABLE_CONFIGURATION = {
       title: 'Nombre',
     },
     {
-      name: 'usuario',
+      name: 'jefe_almacen',
       type: 'select',
       items: [],
-      title: 'Usuario',
+      title: 'Jefe Almacén',
     },
     {
       name: 'departamento',

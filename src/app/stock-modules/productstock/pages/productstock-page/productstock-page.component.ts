@@ -140,7 +140,7 @@ export class ProductstockPageComponent implements OnInit {
       .pipe(
         map((response: ApiResponse<Productstock>) => {
           this.productstock = response.results.map((res) => {
-            console.log('Hay datos: ', res);
+            //console.log('Hay datos: ', res);
             const measureString = this.getProductsmeasureString(res.unidad_medida);
             const familyString = this.getFamilyString(res.familia);
             const taxString = this.getTaxString(res.impuesto);
