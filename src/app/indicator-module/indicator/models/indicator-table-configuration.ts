@@ -3,8 +3,8 @@ import { DEFAULT_PAGINATION_SIZE } from '../../../../app/core/models/api-respons
 
 export const INDICATOR_TABLE_CONFIGURATION: TableConfiguration = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['nombre', 'especificidad', 'variables', 'objetivo'],
-  columnsName: ['Nombre', 'Especificidad', 'Variables', 'Objetivo'],
+  displayedColumns: ['nombre', 'especificidad', 'variables', 'objetivo', 'tipo_indicador_descripcion'],
+  columnsName: ['Nombre', 'Especificidad', 'Variables', 'Objetivo', 'Tipo Indicador'],
   tableFilters: [
     {
       name: 'nombre',
@@ -25,6 +25,12 @@ export const INDICATOR_TABLE_CONFIGURATION: TableConfiguration = {
       name: 'objetivo',
       title: 'Objetivo',
       type: 'text',
+    },
+    {
+      name: 'tipo_indicador',
+      title: 'Tipo Indicador',
+      type: 'select',
+      items: [],
     },
   ],
 };
