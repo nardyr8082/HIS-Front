@@ -48,11 +48,11 @@ export class SuplierreturnFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const duda = 'Fri Jul 02 2021 00:00:00 GMT-0500 (GMT-05:00)';
+    /*const duda = 'Fri Jul 02 2021 00:00:00 GMT-0500 (GMT-05:00)';
     console.log('mi duda 1:', typeof(duda));
     const arr = duda.split(' ');
     console.log('ver ahora: ', arr);
-    console.log('mi duda 2:', typeof(arr));
+    console.log('mi duda 2:', typeof(arr));*/
     this.buildForm();
     this.getStock();
     this.getUser();
@@ -114,17 +114,47 @@ export class SuplierreturnFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(data) {
-    console.log('mi data es OK:', data);
+    console.log('mi data inicial:', data);
+    console.log('como esta la editacion:', this.data.suplierreturn);
     let fecha = data['fecha'].toString();
     let formateada = fecha.split(' ');
-    console.log('mi data es  fecha:', formateada);
-    //["Sat0", "Jul 1", "03 2", "2021 3", "00:00:00", "GMT-0500", "(GMT-05:00)"]
-     const midate = formateada[3] + '-' + this.ChangesMonth(formateada[1]) + '-' + formateada[2];
-    //data['fecha'] = '1991-04-07';
-    console.log('el que yo cree: ', midate);
-    if (midate === data['fecha']){
-      console.log('HURRRA!!!!!');
+    console.log('arregloa: ', formateada);
+    if ( this.data.suplierreturn === null || formateada.length > 0) {
+      const midate = formateada[3] + '-' + this.ChangesMonth(formateada[1]) + '-' + formateada[2];
+      data['fecha'] = midate;
     }
+
+    /*
+    * {
+    "id": 29,
+    "fecha": "2021-07-03",
+    "numero": 45,
+    "comentario": "ioiu",
+    "nro_control": "oho",
+    "almacen": 1,
+    "estado": 1,
+    "tipo_de_movimiento": 1,
+    "usuario": 1,
+    "proveedor": 1
+}*/
+    /*data['fecha'] = '1977-07-13';
+    data['numero'] = 100;
+    data['comentario'] = 'gley';
+    data['nro_control'] = 'habana';
+    data['almacen'] = 1;
+    data['estado'] = 1;
+    data['tipo_de_movimiento'] = 1;
+    data['usuario'] = 1;
+    data['proveedor'] = 1;*/
+    //console.log('mi data es  fecha:', formateada);
+    //["Sat0", "Jul 1", "03 2", "2021 3", "00:00:00", "GMT-0500", "(GMT-05:00)"]
+
+    //data['fecha'] = '1991-04-07';
+    //console.log('el que yo cree: ', midate);
+    /*if (midate === data['fecha']){
+      console.log('HURRRA!!!!!');
+    }*/
+    console.log('mi data final:', data);
     this.data.suplierreturn ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();
   }

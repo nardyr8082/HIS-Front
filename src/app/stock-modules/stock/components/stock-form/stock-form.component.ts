@@ -48,13 +48,14 @@ export class StockFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
+    console.log('en buildform: ', this.data?.stock);
     this.stockForm = new FormGroup({
       id: new FormControl(this.data?.stock?.id ? this.data?.stock.id : null),
       codigo: new FormControl(this.data?.stock?.codigo ? this.data?.stock.codigo : null, [Validators.required], ValidationStock.validateFieldCodec( this.getStockService, this.data?.stock?.id)),
       nombre: new FormControl(this.data?.stock?.nombre ? this.data?.stock.nombre : null, Validators.required),
       direccion: new FormControl(this.data?.stock?.direccion ? this.data?.stock.direccion : null),
-      activo: new FormControl(this.data?.stock?.activo ? this.data?.stock.activo : 'true'),
-      punto_de_venta: new FormControl(this.data?.stock?.punto_de_venta ? this.data?.punto_de_venta : 'true'),
+      activo: new FormControl(this.data?.stock?.activo ? this.data?.stock.activo : false),
+      punto_de_venta: new FormControl(this.data?.stock?.punto_de_venta ? this.data?.punto_de_venta : false),
       jefe_almacen: new FormControl(this.data?.stock?.jefe_almacen ? this.data?.stock.jefe_almacen.id : null, Validators.required),
       departamento: new FormControl(this.data?.stock?.departamento ? this.data?.stock.departamento.id : null, Validators.required),
     });
@@ -85,7 +86,8 @@ export class StockFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(data) {
-    this.data.stock? this.edit.emit(data) : this.create.emit(data);
+    console.log('ver los datos: ', data);
+    this.data.stock ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();
   }
 

@@ -7,7 +7,7 @@ import { MoveType } from '../../classifiers/move-type/models/move-type.model';
 export interface Suplierreturn {
   id?: string;
   fecha?: string;
-  numero?: string;
+  numero?: number;
   comentario?: string;
   nro_control?: string;
   almacen?: Stock;
