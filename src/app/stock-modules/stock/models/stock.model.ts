@@ -10,6 +10,8 @@ export interface Stock {
   punto_de_venta?: boolean;
   jefe_almacen?: User;
   departamento?: Office;
+  activo_string?: string;
+  punto_de_venta_string?: string;
   jefe_almacen_string?: string;
   departamento_string?: string;
 }

@@ -12,13 +12,13 @@ export const Inventorys_TABLE_CONFIGURATION: TableConfiguration = {
     },
     {
       name: 'fecha_inicio',
-      type: 'text',
+      type: 'date',
       title: 'Fecha Inicio',
     },
     {
       name: 'fecha_fin',
       title: 'Fecha Fin',
-      type: 'text',
+      type: 'date',
     },
     {
       name: 'usuario',

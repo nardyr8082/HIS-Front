@@ -15,6 +15,8 @@ import { MoveStatusService } from '../../../classifiers/move-status/services/mov
 import { MoveTypeService } from '../../../classifiers/move-type/services/moveType.service';
 import { UserService } from '../../../../security-module/user/services/user.service';
 import { ValidationSuplierReturn } from '../../validator/validator';
+import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -43,6 +45,7 @@ export class SuplierreturnFormComponent implements OnInit, OnDestroy {
     private getMoveSatusService: MoveStatusService,
     private getMoveTypeService: MoveTypeService,
     private getStockService: StockService,
+    private toastrService: ToastrService,
     public dialogRef: MatDialogRef<SuplierreturnFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
   ) {}
@@ -66,9 +69,10 @@ export class SuplierreturnFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
+    const fecha = this.data.suplierreturn ? this.getFormattedDate(this.data.suplierreturn.fecha) : '';
     this.suplierreturnForm = new FormGroup({
       id: new FormControl(this.data?.suplierreturn?.id ? this.data?.suplierreturn.id : null),
-      fecha: new FormControl(this.data?.suplierreturn?.fecha ? this.data?.suplierreturn.fecha : null, Validators.required),
+      fecha: new FormControl(fecha, Validators.required),
       numero: new FormControl(this.data?.suplierreturn?.numero ? this.data?.suplierreturn.numero : null, [Validators.required, Validators.min(-2147483647), Validators.max(2147483647), ValidationSuplierReturn.esNumero]),
       comentario: new FormControl(this.data?.suplierreturn?.comentario ? this.data?.suplierreturn.comentario : null, Validators.required),
       nro_control: new FormControl(this.data?.suplierreturn?.nro_control ? this.data?.suplierreturn.nro_control : null, Validators.required),
@@ -111,6 +115,21 @@ export class SuplierreturnFormComponent implements OnInit, OnDestroy {
 
   get comentaryControl() {
     return this.suplierreturnForm.get('comentario') as FormControl;
+  }
+  getFormattedDate(apiDate: string) {
+    const arrayDate = apiDate.split('-');
+    return new Date(parseInt(arrayDate[0]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[2]));
+  }
+  sendData() {
+    if (this.suplierreturnForm.valid) {
+      const sale = this.suplierreturnForm.value;
+      const dateFormat = moment(sale.fecha);
+      sale.fecha = dateFormat.format('yyyy-MM-DD');
+      this.data.sale ? this.edit.emit( sale ) : this.create.emit( sale );
+      this.dialogRef.close();
+    } else {
+      this.toastrService.error('Por favor revise los formularios, quedan campos requeridos sin llenar', 'Error');
+    }
   }
 
   onSubmit(data) {

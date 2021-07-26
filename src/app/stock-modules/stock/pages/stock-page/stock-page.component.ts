@@ -87,6 +87,8 @@ export class StockPageComponent implements OnInit {
     this.subscriptions.push(sub);
   }
 
+
+
   getStock(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.stockService
@@ -96,6 +98,8 @@ export class StockPageComponent implements OnInit {
           this.stock = response.results.map((res) => {
             const userString = this.getUserString(res.jefe_almacen);
             const departamentoString = this.getOfficeString(res.departamento);
+            const activeString = this.getActiveString(res.activo);
+            const pointString = this.getSalePointString(res.punto_de_venta);
             return { ...res, jefe_almacen_string: userString, departamento_string: departamentoString };
           });
           this.dataCount = response.count;
@@ -113,6 +117,18 @@ export class StockPageComponent implements OnInit {
   }
   getUserString(user: User) {
     return user.username;
+  }
+  getActiveString(active: boolean) {
+    if (active === true)
+     return 'Si';
+    else
+      return 'No';
+  }
+  getSalePointString(point: boolean) {
+    if (point === true)
+      return 'Si';
+    else
+      return 'No';
   }
   getOfficeString(office: Office) {
     return office.nombre;

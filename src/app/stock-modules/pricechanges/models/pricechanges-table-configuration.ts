@@ -7,7 +7,7 @@ export const Pricechanges_TABLE_CONFIGURATION: TableConfiguration = {
   tableFilters: [
     {
       name: 'fecha',
-      type: 'text',
+      type: 'date',
       title: 'Fecha',
     },
     {

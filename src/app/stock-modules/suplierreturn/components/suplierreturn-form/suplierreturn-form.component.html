@@ -2,7 +2,7 @@
   <h4>{{ data.suplierreturn ? 'Editar Devolución Proveedores' : 'Crear Devolución Proveedores' }}</h4>
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="suplierreturnForm" [formGroup]="suplierreturnForm">
-    <mat-form-field class="w-100" appearance="outline">
+    <mat-form-field class="w-100" appearance="outline" floatLabel="always">
       <mat-label>Fecha</mat-label>
       <input matInput formControlName="fecha" [matDatepicker]="picker"/>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>

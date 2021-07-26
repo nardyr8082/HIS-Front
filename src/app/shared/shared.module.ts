@@ -53,6 +53,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { CustomTableComponent } from './table/custom-table/custom-table.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTimepickerModule } from 'mat-timepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { NgxDropzoneModule } from 'ngx-dropzone';
@@ -115,6 +116,7 @@ const components = [DeleteConfirmationModalComponent];
     MatProgressBarModule,
     MatStepperModule,
     MatDatepickerModule,
+    MatTimepickerModule,
     MatNativeDateModule,
     MatAutocompleteModule,
     NgSelectModule,
@@ -163,6 +165,7 @@ const components = [DeleteConfirmationModalComponent];
     CustomTableComponent,
     MatStepperModule,
     MatDatepickerModule,
+    MatTimepickerModule,
     MatNativeDateModule,
     MatAutocompleteModule,
     NgSelectModule,

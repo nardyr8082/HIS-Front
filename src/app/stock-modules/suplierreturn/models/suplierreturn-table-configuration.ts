@@ -7,7 +7,7 @@ export const Suplierreturn_TABLE_CONFIGURATION = {
   tableFilters: [
     {
       name: 'fecha',
-      type: 'text',
+      type: 'date',
       title: 'Fecha',
     },
     {

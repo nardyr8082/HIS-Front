@@ -55,12 +55,12 @@ export class StockFormComponent implements OnInit, OnDestroy {
       nombre: new FormControl(this.data?.stock?.nombre ? this.data?.stock.nombre : null, Validators.required),
       direccion: new FormControl(this.data?.stock?.direccion ? this.data?.stock.direccion : null),
       activo: new FormControl(this.data?.stock?.activo ? this.data?.stock.activo : false),
-      punto_de_venta: new FormControl(this.data?.stock?.punto_de_venta ? this.data?.punto_de_venta : false),
+      punto_de_venta: new FormControl(this.data?.stock?.punto_de_venta ? this.data?.stock.punto_de_venta : false),
       jefe_almacen: new FormControl(this.data?.stock?.jefe_almacen ? this.data?.stock.jefe_almacen.id : null, Validators.required),
       departamento: new FormControl(this.data?.stock?.departamento ? this.data?.stock.departamento.id : null, Validators.required),
     });
-    console.log('ver AQUI', this.data);
-    console.log('hay mas: ', this.data?.stock?.punto_de_venta ? 'primero' : 'segundo');
+    //console.log('ver AQUI', this.data);
+    console.log('hay mas: ', this.data?.stock?.punto_de_venta);
   }
 
   get idControl() {

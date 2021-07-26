@@ -30,6 +30,7 @@
     "angular2-prettyjson": "^3.0.1",
     "angular2-uuid": "^1.1.1",
     "bootstrap": "^5.0.1",
+    "mat-timepicker": "^5.1.4",
     "material-design-icons": "^3.0.1",
     "moment": "^2.29.1",
     "ngp-image-picker": "^1.2.6",

@@ -4,12 +4,23 @@
   <form *ngIf="pricechangesForm" [formGroup]="pricechangesForm">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Fecha:</mat-label>
-      <input matInput formControlName="fecha" />
-      <!--<input matInput formControlName="fecha" [matDatepicker]="picker" />
+      <!--<input matInput formControlName="fecha" />-->
+      <input matInput formControlName="fechaT" [matDatepicker]="picker" />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>-->
+      <mat-datepicker #picker></mat-datepicker>
       <mat-error *ngIf="dateControl.errors?.required"> {{ 'La fecha es' }} <strong>requerido</strong>  </mat-error>
    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label i18n="Timepicker 1 Title">Hora</mat-label>
+      <input matTimepicker #t1="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
+             i18n-cancelLabel="Timepicker 1 Cancel Label" cancelLabel="Cancel"  id="timepicker-example-1" mode="24h" formControlName="hora" placeholder="Please select time..."
+             name="time-1" required>
+      <mat-icon matSuffix (click)="t1.showDialog()">access_time</mat-icon>
+      <mat-error *ngIf="timeControl.errors?.required"> {{ 'La hora es' }} <strong>requerido</strong>  </mat-error>
+      <!--<mat-error *ngIf="time1.touched && time1.invalid">Invalid Date</mat-error>-->
+    </mat-form-field>
+
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Precio Viejo:</mat-label>
       <input matInput formControlName="precio_viejo" maxlength="20"/>
