@@ -13,13 +13,13 @@ export const PURCHASE_FACTURE_TABLE_CONFIGURATION: TableConfiguration = {
     },
     {
       name: 'fecha_emision',
-      type: 'text',
+      type: 'date',
       title: 'Fecha Emisión',
     },
     {
       name: 'fecha_entrega',
       title: 'Fecha Entrega',
-      type: 'text',
+      type: 'date',
     },
     {
       name: 'importe_total',
