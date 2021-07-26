@@ -63,13 +63,16 @@ export class PricechangesFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    const fecha = this.data.pricechanges ? this.getFormattedDate(this.data.pricechanges.fechaT) : '';
+    const fecha = this.data.pricechanges ? this.getFormattedDate(this.data.pricechanges.fecha) : '';
+    const hora = this.data.pricechanges ? this.getFormattedHora(this.data.pricechanges.fecha) : '';
+    console.log('Inicial: ', this.data.pricechanges);
     this.pricechangesForm = new FormGroup({
+      id: new FormControl(this.data?.pricechanges?.id ? this.data?.pricechanges.id : null),
       fechaT: new FormControl(fecha, Validators.required),
-      hora: new FormControl(this.data.pricechanges ? this.data.pricechanges.hora : '', Validators.required),
+      hora: new FormControl(hora, Validators.required),
       precio_viejo: new FormControl(this.data.pricechanges ? this.data.pricechanges.precio_viejo : '', [Validators.required, ValidationPrinceChanges.isDecimalFijo172]),
       precio_nuevo: new FormControl(this.data.pricechanges ? this.data.pricechanges.precio_nuevo : '', [Validators.required, ValidationPrinceChanges.isDecimalFijo172]),
-      comentario: new FormControl(this.data.pricechanges ? this.data.pricechanges.comentario : ''),
+      comentario: new FormControl(this.data.pricechanges ? this.data.pricechanges.comentario : '', Validators.required),
       lote: new FormControl(this.data.pricechanges ? this.data.pricechanges.lote_id : '', Validators.required),
       usuario: new FormControl(this.data.pricechanges ? this.data.pricechanges.usuario_id : '', Validators.required),
     });
@@ -114,6 +117,17 @@ export class PricechangesFormComponent implements OnInit, OnDestroy {
   getFormattedDate(apiDate: string) {
     const arrayDate = apiDate.split('-');
     return new Date(parseInt(arrayDate[0]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[2]));
+  }
+  getFormattedHora(apiDate: string) {
+    //2021-07-09T13:48:00Z
+    console.log('mira la hora:', apiDate);
+    const arrayDate = apiDate.split('T');
+    let arrayDate1 = arrayDate[1];
+    arrayDate1 = arrayDate1.substring(0, arrayDate1.length - 2);
+    console.log('OJO: ', arrayDate1);
+    const end = arrayDate1.split(':');
+    console.log('OJO: ', end);
+    return new Date(parseInt(end[0]), parseInt(end[1]) - 1, parseInt(end[2]));
   }
   get dateControl() {
     return this.pricechangesForm?.get('fechaT') as FormControl;

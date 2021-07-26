@@ -7,16 +7,45 @@
       <input matInput formControlName="numero" />
       <mat-error *ngIf="numberControl.errors?.required"> {{ 'La número es' }} <strong>requerido</strong>  </mat-error>
    </mat-form-field>
+
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Fecha Inicio:</mat-label>
-      <input matInput formControlName="fecha_inicio" />
-      <mat-error *ngIf="datestartControl.errors?.required"> {{ 'La fecha de inicio es' }} <strong>requerido</strong>  </mat-error>
+      <mat-label>Fecha Inicial:</mat-label>
+      <!--<input matInput formControlName="fecha" />-->
+      <input matInput formControlName="fecha_inicioT" [matDatepicker]="picker" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="datestartControl.errors?.required"> {{ 'La fecha inicial es' }} <strong>requerido</strong>  </mat-error>
     </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label i18n="Timepicker 1 Title">Hora Inicial</mat-label>
+      <input matTimepicker #t1="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
+             i18n-cancelLabel="Timepicker 1 Cancel Label" cancelLabel="Cancel"   mode="24h" formControlName="horaiT" placeholder="Please select time..."
+             name="time-1" required>
+      <mat-icon matSuffix (click)="t1.showDialog()">access_time</mat-icon>
+      <mat-error *ngIf="timestartControl.errors?.required"> {{ 'La hora inicial es' }} <strong>requerido</strong>  </mat-error>
+      <!--<mat-error *ngIf="time1.touched && time1.invalid">Invalid Date</mat-error>-->
+    </mat-form-field>
+
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Fecha Fin:</mat-label>
-      <input matInput formControlName="fecha_fin" />
-      <mat-error *ngIf="dateendControl.errors?.required"> {{ 'La fecha de fin es' }} <strong>requerido</strong>  </mat-error>
+      <!--<input matInput formControlName="fecha" />-->
+      <input matInput formControlName="fecha_finT" [matDatepicker]="picker1" />
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+      <mat-error *ngIf="dateendControl.errors?.required"> {{ 'La fecha inicial es' }} <strong>requerido</strong>  </mat-error>
     </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label i18n="Timepicker 1 Title">Hora Fin</mat-label>
+      <input matTimepicker #t2="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
+             i18n-cancelLabel="Timepicker 1 Cancel Label" cancelLabel="Cancel"   mode="24h" formControlName="horafT" placeholder="Please select time..."
+             name="time-1" required>
+      <mat-icon matSuffix (click)="t2.showDialog()">access_time</mat-icon>
+      <mat-error *ngIf="timeendControl.errors?.required"> {{ 'La hora inicial es' }} <strong>requerido</strong>  </mat-error>
+      <!--<mat-error *ngIf="time1.touched && time1.invalid">Invalid Date</mat-error>-->
+    </mat-form-field>
+
   <!-- user -->
   <div class="mb-4">
     <ng-select
