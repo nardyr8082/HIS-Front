@@ -109,21 +109,21 @@ export class NavigationService {
           material: true,
           children: [
             {
-              displayName: 'Categoria Cientifica',
+              displayName: 'Categorías Científicas',
               iconName: ['radio_button_unchecked'],
               route: 'cat-science',
               material: true,
               display: true,
             },
             {
-              displayName: 'Categoria Docente',
+              displayName: 'Categorías Docentes',
               iconName: ['radio_button_unchecked'],
               route: 'cat-docent',
               material: true,
               display: true,
             },
             {
-              displayName: 'Profesión',
+              displayName: 'Profesiones',
               iconName: ['radio_button_unchecked'],
               route: 'profession',
               material: true,
@@ -137,7 +137,7 @@ export class NavigationService {
               display: true,
             },
             {
-              displayName: 'Grupo Sangíneo',
+              displayName: 'Grupo Sanguíneo',
               iconName: ['radio_button_unchecked'],
               route: 'blood-type',
               material: true,
@@ -151,7 +151,7 @@ export class NavigationService {
               display: true,
             },
             {
-              displayName: 'Especialidad',
+              displayName: 'Especialidades',
               iconName: ['radio_button_unchecked'],
               route: 'specialty',
               material: true,
@@ -221,12 +221,19 @@ export class NavigationService {
               material: true,
               display: true,
             },
+            {
+              displayName: 'Estado de cita',
+              iconName: ['swap_vertical_circle'],
+              route: 'stock-state-appointment',
+              material: true,
+              display: true,
+            },
           ],
           material: true,
           display: true,
         },
         {
-          displayName: 'Hitoria Clínica',
+          displayName: 'Historia Clínica',
           iconName: ['note'],
           children: [
             {
@@ -319,20 +326,20 @@ export class NavigationService {
           material: true,
           display: true,
         },
-        {
+ /*        {
           displayName: 'Nomencladores',
           iconName: ['build'],
           material: true,
           children: [
             {
-              displayName: 'Categoria Cientifica',
+              displayName: 'Categoría Científica',
               iconName: ['radio_button_unchecked'],
               route: 'cat-science',
               material: true,
               display: true,
             },
             {
-              displayName: 'Categoria Docente',
+              displayName: 'Categoría Docente',
               iconName: ['radio_button_unchecked'],
               route: 'cat-docent',
               material: true,
@@ -360,7 +367,7 @@ export class NavigationService {
               display: true,
             },
             {
-              displayName: 'Especialidad',
+              displayName: 'Especialidades',
               iconName: ['radio_button_unchecked'],
               route: 'specialty',
               material: true,
@@ -388,21 +395,21 @@ export class NavigationService {
               display: true,
             },
             {
-              displayName: 'Pais',
+              displayName: 'Países',
               iconName: ['radio_button_unchecked'],
               route: 'country',
               material: true,
               display: true,
             },
             {
-              displayName: 'Provincia',
+              displayName: 'Provincias',
               iconName: ['radio_button_unchecked'],
               route: 'state',
               material: true,
               display: true,
             },
             {
-              displayName: 'Distrito',
+              displayName: 'Distritos',
               iconName: ['radio_button_unchecked'],
               route: 'municipality',
               material: true,
@@ -410,7 +417,7 @@ export class NavigationService {
             },
           ],
           display: true,
-        },
+        }, */
       ],
       display: true,
     },
@@ -428,21 +435,21 @@ export class NavigationService {
           display: true,
         },
         {
-          displayName: 'Estado de Recurso',
+          displayName: 'Estado del Recurso',
           iconName: ['radio_button_unchecked'],
           route: 'resource-status',
           material: true,
           display: true,
         },
         {
-          displayName: 'Tipo de Recurso',
+          displayName: 'Tipo de Recursos',
           iconName: ['radio_button_unchecked'],
           route: 'resource-type',
           material: true,
           display: true,
         },
         {
-          displayName: 'Clasificador',
+          displayName: 'Clasificadores',
           iconName: ['radio_button_unchecked'],
           route: 'resource-clasificator',
           material: true,
@@ -626,13 +633,6 @@ export class NavigationService {
           display: true,
         },
         {
-          displayName: 'Estado de cita',
-          iconName: ['swap_vertical_circle'],
-          route: 'stock-state-appointment',
-          material: true,
-          display: true,
-        },
-        {
           displayName: 'Distribucion de Lote',
           iconName: ['swap_vertical_circle'],
           route: 'batch-distribution',
@@ -696,7 +696,7 @@ export class NavigationService {
           material: true,
           children: [
             {
-              displayName: 'Medida',
+              displayName: 'Medidas',
               iconName: ['radio_button_unchecked'],
               route: 'stock-measure',
               material: true,
@@ -731,7 +731,7 @@ export class NavigationService {
               display: true,
             },
             {
-              displayName: 'Atributo',
+              displayName: 'Atributos',
               iconName: ['radio_button_unchecked'],
               route: 'attribute',
               material: true,
@@ -773,7 +773,7 @@ export class NavigationService {
               display: true,
             },
             {
-              displayName: 'Estado de Inventario',
+              displayName: 'Estado de Inventarios',
               iconName: ['radio_button_unchecked'],
               route: 'stock-invetory-status',
               material: true,

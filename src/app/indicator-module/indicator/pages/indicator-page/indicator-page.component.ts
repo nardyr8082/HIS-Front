@@ -62,48 +62,20 @@ export class IndicatorPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.getIndicator();
-    this.getSubcategories();
     this.getIndicatorTypes();
-    this.getFrequency();
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  getSubcategories() {
-    const sub = this.subcategoryService
-      .getSubcategory({}, 'id', 'asc', 1, 1000)
-      .pipe(
-        map((response) => {
-          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-
   getIndicatorTypes() {
-    const sub = this.indicatorTypeService
-      .getIndicatorTypes({}, 'id', 'asc', 1, 1000)
+    const sub = this.indicatorService
+      .getIndicatorTypes()
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
         }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-
-  getFrequency() {
-    const sub = this.frequencyService
-      .getFrequency({}, 'id', 'asc', 1, 1000) 
-      .pipe(
-        map((response) => {
-          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
-       }),
       )
       .subscribe();
 

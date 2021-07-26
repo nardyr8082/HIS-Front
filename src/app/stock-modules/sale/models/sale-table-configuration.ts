@@ -13,7 +13,7 @@ export const SALE_TABLE_CONFIGURATION: TableConfiguration = {
     },
     {
       name: 'fecha',
-      type: 'text',
+      type: 'date',
       title: 'Fecha',
     },
     {

@@ -6,7 +6,8 @@
       <mat-label>Código:</mat-label>
       <input matInput formControlName="codigo" />
       <mat-error *ngIf="codeControl.errors?.required"> {{ 'El Código es' }} <strong>requerido</strong> </mat-error>
-     </mat-form-field>
+      <mat-error *ngIf="codeControl.errors?.pattern"> {{ 'El Código solo permite' }} <strong>letras</strong> </mat-error> 
+    </mat-form-field>
      <mat-form-field class="w-100" appearance="outline">
       <mat-label>Descripción:</mat-label>
       <input matInput formControlName="descripcion" />
