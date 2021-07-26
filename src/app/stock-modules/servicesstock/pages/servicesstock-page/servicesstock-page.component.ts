@@ -12,6 +12,9 @@ import { Servicesstock_TABLE_CONFIGURATION } from '../../models/servicesstock-ta
 import { ServicesstockFormComponent } from '../../components/servicesstock-form/servicesstock-form.component';
 import { ServicesstockService } from '../../services/servicesstock.service';
 import { Office } from '../../../../structure-modules/office/models/office.model';
+import { OfficeService } from '../../../../structure-modules/office/services/office.service';
+import { TaxService } from '../../../classifiers/tax/services/tax.service';
+import { UserService } from '../../../../security-module/user/services/user.service';
 
 
 
@@ -47,7 +50,11 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
     },
   ];
 
-  constructor(private servicesstockService: ServicesstockService, private toastService: ToastrService, public dialog: MatDialog) {}
+  constructor(private userService: UserService, private taxService: TaxService, private officeService: OfficeService, private servicesstockService: ServicesstockService, private toastService: ToastrService, public dialog: MatDialog) {
+    this.putOffice();
+    this.putTax();
+    this.putUser();
+  }
 
   ngOnInit(): void {
     this.getServicesstock();
@@ -78,6 +85,45 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
           this.toastService.error('Hubo OJO!!! un error al obtener los datos. Por favor, inténtelo de nuevo más tarde.', 'Error');
           this.loading = false;
           return null;
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  putOffice(filters = {}) {
+    const sub = this.officeService
+      .getOffice(filters, 'descripcion', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  putTax(filters = {}) {
+    const sub = this.taxService
+      .getTaxs(filters, 'descripcion', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[3].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  putUser(filters = {}) {
+    const sub = this.userService
+      .getUsers(filters, 'descripcion', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id, name: res.username }));
         }),
       )
       .subscribe();

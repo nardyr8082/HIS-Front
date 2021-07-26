@@ -23,13 +23,15 @@ export const Servicesstock_TABLE_CONFIGURATION = {
     },
     {
       name: 'impuesto',
-      type: 'text',
       title: 'Impuesto',
+      type: 'select',
+      items: [],
     },
     {
       name: 'departamento',
       title: 'Departamento',
-      type: 'text',
+      type: 'select',
+      items: [],
     },
     {
       name: 'usuario',

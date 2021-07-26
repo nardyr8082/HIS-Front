@@ -22,7 +22,8 @@ export const Productstock_TABLE_CONFIGURATION = {
     },
     {
       name: 'atributos',
-      type: 'text',
+      type: 'select',
+      items: [],
       title: 'Atributos',
     },
     {
