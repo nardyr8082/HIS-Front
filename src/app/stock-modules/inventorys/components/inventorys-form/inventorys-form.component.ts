@@ -76,10 +76,15 @@ export class InventorysFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    const fechai = this.data.pricechanges ? this.getFormattedDate(this.data.pricechanges.fecha_inicio) : '';
-    const horai = this.data.pricechanges ? this.getFormattedHora(this.data.pricechanges.fecha_inicio) : '';
-    const fechaf = this.data.pricechanges ? this.getFormattedDate(this.data.pricechanges.fecha_fin) : '';
-    const horaf = this.data.pricechanges ? this.getFormattedHora(this.data.pricechanges.fecha_fin) : '';
+    const fechai = this.data.inventorys ? this.getFormattedDate(this.data.inventorys.fecha_inicio) : '';
+    const horai = this.data.inventorys ? this.getFormattedHora(this.data.inventorys.fecha_inicio) : '';
+    const fechaf = this.data.inventorys ? this.getFormattedDate(this.data.inventorys.fecha_fin) : '';
+    const horaf = this.data.inventorys ? this.getFormattedHora(this.data.inventorys.fecha_fin) : '';
+    console.log('mensaje data:', this.data.inventorys);
+    console.log('fecha inicio:', fechai);
+    console.log('hora inicio:', fechai);
+    console.log('fecha fin', fechaf);
+    console.log('hora fin:', horaf);
     this.inventorysForm = new FormGroup({
       numero: new FormControl(this.data.inventorys ? this.data.inventorys.numero : '', Validators.required),
       fecha_inicioT: new FormControl(fechai, Validators.required),
@@ -90,6 +95,7 @@ export class InventorysFormComponent implements OnInit, OnDestroy {
       almacen: new FormControl(this.data.inventorys ? this.data.inventorys.almacen_id : '', Validators.required),
       estado: new FormControl(this.data.inventorys ? this.data.inventorys.estado_id : '', Validators.required),
     });
+    console.log('mensaje form:', this.inventorysForm);
   }
   ChangesMonth(mes: any) {
     console.log('El mes es: ', mes);
@@ -129,11 +135,13 @@ export class InventorysFormComponent implements OnInit, OnDestroy {
     return 12;
   }
   getFormattedDate(apiDate: string) {
+    console.log('getFormatDAte:', apiDate);
     const arrayDate = apiDate.split('-');
     return new Date(parseInt(arrayDate[0]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[2]));
   }
   getFormattedHora(apiDate: string) {
     //2021-07-09T13:48:00Z
+    console.log('getFormatHora:', apiDate);
     console.log('mira la hora:', apiDate);
     const arrayDate = apiDate.split('T');
     let arrayDate1 = arrayDate[1];
