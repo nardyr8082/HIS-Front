@@ -1,25 +1,29 @@
 <div class="form">
-    <h4>{{ data.conteo ? 'Editar Almacen de Inventario Diferencia' : 'Crear Almacen de Inventario
+    <h4>{{ data.wareHouseInventoryDif ? 'Editar Almacén de Inventario Diferencia' : 'Crear Almacén de Inventario
         Diferencia' }}</h4>
     <form *ngIf="warehouseInventoryDifferenceForm" [formGroup]="warehouseInventoryDifferenceForm">
 
         <mat-form-field class="w-100" appearance="outline">
             <mat-label>Dif cantidad:</mat-label>
-            <input type='number' matInput formControlName="dif_cantidad" />
+            <input type='number' matInput formControlName="dif_cantidad" maxlength="2147483647" />
+
+
         </mat-form-field>
 
         <mat-form-field class="w-100" appearance="outline">
             <mat-label>Dif importe:</mat-label>
-            <input type='number' matInput formControlName="dif_importe" />
+            <input type='number' matInput formControlName="dif_importe" maxlength="2147483647" />
+
         </mat-form-field>
 
-        <div class="mb-4">
-            <ng-select appearance="outline" class="custom w-100" placeholder="Conteo" [items]="conteo" bindLabel="id"
-                bindValue="id" formControlName="conteo">
-            </ng-select>
-            <small class="text-danger error-style" *ngIf="conteoControl.errors?.required && conteoControl.dirty">
-                El campo conteo es <strong>requerido</strong></small>
-        </div>
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Conteo</mat-label>
+            <mat-select #mySelect formControlName="conteo">
+                <mat-option *ngFor="let c of conteo" [value]="c.id">{{ c.conteo_cant_real }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="conteoControl.errors?.required"> {{ 'Seleccione un conteo' }} </mat-error>
+        </mat-form-field>
+
     </form>
     <mat-divider class="my-4"></mat-divider>
 
@@ -27,7 +31,7 @@
         <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
         <button (click)="onSubmit(warehouseInventoryDifferenceForm.value)"
             [disabled]="!warehouseInventoryDifferenceForm.valid" mat-raised-button color="primary" class="button">
-            {{ data.conteo ? 'Aceptar' : 'Crear' }}
+            {{ data.wareHouseInventoryDif ? 'Aceptar' : 'Crear' }}
         </button>
     </div>
 </div>

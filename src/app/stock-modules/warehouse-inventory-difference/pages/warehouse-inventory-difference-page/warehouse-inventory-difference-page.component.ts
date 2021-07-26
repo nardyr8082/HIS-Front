@@ -50,7 +50,7 @@ export class WarehouseInventoryDifferencePageComponent implements OnInit, OnDest
     private toastService: ToastrService,
     public dialog: MatDialog
   ) {
-    this.putConteo();
+    this.putWareHouseInventoryDif();
   }
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
@@ -58,10 +58,22 @@ export class WarehouseInventoryDifferencePageComponent implements OnInit, OnDest
 
   ngOnInit(): void {
     this.getWareHouseInventoryDif();
-    this.getConteo();
+
   }
 
-  putConteo() { }
+  putWareHouseInventoryDif(filters = {}) {
+    const sub = this.ware_house_inventory_dif_service
+      .getWareHouseInventoryDif(filters, 'descripcion', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+          
+          this.configuration.tableFilters[2].items = response.results.map((res) => ({ id: res.id, name: res.conteo['conteo_cant_real'] }));
+        }),
+      )
+      .subscribe();
+    
+    this.subscriptions.push(sub);
+  }
 
   getWareHouseInventoryDif(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
@@ -69,16 +81,18 @@ export class WarehouseInventoryDifferencePageComponent implements OnInit, OnDest
       .getWareHouseInventoryDif(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
+          
           this.wareHouseInventoryDif = response.results.map((res) => ({
             ...res,
 
             id: res.id,
             dif_cantidad: res.dif_cantidad,
             dif_importe: res.dif_importe,
-            conteo: res.conteo.id
+            conteo: res.conteo.conteo_cant_real,
+            conteo_id: res.conteo.id
 
           }));
-
+          
           this.dataCount = response.count;
           this.loading = false;
         }),
@@ -104,7 +118,7 @@ export class WarehouseInventoryDifferencePageComponent implements OnInit, OnDest
     this.getWareHouseInventoryDif(filters, 'id', 'desc');
   }
 
-  getConteo() { }
+
 
 
 
