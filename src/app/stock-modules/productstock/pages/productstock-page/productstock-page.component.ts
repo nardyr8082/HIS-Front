@@ -20,9 +20,6 @@ import { ProgramService } from '../../../classifiers/program/services/program.se
 import { Program } from '../../../classifiers/program/models/program.model';
 import { Tax } from '../../../classifiers/tax/models/tax.model';
 import { AttributeService } from '../../../classifiers/attribute/services/attribute.service';
-import { Attribute } from '../../../classifiers/attribute/models/attribute.model';
-import { Office } from '../../../../structure-modules/office/models/office.model';
-
 
 
 @Component({
@@ -62,7 +59,7 @@ export class ProductstockPageComponent implements OnInit {
     this.putFamily();
     this.putTax();
     this.putProgram();
-    this.putAtributes();
+    //this.putAtributes();
   }
 
   ngOnInit(): void {
@@ -77,7 +74,7 @@ export class ProductstockPageComponent implements OnInit {
       .getMeasures(filters, 'descripcion', 'asc', 1, 10000)
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[3].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
         }),
       )
       .subscribe();
@@ -89,7 +86,7 @@ export class ProductstockPageComponent implements OnInit {
       .getProductFamily(null, filters, 'id', 'asc', 1, 10000)
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+          this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
         }),
       )
       .subscribe();
@@ -101,18 +98,6 @@ export class ProductstockPageComponent implements OnInit {
       .getTaxs(filters, 'descripcion', 'asc', 1, 10000)
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-  putProgram(filters = {}) {
-    const sub = this.productstockService
-      .getProductstock(filters, 'descripcion', 'asc', 1, 10000)
-      .pipe(
-        map((response) => {
           this.configuration.tableFilters[6].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
         }),
       )
@@ -120,8 +105,20 @@ export class ProductstockPageComponent implements OnInit {
 
     this.subscriptions.push(sub);
   }
+  putProgram(filters = {}) {
+    const sub = this.programService
+      .getPrograms(filters, 'descripcion', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+          this.configuration.tableFilters[7].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+        }),
+      )
+      .subscribe();
 
-  putAtributes(filters = {}) {
+    this.subscriptions.push(sub);
+  }
+
+  /*putAtributes(filters = {}) {
     const sub = this.attributeService
       .getAttributes(filters, 'descripcion', 'asc', 1, 10000)
       .pipe(
@@ -132,7 +129,7 @@ export class ProductstockPageComponent implements OnInit {
       .subscribe();
 
     this.subscriptions.push(sub);
-  }
+  }*/
   getProductstock(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.productstockService

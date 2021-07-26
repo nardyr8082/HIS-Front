@@ -2,8 +2,8 @@ import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model
 
 export const Productstock_TABLE_CONFIGURATION = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['codigo', 'descripcion', 'activo', 'unidad_medida_string', 'familia_string', 'impuesto_string', 'programa_string', 'atributos_string'],
-  columnsName: ['Código', 'Descripción', 'Activo', 'Unidad Medida', 'Familia', 'Impuesto', 'Programa', 'Atributo'],
+  displayedColumns: ['codigo', 'descripcion', 'activo', 'atributos_string', 'unidad_medida_string', 'familia_string', 'impuesto_string', 'programa_string'],
+  columnsName: ['Código', 'Descripción', 'Activo', 'Atributos', 'Unidad Medida', 'Familia', 'Impuesto', 'Programa'],
   tableFilters: [
     {
       name: 'codigo',
@@ -19,6 +19,11 @@ export const Productstock_TABLE_CONFIGURATION = {
       name: 'activo',
       type: 'text',
       title: 'Activo',
+    },
+    {
+      name: 'atributos',
+      type: 'text',
+      title: 'Atributos',
     },
     {
       name: 'unidad_medida',
@@ -44,10 +49,5 @@ export const Productstock_TABLE_CONFIGURATION = {
       items: [],
       title: 'Programa',
     },
-    {
-      name: 'atributos',
-      type: 'text',
-      title: 'Atributos',
-    }
   ],
 };

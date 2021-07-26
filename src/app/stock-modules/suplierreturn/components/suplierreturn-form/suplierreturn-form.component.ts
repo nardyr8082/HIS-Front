@@ -14,6 +14,7 @@ import { ProviderService } from '../../../classifiers/provider/services/provider
 import { MoveStatusService } from '../../../classifiers/move-status/services/move-status.service';
 import { MoveTypeService } from '../../../classifiers/move-type/services/moveType.service';
 import { UserService } from '../../../../security-module/user/services/user.service';
+import { ValidationSuplierReturn } from '../../validator/validator';
 
 
 
@@ -47,6 +48,11 @@ export class SuplierreturnFormComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    const duda = 'Fri Jul 02 2021 00:00:00 GMT-0500 (GMT-05:00)';
+    console.log('mi duda 1:', typeof(duda));
+    const arr = duda.split(' ');
+    console.log('ver ahora: ', arr);
+    console.log('mi duda 2:', typeof(arr));
     this.buildForm();
     this.getStock();
     this.getUser();
@@ -63,7 +69,7 @@ export class SuplierreturnFormComponent implements OnInit, OnDestroy {
     this.suplierreturnForm = new FormGroup({
       id: new FormControl(this.data?.suplierreturn?.id ? this.data?.suplierreturn.id : null),
       fecha: new FormControl(this.data?.suplierreturn?.fecha ? this.data?.suplierreturn.fecha : null, Validators.required),
-      numero: new FormControl(this.data?.suplierreturn?.numero ? this.data?.suplierreturn.numero : null, Validators.required),
+      numero: new FormControl(this.data?.suplierreturn?.numero ? this.data?.suplierreturn.numero : null, [Validators.required, Validators.min(-2147483647), Validators.max(2147483647), ValidationSuplierReturn.esNumero]),
       comentario: new FormControl(this.data?.suplierreturn?.comentario ? this.data?.suplierreturn.comentario : null, Validators.required),
       nro_control: new FormControl(this.data?.suplierreturn?.nro_control ? this.data?.suplierreturn.nro_control : null, Validators.required),
       almacen: new FormControl(this.data?.suplierreturn?.almacen ? this.data?.suplierreturn.almacen.id : null, Validators.required),
@@ -108,9 +114,57 @@ export class SuplierreturnFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(data) {
-    this.data.suplierreturn? this.edit.emit(data) : this.create.emit(data);
+    console.log('mi data es OK:', data);
+    let fecha = data['fecha'].toString();
+    let formateada = fecha.split(' ');
+    console.log('mi data es  fecha:', formateada);
+    //["Sat0", "Jul 1", "03 2", "2021 3", "00:00:00", "GMT-0500", "(GMT-05:00)"]
+     const midate = formateada[3] + '-' + this.ChangesMonth(formateada[1]) + '-' + formateada[2];
+    //data['fecha'] = '1991-04-07';
+    console.log('el que yo cree: ', midate);
+    if (midate === data['fecha']){
+      console.log('HURRRA!!!!!');
+    }
+    this.data.suplierreturn ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();
   }
+   ChangesMonth(mes: any) {
+    console.log('El mes es: ', mes);
+    if (mes === 'Jan') {
+      return '01';
+    }
+     if (mes === 'Feb') {
+       return '02';
+     }
+     if (mes === 'Mar') {
+       return '03';
+     }
+     if (mes === 'Apr') {
+       return '04';
+     }
+     if (mes === 'May') {
+       return '05';
+     }
+     if (mes === 'Jun') {
+       return '06';
+     }
+     if (mes === 'Jul') {
+       return '07';
+     }
+     if (mes === 'Aug') {
+       return '08';
+     }
+     if (mes === 'Sep') {
+       return '09';
+     }
+     if (mes === 'Oct') {
+       return '10';
+     }
+     if (mes === 'Nov') {
+       return '11';
+     }
+     return 12;
+   }
 
   onCancel() {
     this.dialogRef.close();

@@ -10,11 +10,11 @@
       <mat-error *ngIf="numberControl.errors?.notAvailable"> {{ 'El número ' }} <strong>ya existe</strong> </mat-error>
     </mat-form-field>
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Almacen</mat-label>
+      <mat-label>Almacén</mat-label>
       <mat-select #mySelect formControlName="almacen">
         <mat-option *ngFor="let st of stock" [value]="st.id">{{ st.nombre }}</mat-option>
       </mat-select>
-      <mat-error *ngIf="stockControl.errors?.required"> {{ 'Seleccione un almacen' }} </mat-error>
+      <mat-error *ngIf="stockControl.errors?.required"> {{ 'Seleccione un almacén' }} </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">

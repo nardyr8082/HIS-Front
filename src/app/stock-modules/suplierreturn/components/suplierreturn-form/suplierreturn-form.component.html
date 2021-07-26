@@ -4,16 +4,19 @@
   <form *ngIf="suplierreturnForm" [formGroup]="suplierreturnForm">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Fecha</mat-label>
-      <input matInput formControlName="fecha" [matDatepicker]="picker" />
+      <input matInput formControlName="fecha" [matDatepicker]="picker"/>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
       <mat-error *ngIf="dateControl.errors?.required"> {{ 'La fecha es' }} <strong>requerida</strong> </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Numero</mat-label>
-      <input matInput formControlName="numero" maxlength="20" />
-      <mat-error *ngIf="numberControl.errors?.required"> {{ 'El numero es' }} <strong>requerido</strong> </mat-error>
+      <mat-label>Número</mat-label>
+      <input matInput formControlName="numero" maxlength="10" />
+      <mat-error *ngIf="numberControl.errors?.required"> {{ 'El número es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="numberControl.errors?.min"> {{ 'El número ' }} <strong>debe ser mayor o igual a -2147483648.</strong> </mat-error>
+      <mat-error *ngIf="numberControl.errors?.max"> {{ 'El número es' }} <strong>valor es menor o igual a 2147483647</strong> </mat-error>
+      <mat-error *ngIf="numberControl.errors?.esNumero"> {{ 'El número es' }} <strong>debe ser entero</strong> </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
@@ -23,17 +26,17 @@
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Control Numero</mat-label>
+      <mat-label>Control Número</mat-label>
       <input matInput formControlName="nro_control" maxlength="20" />
-      <mat-error *ngIf="controlnumberControl.errors?.required"> {{ 'El control numero es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="controlnumberControl.errors?.required"> {{ 'El control número es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Almacen</mat-label>
+      <mat-label>Almacén</mat-label>
       <mat-select #mySelect formControlName="almacen">
         <mat-option *ngFor="let st of stock" [value]="st.id">{{ st.nombre }}</mat-option>
       </mat-select>
-      <mat-error *ngIf="stockControl.errors?.required"> {{ 'Seleccione un almacen' }} </mat-error>
+      <mat-error *ngIf="stockControl.errors?.required"> {{ 'Seleccione un almacén' }} </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
