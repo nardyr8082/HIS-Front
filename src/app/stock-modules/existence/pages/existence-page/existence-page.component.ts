@@ -13,7 +13,9 @@ import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
 import { ProductCategory } from 'src/app/stock-modules/classifiers/product-category/models/product-category.model';
-
+import { MeasureService } from 'src/app/stock-modules/classifiers/measure/services/measure.service';
+import { StockService } from 'src/app/stock-modules/boxstock/services/stock.service';
+import { WarehouseLotService } from 'src/app/stock-modules/warehouse-lot/services/warehouse-lot.service';
 
 @Component({
   selector: 'app-existence-page',
@@ -55,9 +57,15 @@ export class ExistencePageComponent implements OnInit {
     private existenceService: ExistenceService,
     private toastService: ToastrService,
     public dialog: MatDialog,
-    private productCategoryService: ProductCategoryService
+    private productCategoryService: ProductCategoryService,
+    private measureService: MeasureService,
+    private stockService: StockService,
+    private warehouseLotService: WarehouseLotService,
   ) {
     this.putProductCategory();
+    this.putMeasure();
+    this.putStocks();
+    this.putWarehouseLot();
   }
 
   ngOnInit(): void {
@@ -77,13 +85,57 @@ export class ExistencePageComponent implements OnInit {
 
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+          console.log(response.results);
+          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
         }),
       )
       .subscribe();
 
     this.subscriptions.push(sub);
   }
+
+  putMeasure(filters = {}) {
+    const sub = this.measureService
+      .getMeasures(filters, 'descripcion', 'asc', 1, 10000)
+      .pipe(
+        map((response: ApiResponse<any>) => {
+          console.log(response.results);
+          this.configuration.tableFilters[3].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+
+        }),
+      )
+      .subscribe();
+    this.subscriptions.push(sub);
+  }
+
+  putStocks(filters = {}) {
+    const sub = this.stockService
+      .getStock(filters, 'descripcion', 'asc', 1, 10000)
+      .pipe(
+        map((response: ApiResponse<any>) => {
+          console.log(response.results);
+          this.configuration.tableFilters[2].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+
+        }),
+      )
+      .subscribe();
+    this.subscriptions.push(sub);
+  }
+
+  putWarehouseLot(filters = {}) {
+    const sub = this.warehouseLotService
+      .getWarehouseLot(filters, 'descripcion', 'asc', 1, 10000)
+      .pipe(
+        map((response: ApiResponse<any>) => {
+          console.log(response.results);
+          this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id, name: res.codigo }));
+
+        }),
+      )
+      .subscribe();
+    this.subscriptions.push(sub);
+  };
+
 
   getProductCategory() {
     const sub = this.productCategoryService
@@ -105,6 +157,7 @@ export class ExistencePageComponent implements OnInit {
       .getExistence(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
+          console.log(response.results)
           this.existence = response.results.map((res) => ({
             ...res,
             id: res.id,
@@ -114,6 +167,10 @@ export class ExistencePageComponent implements OnInit {
             unidad_medida: res.unidad_medida.descripcion,
             categoria: res.categoria.descripcion,
             lote: res.lote.codigo,
+            almacen_id: res.almacen.id,
+            unidad_medida_id: res.unidad_medida.id,
+            lote_id: res.lote.id,
+            categoria_id: res.categoria.id
 
           }));
 
