@@ -1,0 +1,29 @@
+<div class="form">
+  <h4>{{ data.register ? 'Editar Registro' : 'Crear Registro' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="registerForm" [formGroup]="registerForm">
+
+  <!-- user -->
+  <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Sesión Clínica"
+      [items]="sesion_clinica"
+      bindLabel="motivo"
+      bindValue="id"
+      formControlName="sesion_clinica">
+    </ng-select>
+    <small class="text-danger error-style" *ngIf="sessionControl.errors?.required && sessionControl.dirty">
+      El campo usuario es <strong>requerido</strong></small>
+  </div>
+
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(registerForm.value)" [disabled]="!registerForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.register ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

@@ -222,6 +222,13 @@ export class NavigationService {
               display: true,
             },
             {
+              displayName: 'Registro',
+              iconName: ['radio_button_unchecked'],
+              route: 'clinic-register',
+              material: true,
+              display: true,
+            },
+            {
               displayName: 'Estado de cita',
               iconName: ['swap_vertical_circle'],
               route: 'stock-state-appointment',
