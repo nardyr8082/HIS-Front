@@ -8,7 +8,7 @@ export const Physicalexam_TABLE_CONFIGURATION: TableConfiguration = {
     {
       name: 'ta',
       type: 'text',
-      title: 'Fecha Ingreso',
+      title: 'Ta',
     },
     {
       name: 'fr',

@@ -51,7 +51,7 @@ export class PhysicalexamPageComponent implements OnInit, OnDestroy {
     private toastService: ToastrService,
     public dialog: MatDialog,
   ) {
-    this.getSessionClinic();
+    this.getClinicSession();
   }
 
   ngOnInit(): void {
@@ -61,30 +61,30 @@ export class PhysicalexamPageComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
-  getSessionClinic(filters = {}) {
+  getClinicSession(filters = {}) {
     const sub = this.physicalexamService
       .getClinicSession()
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[13].items = response.results.map((res) => ({ id: res.id, name: res.estado }));
+          console.log('ver estos ya:', response);
+          this.configuration.tableFilters[12].items = response.results.map((res) => ({ id: res.id, name: res.motivo }));
         }),
       )
       .subscribe();
 
     this.subscriptions.push(sub);
   }
-
-
-
+  
   getPhysicalexam(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.physicalexamService
       .getPhysicalexam(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
+          console.log('mi response: ', response);
           this.physicalexam = response.results.map((res) => ({
             ...res,
-            sesion_clinica_string: res.sesion_clinica.estado,
+            sesion_clinica_string: res.sesion_clinica.motivo,
           }));
           this.dataCount = response.count;
           this.loading = false;
