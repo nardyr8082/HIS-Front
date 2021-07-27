@@ -74,7 +74,7 @@ export class PhysicalexamPageComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(sub);
   }
-  
+
   getPhysicalexam(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.physicalexamService

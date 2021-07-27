@@ -47,6 +47,7 @@ export class PhysicalexamFormComponent implements OnInit, OnDestroy {
     this.physicalexamForm = new FormGroup({
       ta: new FormControl(this.data.physicalexam ? this.data.physicalexam.ta: ''),
       fc: new FormControl(this.data.physicalexam ? this.data.physicalexam.fc: ''),
+      fr: new FormControl(this.data.physicalexam ? this.data.physicalexam.fr: ''),
       temperatura: new FormControl(this.data.physicalexam ? this.data.physicalexam.temperatura: ''),
       peso: new FormControl(this.data.physicalexam ? this.data.physicalexam.peso: ''),
       altura: new FormControl(this.data.physicalexam ? this.data.physicalexam.altura: ''),
