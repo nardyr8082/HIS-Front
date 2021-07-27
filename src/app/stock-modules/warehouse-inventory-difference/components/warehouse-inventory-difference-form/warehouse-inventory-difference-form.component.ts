@@ -43,20 +43,22 @@ export class WarehouseInventoryDifferenceFormComponent implements OnInit {
   }
 
   buildForm() {
+
     this.warehouseInventoryDifferenceForm = new FormGroup({
-      dif_cantidad: new FormControl(this.data.warehouseInventoryDifference ? this.data.warehouseInventoryDifference.dif_cantidad : '', Validators.required),
-      dif_importe: new FormControl(this.data.warehouseInventoryDifference ? this.data.warehouseInventoryDifference.dif_importe : '', Validators.required),
-      conteo: new FormControl(this.data.warehouseInventoryDifference ? this.data.warehouseInventoryDifference.conteo : '', Validators.required),
+      dif_cantidad: new FormControl(this.data.wareHouseInventoryDif ? this.data.wareHouseInventoryDif.dif_cantidad : null, [Validators.required, Validators.pattern('^[0-9]+([,][0-9]+)?$')]),
+      dif_importe: new FormControl(this.data.wareHouseInventoryDif ? this.data.wareHouseInventoryDif.dif_importe : null, [Validators.required, Validators.pattern('^[0-9]+([,][0-9]+)?$')]),
+      conteo: new FormControl(this.data.wareHouseInventoryDif ? this.data.wareHouseInventoryDif.conteo_id : null, Validators.required),
     });
+
   }
 
   getCount() {
     const sub = this.inventoryCountService
-      .getInventoryCount({}, 'id', 'asc', 1, 1000)
+      .getInventoryCount({}, 'id', 'asc', 1, 10000)
       .pipe(
         map((response: ApiResponse<any>) => {
           this.conteo = response.results;
-          console.log(this.conteo);
+
         }),
       )
       .subscribe();
@@ -64,10 +66,10 @@ export class WarehouseInventoryDifferenceFormComponent implements OnInit {
     this.subscriptions.push(sub);
   }
 
-  get dif_cantidadControl() {
+  get difCantidadControl() {
     return this.warehouseInventoryDifferenceForm?.get('dif_cantidad') as FormControl;
   }
-  get dif_importeControl() {
+  get difImporteControl() {
     return this.warehouseInventoryDifferenceForm?.get('dif_importe') as FormControl;
   }
   get conteoControl() {
@@ -75,8 +77,8 @@ export class WarehouseInventoryDifferenceFormComponent implements OnInit {
   }
 
   onSubmit(data) {
-    console.log(data)
-    this.data.conteo ? this.edit.emit(data) : this.create.emit(data);
+
+    this.data.wareHouseInventoryDif ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();
   }
 
