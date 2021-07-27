@@ -112,10 +112,10 @@ export class EntryFormComponent implements OnInit, OnDestroy {
       horai: new FormControl(horai, Validators.required),
       fechaa: new FormControl(fechaa, Validators.required),
       horaa: new FormControl(horaa, Validators.required),
-      paciente: new FormControl(this.data.entry ? this.data.entry.paciente_id : '', Validators.required),
-      medico_solicitante: new FormControl(this.data.entry ? this.data.entry.medico_solicitante_id : '', Validators.required),
-      sala: new FormControl(this.data.entry ? this.data.entry.sala_id : '', Validators.required),
-      cama: new FormControl(this.data.entry ? this.data.entry.cama_id : '', Validators.required),
+      paciente: new FormControl(this.data.entry ? this.data.entry.paciente.id : '', Validators.required),
+      medico_solicitante: new FormControl(this.data.entry ? this.data.entry.medico_solicitante.id : '', Validators.required),
+      sala: new FormControl(this.data.entry ? this.data.entry.sala.id : '', Validators.required),
+      cama: new FormControl(this.data.entry ? this.data.entry.cama.id : '', Validators.required),
     });
     console.log('mensaje form:', this.entryForm);
   }
