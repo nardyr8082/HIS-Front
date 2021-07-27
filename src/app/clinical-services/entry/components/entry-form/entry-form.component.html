@@ -1,0 +1,107 @@
+<div class="form">
+  <h4>{{ data.entry ? 'Editar Ingreso' : 'Crear Ingreso' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="entryForm" [formGroup]="entryForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Fecha Ingreso:</mat-label>
+      <!--<input matInput formControlName="fecha" />-->
+      <input matInput formControlName="fechai" [matDatepicker]="picker" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="datestartControl.errors?.required"> {{ 'La fecha ingreso es' }} <strong>requerido</strong>  </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label i18n="Timepicker 1 Title">Hora Ingreso</mat-label>
+      <input matTimepicker #t1="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
+             i18n-cancelLabel="Timepicker 1 Cancel Label" cancelLabel="Cancel"   mode="24h" formControlName="horai" placeholder="Please select time..."
+             name="time-1" required>
+      <mat-icon matSuffix (click)="t1.showDialog()">access_time</mat-icon>
+      <mat-error *ngIf="timestartControl.errors?.required"> {{ 'La hora ingreso es' }} <strong>requerido</strong>  </mat-error>
+      <!--<mat-error *ngIf="time1.touched && time1.invalid">Invalid Date</mat-error>-->
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Fecha Alta:</mat-label>
+      <!--<input matInput formControlName="fecha" />-->
+      <input matInput formControlName="fechaa" [matDatepicker]="picker1" />
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+      <mat-error *ngIf="dateendControl.errors?.required"> {{ 'La fecha alta es' }} <strong>requerido</strong>  </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label i18n="Timepicker 1 Title">Hora Alta</mat-label>
+      <input matTimepicker #t2="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
+             i18n-cancelLabel="Timepicker 1 Cancel Label" cancelLabel="Cancel"   mode="24h" formControlName="horaa" placeholder="Please select time..."
+             name="time-1" required>
+      <mat-icon matSuffix (click)="t2.showDialog()">access_time</mat-icon>
+      <mat-error *ngIf="timeendControl.errors?.required"> {{ 'La hora alta es' }} <strong>requerido</strong>  </mat-error>
+      <!--<mat-error *ngIf="time1.touched && time1.invalid">Invalid Date</mat-error>-->
+    </mat-form-field>
+
+  <!-- user -->
+  <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Paciente"
+      [items]="paciente"
+      bindLabel="nombre"
+      bindValue="id"
+      formControlName="paciente">
+    </ng-select>
+    <small class="text-danger error-style" *ngIf="patientControl.errors?.required && patientControl.dirty">
+      El campo paciente es <strong>requerido</strong></small>
+  </div>
+   <!-- Almacen -->
+   <div class="mb-4">
+    <ng-select
+      appearance="outline"
+      class="custom w-100"
+      placeholder="Médico Solicitante"
+      [items]="medico_solicitante"
+      bindLabel="username"
+      bindValue="id"
+      formControlName="medico_solicitante">
+    </ng-select>
+    <small class="text-danger error-style" *ngIf="medicControl.errors?.required && medicControl.dirty">
+      El campo médico solicitante es <strong>requerido</strong></small>
+  </div>
+    <!-- Estado -->
+    <div class="mb-4">
+      <ng-select
+        appearance="outline"
+        class="custom w-100"
+        placeholder="Sala"
+        [items]="sala"
+        bindLabel="nombre"
+        bindValue="id"
+        formControlName="sala">
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="officeControl.errors?.required && officeControl.dirty">
+        El campo sala es <strong>requerido</strong></small>
+    </div>
+
+    <div class="mb-4">
+      <ng-select
+        appearance="outline"
+        class="custom w-100"
+        placeholder="cama"
+        [items]="cama"
+        bindLabel="nro_inventario"
+        bindValue="id"
+        formControlName="cama">
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="bedControl.errors?.required && bedControl.dirty">
+        El campo cama es <strong>requerido</strong></small>
+    </div>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(entryForm.value)" [disabled]="!entryForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.entry ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

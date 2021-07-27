@@ -156,6 +156,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'clinic-entry',
+        loadChildren: () => import('./clinical-services/entry/entry.module').then((m) => m.EntryModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'stock-box',
         loadChildren: () => import('./stock-modules/boxstock/boxstock.module').then((m) => m.BoxstockModule),
         canActivate: [BackendGuard],
