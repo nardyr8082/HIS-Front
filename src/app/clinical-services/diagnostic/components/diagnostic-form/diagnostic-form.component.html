@@ -1,0 +1,34 @@
+<div class="form">
+  <h4>{{ data.diagnostic ? 'Editar Diagnóstico' : 'Crear Diagnóstico' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="diagnosticForm" [formGroup]="diagnosticForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Descricpión:</mat-label>
+      <input matInput formControlName="descripcion" />
+      <mat-error *ngIf="this.nameDiagnosticControl.errors?.required"> {{ 'La descripción es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="this.nameDiagnosticControl.errors?.pattern"> {{ 'La descripción solo permite letras y espacios' }} </mat-error>
+    </mat-form-field>
+    <div class="mb-4">
+      <ng-select
+        appearance="outline"
+        class="custom w-100"
+        placeholder="Sesión Clínica"
+        [items]="clininc_session"
+        bindLabel="hc"
+        bindValue="id"
+        formControlName="sesion_clinica"
+      >
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="diagnosticForm.controls['sesion_clinica'].errors?.required && diagnosticForm.controls['sesion_clinica'].dirty"
+        >El campo Sesión Clínica es <strong>requerido</strong></small
+      >
+    </div>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(diagnosticForm.value)" [disabled]="!diagnosticForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.diagnostic ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

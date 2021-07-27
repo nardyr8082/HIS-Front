@@ -331,6 +331,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/purchase-facture/purchase-facture.module').then((m) => m.PurchaseFactureModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'diagnostic',
+        loadChildren: () => import('./clinical-services/diagnostic/diagnostic.module').then((m) => m.DiagnosticModule),
+        canActivate: [BackendGuard],
+      },
       // Resources
       {
         path: 'resource-status',
