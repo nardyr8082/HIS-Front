@@ -11,13 +11,13 @@ export const EXISTENCE_TABLE_CONFIGURATION: TableConfiguration = {
     {
       name: 'cantidad',
       title: 'Cantidad',
-      type: 'number',
+      type: 'text',
 
     },
     {
       name: 'importe',
       title: 'Importe',
-      type: 'number',
+      type: 'text',
 
     },
     {

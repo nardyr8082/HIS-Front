@@ -105,12 +105,12 @@ export class ExistenceFormComponent implements OnInit {
 
   buildForm() {
     this.existenceForm = new FormGroup({
-      cantidad: new FormControl(this.data.existence ? this.data.existence.cantidad : '', Validators.required),
-      importe: new FormControl(this.data.existence ? this.data.existence.importe : '', Validators.required),
-      almacen: new FormControl(this.data.existence ? this.data.existence.almacen : '', Validators.required),
-      unidad_medida: new FormControl(this.data.existence ? this.data.existence.unidad_medida : '', Validators.required),
-      categoria: new FormControl(this.data.existence ? this.data.existence.categoria : '', Validators.required),
-      lote: new FormControl(this.data.existence ? this.data.existence.lote : '', Validators.required)
+      cantidad: new FormControl(this.data.existence ? this.data.existence.cantidad : null, Validators.required),
+      importe: new FormControl(this.data.existence ? this.data.existence.importe : null, Validators.required),
+      almacen: new FormControl(this.data.existence ? this.data.existence.almacen_id : null, Validators.required),
+      unidad_medida: new FormControl(this.data.existence ? this.data.existence.unidad_medida_id : null, Validators.required),
+      categoria: new FormControl(this.data.existence ? this.data.existence.categoria_id : null, Validators.required),
+      lote: new FormControl(this.data.existence ? this.data.existence.lote_id : null, Validators.required)
 
     });
   }
