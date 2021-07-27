@@ -59,6 +59,7 @@ export class WarehouseLotFormComponent implements OnInit {
 
 
   buildForm() {
+
     const fechaFabricacion = this.data.warehouseLot ? this.getFormattedDate(this.data.warehouseLot.fecha_fabricacion) : '';
     const fechaVencimiento = this.data.warehouseLot ? this.getFormattedDate(this.data.warehouseLot.fecha_vencimiento) : '';
     this.warehouseLotForm = new FormGroup({
@@ -66,19 +67,13 @@ export class WarehouseLotFormComponent implements OnInit {
       codigo_barra_venta: new FormControl(this.data.warehouseLot ? this.data.warehouseLot.codigo_barra_venta : '', Validators.required),
       precio_costo: new FormControl(this.data.warehouseLot ? this.data.warehouseLot.precio_costo : '', Validators.required),
       precio_venta: new FormControl(this.data.warehouseLot ? this.data.warehouseLot.precio_venta : '', Validators.required),
-      fecha_fabricacion: new FormControl(fechaFabricacion, [Validators.required]),
-      fecha_vencimiento: new FormControl(fechaVencimiento, [Validators.required]),
-      retenido: new FormControl(this.data.warehouseLot ? this.data.warehouseLot.retenido : '', Validators.required),
-      vencido: new FormControl(this.data.warehouseLot ? this.data.warehouseLot.vencido : '', Validators.required),
-      producto: new FormControl(this.data.warehouseLot ? this.data.warehouseLot.producto : '', Validators.required),
+      fecha_fabricacion: new FormControl(fechaFabricacion, Validators.required),
+      fecha_vencimiento: new FormControl(fechaVencimiento, Validators.required),
+      retenido: new FormControl(this.data?.warehouseLot?.retenido==='Retenido' ? true : false),
+      vencido: new FormControl(this.data?.warehouseLot?.vencido==='Vencido' ? true : false),
+      producto: new FormControl(this.data.warehouseLot ? this.data.warehouseLot.producto_id : '', Validators.required),
     });
     console.log(this.warehouseLotForm);
-  }
-
-
-  getFormattedDate(apiDate: string) {
-    const arrayDate = apiDate.split('-');
-    return new Date(parseInt(arrayDate[0]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[2]));
   }
 
   get codigoControl() {
@@ -110,16 +105,21 @@ export class WarehouseLotFormComponent implements OnInit {
     return this.warehouseLotForm?.get('producto') as FormControl;
   }
 
+  getFormattedDate(apiDate: string) {
+    const arrayDate = apiDate.split('-');
+    return new Date(parseInt(arrayDate[0]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[2]));
+  }
+
   sendData() {
     if (this.warehouseLotForm.valid) {
       console.log('llego')
-      const warehouseLForm = this.warehouseLotForm.value;
-      const dateFormat = moment(warehouseLForm.fecha_fabricacion);
-      const dateFormat1 = moment(warehouseLForm.fecha_vencimiento);
-      warehouseLForm.fecha_fabricacion = dateFormat.format('yyyy-MM-DD');
-      warehouseLForm.fecha_vencimiento = dateFormat1.format('yyyy-MM-DD');
-      console.log(warehouseLForm);
-      this.data.warehouseLForm ? this.edit.emit(warehouseLForm) : this.create.emit(warehouseLForm);
+      const warehouse = this.warehouseLotForm.value;
+      const dateFormat = moment(warehouse.fecha_fabricacion);
+      const dateFormat1 = moment(warehouse.fecha_vencimiento);
+      warehouse.fecha_fabricacion = dateFormat.format('yyyy-MM-DD');
+      warehouse.fecha_vencimiento = dateFormat1.format('yyyy-MM-DD');
+      console.log(warehouse);
+      this.data.warehouseLForm ? this.edit.emit(warehouse) : this.create.emit(warehouse);
       this.dialogRef.close();
     } else {
       this.toastrService.error('Por favor revise los formularios, quedan campos requeridos sin llenar', 'Error');
@@ -128,12 +128,64 @@ export class WarehouseLotFormComponent implements OnInit {
 
 
   onSubmit(data) {
+    console.log(data);
+
+    let fechaFabricacion = data['fecha_fabricacion'].toString();
+    let fechaVencimiento = data['fecha_vencimiento'].toString();
+    let formateadaFabricacion = fechaFabricacion.split(' ');
+    let formateadaVencimiento = fechaVencimiento.split(' ');
+
+    if (this.data.warehouseLForm === null || formateadaFabricacion.length > 0 || formateadaVencimiento.length > 0) {
+      const midateFab = formateadaFabricacion[3] + '-' + this.ChangesMonth(formateadaFabricacion[1]) + '-' + formateadaFabricacion[2];
+      const midateVen = formateadaVencimiento[3] + '-' + this.ChangesMonth(formateadaVencimiento[1]) + '-' + formateadaVencimiento[2];
+      data['fecha_fabricacion'] = midateFab;
+      data['fecha_vencimiento'] = midateVen;
+    }
+    console.log(data);
     this.data.warehouseLot ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();
   }
 
   onCancel() {
     this.dialogRef.close();
+  }
+
+  ChangesMonth(mes: any) {
+    console.log('El mes es: ', mes);
+    if (mes === 'Jan') {
+      return '01';
+    }
+    if (mes === 'Feb') {
+      return '02';
+    }
+    if (mes === 'Mar') {
+      return '03';
+    }
+    if (mes === 'Apr') {
+      return '04';
+    }
+    if (mes === 'May') {
+      return '05';
+    }
+    if (mes === 'Jun') {
+      return '06';
+    }
+    if (mes === 'Jul') {
+      return '07';
+    }
+    if (mes === 'Aug') {
+      return '08';
+    }
+    if (mes === 'Sep') {
+      return '09';
+    }
+    if (mes === 'Oct') {
+      return '10';
+    }
+    if (mes === 'Nov') {
+      return '11';
+    }
+    return 12;
   }
 
 
