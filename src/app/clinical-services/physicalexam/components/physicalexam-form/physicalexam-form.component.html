@@ -1,0 +1,92 @@
+<div class="form">
+  <h4>{{ data.physicalexam ? 'Editar Examén Físico' : 'Crear Examén Físico' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="physicalexamForm" [formGroup]="physicalexamForm">
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Ta</mat-label>
+      <input matInput formControlName="ta" maxlength="100" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Fc</mat-label>
+      <input matInput formControlName="fc" maxlength="100" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Fr</mat-label>
+      <input matInput formControlName="fr" maxlength="100" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Temperatura</mat-label>
+      <input matInput formControlName="temperatura" maxlength="100" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Peso</mat-label>
+      <input matInput formControlName="peso" maxlength="100" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Altura</mat-label>
+      <input matInput formControlName="altura" maxlength="100" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Imc</mat-label>
+      <input matInput formControlName="imc" maxlength="100" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Impresión General</mat-label>
+      <input matInput formControlName="impresion_general" maxlength="255" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Constitución</mat-label>
+      <input matInput formControlName="constitucion" maxlength="255" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Actitud</mat-label>
+      <input matInput formControlName="actitud" maxlength="255" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Decubito</mat-label>
+      <input matInput formControlName="decubito" maxlength="255" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Marcha</mat-label>
+      <input matInput formControlName="marcha" maxlength="255" />
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+    <mat-label>Observaciones Generales</mat-label>
+    <input matInput formControlName="observaciones_generales"  />
+    </mat-form-field>
+
+    <div class="mb-4">
+      <ng-select
+        appearance="outline"
+        class="custom w-100"
+        placeholder="Sesión Clínica"
+        [items]="sesion_clinica"
+        bindLabel="motivo"
+        bindValue="id"
+        formControlName="sesion_clinica">
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="sessionControl.errors?.required && sessionControl.dirty">
+        El campo sesión clínica es <strong>requerido</strong></small>
+    </div>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(physicalexamForm.value)" [disabled]="!physicalexamForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.physicalexam ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

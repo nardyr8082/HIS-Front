@@ -15,6 +15,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
 
+
 @Component({
   selector: 'app-warehouse-movement-detail-page',
   templateUrl: './warehouse-movement-detail-page.component.html',
@@ -53,9 +54,12 @@ export class WarehouseMovementDetailPageComponent implements OnInit {
     private toastService: ToastrService,
     public dialog: MatDialog,
     private measureService: MeasureService,
-    private warehouseProductService: WarehouseProductService
-    
-  ) { }
+    private warehouseProductService: WarehouseProductService,
+) {
+  this.putMeasure();
+  this.putWarehouseMove();
+  this.putWarehouseProduct();
+ }
 
   ngOnInit(): void {
     this.getWarehouseMovementDetail();
@@ -67,6 +71,50 @@ export class WarehouseMovementDetailPageComponent implements OnInit {
   }
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
+  }
+
+  putMeasure(filters = {}) {
+    const sub = this.measureService
+      .getMeasures(filters, 'descripcion', 'asc', 1, 10000)
+      .pipe(
+        map((response: ApiResponse<any>) => {
+          console.log(response.results);
+          this.configuration.tableFilters[6].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+   
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  putWarehouseMove(filters = {}) {
+    const sub = this.warehouseMovementDetailService
+      .getMovement()
+      .pipe(
+        map((response: ApiResponse<any>) => {
+   console.log(response.results);
+          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name:res.comentario }));
+        }),
+      )
+      .subscribe();
+
+
+    this.subscriptions.push(sub);
+  }
+
+  putWarehouseProduct(filters = {}) {
+    const sub = this.warehouseProductService
+      .geWarehouseProduct(filters, 'descripcion', 'asc', 1, 10000)
+      .pipe(
+        map((response: ApiResponse<any>) => {
+          console.log(response.results);
+          this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id,  name:res.descripcion }));
+        }),
+      )
+      .subscribe();
+   
+    this.subscriptions.push(sub);
   }
 
   getMeasure() {

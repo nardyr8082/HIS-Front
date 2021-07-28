@@ -22,6 +22,7 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
   measure: any = [];
   warehouseProduct: any = [];
   move: any = [];
+  warehouseMovementDetails: any[];
   WarehouseMovementDetailForm: FormGroup;
   subscriptions: Subscription[] = [];
   constructor(
@@ -36,6 +37,7 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
     this.getMeasure();
     this.getWarehouseMove();
     this.getWarehouseProduct();
+    this.getWarehouseMovementDetail();
 
   }
 
@@ -66,6 +68,18 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
+    this.subscriptions.push(sub);
+  }
+
+  getWarehouseMovementDetail() {
+    const sub = this.warehouseMovementDetailService
+      .getWarehouseMovementDetail({}, 'id', 'asc', 1, 10000)
+      .pipe(
+        map((response: ApiResponse<any>) => {
+          this.warehouseMovementDetails = response.results;
+        }),
+      )
+      .subscribe();
 
     this.subscriptions.push(sub);
   }
@@ -85,13 +99,11 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.WarehouseMovementDetailForm = new FormGroup({
-      cantidad: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.cantidad : ''),
-      precio: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.precio : ''),
-      importe: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.importe : ''),
-      existencia: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.existencia : '', [Validators.required, Validators.pattern('^[0-9]+([,][0-9]+)?$')]),
-      producto: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.producto : '', Validators.required),
-      movimiento: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.movimiento : '', Validators.required),
-      unidad_medida: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.unidad_medida : '', Validators.required),
+      cantidad: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.cantidad : null, Validators.required),
+      precio: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.precio : null, Validators.required),
+      producto: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.producto_id : null),
+      movimiento: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.movimiento_id : null),
+      unidad_medida: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.unidad_medida_id : null),
     });
   }
 
@@ -117,9 +129,17 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
     return this.WarehouseMovementDetailForm?.get('unidad_medida') as FormControl;
   }
 
+
   onSubmit(data) {
-    this.data.warehouseMovementDetail ? this.edit.emit(data) : this.create.emit(data);
-    this.dialogRef.close();
+
+
+
+
+  
+      this.data.warehouseMovementDetail ? this.edit.emit(data) : this.create.emit(data);
+      this.dialogRef.close();
+    
+
   }
 
   onCancel() {

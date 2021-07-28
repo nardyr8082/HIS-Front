@@ -61,7 +61,6 @@ export class WarehouseLotPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getWareHouseLot();
-    this.getWarehouseProduct();
   }
 
   ngOnDestroy() {
@@ -74,7 +73,8 @@ export class WarehouseLotPageComponent implements OnInit {
 
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+
+          this.configuration.tableFilters[6].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
         }),
       )
       .subscribe();
@@ -82,19 +82,6 @@ export class WarehouseLotPageComponent implements OnInit {
     this.subscriptions.push(sub);
   }
 
-  getWarehouseProduct() {
-    const sub = this.warehouseProductService
-      .geWarehouseProduct({}, 'id', 'asc', 1, 1000)
-      .pipe(
-        map((response) => {
-          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
-
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
 
   getWareHouseLot(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
@@ -112,9 +99,10 @@ export class WarehouseLotPageComponent implements OnInit {
             precio_venta: res.precio_venta,
             fecha_fabricacion: res.fecha_fabricacion,
             fecha_vencimiento: res.fecha_vencimiento,
-            retenido: res.retenido,
-            vencido: res.vencido,
-            producto: res.producto.descripcion
+            retenido: res.retenido === false ? 'No retenido' : 'Retenido',
+            vencido: res.vencido === false ? 'No vencido' : 'Vencido',
+            producto: res.producto.descripcion,
+            producto_id: res.producto.id
           }));
 
           this.dataCount = response.count;

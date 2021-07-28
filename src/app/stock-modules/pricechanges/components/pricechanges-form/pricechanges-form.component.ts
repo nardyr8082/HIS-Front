@@ -119,15 +119,9 @@ export class PricechangesFormComponent implements OnInit, OnDestroy {
     return new Date(parseInt(arrayDate[0]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[2]));
   }
   getFormattedHora(apiDate: string) {
-    //2021-07-09T13:48:00Z
-    console.log('mira la hora:', apiDate);
-    const arrayDate = apiDate.split('T');
-    let arrayDate1 = arrayDate[1];
-    arrayDate1 = arrayDate1.substring(0, arrayDate1.length - 2);
-    console.log('OJO: ', arrayDate1);
-    const end = arrayDate1.split(':');
-    console.log('OJO: ', end);
-    return new Date(parseInt(end[0]), parseInt(end[1]) - 1, parseInt(end[2]));
+    if (apiDate.indexOf('Z') !== -1 )
+     apiDate = apiDate.substring(0, apiDate.length - 1);
+    return new Date(apiDate);
   }
   get dateControl() {
     return this.pricechangesForm?.get('fechaT') as FormControl;
@@ -165,7 +159,7 @@ export class PricechangesFormComponent implements OnInit, OnDestroy {
     console.log('arregloa: ', formateadahora);
     if ( this.data.suplierreturn === null || formateada.length > 0) {
       const midate = formateada[3] + '-' + this.ChangesMonth(formateada[1]) + '-' + formateada[2];
-      const mihora = 'T' + formateadahora[4] + 'Z';
+      const mihora = 'T' + formateadahora[4];
       valores['fecha'] = midate + mihora;
       valores['precio_viejo'] = data['precio_viejo'];
       valores['precio_nuevo'] = data['precio_nuevo'];

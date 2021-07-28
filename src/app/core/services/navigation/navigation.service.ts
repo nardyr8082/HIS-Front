@@ -222,6 +222,27 @@ export class NavigationService {
               display: true,
             },
             {
+              displayName: 'Registro',
+              iconName: ['radio_button_unchecked'],
+              route: 'clinic-register',
+              material: true,
+              display: true,
+            },
+            {
+              displayName: 'Ingreso',
+              iconName: ['radio_button_unchecked'],
+              route: 'clinic-entry',
+              material: true,
+              display: true,
+            },
+            {
+              displayName: 'Examén Físico',
+              iconName: ['radio_button_unchecked'],
+              route: 'clinic-test',
+              material: true,
+              display: true,
+            },
+            {
               displayName: 'Estado de cita',
               iconName: ['swap_vertical_circle'],
               route: 'stock-state-appointment',

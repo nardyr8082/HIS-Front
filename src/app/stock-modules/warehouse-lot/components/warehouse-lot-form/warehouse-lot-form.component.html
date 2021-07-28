@@ -4,12 +4,12 @@
     <form *ngIf="warehouseLotForm" [formGroup]="warehouseLotForm">
 
         <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Codigo:</mat-label>
+            <mat-label>Código:</mat-label>
             <input matInput formControlName="codigo" />
         </mat-form-field>
 
         <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Codigo barra venta:</mat-label>
+            <mat-label>Código barra venta:</mat-label>
             <input matInput formControlName="codigo_barra_venta" />
         </mat-form-field>
 
@@ -25,7 +25,7 @@
 
         <!-- Fecha fabricacion -->
         <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Fecha fabricacion</mat-label>
+            <mat-label>Fecha fabricación</mat-label>
             <input matInput formControlName="fecha_fabricacion" [matDatepicker]="picker" />
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>

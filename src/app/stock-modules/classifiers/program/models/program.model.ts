@@ -1,4 +1,4 @@
 export interface Program {
-  id: number;
+  id: any;
   descripcion: string;
 }

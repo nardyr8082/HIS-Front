@@ -6,50 +6,34 @@
         <mat-form-field class="w-100" appearance="outline">
             <mat-label>Cantidad:</mat-label>
             <input matInput formControlName="cantidad" />
+            <mat-error *ngIf="this.cantidadControl.errors?.required"> {{ 'La cantidad es'}} <strong>requerida</strong>
+            </mat-error>
         </mat-form-field>
 
         <mat-form-field class="w-100" appearance="outline">
             <mat-label>Precio:</mat-label>
             <input matInput formControlName="precio" />
-        </mat-form-field>
-
-        <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Importe:</mat-label>
-            <input matInput formControlName="importe" />
-        </mat-form-field>
-
-        <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Existencia:</mat-label>
-            <input type="number" matInput formControlName="existencia" />
-            <mat-error *ngIf="this.existenciaControl.errors?.required"> {{ 'La existencia'}} <strong>requerido</strong>
-            </mat-error>
-            <mat-error *ngIf="this.existenciaControl.errors?.pattern"> {{ 'El existencia solo permite' }}
-                <strong>números</strong>
+            <mat-error *ngIf="this.precioControl.errors?.required"> {{ 'El precio es'}} <strong>requerido</strong>
             </mat-error>
         </mat-form-field>
+        
         <!-- Producto -->
         <div class="mb-4">
             <ng-select appearance="outline" class="custom w-100" placeholder="Producto" [items]="warehouseProduct"
                 bindLabel="descripcion" bindValue="id" formControlName="producto">
             </ng-select>
-            <small class="text-danger error-style" *ngIf="productoControl.errors?.required">El campo producto es
-                <strong>requerido</strong></small>
         </div>
         <!-- Unidad de Medida -->
         <div class="mb-4">
             <ng-select appearance="outline" class="custom w-100" placeholder="Unidad de Medida" [items]="measure"
                 bindLabel="descripcion" bindValue="id" formControlName="unidad_medida">
             </ng-select>
-            <small class="text-danger error-style" *ngIf="unidad_medidaControl.errors?.required">El campo unidad de
-                medida es <strong>requerido</strong></small>
         </div>
         <!-- Movimiento -->
         <div class="mb-4">
             <ng-select appearance="outline" class="custom w-100" placeholder="Movimiento" [items]="move"
                 bindLabel="comentario" bindValue="id" formControlName="movimiento">
             </ng-select>
-            <small class="text-danger error-style" *ngIf="movimientoControl.errors?.required">El campo movimiento es
-                <strong>requerido</strong></small>
         </div>
     </form>
     <mat-divider class="my-4"></mat-divider>

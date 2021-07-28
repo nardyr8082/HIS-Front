@@ -4,7 +4,7 @@ import { CatDocent } from './../../../nomenclator-modules/cat-docent/models/cat-
 import { CatScience } from './../../../nomenclator-modules/cat-science/models/cat-science.model';
 import { Role } from './../../role/models/role.model';
 export interface User {
-  id?: number;
+  id?: any;
   password?: string;
   last_login?: Date;
   is_superuser?: boolean;

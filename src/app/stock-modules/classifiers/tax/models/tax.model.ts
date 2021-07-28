@@ -1,5 +1,5 @@
 export interface Tax {
-  id: number;
+  id: any;
   descripcion: string;
   importe_fijo: number;
   importe_proporcional: number;
