@@ -14,12 +14,24 @@ export const WAREHOUSELOT_TABLE_CONFIGURATION: TableConfiguration = {
     {
       name: 'codigo',
       title: 'Codigo',
-      type: 'number',
+      type: 'text',
+
+    },
+    {
+      name: 'codigo_barra_venta',
+      title: 'Codigo barra venta',
+      type: 'text',
 
     },
     {
       name: 'precio_costo',
       title: 'Precio costo',
+      type: 'text',
+
+    },
+    {
+      name: 'precio_venta',
+      title: 'Precio venta',
       type: 'text',
 
     },
@@ -34,18 +46,6 @@ export const WAREHOUSELOT_TABLE_CONFIGURATION: TableConfiguration = {
       title: 'Fecha vencimiento',
       type: 'text'
 
-    },
-    {
-      name: 'retenido',
-      title: 'Retenido',
-      type: 'text',
-      
-    },
-    {
-      name: 'vencido',
-      title: 'Vencido',
-      type: 'text',
-      
     },
     {
       name: 'producto',
