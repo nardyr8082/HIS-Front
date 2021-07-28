@@ -1,0 +1,30 @@
+<div class="form">
+    <h4>{{ data.clinicHistoryStatic === null ? 'Crear Historia Clínica' : 'Editar Historia Clínica' }}</h4>
+    <mat-divider class="my-4"></mat-divider>
+    <form *ngIf="clinicHistoryStaticForm" [formGroup]="clinicHistoryStaticForm">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Numero hc:</mat-label>
+            <input matInput formControlName="numero_hc" />
+            <mat-error *ngIf="this.numero_hcControl.errors?.required"> {{ 'El Numero hc es:' }}
+                <strong>requerido</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <div class="mb-4">
+            <ng-select appearance="outline" class="custom w-100" placeholder="Paciente" [items]="patient"
+                bindLabel="nro_identificacion" bindValue="id" formControlName="paciente">
+            </ng-select>
+            <small class="text-danger error-style" *ngIf="pacienteControl.errors?.required">El
+                campo paciente es <strong>requerido</strong></small>
+        </div>
+
+    </form>
+    <mat-divider class="my-4"></mat-divider>
+    <div class="d-flex align-items-center justify-content-end">
+        <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+        <button (click)="onSubmit(clinicHistoryStaticForm.value)" [disabled]="!clinicHistoryStaticForm.valid"
+            mat-raised-button color="primary" class="button">
+            {{ data.clinicHistoryStatic === null ? 'Crear' : 'Aceptar' }}
+        </button>
+    </div>
+</div>

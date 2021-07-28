@@ -288,6 +288,13 @@ export class NavigationService {
           ],
           material: true,
           display: true,
+        },{
+          displayName: 'Crear Historia Clínica Tabla',
+          iconName: ['center_focus_strong'],
+          route: 'clinic-history-static',
+          material: true,
+          display: true,
+          
         },
         {
           displayName: 'Núcleo Funcional',
