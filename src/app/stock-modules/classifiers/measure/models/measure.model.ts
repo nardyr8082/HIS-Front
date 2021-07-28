@@ -1,5 +1,5 @@
 export interface Measure {
-  id: number;
+  id: any;
   clave: string;
   descripcion: string;
 }

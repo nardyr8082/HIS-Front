@@ -143,7 +143,8 @@ export class ProductstockPageComponent implements OnInit {
             const taxString = this.getTaxString(res.impuesto);
             const programString = this.getProgramString(res.programa);
             const attributeString = this.getAttributeString(res.atributos);
-            return { ...res, unidad_medida_string: measureString, familia_string: familyString, impuesto_string: taxString, programa_string: programString, atributos_string: attributeString };
+            const activo = res.activo ? '<p class="text-success">Si</p>' : '<p class="text-danger">No</p>';
+            return { ...res, activo_string: activo, unidad_medida_string: measureString, familia_string: familyString, impuesto_string: taxString, programa_string: programString, atributos_string: attributeString };
           });
           this.dataCount = response.count;
           this.loading = false;

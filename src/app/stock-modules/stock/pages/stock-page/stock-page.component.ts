@@ -61,12 +61,13 @@ export class StockPageComponent implements OnInit {
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
+
   putUser(filters = {}) {
     const sub = this.userService
       .getUsers(filters, 'descripcion', 'asc', 1, 10000)
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[2].items = response.results.map((res) => ({ id: res.id, name: res.username }));
+          this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id, name: res.username }));
         }),
       )
       .subscribe();
@@ -79,7 +80,7 @@ export class StockPageComponent implements OnInit {
       .getOffice(filters, 'descripcion', 'asc', 1, 10000)
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[3].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
+          this.configuration.tableFilters[6].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
         }),
       )
       .subscribe();
@@ -98,9 +99,9 @@ export class StockPageComponent implements OnInit {
           this.stock = response.results.map((res) => {
             const userString = this.getUserString(res.jefe_almacen);
             const departamentoString = this.getOfficeString(res.departamento);
-            const activeString = this.getActiveString(res.activo);
-            const pointString = this.getSalePointString(res.punto_de_venta);
-            return { ...res, jefe_almacen_string: userString, departamento_string: departamentoString };
+            const activo = res.activo ? '<p class="text-success">Si</p>' : '<p class="text-danger">No</p>';
+            const punto_de_venta = res.punto_de_venta ? '<p class="text-success">Si</p>' : '<p class="text-danger">No</p>';
+            return { ...res, activo_string: activo, punto_de_venta_string: punto_de_venta, jefe_almacen_string: userString, departamento_string: departamentoString};
           });
           this.dataCount = response.count;
           this.loading = false;
@@ -120,15 +121,16 @@ export class StockPageComponent implements OnInit {
   }
   getActiveString(active: boolean) {
     if (active === true)
-     return 'Si';
-    else
-      return 'No';
+      return '<p class="text-success">Si</p>';
+    return '<p class="text-danger">No</p>';
   }
   getSalePointString(point: boolean) {
-    if (point === true)
-      return 'Si';
-    else
-      return 'No';
+    if (point === true){
+      console.log('OKIS');
+      return '<p class="text-success">Si</p>';
+    }
+    console.log('NOP');
+    return '<p class="text-danger">No</p>';
   }
   getOfficeString(office: Office) {
     return office.nombre;

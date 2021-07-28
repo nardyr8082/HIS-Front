@@ -1,5 +1,5 @@
 export interface ProductFamily {
-  id: number;
+  id: any;
   codigo?: string;
   descripcion?: string;
   padre?: string;

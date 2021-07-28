@@ -1,5 +1,5 @@
 export interface Office {
-  id: number;
+  id: any;
   nombre?: string;
   unidad?: string;
 }
