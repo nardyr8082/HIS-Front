@@ -15,7 +15,7 @@ export class PurchaseFactureService {
   private apiEndpointEst = `${environment.apiUrl}alm_estado_factura`;
   private apiEndpointCom = `${environment.apiUrl}usuario`;
   private apiEndpointOpe = `${environment.apiUrl}alm_operacion_comercial`;
-  private apiEndpointPro = `${environment.apiUrl}alm_proveedor`;
+  private apiEndpointComp = `${environment.apiUrl}alm_compra`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -50,8 +50,8 @@ export class PurchaseFactureService {
     return this.http.get<ApiResponse<any>>(this.apiEndpointOpe);
   }
 
-  getProveedor(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointPro);
+  getCompra(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointComp);
   }
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
     let queryParams = '';
