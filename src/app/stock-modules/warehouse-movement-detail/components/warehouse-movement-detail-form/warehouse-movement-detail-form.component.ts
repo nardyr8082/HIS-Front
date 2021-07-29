@@ -8,6 +8,7 @@ import { MatFormField, MatFormFieldControl } from '@angular/material/form-field'
 import { WarehouseMovementDetailService } from '../../services/warehouse-movement-detail.service';
 import { MeasureService } from 'src/app/stock-modules/classifiers/measure/services/measure.service';
 import { WarehouseProductService } from 'src/app/stock-modules/warehouse-lot/services/warehouse-product.service';
+import { ValidationWarehouse } from '../../validator/validator';
 
 
 @Component({
@@ -99,16 +100,23 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.WarehouseMovementDetailForm = new FormGroup({
-      cantidad: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.cantidad : null, Validators.required),
-      precio: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.precio : null, Validators.required),
-      producto: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.producto_id : null),
-      movimiento: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.movimiento_id : null),
-      unidad_medida: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.unidad_medida_id : null),
+      cantidad: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.cantidad : null, [Validators.required, ValidationWarehouse.isDecimalFijo154]),
+      existencia: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.existencia : null, ValidationWarehouse.isInts),
+      precio: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.precio : null, [Validators.required, ValidationWarehouse.isDecimalFijo172]),
+      producto: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.producto_id : null, Validators.required),
+      movimiento: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.movimiento_id : null, Validators.required),
+      unidad_medida: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.unidad_medida_id : null, Validators.required),
     });
   }
 
   get cantidadControl() {
     return this.WarehouseMovementDetailForm?.get('cantidad') as FormControl;
+  }
+  get importControl() {
+    return this.WarehouseMovementDetailForm?.get('importe') as FormControl;
+  }
+  get existControl() {
+    return this.WarehouseMovementDetailForm?.get('existencia') as FormControl;
   }
   get precioControl() {
     return this.WarehouseMovementDetailForm?.get('precio') as FormControl;
@@ -131,15 +139,14 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
 
 
   onSubmit(data) {
+    console.log('ver data ya', data);
+       console.log('ver ya', this.data);
+       //data['precio'] = parseInt(data['precio']);
+       //data['cantidad'] = parseInt(data['cantidad']);
+       //data['importe'] = null;
 
-
-
-
-  
       this.data.warehouseMovementDetail ? this.edit.emit(data) : this.create.emit(data);
       this.dialogRef.close();
-    
-
   }
 
   onCancel() {

@@ -205,7 +205,7 @@ export class ExistencePageComponent implements OnInit {
 
     dialogRef = this.dialog.open(ExistenceFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
-      maxWidth: '500px',
+      maxWidth: '700px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',
@@ -253,7 +253,7 @@ export class ExistencePageComponent implements OnInit {
 
     dialogRef = this.dialog.open(ExistenceFormComponent, {
       panelClass: 'app-dialog-add-edit-business',
-      maxWidth: '500px',
+      maxWidth: '700px',
       minWidth: '150px',
       maxHeight: '100vh',
       width: '100%',

@@ -7,8 +7,4 @@ export interface WarehouseMovementDetail {
   movimiento?: string;
   producto?: string;
   unidad_medida?: string;
-  
-  
-
-
 }

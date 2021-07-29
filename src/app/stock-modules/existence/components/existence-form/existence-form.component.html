@@ -2,52 +2,75 @@
     <h4>{{ data.existence === null ? 'Crear Existencia' : 'Editar Existencia' }}</h4>
     <mat-divider class="my-4"></mat-divider>
     <form *ngIf="existenceForm" [formGroup]="existenceForm">
+      <div class="row mb-4">
+        <div class="form-group col-md-6">
         <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Cantidad:</mat-label>
-            <input type="number" matInput formControlName="cantidad" />
-            <mat-error *ngIf="this.cantidadControl.errors?.required"> {{ 'La cantidad es:' }} <strong>requerido</strong>
-            </mat-error>
-        </mat-form-field>
+          <mat-label>Cantidad:</mat-label>
+          <input type="text" matInput formControlName="cantidad" maxlength="19" />
+          <mat-error *ngIf="this.cantidadControl.errors?.required"> {{ 'La cantidad es:' }} <strong>requerido</strong></mat-error>
+          <mat-error *ngIf="this.cantidadControl.errors?.isDecimalFijo154"> {{ 'La cantidad es numérica :' }} <strong>la parte entera no debe exceder de 15 números y la decimal 4 números</strong></mat-error>
 
-        <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Importe:</mat-label>
-            <input type="number" matInput formControlName="importe" />
-            <mat-error *ngIf="this.importeControl.errors?.required"> {{ 'La importe es:' }} <strong>requerido</strong>
-            </mat-error>
         </mat-form-field>
-        <!-- almacen -->
-        <div class="mb-4">
-            <ng-select appearance="outline" class="custom w-100" placeholder="Almac�n" [items]="almacenes"
-                bindLabel="nombre" bindValue="id" formControlName="almacen">
-            </ng-select>
-            <small class="text-danger error-style" *ngIf="almacenControl.errors?.required">El
-                campo almac�n es <strong>requerido</strong></small>
+      </div>
+        <div class="form-group col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Importe:</mat-label>
+          <input type="text" matInput formControlName="importe"  maxlength="19" />
+          <mat-error *ngIf="this.importeControl.errors?.required"> {{ 'La importe es:' }} <strong>requerido</strong></mat-error>
+          <mat-error *ngIf="this.importeControl.errors?.isDecimalFijo172"> {{ 'El importe es numérico :' }} <strong>la parte entera no debe exceder de 17 números y la decimal 2 números</strong></mat-error>
+        </mat-form-field>
+      </div>
+      </div>
+
+      <div class="row mb-4">
+        <div class="form-group col-md-6">
+          <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Almacén</mat-label>
+          <mat-select #mySelect formControlName="almacen">
+            <mat-option *ngFor="let st of almacenes" [value]="st.id">{{ st.nombre }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="almacenControl.errors?.required">El campo almacén es <strong>requerido</strong></mat-error>
+          </mat-form-field>
         </div>
         <!-- unidad_medida -->
-        <div class="mb-4">
-            <ng-select appearance="outline" class="custom w-100" placeholder="Unidad Medida" [items]="unidad_medida"
-                bindLabel="descripcion" bindValue="id" formControlName="unidad_medida">
-            </ng-select>
-            <small class="text-danger error-style" *ngIf="unidad_medidaControl.errors?.required">La
-                unidad de medida es <strong>requerido</strong></small>
+        <div class="form-group col-md-6">
+          <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Unidad Medida</mat-label>
+          <mat-select #mySelect formControlName="unidad_medida">
+            <mat-option *ngFor="let st of unidad_medida" [value]="st.id">{{ st.descripcion }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="unidad_medidaControl.errors?.required">La unidad de medida es <strong>requerido</strong></mat-error>
+          </mat-form-field>
         </div>
+      </div>
+        <!-- almacen -->
+
         <!-- categoria -->
-        <div class="mb-4">
-            <ng-select appearance="outline" class="custom w-100" placeholder="Categor�a" [items]="productCategory"
-                bindLabel="descripcion" bindValue="id" formControlName="categoria">
-            </ng-select>
-            <small class="text-danger error-style" *ngIf="categoriaControl.errors?.required">La
-                categor�a es <strong>requerido</strong></small>
+      <div class="row">
+        <div class="form-group col-md-6">
+          <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Categoría</mat-label>
+          <mat-select #mySelect formControlName="categoria">
+            <mat-option *ngFor="let st of productCategory" [value]="st.id">{{ st.descripcion }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="categoriaControl.errors?.required">La  categoría es <strong>requerido</strong></mat-error>
+          </mat-form-field>
         </div>
 
+
+
         <!-- Lote -->
-        <div class="mb-4">
-            <ng-select appearance="outline" class="custom w-100" placeholder="Lote" [items]="lote" bindLabel="codigo"
-                bindValue="id" formControlName="lote">
-            </ng-select>
-            <small class="text-danger error-style" *ngIf="loteControl.errors?.required">El
-                Lote es <strong>requerido</strong></small>
+        <div class="form-group col-md-6">
+          <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Lote</mat-label>
+          <mat-select #mySelect formControlName="lote">
+            <mat-option *ngFor="let st of lote" [value]="st.id">{{ st.codigo }}</mat-option>
+          </mat-select>
+          <mat-error  *ngIf="loteControl.errors?.required">El Lote es <strong>requerido</strong></mat-error>
+          </mat-form-field>
         </div>
+      </div>
+
 
 
     </form>
