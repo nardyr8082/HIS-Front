@@ -9,6 +9,7 @@ import { WarehouseMovementDetailService } from '../../services/warehouse-movemen
 import { MeasureService } from 'src/app/stock-modules/classifiers/measure/services/measure.service';
 import { WarehouseProductService } from 'src/app/stock-modules/warehouse-lot/services/warehouse-product.service';
 import { ValidationWarehouse } from '../../validator/validator';
+import { del } from 'selenium-webdriver/http';
 
 
 @Component({
@@ -144,8 +145,26 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
        //data['precio'] = parseInt(data['precio']);
        //data['cantidad'] = parseInt(data['cantidad']);
        //data['importe'] = null;
+       /*
+       * {
+    "cantidad": "3.0000",
+    "precio": "3.00",
+    "movimiento": 26,
+    "producto": 6,
+    "unidad_medida": 4
+}*/   let valores = {};
+       if (data['existencia'] !== null)
+         valores['existencia'] = data['existencia'];
 
-      this.data.warehouseMovementDetail ? this.edit.emit(data) : this.create.emit(data);
+       valores['cantidad'] = data['cantidad']
+       valores['precio'] = data['cantidad']
+       valores['movimiento'] = data['cantidad']
+       valores['producto'] = data['cantidad']
+       valores['unidad_medida'] = data['cantidad']
+    console.log('ver valores ya', valores);
+    if (data === valores)
+      console.log('Son iguales');
+      this.data.warehouseMovementDetail ? this.edit.emit(valores) : this.create.emit(valores);
       this.dialogRef.close();
   }
 

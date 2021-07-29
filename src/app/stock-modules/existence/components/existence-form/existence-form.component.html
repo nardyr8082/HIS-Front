@@ -2,7 +2,7 @@
     <h4>{{ data.existence === null ? 'Crear Existencia' : 'Editar Existencia' }}</h4>
     <mat-divider class="my-4"></mat-divider>
     <form *ngIf="existenceForm" [formGroup]="existenceForm">
-      <div class="row mb-4">
+      <div class="row mb-2">
         <div class="form-group col-md-6">
         <mat-form-field class="w-100" appearance="outline">
           <mat-label>Cantidad:</mat-label>
@@ -22,7 +22,7 @@
       </div>
       </div>
 
-      <div class="row mb-4">
+      <div class="row mb-2">
         <div class="form-group col-md-6">
           <mat-form-field class="w-100" appearance="outline">
           <mat-label>Almacén</mat-label>
