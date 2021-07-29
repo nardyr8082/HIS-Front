@@ -270,7 +270,7 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/move-type/move-type.module').then((m) => m.MoveTypeModule),
         canActivate: [BackendGuard],
       },
-       {
+      {
         path: 'lotwarehouse',
         loadChildren: () => import('./stock-modules/warehouse-lot/warehouse-lot.module').then((m) => m.WarehouseLotModule),
         canActivate: [BackendGuard],
@@ -398,7 +398,7 @@ const routes: Routes = [
           import('./stock-modules/warehouse-received-transfer/warehouse-received-transfer.module').then((m) => m.WarehouseReceivedTransferModule),
         canActivate: [BackendGuard],
       },
-      
+
       {
         path: 'batch-distribution',
         loadChildren: () => import('./stock-modules/batch-distribution/batch-distribution.module').then((m) => m.BatchDistributionModule),
@@ -413,7 +413,11 @@ const routes: Routes = [
         path: 'transfer-emited',
         loadChildren: () => import('./stock-modules/transfer-emited-stock/transfer-emited-stock.module').then((m) => m.TransferEmitedStockModule),
         canActivate: [BackendGuard],
-      },
+      }, {
+        path: 'treatment-indications',
+        loadChildren: () => import('./clinical-services/treatment-indications/treatment-indications.module').then((m) => m.TreatmentIndicationsModule),
+        canActivate: [BackendGuard],
+      }
     ],
   },
   {
@@ -428,4 +432,4 @@ export const routing: ModuleWithProviders<Route> = RouterModule.forRoot(routes, 
   imports: [routing],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
