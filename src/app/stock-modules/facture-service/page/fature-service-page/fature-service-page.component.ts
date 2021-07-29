@@ -55,8 +55,8 @@ export class FactureServicePageComponent implements OnInit, OnDestroy {
     private toastService: ToastrService,
     public dialog: MatDialog,
   ) {
-    this.associteFactureWithFilters();
     this.associteStockServiceWithFilters();
+    this.getEstado();
   }
 
   ngOnInit(): void {
@@ -67,13 +67,13 @@ export class FactureServicePageComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-  associteFactureWithFilters() {
-    const sub = this.factureService
-      .getFacture({}, 'id', 'asc', 1, 10000)
+  associteStockServiceWithFilters() {
+    const sub = this.stockService
+      .getServicesstock({}, 'id', 'asc', 1, 10000)
       .pipe(
         map((response) => {
-          const items = response.results.map((item) => ({ id: item.id, name: item.nro_factura }));
-          this.configuration.tableFilters[1].items = items;
+          const items = response.results.map((item) => ({ id: item.id, name: item.nombre }));
+          this.configuration.tableFilters[5].items = items;
         }),
       )
       .subscribe();
@@ -81,13 +81,12 @@ export class FactureServicePageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  associteStockServiceWithFilters() {
-    const sub = this.stockService
-      .getServicesstock({}, 'id', 'asc', 1, 10000)
+  getEstado(filters = {}) {
+    const sub = this.factureService
+      .getEstado()
       .pipe(
         map((response) => {
-          const items = response.results.map((item) => ({ id: item.id, name: item.nombre }));
-          this.configuration.tableFilters[2].items = items;
+          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
         }),
       )
       .subscribe();
@@ -100,12 +99,16 @@ export class FactureServicePageComponent implements OnInit, OnDestroy {
     const sub = this.factureServiceService
       .getFactureService(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
-        map((response: ApiResponse<FactureServiceModel>) => {
-          this.factureServices = response.results.map((response) => {
-            const factura_string = response.factura.nro_factura;
-            const servicio_string = response.servicio.nombre;
-            return { ...response, factura_string, servicio_string };
-          });
+        map((response: ApiResponse<any>) => {
+          this.factureServices = response.results.map((res) => ({
+            ...res,
+            operacion_comercial_id:res.operacion_comercial.id,
+            estado_id: res.estado.id,
+            estado_descrip: res.estado.descripcion,
+            comercial_id:res.comercial.id,
+            servicio_id: res.servicio.id,
+            servicio_string: res.servicio.id,
+          }));
           this.dataCount = response.count;
           this.loading = false;
         }),

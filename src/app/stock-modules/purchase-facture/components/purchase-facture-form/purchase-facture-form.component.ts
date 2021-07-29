@@ -22,7 +22,7 @@ export class PurchaseFactureFormComponent implements OnInit, OnDestroy {
 
   purchaseFactureForm: FormGroup;
   estado: any = [];
-  proveedor: any = [];
+  compra: any = [];
   operacion_comercial: any = [];
   comercial: any = [];
   subscriptions: Subscription[] = [];
@@ -37,7 +37,7 @@ export class PurchaseFactureFormComponent implements OnInit, OnDestroy {
     this.getEstado();
     this.getOperacion();
     this.getComercial();
-    this.getProveedor();
+    this.getCompra();
   }
 
   ngOnDestroy() {
@@ -84,12 +84,12 @@ export class PurchaseFactureFormComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
 
-  getProveedor() {
+  getCompra() {
     const sub = this.purchaseFactureService
-      .getProveedor()
+      .getCompra()
       .pipe(
         map((response: ApiResponse<any>) => {
-          this.proveedor = response.results;
+          this.compra = response.results;
         }),
       )
       .subscribe();
@@ -111,7 +111,7 @@ export class PurchaseFactureFormComponent implements OnInit, OnDestroy {
       operacion_comercial: new FormControl(this.data.purchaseFacture ? this.data.purchaseFacture.operacion_comercial_id : '', Validators.required),
       estado: new FormControl(this.data.purchaseFacture ? this.data.purchaseFacture.estado_id : '', Validators.required),
       comercial: new FormControl(this.data.purchaseFacture ? this.data.purchaseFacture.comercial_id : '', Validators.required),
-      proveedor: new FormControl(this.data.purchaseFacture ? this.data.purchaseFacture.proveedor_id : '', Validators.required),
+      compra: new FormControl(this.data.purchaseFacture ? this.data.purchaseFacture.compra_id : '', Validators.required),
     });
   }
 
@@ -157,8 +157,8 @@ export class PurchaseFactureFormComponent implements OnInit, OnDestroy {
     return this.purchaseFactureForm?.get('fecha_entrega') as FormControl;
   }
   
-  get proveedorControl() {
-    return this.purchaseFactureForm?.get('proveedor') as FormControl;
+  get compraControl() {
+    return this.purchaseFactureForm?.get('compra') as FormControl;
   }
   sendData() {
     if (this.purchaseFactureForm.valid) {

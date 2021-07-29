@@ -146,6 +146,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'clinic-history-static',
+        loadChildren: () => import('./clinical-services/clinic-history-static/clinic-history-static.module').then((m) => m.ClinicHistoryStaticModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'system-manager',
         loadChildren: () => import('./clinical-services/systemmanager/systemmanager.module').then((m) => m.SystemmanagerModule),
         canActivate: [BackendGuard],
@@ -344,6 +349,11 @@ const routes: Routes = [
       {
         path: 'purchase-facture',
         loadChildren: () => import('./stock-modules/purchase-facture/purchase-facture.module').then((m) => m.PurchaseFactureModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'diagnostic',
+        loadChildren: () => import('./clinical-services/diagnostic/diagnostic.module').then((m) => m.DiagnosticModule),
         canActivate: [BackendGuard],
       },
       // Resources

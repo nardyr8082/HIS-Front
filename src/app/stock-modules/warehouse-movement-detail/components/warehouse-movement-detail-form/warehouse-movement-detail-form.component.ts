@@ -8,6 +8,8 @@ import { MatFormField, MatFormFieldControl } from '@angular/material/form-field'
 import { WarehouseMovementDetailService } from '../../services/warehouse-movement-detail.service';
 import { MeasureService } from 'src/app/stock-modules/classifiers/measure/services/measure.service';
 import { WarehouseProductService } from 'src/app/stock-modules/warehouse-lot/services/warehouse-product.service';
+import { ValidationWarehouse } from '../../validator/validator';
+import { del } from 'selenium-webdriver/http';
 
 
 @Component({
@@ -20,6 +22,7 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
   measure: any = [];
+  amount = 0;
   warehouseProduct: any = [];
   move: any = [];
   warehouseMovementDetails: any[];
@@ -99,16 +102,35 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
 
   buildForm() {
     this.WarehouseMovementDetailForm = new FormGroup({
-      cantidad: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.cantidad : null, Validators.required),
-      precio: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.precio : null, Validators.required),
-      producto: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.producto_id : null),
-      movimiento: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.movimiento_id : null),
-      unidad_medida: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.unidad_medida_id : null),
+      cantidad: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.cantidad : null, [Validators.required, ValidationWarehouse.isDecimalFijo154]),
+      existencia: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.existencia : null, ValidationWarehouse.isInts),
+      precio: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.precio : null, [Validators.required, ValidationWarehouse.isDecimalFijo172]),
+      producto: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.producto_id : null, Validators.required),
+      movimiento: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.movimiento_id : null, Validators.required),
+      unidad_medida: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.unidad_medida_id : null, Validators.required),
     });
+    console.log('cantidad', this.WarehouseMovementDetailForm.get('cantidad').value);
+    console.log('precio', this.WarehouseMovementDetailForm.get('precio').value);
+    this.getShowAmount();
   }
-
+  getShowAmount() {
+   const counts = this.WarehouseMovementDetailForm.get('cantidad').value;
+   const price = this.WarehouseMovementDetailForm.get('precio').value;
+   if (counts === null || price === null) {
+     this.amount = 0;
+   }
+   else{
+     this.amount = counts * price;
+   }
+  }
   get cantidadControl() {
     return this.WarehouseMovementDetailForm?.get('cantidad') as FormControl;
+  }
+  get importControl() {
+    return this.WarehouseMovementDetailForm?.get('importe') as FormControl;
+  }
+  get existControl() {
+    return this.WarehouseMovementDetailForm?.get('existencia') as FormControl;
   }
   get precioControl() {
     return this.WarehouseMovementDetailForm?.get('precio') as FormControl;
@@ -131,15 +153,32 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
 
 
   onSubmit(data) {
+    console.log('ver data ya', data);
+       console.log('ver ya', this.data);
+       //data['precio'] = parseInt(data['precio']);
+       //data['cantidad'] = parseInt(data['cantidad']);
+       //data['importe'] = null;
+       /*
+       * {
+    "cantidad": "3.0000",
+    "precio": "3.00",
+    "movimiento": 26,
+    "producto": 6,
+    "unidad_medida": 4
+}*/   let valores = {};
+       if (data['existencia'] !== null)
+         valores['existencia'] = data['existencia'];
 
-
-
-
-  
-      this.data.warehouseMovementDetail ? this.edit.emit(data) : this.create.emit(data);
+       valores['cantidad'] = data['cantidad']
+       valores['precio'] = data['cantidad']
+       valores['movimiento'] = data['cantidad']
+       valores['producto'] = data['cantidad']
+       valores['unidad_medida'] = data['cantidad']
+    console.log('ver valores ya', valores);
+    if (data === valores)
+      console.log('Son iguales');
+      this.data.warehouseMovementDetail ? this.edit.emit(valores) : this.create.emit(valores);
       this.dialogRef.close();
-    
-
   }
 
   onCancel() {

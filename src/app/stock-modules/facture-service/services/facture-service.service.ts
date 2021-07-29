@@ -13,6 +13,9 @@ import { FactureServiceModel } from '../models/facture-service.model';
 })
 export class FactureServiceService {
   private apiEndpoint = `${environment.apiUrl}alm_factura_servicio`;
+  private apiEndpointEst = `${environment.apiUrl}alm_estado_factura`;
+  private apiEndpointCom = `${environment.apiUrl}usuario`;
+  private apiEndpointOpe = `${environment.apiUrl}alm_operacion_comercial`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -34,6 +37,18 @@ export class FactureServiceService {
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
     return this.http.get<ApiResponse<FactureServiceModel>>(this.apiEndpoint + queryParams);
+  }
+
+  getEstado(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointEst);
+  }
+
+  getComercial(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointCom);
+  }
+
+  getOperacion(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointOpe);
   }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {

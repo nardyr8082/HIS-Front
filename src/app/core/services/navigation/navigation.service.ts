@@ -265,6 +265,13 @@ export class NavigationService {
               display: true,
             },
             {
+              displayName: 'Diagnóstico',
+              iconName: ['radio_button_unchecked'],
+              route: 'diagnostic',
+              material: true,
+              display: true,
+            },
+            {
               displayName: 'Crear Tabla dinamica',
               iconName: ['radio_button_unchecked'],
               route: 'clinical-services/meta-table',
@@ -281,6 +288,13 @@ export class NavigationService {
           ],
           material: true,
           display: true,
+        },{
+          displayName: 'Crear Historia Clínica Tabla',
+          iconName: ['center_focus_strong'],
+          route: 'clinic-history-static',
+          material: true,
+          display: true,
+          
         },
         {
           displayName: 'Núcleo Funcional',

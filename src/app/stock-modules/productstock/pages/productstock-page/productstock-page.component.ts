@@ -59,7 +59,7 @@ export class ProductstockPageComponent implements OnInit {
     this.putFamily();
     this.putTax();
     this.putProgram();
-    //this.putAtributes();
+    this.putAtributes();
   }
 
   ngOnInit(): void {
@@ -118,18 +118,18 @@ export class ProductstockPageComponent implements OnInit {
     this.subscriptions.push(sub);
   }
 
-  /*putAtributes(filters = {}) {
+  putAtributes(filters = {}) {
     const sub = this.attributeService
       .getAttributes(filters, 'descripcion', 'asc', 1, 10000)
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[7].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+          this.configuration.tableFilters[3].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
         }),
       )
       .subscribe();
 
     this.subscriptions.push(sub);
-  }*/
+  }
   getProductstock(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.productstockService
@@ -143,7 +143,8 @@ export class ProductstockPageComponent implements OnInit {
             const taxString = this.getTaxString(res.impuesto);
             const programString = this.getProgramString(res.programa);
             const attributeString = this.getAttributeString(res.atributos);
-            return { ...res, unidad_medida_string: measureString, familia_string: familyString, impuesto_string: taxString, programa_string: programString, atributos_string: attributeString };
+            const activo = res.activo ? '<p class="text-success">Si</p>' : '<p class="text-danger">No</p>';
+            return { ...res, activo_string: activo, unidad_medida_string: measureString, familia_string: familyString, impuesto_string: taxString, programa_string: programString, atributos_string: attributeString };
           });
           this.dataCount = response.count;
           this.loading = false;

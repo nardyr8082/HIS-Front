@@ -5,10 +5,11 @@ import { Program } from '../../classifiers/program/models/program.model';
 import { Attribute } from '../../classifiers/attribute/models/attribute.model';
 
 export interface Productstock {
-  id?: string;
+  id?: any;
   codigo?: string;
   descripcion?: string;
   activo?: boolean;
+  activo_string?: string;
   unidad_medida?: Measure;
   familia?: ProductFamily;
   impuesto?: Tax;

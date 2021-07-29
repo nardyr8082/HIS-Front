@@ -1,4 +1,4 @@
 export interface Attribute {
-  id?: string;
+  id?: any;
   descripcion?: string;
 }

@@ -11,6 +11,7 @@ import { ProductCategoryService } from 'src/app/stock-modules/classifiers/produc
 import { MeasureService } from 'src/app/stock-modules/classifiers/measure/services/measure.service';
 import { StockService } from 'src/app/stock-modules/boxstock/services/stock.service';
 import { WarehouseLotService } from 'src/app/stock-modules/warehouse-lot/services/warehouse-lot.service';
+import { ValidationExistence } from '../../validator/validator';
 @Component({
   selector: 'app-existence-form',
   templateUrl: './existence-form.component.html',
@@ -105,8 +106,8 @@ export class ExistenceFormComponent implements OnInit {
 
   buildForm() {
     this.existenceForm = new FormGroup({
-      cantidad: new FormControl(this.data.existence ? this.data.existence.cantidad : null, Validators.required),
-      importe: new FormControl(this.data.existence ? this.data.existence.importe : null, Validators.required),
+      cantidad: new FormControl(this.data.existence ? this.data.existence.cantidad : null, [Validators.required, ValidationExistence.isDecimalFijo154]),
+      importe: new FormControl(this.data.existence ? this.data.existence.importe : null, [Validators.required, ValidationExistence.isDecimalFijo172]),
       almacen: new FormControl(this.data.existence ? this.data.existence.almacen_id : null, Validators.required),
       unidad_medida: new FormControl(this.data.existence ? this.data.existence.unidad_medida_id : null, Validators.required),
       categoria: new FormControl(this.data.existence ? this.data.existence.categoria_id : null, Validators.required),
