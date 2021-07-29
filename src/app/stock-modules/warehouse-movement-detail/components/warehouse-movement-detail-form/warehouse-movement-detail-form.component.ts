@@ -22,6 +22,7 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
   measure: any = [];
+  amount = 0;
   warehouseProduct: any = [];
   move: any = [];
   warehouseMovementDetails: any[];
@@ -108,8 +109,20 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
       movimiento: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.movimiento_id : null, Validators.required),
       unidad_medida: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.unidad_medida_id : null, Validators.required),
     });
+    console.log('cantidad', this.WarehouseMovementDetailForm.get('cantidad').value);
+    console.log('precio', this.WarehouseMovementDetailForm.get('precio').value);
+    this.getShowAmount();
   }
-
+  getShowAmount() {
+   const counts = this.WarehouseMovementDetailForm.get('cantidad').value;
+   const price = this.WarehouseMovementDetailForm.get('precio').value;
+   if (counts === null || price === null) {
+     this.amount = 0;
+   }
+   else{
+     this.amount = counts * price;
+   }
+  }
   get cantidadControl() {
     return this.WarehouseMovementDetailForm?.get('cantidad') as FormControl;
   }

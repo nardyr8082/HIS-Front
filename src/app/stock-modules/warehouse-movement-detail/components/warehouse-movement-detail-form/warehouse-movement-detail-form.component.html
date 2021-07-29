@@ -2,7 +2,7 @@
     <h4>{{ data.warehouseMovementDetail ? 'Editar Detalle Movimiento' : 'Crear Detalle Movimiento' }}</h4>
     <mat-divider class="my-4"></mat-divider>
     <form *ngIf="WarehouseMovementDetailForm" [formGroup]="WarehouseMovementDetailForm">
-            <label>Importe:</label>
+            <label class="border border-success mb-1">Importe: {{ amount}}</label>
        <div class="row mb-2">
          <div class="form-group col-md-6">
            <mat-form-field class="w-100" appearance="outline">
