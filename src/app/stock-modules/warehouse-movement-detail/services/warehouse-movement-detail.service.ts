@@ -7,6 +7,7 @@ import { WarehouseMovementDetail } from '../models/warehouse-movement-detail.mod
 import { Measure } from '../../classifiers/measure/models/measure.model';
 import { warehouseProduct } from '../../warehouse-lot/models/warehouseProduct';
 import { WarehouseMove } from '../models/warehouse-move.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -95,6 +96,24 @@ export class WarehouseMovementDetailService {
 
   deleteWarehouseMovementDetail(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
+  }
+  checkNumberMov(mov: any, idPro: any) {
+    return this.http.get<any>(this.apiEndpoint).pipe(
+      map((res) => {
+        console.log('ID: ', idPro);
+        const miarre = res.results.filter((valores) => {
+          console.log('Dentro del filter', valores);
+          if (valores.movimiento.id === mov && valores.producto.id === idPro)
+           return valores;
+        });
+        if (miarre.length == 1) {
+          console.log('Primero ', miarre);
+          return { isNumberAvailable: false };
+        }
+        console.log('Segundo ', miarre);
+        return { isNumberAvailable: true };
+      }),
+    );
   }
 
 }
