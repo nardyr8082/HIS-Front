@@ -85,7 +85,7 @@ export class PurchaseFacturePageComponent implements OnInit, OnDestroy {
             estado_id: res.estado.id,
             estado_descrip: res.estado.descripcion,
             comercial_id:res.comercial.id,
-            proveedor_id: res.proveedor.id
+            compra_id: res.compra.id
           }));
           this.dataCount = response.count;
           this.loading = false;

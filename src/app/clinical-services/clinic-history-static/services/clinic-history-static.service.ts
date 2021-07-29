@@ -1,21 +1,16 @@
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../../../src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-//
 import { Observable } from 'rxjs';
-import { ApiResponse } from '../../../core/models/api-response.model';
-import { FactureServiceModel } from '../models/facture-service.model';
-
-//
-
+import { ApiResponse } from '../../../../app/core/models/api-response.model';
+import { ClinicHistoryStatic } from '../models/clinic-history-static.model';
+import { Patient } from 'src/app/patient/models/patient.model';
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
-export class FactureServiceService {
-  private apiEndpoint = `${environment.apiUrl}alm_factura_servicio`;
-  private apiEndpointEst = `${environment.apiUrl}alm_estado_factura`;
-  private apiEndpointCom = `${environment.apiUrl}usuario`;
-  private apiEndpointOpe = `${environment.apiUrl}alm_operacion_comercial`;
+export class ClinicHistoryStaticService {
+  private apiEndpoint = `${environment.apiUrl}adm_historia_clinica`;
+  private apiEndpointPatient = `${environment.apiUrl}paciente`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -26,9 +21,9 @@ export class FactureServiceService {
 
   private defaultPageSize: number = 10;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getFactureService(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<FactureServiceModel>> {
+  getClinicHistoryStatic(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<ClinicHistoryStatic>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -36,19 +31,8 @@ export class FactureServiceService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<FactureServiceModel>>(this.apiEndpoint + queryParams);
-  }
+    return this.http.get<ApiResponse<ClinicHistoryStatic>>(this.apiEndpoint + queryParams);
 
-  getEstado(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointEst);
-  }
-
-  getComercial(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointCom);
-  }
-
-  getOperacion(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointOpe);
   }
 
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
@@ -60,7 +44,6 @@ export class FactureServiceService {
         queryParams += `${property}=${filters[property]}`;
       }
     }
-
     if (sortColumn) {
       let ordering = '';
 
@@ -85,15 +68,32 @@ export class FactureServiceService {
     return queryParams;
   }
 
-  createFactureService(data: FactureServiceModel): Observable<FactureServiceModel> {
+  getPatient(): Observable<ApiResponse<Patient>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointPatient);
+  }
+
+
+  createClinicHistoryStatic(data: ClinicHistoryStatic): Observable<ClinicHistoryStatic> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editFactureService(data: FactureServiceModel): Observable<FactureServiceModel> {
-    return this.http.patch<FactureServiceModel>(`${this.apiEndpoint}/${data.id}/`, data);
+  editClinicHistoryStatic(data: ClinicHistoryStatic): Observable<ClinicHistoryStatic> {
+
+    return this.http.patch<ClinicHistoryStatic>(`${this.apiEndpoint}/${data.id}/`, data);
+
   }
 
-  deleteFactureService(id: string): Observable<any> {
+  deleteClinicHistoryStatic(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
+
+
+
+
+
+
+
+
+
+
 }

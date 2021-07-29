@@ -107,19 +107,19 @@
     </div>
   </div>
   <div class="col-lg-4 col-md-12">
-  <!-- Proveedor -->
+  <!-- Compre -->
   <div class="mb-4">
    <ng-select
      appearance="outline"
      class="custom w-100"
-     placeholder="Proveedor"
-     [items]="proveedor"
-     bindLabel="nombre"
+     placeholder="Compra"
+     [items]="compra"
+     bindLabel="numero"
      bindValue="id"
-     formControlName="proveedor">
+     formControlName="compra">
    </ng-select>
-   <small class="text-danger error-style" *ngIf="proveedorControl.errors?.required && proveedorControl.dirty">
-     El campo proveedor es <strong>requerido</strong></small>
+   <small class="text-danger error-style" *ngIf="compraControl.errors?.required && compraControl.dirty">
+     El campo compra es <strong>requerido</strong></small>
  </div>
 </div>
 </div>

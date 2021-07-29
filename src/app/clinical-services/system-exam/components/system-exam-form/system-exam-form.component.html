@@ -1,0 +1,34 @@
+<div class="form">
+  <h4>{{ data.subcategory ? 'Editar Subcategoría' : 'Crear Subcategoría' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="subcategoryForm" [formGroup]="subcategoryForm">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Descricpión:</mat-label>
+      <input matInput formControlName="descripcion" />
+      <mat-error *ngIf="this.nameSubcategoryControl.errors?.required"> {{ 'La descripción es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="this.nameSubcategoryControl.errors?.pattern"> {{ 'La descripción solo permite letras y espacios' }}  </mat-error>
+    </mat-form-field>
+    <div class="mb-4">
+      <ng-select
+        appearance="outline"
+        class="custom w-100"
+        placeholder="Categoria"
+        [items]="category"
+        bindLabel="descripcion"
+        bindValue="id"
+        formControlName="categoria"
+      >
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="subcategoryForm.controls['categoria'].errors?.required && subcategoryForm.controls['categoria'].dirty"
+        >El campo categoría es <strong>requerido</strong></small
+      >
+    </div>
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(subcategoryForm.value)" [disabled]="!subcategoryForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.subcategory ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

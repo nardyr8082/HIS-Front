@@ -4,18 +4,16 @@ import { Injectable } from '@angular/core';
 //
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../../core/models/api-response.model';
-import { FactureServiceModel } from '../models/facture-service.model';
-
+import { SystemExam } from '../models/system-exam.model';
 //
 
 @Injectable({
   providedIn: 'root',
 })
-export class FactureServiceService {
-  private apiEndpoint = `${environment.apiUrl}alm_factura_servicio`;
-  private apiEndpointEst = `${environment.apiUrl}alm_estado_factura`;
-  private apiEndpointCom = `${environment.apiUrl}usuario`;
-  private apiEndpointOpe = `${environment.apiUrl}alm_operacion_comercial`;
+export class SystemExamService {
+  private apiEndpoint = `${environment.apiUrl}adm_examen_sistema`;
+  private apiEndpointF = `${environment.apiUrl}adm_examen_fisico`;
+  private apiEndpointS = `${environment.apiUrl}adm_sistema`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -28,7 +26,7 @@ export class FactureServiceService {
 
   constructor(private http: HttpClient) {}
 
-  getFactureService(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<FactureServiceModel>> {
+  getSystemExam(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<SystemExam>> {
     this.defaultFilter = filter;
     this.defaultSortColumn = sortColumn;
     this.defaultSortDirection = sortDirection;
@@ -36,21 +34,15 @@ export class FactureServiceService {
     this.defaultPageSize = pageSize;
 
     const queryParams = this.formatQueryParams(filter, sortColumn, sortDirection, page, pageSize);
-    return this.http.get<ApiResponse<FactureServiceModel>>(this.apiEndpoint + queryParams);
+    return this.http.get<ApiResponse<SystemExam>>(this.apiEndpoint + queryParams);
+  }
+  getFisicExam(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointF);
   }
 
-  getEstado(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointEst);
+  getSystem(): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpointS);
   }
-
-  getComercial(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointCom);
-  }
-
-  getOperacion(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointOpe);
-  }
-
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
     let queryParams = '';
 
@@ -85,15 +77,15 @@ export class FactureServiceService {
     return queryParams;
   }
 
-  createFactureService(data: FactureServiceModel): Observable<FactureServiceModel> {
+  createSystemExam(data: SystemExam): Observable<SystemExam> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
-  editFactureService(data: FactureServiceModel): Observable<FactureServiceModel> {
-    return this.http.patch<FactureServiceModel>(`${this.apiEndpoint}/${data.id}/`, data);
+  editSystemExam(data: SystemExam): Observable<SystemExam> {
+    return this.http.patch<SystemExam>(`${this.apiEndpoint}/${data.id}/`, data);
   }
 
-  deleteFactureService(id: string): Observable<any> {
+  deleteSystemExam(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
 }
