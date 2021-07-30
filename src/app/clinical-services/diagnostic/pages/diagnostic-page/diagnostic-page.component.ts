@@ -65,7 +65,7 @@ export class DiagnosticPageComponent implements OnInit, OnDestroy {
       .getClinicSession()
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.hc }));
+          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.motivo }));
         }),
       )
       .subscribe();
@@ -80,7 +80,7 @@ export class DiagnosticPageComponent implements OnInit, OnDestroy {
       .pipe(
         map((response: ApiResponse<any>) => {
           this.diagnostic = response.results.map((resp) => {
-            const sesion_clinica = resp.sesion_clinica ? resp.sesion_clinica.hc: '';
+            const sesion_clinica = resp.sesion_clinica ? resp.sesion_clinica.motivo: '';
             const sesion_clinica_id = resp.sesion_clinica ? resp.sesion_clinica.id : '';
             return { ...resp, sesion_clinica: sesion_clinica, sesion_clinica_id: sesion_clinica_id };
           });
