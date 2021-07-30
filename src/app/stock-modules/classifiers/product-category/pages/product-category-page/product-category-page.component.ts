@@ -27,7 +27,7 @@ export class ProductCategoryPageComponent implements OnInit, OnDestroy {
   page = 1;
   pageSize = DEFAULT_PAGE_SIZE;
 
-  rowActionButtons = [
+/*   rowActionButtons = [
     {
       tooltipText: 'Editar Categoría Producto',
       icon: 'edit',
@@ -42,7 +42,7 @@ export class ProductCategoryPageComponent implements OnInit, OnDestroy {
       class: 'btn-danger',
       callback: (item) => this.deleteProductCategory(item),
     },
-  ];
+  ]; */
 
   constructor(private productCategoryService: ProductCategoryService, private toastService: ToastrService, public dialog: MatDialog) {}
 

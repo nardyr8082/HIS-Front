@@ -32,12 +32,12 @@ export class MoveStatusFormComponent implements OnInit {
     return this.moveStatusForm?.get('descripcion') as FormControl;
   }
 
-  onSubmit(data) {
+ /*  onSubmit(data) {
     this.data.moveStatus ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();
   }
 
   onCancel() {
     this.dialogRef.close();
-  }
+  } */
 }
