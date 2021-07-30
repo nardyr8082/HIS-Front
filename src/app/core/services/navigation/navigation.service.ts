@@ -255,7 +255,16 @@ export class NavigationService {
               material: true,
               display: true,
 
+            }, {
+              displayName: 'Ejecuciones de Tratamiento',
+              iconName: ['swap_vertical_circle'],
+              route: 'treatment-executions',
+              material: true,
+              display: true,
+
             }
+
+
           ],
           material: true,
           display: true,
