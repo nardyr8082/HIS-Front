@@ -47,7 +47,10 @@ export class WarehouseMovementDetailService {
   getWarehouseProduct(): Observable<ApiResponse<warehouseProduct>> {
     return this.http.get<ApiResponse<any>>(this.apiEndpointWareHouseProduct);
   }
-
+  //WarehouseMovementDetail
+  getWarehouseMovementDetailAux(): Observable<ApiResponse<WarehouseMovementDetail>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpoint);
+  }
   getMovement(): Observable<ApiResponse<WarehouseMove>> {
     return this.http.get<ApiResponse<any>>(this.apiEndpointMovement);
   }
@@ -98,9 +101,11 @@ export class WarehouseMovementDetailService {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
   checkNumberMov(mov: any, idPro: any) {
+    console.log('servicio mov', mov);
+    console.log('servicio pro', idPro);
     return this.http.get<any>(this.apiEndpoint).pipe(
       map((res) => {
-        console.log('ID: ', idPro);
+        console.log('RES: ', res.results);
         const miarre = res.results.filter((valores) => {
           console.log('Dentro del filter', valores);
           if (valores.movimiento.id === mov && valores.producto.id === idPro)
@@ -108,10 +113,10 @@ export class WarehouseMovementDetailService {
         });
         if (miarre.length == 1) {
           console.log('Primero ', miarre);
-          return { isNumberAvailable: false };
+          return { isConjunt: false };
         }
         console.log('Segundo ', miarre);
-        return { isNumberAvailable: true };
+        return { isConjunt: true };
       }),
     );
   }

@@ -11,7 +11,7 @@
          <div class="form-group col-md-6">
            <mat-form-field class="w-100" appearance="outline">
              <mat-label>Cantidad:</mat-label>
-             <input  matInput formControlName="cantidad" maxlength="19"/>
+             <input  matInput formControlName="cantidad" maxlength="19" (keyup)="getShowAmount($event)"/>
              <mat-error *ngIf="this.cantidadControl.errors?.required"> {{ 'La cantidad es'}} <strong>requerida</strong></mat-error>
              <mat-error *ngIf="this.cantidadControl.errors?.isDecimalFijo154"> {{ 'La cantidad es numérica '}} <strong>la parte entera no debe exceder de 15 números y la parte decimal de 4 números</strong> </mat-error>
            </mat-form-field>
@@ -19,7 +19,7 @@
            <div class="form-group col-md-6">
            <mat-form-field class="w-100" appearance="outline">
              <mat-label>Precio:</mat-label>
-             <input matInput formControlName="precio" maxlength="19"/>
+             <input matInput formControlName="precio" maxlength="19" (keyup)="getShowAmount($event)"/>
              <mat-error *ngIf="this.precioControl.errors?.required"> {{ 'El precio es'}} <strong>requerido</strong></mat-error>
              <mat-error *ngIf="this.precioControl.errors?.isDecimalFijo172"> {{ 'El precio es numérico'}} <strong>la parte entera no debe exceder de 17 números y la parte decimal de 2 números</strong></mat-error>
            </mat-form-field>
@@ -40,6 +40,7 @@
             <mat-option *ngFor="let st of warehouseProduct" [value]="st.id">{{ st.descripcion }}</mat-option>
           </mat-select>
             <mat-error *ngIf="productoControl.errors?.required">La  categoría es <strong>requerido</strong></mat-error>
+            <mat-error *ngIf="productoControl.errors?.isConjunt">Esta pareja de Producto y Movimiento <strong>ya existe</strong></mat-error>
           </mat-form-field>
        </div>
     </div>
@@ -61,6 +62,7 @@
               <mat-option *ngFor="let st of move" [value]="st.id">{{ st.comentario }}</mat-option>
             </mat-select>
               <mat-error *ngIf="movimientoControl.errors?.required">La  categoría es <strong>requerido</strong></mat-error>
+              <mat-error *ngIf="movimientoControl.errors?.isConjunt">Esta pareja de Producto y Movimiento <strong>ya existe</strong></mat-error>
             </mat-form-field>
          </div>
        </div>

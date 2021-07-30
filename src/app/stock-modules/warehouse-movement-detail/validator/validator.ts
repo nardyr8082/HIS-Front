@@ -1,8 +1,10 @@
-import { AbstractControl } from "@angular/forms";
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { BoxstockService } from '../../boxstock/services/boxstock.service';
 import { map } from 'rxjs/operators';
 import { WarehouseMovementDetailService } from '../services/warehouse-movement-detail.service';
+import { group } from '@angular/animations';
 export class ValidationWarehouse {
+
   static isDecimalFijo154(control: AbstractControl) {
     let value = control.value;
     if (value == null || value == '') {
@@ -130,19 +132,5 @@ export class ValidationWarehouse {
 
     console.log('A4');
     return null;
-  }
-  static validateFieldMove( moveService: WarehouseMovementDetailService, id: any) {
-    return(control: AbstractControl) => {
-      const value = control.value;
-      console.log('Validator', id);
-      return moveService.checkNumberMov(value, id)
-        .pipe(
-          map( response => {
-            console.log('mira aqui move: ', response);
-            //vlor true para que no de error
-            return response.isNumberAvailable ? null : { notAvailable: true };
-          })
-        );
-    };
   }
 }

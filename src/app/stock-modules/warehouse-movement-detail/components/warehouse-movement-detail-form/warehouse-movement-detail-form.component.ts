@@ -1,5 +1,5 @@
 import { Component, ContentChild, EventEmitter, Inject, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -23,6 +23,7 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
   measure: any = [];
+  arrayInputs: any = [];
   amount = 0;
   warehouseProduct: any = [];
   move: any = [];
@@ -115,22 +116,42 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
       cantidad: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.cantidad : null, [Validators.required, ValidationWarehouse.isDecimalFijo154]),
       existencia: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.existencia : null, ValidationWarehouse.isInts),
       precio: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.precio : null, [Validators.required, ValidationWarehouse.isDecimalFijo172]),
-      producto: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.producto_id : null, Validators.required),
-      movimiento: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.movimiento_id : null, Validators.required, ValidationWarehouse.validateFieldMove( this.warehouseMovementDetailService, this.data.warehouseMovementDetail)),
+      producto: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.producto_id : null, [Validators.required]),
+      movimiento: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.movimiento_id : null, Validators.required),
       unidad_medida: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.unidad_medida_id : null, Validators.required),
-    });
-    console.log('cantidad', this.WarehouseMovementDetailForm.get('cantidad').value);
-    console.log('precio', this.WarehouseMovementDetailForm.get('precio').value);
-    this.getShowAmount();
+    }, { validators: this.checkConjuntMovProd });
+   // this.getShowAmount();
   }
-  getShowAmount() {
-   const counts = this.WarehouseMovementDetailForm.get('cantidad').value;
-   const price = this.WarehouseMovementDetailForm.get('precio').value;
-   if (counts === null || price === null) {
+
+  checkConjuntMovProd: ValidatorFn = (group: AbstractControl):  ValidationErrors | null => {
+    let pro = group.get('producto').value;
+    let mov = group.get('movimiento').value;
+    this.warehouseMovementDetailService.getWarehouseMovementDetailAux().subscribe( (res) => {
+      this.arrayInputs = res.results;
+    });
+    this.arrayInputs = this.arrayInputs.filter((valores) => (valores.producto['id'] === pro && valores.movimiento['id'] === mov));
+    if (this.arrayInputs.length >= 1 ) {
+      return { isConjunt: true };
+    }
+    return null;
+  }
+
+  getShowAmount(event) {
+    console.log('showamount: ', event);
+   let counts = this.WarehouseMovementDetailForm.get('cantidad').value;
+   let price = this.WarehouseMovementDetailForm.get('precio').value;
+   console.log('form chequeo:', this.WarehouseMovementDetailForm);
+   if (counts === null || price === null || counts < 0 || price < 0) {
      this.amount = 0;
    }
    else{
-     this.amount = counts * price;
+     if (this.WarehouseMovementDetailForm) {
+       if (this.WarehouseMovementDetailForm.controls.cantidad.errors === null && this.WarehouseMovementDetailForm.controls.precio.errors === null)
+       this.amount = counts * price;
+       else
+         this.amount = 0;
+     }
+
    }
   }
   get cantidadControl() {
