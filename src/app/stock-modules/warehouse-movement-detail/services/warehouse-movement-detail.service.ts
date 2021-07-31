@@ -104,21 +104,16 @@ export class WarehouseMovementDetailService {
     return this.http.get<any>(this.apiEndpoint).pipe(
       map((res) => {
         let prueba = [];
-        console.log('RESULTADOS ',  res.results);
         if ( id !== undefined && id !== null) {
           prueba = res.results.filter((valores) => (valores.id === id && valores.movimiento['id'] === mov && valores.producto['id'] === idPro));
-          console.log('Editar ID ', prueba);
-          console.log('checkMov MOV ', mov);
-          console.log('checkMov PRO ', idPro);
-          if (prueba.length === 1)
+          if (prueba.length === 1){
+            console.log('NO EXISTE 1');
             return { isAvailable: false };
+          }
         }
         const  miarre = res.results.filter((valores) => (valores.movimiento['id'] === mov && valores.producto['id'] === idPro));
-        console.log('Editar POST ID ', id);
-        console.log('checkMov MOV POST/PUT ', mov);
-        console.log('checkMov PRO POST/PUT', idPro);
-        console.log('checkMov PRO POST/PUT ARREGLOS', miarre);
         if (miarre.length == 0) {
+          console.log('NO EXISTE 2');
           return { isAvailable: false };
         }
         console.log('Segundo ', miarre);

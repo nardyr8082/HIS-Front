@@ -8,6 +8,7 @@ import { WarehouseMovementDetailService } from '../../services/warehouse-movemen
 import { MeasureService } from 'src/app/stock-modules/classifiers/measure/services/measure.service';
 import { WarehouseProductService } from 'src/app/stock-modules/warehouse-lot/services/warehouse-product.service';
 import { ValidationWarehouse } from '../../validator/validator';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-warehouse-movement-detail-form',
   templateUrl: './warehouse-movement-detail-form.component.html',
@@ -31,6 +32,7 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   constructor(
     public fb: FormBuilder,
+    private toastService: ToastrService,
     public warehouseMovementDetailService: WarehouseMovementDetailService,
     private measureService: MeasureService,
     private warehouseProductService: WarehouseProductService,
@@ -68,25 +70,32 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
     let id = null;
     //put, post espera un evento
     if ( this.valueMov === null && this.valueProd === null) {
+      console.log('OK 1');
       if (this.data?.warehouseMovementDetail !== null) {
+        console.log('OK 2');
           this.valueMov = this.WarehouseMovementDetailForm.get('movimiento').value;
           this.valueProd = this.WarehouseMovementDetailForm.get('producto').value;
           id = this.WarehouseMovementDetailForm.get('id').value;
       }
       else {
+        console.log('OK 3');
         this.notSubmit = false;
       }
     }
     //put onselect, post es cuano se selecciono 2 enevto
     if ( this.valueMov !== null && this.valueProd !== null) {
+      console.log('OK 4');
       if (this.data?.warehouseMovementDetail !== null)
         id = this.data?.warehouseMovementDetail.id;
       this.warehouseMovementDetailService.checkMov(this.valueMov, this.valueProd, id).subscribe(res => {
-        console.log('ver ahora', res);
-        this.notSubmit = res.isAvailable ? true : false;
+        console.log('OK 5', res.isAvailable);
+        this.notSubmit = res.isAvailable;
+        if (this.notSubmit)
+          this.toastService.error('El conjunto de Producto y Movimiento ya existe.', 'Error');
       });
-      console.log('El submit es', this.notSubmit);
+      console.log('El submit es final 0', this.notSubmit);
     }
+    console.log('El submit es final 1', this.notSubmit);
   }
 
   getMeasure() {
