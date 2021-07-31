@@ -203,6 +203,7 @@ export class WarehouseMovementDetailPageComponent implements OnInit {
       data: {
         warehouseMovementDetail: null,
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as WarehouseMovementDetailFormComponent;
@@ -241,6 +242,7 @@ export class WarehouseMovementDetailPageComponent implements OnInit {
       data: {
         warehouseMovementDetail: item,
       },
+      disableClose: true,
     });
     const modalComponentRef = dialogRef.componentInstance as WarehouseMovementDetailFormComponent;
 
