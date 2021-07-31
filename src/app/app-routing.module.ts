@@ -422,6 +422,11 @@ const routes: Routes = [
         path: 'treatment-executions',
         loadChildren: () => import('./clinical-services/treatment-executions/treatment-executions.module').then((m) => m.TreatmentExecutionsModule),
         canActivate: [BackendGuard],
+      },
+      {
+        path: 'appointment',
+        loadChildren: () => import('./clinical-services/appointment/appointment.module').then((m) => m.AppointmentModule),
+        canActivate: [BackendGuard],
       }
     ],
   },
