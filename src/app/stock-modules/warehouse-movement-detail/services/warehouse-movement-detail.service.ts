@@ -100,23 +100,29 @@ export class WarehouseMovementDetailService {
   deleteWarehouseMovementDetail(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
-  checkNumberMov(mov: any, idPro: any) {
-    console.log('servicio mov', mov);
-    console.log('servicio pro', idPro);
+  checkMov(mov: any, idPro: any, id: any) {
     return this.http.get<any>(this.apiEndpoint).pipe(
       map((res) => {
-        console.log('RES: ', res.results);
-        const miarre = res.results.filter((valores) => {
-          console.log('Dentro del filter', valores);
-          if (valores.movimiento.id === mov && valores.producto.id === idPro)
-           return valores;
-        });
-        if (miarre.length == 1) {
-          console.log('Primero ', miarre);
-          return { isConjunt: false };
+        let prueba = [];
+        console.log('RESULTADOS ',  res.results);
+        if ( id !== undefined && id !== null) {
+          prueba = res.results.filter((valores) => (valores.id === id && valores.movimiento['id'] === mov && valores.producto['id'] === idPro));
+          console.log('Editar ID ', prueba);
+          console.log('checkMov MOV ', mov);
+          console.log('checkMov PRO ', idPro);
+          if (prueba.length === 1)
+            return { isAvailable: false };
+        }
+        const  miarre = res.results.filter((valores) => (valores.movimiento['id'] === mov && valores.producto['id'] === idPro));
+        console.log('Editar POST ID ', id);
+        console.log('checkMov MOV POST/PUT ', mov);
+        console.log('checkMov PRO POST/PUT', idPro);
+        console.log('checkMov PRO POST/PUT ARREGLOS', miarre);
+        if (miarre.length == 0) {
+          return { isAvailable: false };
         }
         console.log('Segundo ', miarre);
-        return { isConjunt: true };
+        return { isAvailable: true };
       }),
     );
   }

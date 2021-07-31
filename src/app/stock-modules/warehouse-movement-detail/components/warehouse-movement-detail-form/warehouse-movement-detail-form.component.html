@@ -36,12 +36,13 @@
         <div class="form-group col-md-6">
           <mat-form-field class="w-100" appearance="outline">
           <mat-label>Producto</mat-label>
-          <mat-select #mySelect formControlName="producto">
+          <mat-select #mySelect formControlName="producto" (selectionChange)="myChangePro($event)">
             <mat-option *ngFor="let st of warehouseProduct" [value]="st.id">{{ st.descripcion }}</mat-option>
           </mat-select>
             <mat-error *ngIf="productoControl.errors?.required">La  categoría es <strong>requerido</strong></mat-error>
-            <mat-error *ngIf="productoControl.errors?.isConjunt">Esta pareja de Producto y Movimiento <strong>ya existe</strong></mat-error>
+            <mat-error *ngIf="notSubmit" class="p-0 m-0 text-danger">Esta pareja de Producto y Movimiento ya existe</mat-error>
           </mat-form-field>
+
        </div>
     </div>
       <div class="row">
@@ -58,12 +59,13 @@
           <div class="form-group col-md-6">
             <mat-form-field class="w-100" appearance="outline">
             <mat-label>Movimiento</mat-label>
-            <mat-select #mySelect formControlName="movimiento">
+            <mat-select #mySelect formControlName="movimiento" (selectionChange)="myChangeMov($event)">
               <mat-option *ngFor="let st of move" [value]="st.id">{{ st.comentario }}</mat-option>
             </mat-select>
               <mat-error *ngIf="movimientoControl.errors?.required">La  categoría es <strong>requerido</strong></mat-error>
-              <mat-error *ngIf="movimientoControl.errors?.isConjunt">Esta pareja de Producto y Movimiento <strong>ya existe</strong></mat-error>
+              <mat-error *ngIf="notSubmit" class="m-0 p-0 text-danger">Esta pareja de Producto y Movimiento ya existe</mat-error>
             </mat-form-field>
+
          </div>
        </div>
 
@@ -72,7 +74,7 @@
     <mat-divider class="my-4"></mat-divider>
     <div class="d-flex align-items-center justify-content-end">
         <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
-        <button (click)="onSubmit(WarehouseMovementDetailForm.value)" [disabled]="!WarehouseMovementDetailForm.valid"
+        <button (click)="onSubmit(WarehouseMovementDetailForm.value)" [disabled]="!WarehouseMovementDetailForm.valid || notSubmit"
             mat-raised-button color="primary" class="button">
             {{ data.warehouseMovementDetail ? 'Aceptar' : 'Crear' }}
         </button>
