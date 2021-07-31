@@ -434,6 +434,11 @@ const routes: Routes = [
         loadChildren: () => import('./clinical-services/appointment/appointment.module').then((m) => m.AppointmentModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'interview',
+        loadChildren: () => import('./clinical-services/interview/interview.module').then((m) => m.InterviewModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
