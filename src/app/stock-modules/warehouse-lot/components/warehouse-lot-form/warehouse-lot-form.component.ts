@@ -73,7 +73,7 @@ export class WarehouseLotFormComponent implements OnInit {
       vencido: new FormControl(this.data?.warehouseLot?.vencido==='Vencido' ? true : false),
       producto: new FormControl(this.data.warehouseLot ? this.data.warehouseLot.producto_id : '', Validators.required),
     });
-    console.log(this.warehouseLotForm);
+    
   }
 
   get codigoControl() {
@@ -112,13 +112,13 @@ export class WarehouseLotFormComponent implements OnInit {
 
   sendData() {
     if (this.warehouseLotForm.valid) {
-      console.log('llego')
+      
       const warehouse = this.warehouseLotForm.value;
       const dateFormat = moment(warehouse.fecha_fabricacion);
       const dateFormat1 = moment(warehouse.fecha_vencimiento);
       warehouse.fecha_fabricacion = dateFormat.format('yyyy-MM-DD');
       warehouse.fecha_vencimiento = dateFormat1.format('yyyy-MM-DD');
-      console.log(warehouse);
+      
       this.data.warehouseLForm ? this.edit.emit(warehouse) : this.create.emit(warehouse);
       this.dialogRef.close();
     } else {
@@ -128,7 +128,7 @@ export class WarehouseLotFormComponent implements OnInit {
 
 
   onSubmit(data) {
-    console.log(data);
+    
 
     let fechaFabricacion = data['fecha_fabricacion'].toString();
     let fechaVencimiento = data['fecha_vencimiento'].toString();
@@ -141,7 +141,7 @@ export class WarehouseLotFormComponent implements OnInit {
       data['fecha_fabricacion'] = midateFab;
       data['fecha_vencimiento'] = midateVen;
     }
-    console.log(data);
+    
     this.data.warehouseLot ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();
   }
@@ -151,7 +151,7 @@ export class WarehouseLotFormComponent implements OnInit {
   }
 
   ChangesMonth(mes: any) {
-    console.log('El mes es: ', mes);
+    
     if (mes === 'Jan') {
       return '01';
     }

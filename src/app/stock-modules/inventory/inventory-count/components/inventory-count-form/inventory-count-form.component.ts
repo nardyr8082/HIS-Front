@@ -40,7 +40,7 @@ export class InventoryCountFormComponent implements OnInit, OnDestroy {
       .pipe(
         map((response: ApiResponse<any>) => {
           this.existencia = response.results;
-          console.log(this.existencia);
+
         }),
       )
       .subscribe();

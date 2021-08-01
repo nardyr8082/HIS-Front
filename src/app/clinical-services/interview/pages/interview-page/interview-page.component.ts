@@ -87,7 +87,7 @@ export class InterviewPageComponent implements OnInit {
       .getInterview(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
-          console.log(response.results);
+         
           this.interview = response.results.map((res) => ({
             ...res,
             id: res.id,
