@@ -200,6 +200,7 @@ export class SuplierreturnPageComponent implements OnInit {
       data: {
         suplierreturn: null,
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as SuplierreturnFormComponent;
@@ -238,6 +239,7 @@ export class SuplierreturnPageComponent implements OnInit {
       data: {
         suplierreturn: item,
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as SuplierreturnFormComponent;

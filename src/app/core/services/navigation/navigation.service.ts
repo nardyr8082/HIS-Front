@@ -248,7 +248,15 @@ export class NavigationService {
               route: 'stock-state-appointment',
               material: true,
               display: true,
-            }, {
+            },
+            {
+              displayName: 'Sesión Clínica',
+              iconName: ['swap_vertical_circle'],
+              route: 'clinical-session',
+              material: true,
+              display: true,
+            },
+            {
               displayName: 'Indicaciones de Tratamiento',
               iconName: ['swap_vertical_circle'],
               route: 'treatment-indications',

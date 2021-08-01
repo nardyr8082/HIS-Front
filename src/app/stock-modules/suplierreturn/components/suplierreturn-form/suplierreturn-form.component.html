@@ -2,6 +2,8 @@
   <h4>{{ data.suplierreturn ? 'Editar Devolución Proveedores' : 'Crear Devolución Proveedores' }}</h4>
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="suplierreturnForm" [formGroup]="suplierreturnForm">
+    <div class="row mb-1">
+      <div class="form-group col-md-6">
     <mat-form-field class="w-100" appearance="outline" floatLabel="always">
       <mat-label>Fecha</mat-label>
       <input matInput formControlName="fecha" [matDatepicker]="picker"/>
@@ -9,7 +11,8 @@
       <mat-datepicker #picker></mat-datepicker>
       <mat-error *ngIf="dateControl.errors?.required"> {{ 'La fecha es' }} <strong>requerida</strong> </mat-error>
     </mat-form-field>
-
+      </div>
+      <div class="form-group col-md-6">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Número</mat-label>
       <input matInput formControlName="numero" maxlength="10" />
@@ -18,19 +21,28 @@
       <mat-error *ngIf="numberControl.errors?.max"> {{ 'El número es' }} <strong>valor es menor o igual a 2147483647</strong> </mat-error>
       <mat-error *ngIf="numberControl.errors?.esNumero"> {{ 'El número es' }} <strong>debe ser entero</strong> </mat-error>
     </mat-form-field>
+      </div>
+      </div>
 
+    <div class="row mb-1">
+      <div class="form-group col-md-6">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Comentario</mat-label>
       <input matInput formControlName="comentario" maxlength="20" />
       <mat-error *ngIf="comentaryControl.errors?.required"> {{ 'El comentario es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
-
+      </div>
+        <div class="form-group col-md-6">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Control Número</mat-label>
       <input matInput formControlName="nro_control" maxlength="20" />
       <mat-error *ngIf="controlnumberControl.errors?.required"> {{ 'El control número es' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
+      </div>
+    </div>
 
+    <div class="row mb-1">
+      <div class="form-group col-md-6">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Almacén</mat-label>
       <mat-select #mySelect formControlName="almacen">
@@ -38,7 +50,8 @@
       </mat-select>
       <mat-error *ngIf="stockControl.errors?.required"> {{ 'Seleccione un almacén' }} </mat-error>
     </mat-form-field>
-
+      </div>
+        <div class="form-group col-md-6">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Estado</mat-label>
       <mat-select #mySelect formControlName="estado">
@@ -46,7 +59,10 @@
       </mat-select>
       <mat-error *ngIf="movestatusControl.errors?.required"> {{ 'Seleccione un estado movimiento' }} </mat-error>
     </mat-form-field>
-
+      </div>
+    </div>
+    <div class="row mb-1">
+      <div class="form-group col-md-4">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Tipo Movimiento</mat-label>
       <mat-select #mySelect formControlName="tipo_de_movimiento">
@@ -54,7 +70,9 @@
       </mat-select>
       <mat-error *ngIf="movestypeControl.errors?.required"> {{ 'Seleccione un tipo movimiento' }} </mat-error>
     </mat-form-field>
+      </div>
 
+        <div class="form-group col-md-4">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Usuario</mat-label>
       <mat-select #mySelect formControlName="usuario">
@@ -62,7 +80,8 @@
       </mat-select>
       <mat-error *ngIf="userControl.errors?.required"> {{ 'Seleccione un usuario' }} </mat-error>
     </mat-form-field>
-
+        </div>
+            <div class="form-group col-md-4">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Proveedor</mat-label>
       <mat-select #mySelect formControlName="proveedor">
@@ -70,6 +89,8 @@
       </mat-select>
       <mat-error *ngIf="providerControl.errors?.required"> {{ 'Seleccione un proveedor' }} </mat-error>
     </mat-form-field>
+            </div>
+    </div>
 
   </form>
   <mat-divider class="my-4"></mat-divider>

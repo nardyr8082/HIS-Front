@@ -146,6 +146,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'clinical-session',
+        loadChildren: () => import('./clinical-services/clinicsession/clinicsession.module').then((m) => m.ClinicsessionModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'clinic-history-static',
         loadChildren: () => import('./clinical-services/clinic-history-static/clinic-history-static.module').then((m) => m.ClinicHistoryStaticModule),
         canActivate: [BackendGuard],

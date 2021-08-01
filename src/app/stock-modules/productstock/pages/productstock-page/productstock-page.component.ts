@@ -202,6 +202,7 @@ export class ProductstockPageComponent implements OnInit {
       data: {
         productstock: null,
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as ProductstockFormComponent;
@@ -240,6 +241,7 @@ export class ProductstockPageComponent implements OnInit {
       data: {
         productstock: item,
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as ProductstockFormComponent;
