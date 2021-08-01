@@ -5,11 +5,10 @@ import { ProductstockRoutingModule } from './productstock-routing.module';
 import { ProductstockPageComponent } from './pages/productstock-page/productstock-page.component';
 import { ProductstockFormComponent } from './components/productstock-form/productstock-form.component';
 
-
-
 @NgModule({
   declarations: [ProductstockPageComponent, ProductstockFormComponent],
   imports: [CommonModule, ProductstockRoutingModule, SharedModule],
   entryComponents: [ProductstockFormComponent],
+  exports: [ProductstockFormComponent],
 })
 export class ProductstockModule {}

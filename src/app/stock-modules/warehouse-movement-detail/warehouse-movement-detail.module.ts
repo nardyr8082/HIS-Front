@@ -6,14 +6,10 @@ import { WarehouseMovementDetailRoutingModule } from './warehouse-movement-detai
 import { WarehouseMovementDetailFormComponent } from './components/warehouse-movement-detail-form/warehouse-movement-detail-form.component';
 import { WarehouseMovementDetailPageComponent } from './pages/warehouse-movement-detail-page/warehouse-movement-detail-page.component';
 
-
 @NgModule({
   declarations: [WarehouseMovementDetailFormComponent, WarehouseMovementDetailPageComponent],
-  imports: [
-    CommonModule,
-    WarehouseMovementDetailRoutingModule,
-    SharedModule
-  ],
+  imports: [CommonModule, WarehouseMovementDetailRoutingModule, SharedModule],
   entryComponents: [WarehouseMovementDetailFormComponent],
+  exports: [WarehouseMovementDetailFormComponent, WarehouseMovementDetailPageComponent],
 })
-export class WarehouseMovementDetailModule { }
+export class WarehouseMovementDetailModule {}

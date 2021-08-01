@@ -1,0 +1,8 @@
+<app-stock-moves-form
+  [stockMove]="stockMove"
+  [stocks]="stocks$ | async"
+  [categories]="categories$ | async"
+  [moveTypes]="moveTypes$ | async"
+  (edit)="onEdit($event)"
+  (create)="onCreate($event)"
+></app-stock-moves-form>

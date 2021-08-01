@@ -5,7 +5,7 @@ import { MeasureService } from 'src/app/stock-modules/classifiers/measure/servic
 import { WarehouseProductService } from 'src/app/stock-modules/warehouse-lot/services/warehouse-product.service';
 import { WarehouseMovementDetail } from '../../models/warehouse-movement-detail.model';
 import { WarehouseMovementDetailFormComponent } from '../../components/warehouse-movement-detail-form/warehouse-movement-detail-form.component';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { of, Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -15,14 +15,14 @@ import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
 
-
 @Component({
   selector: 'app-warehouse-movement-detail-page',
   templateUrl: './warehouse-movement-detail-page.component.html',
-  styleUrls: ['./warehouse-movement-detail-page.component.scss']
+  styleUrls: ['./warehouse-movement-detail-page.component.scss'],
 })
 export class WarehouseMovementDetailPageComponent implements OnInit {
-  warehouseMovementDetail: WarehouseMovementDetail[];
+  @Input() displayHeader = true;
+  @Input() warehouseMovementDetail: WarehouseMovementDetail[];
   dataCount = 0;
   configuration = WAREHOUSE_MOVEMENT_DETAIL_TABLE_CONFIGURATION;
   subscriptions: Subscription[] = [];
@@ -48,26 +48,23 @@ export class WarehouseMovementDetailPageComponent implements OnInit {
     },
   ];
 
-
   constructor(
     private warehouseMovementDetailService: WarehouseMovementDetailService,
     private toastService: ToastrService,
     public dialog: MatDialog,
     private measureService: MeasureService,
     private warehouseProductService: WarehouseProductService,
-) {
-  this.putMeasure();
-  this.putWarehouseMove();
-  this.putWarehouseProduct();
- }
+  ) {
+    this.putMeasure();
+    this.putWarehouseMove();
+    this.putWarehouseProduct();
+  }
 
   ngOnInit(): void {
     this.getWarehouseMovementDetail();
 
     this.getMeasure();
     this.getWarehouseProduct();
-
-
   }
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
@@ -78,9 +75,7 @@ export class WarehouseMovementDetailPageComponent implements OnInit {
       .getMeasures(filters, 'descripcion', 'asc', 1, 10000)
       .pipe(
         map((response: ApiResponse<any>) => {
-          console.log(response.results);
           this.configuration.tableFilters[6].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
-   
         }),
       )
       .subscribe();
@@ -93,12 +88,10 @@ export class WarehouseMovementDetailPageComponent implements OnInit {
       .getMovement()
       .pipe(
         map((response: ApiResponse<any>) => {
-   console.log(response.results);
-          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name:res.comentario }));
+          this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.comentario }));
         }),
       )
       .subscribe();
-
 
     this.subscriptions.push(sub);
   }
@@ -108,12 +101,11 @@ export class WarehouseMovementDetailPageComponent implements OnInit {
       .geWarehouseProduct(filters, 'descripcion', 'asc', 1, 10000)
       .pipe(
         map((response: ApiResponse<any>) => {
-          console.log(response.results);
-          this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id,  name:res.descripcion }));
+          this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
         }),
       )
       .subscribe();
-   
+
     this.subscriptions.push(sub);
   }
 
@@ -139,45 +131,44 @@ export class WarehouseMovementDetailPageComponent implements OnInit {
         }),
       )
       .subscribe();
-    console.log(this.configuration)
     this.subscriptions.push(sub);
   }
 
   getWarehouseMovementDetail(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
-    this.loading = true;
-    const sub = this.warehouseMovementDetailService
-      .getWarehouseMovementDetail(filters, sortColumn, sortDirection, page, pageSize)
-      .pipe(
-        map((response: ApiResponse<any>) => {
-          this.warehouseMovementDetail = response.results.map((res) => ({
-            ...res,
-            id: res.id,
-            cantidad: res.cantidad,
-            precio: res.precio,
-            importe: res.importe,
-            existencia: res.existencia,
-            movimiento: res.movimiento.comentario,
-            movimiento_id: res.movimiento.id,
-            producto: res.producto.descripcion,
-            producto_id: res.producto.id,
-            unidad_medida: res.unidad_medida.descripcion,
-            unidad_medida_id: res.unidad_medida.id
-          }));
-          console.log(response);
-          console.log(this.warehouseMovementDetail);
+    if (!this.warehouseMovementDetail) {
+      this.loading = true;
+      const sub = this.warehouseMovementDetailService
+        .getWarehouseMovementDetail(filters, sortColumn, sortDirection, page, pageSize)
+        .pipe(
+          map((response: ApiResponse<any>) => {
+            this.warehouseMovementDetail = response.results.map((res) => ({
+              ...res,
+              id: res.id,
+              cantidad: res.cantidad,
+              precio: res.precio,
+              importe: res.importe,
+              existencia: res.existencia,
+              movimiento: res.movimiento.comentario,
+              movimiento_id: res.movimiento.id,
+              producto: res.producto.descripcion,
+              producto_id: res.producto.id,
+              unidad_medida: res.unidad_medida.descripcion,
+              unidad_medida_id: res.unidad_medida.id,
+            }));
 
-          this.dataCount = response.count;
-          this.loading = false;
-        }),
-        catchError(() => {
-          this.toastService.error('Hubo un error al obtener los datos. Por favor, inténtelo de nuevo más tarde.', 'Error');
-          this.loading = false;
-          return null;
-        }),
-      )
-      .subscribe();
+            this.dataCount = response.count;
+            this.loading = false;
+          }),
+          catchError(() => {
+            this.toastService.error('Hubo un error al obtener los datos. Por favor, inténtelo de nuevo más tarde.', 'Error');
+            this.loading = false;
+            return null;
+          }),
+        )
+        .subscribe();
 
-    this.subscriptions.push(sub);
+      this.subscriptions.push(sub);
+    }
   }
 
   onChangePage(page: PageEvent) {
@@ -304,7 +295,4 @@ export class WarehouseMovementDetailPageComponent implements OnInit {
   onChangeSort(sort: Sort) {
     this.getWarehouseMovementDetail(this.filters, sort.active, sort.direction);
   }
-
 }
-
-

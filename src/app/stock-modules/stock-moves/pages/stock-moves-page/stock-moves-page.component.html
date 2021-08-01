@@ -1,11 +1,11 @@
 <div class="container mt-3">
-  <div *ngIf="displayHeader" class="d-flex justify-content-between align-items-center">
-    <h4>Detalle Movimiento</h4>
-    <button (click)="createWarehouseMovementDetail()" mat-raised-button color="primary" class="button">Crear Detalle Movimiento</button>
+  <div class="d-flex justify-content-between align-items-center">
+    <h4>Movimientos</h4>
+    <button (click)="goToItem()" mat-raised-button color="primary" class="button">Crear Movimiento</button>
   </div>
   <app-custom-table
-    *ngIf="warehouseMovementDetail"
-    [data]="warehouseMovementDetail"
+    *ngIf="stockMoves"
+    [data]="stockMoves"
     [dataCount]="dataCount"
     [displayedColumns]="configuration.displayedColumns"
     [columnsName]="configuration.columnsName"
@@ -15,6 +15,6 @@
     [loading]="loading"
     (changePage)="onChangePage($event)"
     (changeFilter)="onChangeFilter($event)"
-    (changeSort)="onChangeSort($event)"
+    (changeSort)="changeSort($event)"
   ></app-custom-table>
 </div>

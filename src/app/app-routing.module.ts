@@ -418,7 +418,8 @@ const routes: Routes = [
         path: 'transfer-emited',
         loadChildren: () => import('./stock-modules/transfer-emited-stock/transfer-emited-stock.module').then((m) => m.TransferEmitedStockModule),
         canActivate: [BackendGuard],
-      }, {
+      },
+      {
         path: 'treatment-indications',
         loadChildren: () => import('./clinical-services/treatment-indications/treatment-indications.module').then((m) => m.TreatmentIndicationsModule),
         canActivate: [BackendGuard],
@@ -427,7 +428,22 @@ const routes: Routes = [
         path: 'treatment-executions',
         loadChildren: () => import('./clinical-services/treatment-executions/treatment-executions.module').then((m) => m.TreatmentExecutionsModule),
         canActivate: [BackendGuard],
-      }
+      },
+      {
+        path: 'moves',
+        loadChildren: () => import('./stock-modules/stock-moves/stock-moves.module').then((m) => m.StockMovesModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'appointment',
+        loadChildren: () => import('./clinical-services/appointment/appointment.module').then((m) => m.AppointmentModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'interview',
+        loadChildren: () => import('./clinical-services/interview/interview.module').then((m) => m.InterviewModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
@@ -436,10 +452,10 @@ const routes: Routes = [
   },
 ];
 
-export const routing: ModuleWithProviders<Route> = RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' });
+export const routing: ModuleWithProviders<Route> = RouterModule.forRoot(routes);
 
 @NgModule({
   imports: [routing],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
