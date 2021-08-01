@@ -12,11 +12,10 @@ import { ValidationWarehouse } from '../../validator/validator';
 import { del } from 'selenium-webdriver/http';
 import { MyValidation } from '../../../boxstock/validator/validator';
 
-
 @Component({
   selector: 'app-warehouse-movement-detail-form',
   templateUrl: './warehouse-movement-detail-form.component.html',
-  styleUrls: ['./warehouse-movement-detail-form.component.scss']
+  styleUrls: ['./warehouse-movement-detail-form.component.scss'],
 })
 export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
   @Output() create: EventEmitter<any> = new EventEmitter();
@@ -35,7 +34,8 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
     private measureService: MeasureService,
     private warehouseProductService: WarehouseProductService,
     public dialogRef: MatDialogRef<WarehouseMovementDetailFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -43,7 +43,6 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
     this.getWarehouseMove();
     this.getWarehouseProduct();
     this.getWarehouseMovementDetail();
-
   }
 
   ngOnDestroy() {
@@ -112,26 +111,33 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
       //producto: [(this.data.warehouseMovementDetail && this.data.warehouseMovementDetail.producto_id) ? this.data.warehouseMovementDetail.producto_id : '', [Validators.required]],
       //movimiento: [(this.data.warehouseMovementDetail && this.data.warehouseMovementDetail.movimiento_id) ? this.data.warehouseMovementDetail.movimiento_id : '', [Validators.required]],
       //unidad_medida: [(this.data.warehouseMovementDetail && this.data.warehouseMovementDetail.unidad_medida_id) ? this.data.warehouseMovementDetail.unidad_medida_id : '', [Validators.required]],
-      cantidad: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.cantidad : null, [Validators.required, ValidationWarehouse.isDecimalFijo154]),
+      cantidad: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.cantidad : null, [
+        Validators.required,
+        ValidationWarehouse.isDecimalFijo154,
+      ]),
       existencia: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.existencia : null, ValidationWarehouse.isInts),
-      precio: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.precio : null, [Validators.required, ValidationWarehouse.isDecimalFijo172]),
+      precio: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.precio : null, [
+        Validators.required,
+        ValidationWarehouse.isDecimalFijo172,
+      ]),
       producto: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.producto_id : null, Validators.required),
-      movimiento: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.movimiento_id : null, Validators.required, ValidationWarehouse.validateFieldMove( this.warehouseMovementDetailService, this.data.warehouseMovementDetail)),
+      movimiento: new FormControl(
+        this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.movimiento_id : null,
+        Validators.required,
+        ValidationWarehouse.validateFieldMove(this.warehouseMovementDetailService, this.data.warehouseMovementDetail),
+      ),
       unidad_medida: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.unidad_medida_id : null, Validators.required),
     });
-    console.log('cantidad', this.WarehouseMovementDetailForm.get('cantidad').value);
-    console.log('precio', this.WarehouseMovementDetailForm.get('precio').value);
     this.getShowAmount();
   }
   getShowAmount() {
-   const counts = this.WarehouseMovementDetailForm.get('cantidad').value;
-   const price = this.WarehouseMovementDetailForm.get('precio').value;
-   if (counts === null || price === null) {
-     this.amount = 0;
-   }
-   else{
-     this.amount = counts * price;
-   }
+    const counts = this.WarehouseMovementDetailForm.get('cantidad').value;
+    const price = this.WarehouseMovementDetailForm.get('precio').value;
+    if (counts === null || price === null) {
+      this.amount = 0;
+    } else {
+      this.amount = counts * price;
+    }
   }
   get cantidadControl() {
     return this.WarehouseMovementDetailForm?.get('cantidad') as FormControl;
@@ -161,34 +167,31 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
     return this.WarehouseMovementDetailForm?.get('unidad_medida') as FormControl;
   }
 
-
   onSubmit(data) {
     console.log('ver data ya', data);
-       console.log('ver ya', this.data);
-       //data['precio'] = parseInt(data['precio']);
-       //data['cantidad'] = parseInt(data['cantidad']);
-       //data['importe'] = null;
-       /*
+    console.log('ver ya', this.data);
+    //data['precio'] = parseInt(data['precio']);
+    //data['cantidad'] = parseInt(data['cantidad']);
+    //data['importe'] = null;
+    /*
        * {
     "cantidad": "3.0000",
     "precio": "3.00",
     "movimiento": 26,
     "producto": 6,
     "unidad_medida": 4
-}*/   let valores = {};
-       if (data['existencia'] !== null)
-         valores['existencia'] = data['existencia'];
+}*/ let valores = {};
+    if (data['existencia'] !== null) valores['existencia'] = data['existencia'];
 
-       valores['cantidad'] = data['cantidad'];
-       valores['precio'] = data['precio'];
-       valores['movimiento'] = data['movimiento'];
-       valores['producto'] = data['producto'];
-       valores['unidad_medida'] = data['unidad_medida'];
+    valores['cantidad'] = data['cantidad'];
+    valores['precio'] = data['precio'];
+    valores['movimiento'] = data['movimiento'];
+    valores['producto'] = data['producto'];
+    valores['unidad_medida'] = data['unidad_medida'];
     console.log('ver valores ya', valores);
-    if (data === valores)
-      console.log('Son iguales');
-      this.data.warehouseMovementDetail ? this.edit.emit(valores) : this.create.emit(valores);
-      this.dialogRef.close();
+    if (data === valores) console.log('Son iguales');
+    this.data.warehouseMovementDetail ? this.edit.emit(valores) : this.create.emit(valores);
+    this.dialogRef.close();
   }
 
   onCancel() {

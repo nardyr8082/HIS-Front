@@ -11,8 +11,6 @@ import { User } from '../../../../security-module/user/models/user.model';
 import { ValidationProductStock } from '../../../productstock/validator/validator';
 import { ValidationStock } from '../../validator/validator';
 
-
-
 @Component({
   selector: 'app-stock-form',
   templateUrl: './stock-form.component.html',
@@ -51,7 +49,11 @@ export class StockFormComponent implements OnInit, OnDestroy {
     console.log('en buildform: ', this.data?.stock);
     this.stockForm = new FormGroup({
       id: new FormControl(this.data?.stock?.id ? this.data?.stock.id : null),
-      codigo: new FormControl(this.data?.stock?.codigo ? this.data?.stock.codigo : null, [Validators.required], ValidationStock.validateFieldCodec( this.getStockService, this.data?.stock?.id)),
+      codigo: new FormControl(
+        this.data?.stock?.codigo ? this.data?.stock.codigo : null,
+        [Validators.required],
+        ValidationStock.validateFieldCodec(this.getStockService, this.data?.stock?.id),
+      ),
       nombre: new FormControl(this.data?.stock?.nombre ? this.data?.stock.nombre : null, Validators.required),
       direccion: new FormControl(this.data?.stock?.direccion ? this.data?.stock.direccion : null),
       activo: new FormControl(this.data?.stock?.activo ? this.data?.stock.activo : false),
@@ -59,8 +61,6 @@ export class StockFormComponent implements OnInit, OnDestroy {
       jefe_almacen: new FormControl(this.data?.stock?.jefe_almacen ? this.data?.stock.jefe_almacen.id : null, Validators.required),
       departamento: new FormControl(this.data?.stock?.departamento ? this.data?.stock.departamento.id : null, Validators.required),
     });
-    //console.log('ver AQUI', this.data);
-    console.log('hay mas: ', this.data?.stock?.punto_de_venta);
   }
 
   get idControl() {

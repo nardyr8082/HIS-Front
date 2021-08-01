@@ -1,0 +1,55 @@
+<div class="container my-4">
+  <h4>Detalles del Movimiento</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="stockDetailMoveForm" [formGroup]="stockDetailMoveForm">
+    <div class="row">
+      <div class="col-sm-12 col-lg-3 d-flex align-items-center">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Producto</mat-label>
+          <mat-select #mySelect formControlName="producto">
+            <mat-option *ngFor="let st of products" [value]="st.id">{{ st.descripcion }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="productoControl.errors?.required">La categoría es <strong>requerido</strong></mat-error>
+        </mat-form-field>
+        <button #tooltip="matTooltip" matTooltip="Crear Producto" class="mx-1 mb-3" (click)="createProductstock()" mat-icon-button color="primary">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+      <div class="col-sm-12 col-lg-2">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Unidad de Medida</mat-label>
+          <mat-select #mySelect formControlName="unidad_medida">
+            <mat-option *ngFor="let st of measures" [value]="st.id">{{ st.descripcion }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="unidad_medidaControl.errors?.required">Seleccione una unidad de medida</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-lg-2">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Cantidad:</mat-label>
+          <input type="number" matInput formControlName="cantidad" maxlength="19" />
+          <mat-error *ngIf="this.cantidadControl.errors?.required"> {{ 'La cantidad es' }} <strong>requerida</strong></mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12 col-lg-2">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Precio:</mat-label>
+          <input matInput type="number" formControlName="precio" maxlength="19" />
+          <mat-error *ngIf="this.precioControl.errors?.required"> {{ 'El precio es' }} <strong>requerido</strong></mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-md-2">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Existencia</mat-label>
+          <input type="number" matInput formControlName="existencia" maxlength="10" />
+          <mat-error *ngIf="this.existControl.errors?.required"> {{ 'La existencia es' }} <strong>requerida</strong></mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-1">
+        <button [disabled]="stockDetailMoveForm.invalid" (click)="saveMoveDetail(stockDetailMoveForm.value)" mat-fab color="primary">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -288,13 +288,13 @@ export class NavigationService {
           ],
           material: true,
           display: true,
-        },{
+        },
+        {
           displayName: 'Crear Historia Clínica Tabla',
           iconName: ['center_focus_strong'],
           route: 'clinic-history-static',
           material: true,
           display: true,
-          
         },
         {
           displayName: 'Núcleo Funcional',
@@ -361,7 +361,7 @@ export class NavigationService {
           material: true,
           display: true,
         },
- /*        {
+        /*        {
           displayName: 'Nomencladores',
           iconName: ['build'],
           material: true,
@@ -577,11 +577,18 @@ export class NavigationService {
       material: true,
       children: [
         {
+          displayName: 'Movimientos',
+          iconName: ['swap_vertical_circle'],
+          route: 'moves',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Lote',
           iconName: ['swap_vertical_circle'],
           route: 'lotwarehouse',
           material: true,
-          display: true
+          display: true,
         },
         {
           displayName: 'Existencia',

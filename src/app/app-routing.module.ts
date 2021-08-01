@@ -414,6 +414,11 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/transfer-emited-stock/transfer-emited-stock.module').then((m) => m.TransferEmitedStockModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'moves',
+        loadChildren: () => import('./stock-modules/stock-moves/stock-moves.module').then((m) => m.StockMovesModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
