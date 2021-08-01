@@ -30,12 +30,12 @@ export class ProductCategoryFormComponent implements OnInit {
     return this.productCategoryForm?.get('descripcion') as FormControl;
   }
 
-  onSubmit(data) {
+/*   onSubmit(data) {
     this.data.productCategory ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();
   }
 
   onCancel() {
     this.dialogRef.close();
-  }
+  } */
 }

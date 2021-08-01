@@ -62,12 +62,12 @@ export class MoveTypeFormComponent implements OnInit {
     return this.moveTypeForm?.get('categoria') as FormControl;
   }
 
-  onSubmit(data) {
+/*   onSubmit(data) {
     this.data.moveType ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();
   }
 
   onCancel() {
     this.dialogRef.close();
-  }
+  } */
 }

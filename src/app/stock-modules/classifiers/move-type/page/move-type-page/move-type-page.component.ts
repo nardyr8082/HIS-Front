@@ -31,7 +31,7 @@ export class MoveTypePageComponent implements OnInit {
 
   categories: ProductCategory[];
 
-  rowActionButtons = [
+/*   rowActionButtons = [
     {
       tooltipText: 'Editar Tipo de movimiento',
       icon: 'edit',
@@ -46,7 +46,7 @@ export class MoveTypePageComponent implements OnInit {
       class: 'btn-danger',
       callback: (item) => this.deleteMoveType(item),
     },
-  ];
+  ]; */
 
   constructor(
     private productCategoryService: ProductCategoryService,

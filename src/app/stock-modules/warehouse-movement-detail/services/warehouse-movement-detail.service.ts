@@ -47,7 +47,10 @@ export class WarehouseMovementDetailService {
   getWarehouseProduct(): Observable<ApiResponse<warehouseProduct>> {
     return this.http.get<ApiResponse<any>>(this.apiEndpointWareHouseProduct);
   }
-
+  //WarehouseMovementDetail
+  getWarehouseMovementDetailAux(): Observable<ApiResponse<WarehouseMovementDetail>> {
+    return this.http.get<ApiResponse<any>>(this.apiEndpoint);
+  }
   getMovement(): Observable<ApiResponse<WarehouseMove>> {
     return this.http.get<ApiResponse<any>>(this.apiEndpointMovement);
   }
@@ -97,21 +100,24 @@ export class WarehouseMovementDetailService {
   deleteWarehouseMovementDetail(id: string): Observable<any> {
     return this.http.delete<any>(`${this.apiEndpoint}/${id}/`);
   }
-  checkNumberMov(mov: any, idPro: any) {
+  checkMov(mov: any, idPro: any, id: any) {
     return this.http.get<any>(this.apiEndpoint).pipe(
       map((res) => {
-        console.log('ID: ', idPro);
-        const miarre = res.results.filter((valores) => {
-          console.log('Dentro del filter', valores);
-          if (valores.movimiento.id === mov && valores.producto.id === idPro)
-           return valores;
-        });
-        if (miarre.length == 1) {
-          console.log('Primero ', miarre);
-          return { isNumberAvailable: false };
+        let prueba = [];
+        if ( id !== undefined && id !== null) {
+          prueba = res.results.filter((valores) => (valores.id === id && valores.movimiento['id'] === mov && valores.producto['id'] === idPro));
+          if (prueba.length === 1){
+            console.log('NO EXISTE 1');
+            return { isAvailable: false };
+          }
+        }
+        const  miarre = res.results.filter((valores) => (valores.movimiento['id'] === mov && valores.producto['id'] === idPro));
+        if (miarre.length == 0) {
+          console.log('NO EXISTE 2');
+          return { isAvailable: false };
         }
         console.log('Segundo ', miarre);
-        return { isNumberAvailable: true };
+        return { isAvailable: true };
       }),
     );
   }

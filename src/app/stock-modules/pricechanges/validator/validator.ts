@@ -3,7 +3,7 @@ export class ValidationPrinceChanges{
   static isDecimalFijo172(control: AbstractControl) {
     let value = control.value;
     if (value == null || value == ''){
-      return {isDecimal: false};
+      return {isDecimalFijo172: false};
     }
     else {
       if (value.length > 2){

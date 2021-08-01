@@ -28,7 +28,7 @@ export class MoveStatusPageComponent implements OnInit {
   page = 1;
   pageSize = DEFAULT_PAGE_SIZE;
 
-  rowActionButtons = [
+/*   rowActionButtons = [
     {
       tooltipText: 'Editar Estado de Movimiento',
       icon: 'edit',
@@ -41,9 +41,9 @@ export class MoveStatusPageComponent implements OnInit {
       icon: 'delete',
       color: 'warn',
       class: 'btn-danger',
-      callback: (item) => this.deleteProgram(item),
+      callback: (item) => this.deleteMovesStatus(item),
     },
-  ];
+  ]; */
 
   constructor(private moveStatusService: MoveStatusService, private toastService: ToastrService, public dialog: MatDialog) {}
 
@@ -163,7 +163,7 @@ export class MoveStatusPageComponent implements OnInit {
     this.subscriptions.push(sub);
   }
 
-  deleteProgram(item) {
+  deleteMovesStatus(item) {
     const modalRef = this.dialog.open(DeleteConfirmationModalComponent);
 
     const modalComponentRef = modalRef.componentInstance as DeleteConfirmationModalComponent;
