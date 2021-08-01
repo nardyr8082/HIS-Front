@@ -356,6 +356,11 @@ const routes: Routes = [
         loadChildren: () => import('./clinical-services/diagnostic/diagnostic.module').then((m) => m.DiagnosticModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'system-exam',
+        loadChildren: () => import('./clinical-services/system-exam/system-exam.module').then((m) => m.SystemExamModule),
+        canActivate: [BackendGuard],
+      },
       // Resources
       {
         path: 'resource-status',

@@ -12,7 +12,7 @@ import { SystemExam } from '../models/system-exam.model';
 })
 export class SystemExamService {
   private apiEndpoint = `${environment.apiUrl}adm_examen_sistema`;
-  private apiEndpointF = `${environment.apiUrl}adm_examen_fisico`;
+  private apiEndpointF = `${environment.apiUrl}adm_examen_fisico_unico`;
   private apiEndpointS = `${environment.apiUrl}adm_sistema`;
   private defaultFilter: any = {};
 
