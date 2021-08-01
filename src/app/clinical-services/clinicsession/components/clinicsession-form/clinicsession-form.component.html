@@ -2,6 +2,7 @@
   <h4>{{ data.clinicsession ? 'Editar Sesión Clínica' : 'Crear Sesión Clínica' }}</h4>
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="clinicsessionForm" [formGroup]="clinicsessionForm">
+
     <div class="row mb-1">
         <div class="form-group col-md-6">
     <mat-form-field class="w-100" appearance="outline">
@@ -85,7 +86,7 @@
         <div class="form-group col-md-6">
           <mat-form-field class="w-100" appearance="outline">
             <mat-label>Médico Solicita</mat-label>
-            <mat-select #mySelect formControlName="medico_realiza">
+            <mat-select #mySelect formControlName="medico_solicita">
               <mat-option *ngFor="let st of medico_solicita" [value]="st.id">{{ st.username }}</mat-option>
             </mat-select>
             <mat-error *ngIf="medicSolControl.errors?.required"> {{ 'Seleccione un Médico Solicita' }} </mat-error>
@@ -152,7 +153,8 @@
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
-    <button (click)="onSubmit(clinicsessionForm.value)" [disabled]="!clinicsessionForm.valid" mat-raised-button color="primary" class="button">
+    <!-- [disabled]="!clinicsessionForm.valid"-->
+    <button (click)="onSubmit(clinicsessionForm.value)"  [disabled]="!clinicsessionForm.valid" mat-raised-button color="primary" class="button">
       {{ data.clinicsession ? 'Aceptar' : 'Crear' }}
     </button>
   </div>

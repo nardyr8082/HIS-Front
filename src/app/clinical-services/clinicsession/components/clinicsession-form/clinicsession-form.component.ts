@@ -65,6 +65,7 @@ export class ClinicsessionFormComponent implements OnInit, OnDestroy {
       .pipe(
         map((response: ApiResponse<any>) => {
           this.medico_solicita = response.results;
+          console.log('medico solicita', this.medico_solicita);
         }),
       )
       .subscribe();
@@ -243,7 +244,7 @@ export class ClinicsessionFormComponent implements OnInit, OnDestroy {
     let formateada1 = fecha1.split(' ');
     let formateadahora1 = hora1.split(' ');
     console.log('arregloa: ', formateadahora);
-    if ( this.data.suplierreturn === null || formateada.length > 0) {
+    if ( this.data.clinicsession === null || formateada.length > 0) {
       const midate = formateada[3] + '-' + this.ChangesMonth(formateada[1]) + '-' + formateada[2];
       const midate1 = formateada1[3] + '-' + this.ChangesMonth(formateada1[1]) + '-' + formateada1[2];
       const mihora = 'T' + formateadahora[4];
