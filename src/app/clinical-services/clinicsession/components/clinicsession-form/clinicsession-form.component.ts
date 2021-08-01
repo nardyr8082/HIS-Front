@@ -5,11 +5,11 @@ import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApiResponse } from '../../../../core/models/api-response.model';
 import { ClinicsessionService } from '../../services/clinicsession.service';
-import { User } from '../../../../security-module/user/models/user.model';
 import { UserService } from '../../../../security-module/user/services/user.service';
 import { DiseaseService } from '../../../disease/services/disease.service';
 import { ClinicHistoryStaticService } from '../../../clinic-history-static/services/clinic-history-static.service';
 import { OfficeService } from '../../../../structure-modules/office/services/office.service';
+import { AppointmentService } from '../../../appointment/services/appointment.service';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class ClinicsessionFormComponent implements OnInit, OnDestroy {
   cita: any = [];
   subscriptions: Subscription[] = [];
 
-  constructor(public officeService: OfficeService, public hcService: ClinicHistoryStaticService, public diseaseService: DiseaseService, public userService: UserService, public clinicsessionService: ClinicsessionService, public dialogRef: MatDialogRef<ClinicsessionFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(public appoinmentSerice: AppointmentService, public officeService: OfficeService, public hcService: ClinicHistoryStaticService, public diseaseService: DiseaseService, public userService: UserService, public clinicsessionService: ClinicsessionService, public dialogRef: MatDialogRef<ClinicsessionFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -72,8 +72,8 @@ export class ClinicsessionFormComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
   getCita() {
-    const sub = this.clinicsessionService
-      .getCita()
+    const sub = this.appoinmentSerice
+      .getAppointment({}, 'id', 'asc', 1, 10000)
       .pipe(
         map((response: ApiResponse<any>) => {
           this.cita = response.results;
@@ -125,10 +125,10 @@ export class ClinicsessionFormComponent implements OnInit, OnDestroy {
 
   buildForm() {
     const enfermedadesIds = this.data.clinicsession ? this.data.clinicsession.enfermedades.map((r) => r.id) : [];
-    const fechai = this.data.clinicsession ? this.getFormattedDate(this.data.clinicsession.fecha_inicio) : '';
-    const horai = this.data.clinicsession ? this.getFormattedHora(this.data.clinicsession.fecha_inicio) : '';
-    const fechaf = this.data.clinicsession ? this.getFormattedDate(this.data.clinicsession.fecha_fin) : '';
-    const horaf = this.data.clinicsession ? this.getFormattedHora(this.data.clinicsession.fecha_fin) : '';
+    const fechai = this.data.clinicsession ? this.getFormattedDate(this.data.clinicsession.fecha_solicitud) : '';
+    const horai = this.data.clinicsession ? this.getFormattedHora(this.data.clinicsession.fecha_solicitud) : '';
+    const fechaf = this.data.clinicsession ? this.getFormattedDate(this.data.clinicsession.fecha_realizacion) : '';
+    const horaf = this.data.clinicsession ? this.getFormattedHora(this.data.clinicsession.fecha_realizacion) : '';
     this.clinicsessionForm = new FormGroup({
 
       motivo: new FormControl(this.data.clinicsession ? this.data.clinicsession.motivo : '', Validators.required),

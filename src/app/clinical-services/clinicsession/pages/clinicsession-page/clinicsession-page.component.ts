@@ -19,6 +19,8 @@ import { Measure } from '../../../../stock-modules/classifiers/measure/models/me
 import { ClinicHistoryStatic } from '../../../clinic-history-static/models/clinic-history-static.model';
 import { User } from '../../../../security-module/user/models/user.model';
 import { Office } from '../../../../structure-modules/office/models/office.model';
+import { AppointmentService } from '../../../appointment/services/appointment.service';
+import { Appointment } from '../../../appointment/models/appointment.model';
 
 
 
@@ -57,6 +59,7 @@ export class ClinicsessionPageComponent implements OnInit, OnDestroy {
   constructor(
     private clinicsessionService: ClinicsessionService,
     private userService: UserService,
+    private appoimentService: AppointmentService,
     private clinicHistoryStaticService: ClinicHistoryStaticService,
     private diseaseService: DiseaseService,
     private officeService: OfficeService,
@@ -103,8 +106,8 @@ export class ClinicsessionPageComponent implements OnInit, OnDestroy {
     this.subscriptions.push(sub);
   }
   getCita(filters = {}) {
-    const sub = this.clinicsessionService
-      .getCita()
+    const sub = this.appoimentService
+      .getAppointment({}, 'id', 'asc', 1, 10000)
       .pipe(
         map((response) => {
           this.configuration.tableFilters[6].items = response.results.map((res) => ({ id: res.id, name: res.numero }));
@@ -205,14 +208,15 @@ export class ClinicsessionPageComponent implements OnInit, OnDestroy {
             return { ...res, activo_string: activo, unidad_medida_string: measureString, familia_string: familyString, impuesto_string: taxString, programa_string: programString, atributos_string: attributeString };
             */
             const hcString = this.getHcString(res.hc);
-            const userString = this.getMedicReaString(res.medico_solicita);
-            const citaString = this.getMedicSolString(res.medico_realiza);
+            const userString1 = this.getMedicReaString(res.medico_solicita);
+            const userString2 = this.getMedicSolString(res.medico_realiza);
             const departementoString = this.getOfficeString(res.departamento);
             const enfermedadesString = this.getDiseaseString(res.enfermedades);
+            const citaString = this.getCitaString(res.cita);
             return {
               ...res,
-              medico_solicita_string: userString,
-              medico_realiza_string: userString,
+              medico_solicita_string: userString1,
+              medico_realiza_string: userString2,
               cita_string: citaString,
               departamento_string: departementoString,
               enfermedades_string: enfermedadesString,
@@ -233,6 +237,9 @@ export class ClinicsessionPageComponent implements OnInit, OnDestroy {
   }
   getHcString(hc: ClinicHistoryStatic) {
     return hc.numero_hc;
+  }
+  getCitaString(app: Appointment) {
+    return app.numero;
   }
   getOfficeString(o: Office) {
     return o.nombre;

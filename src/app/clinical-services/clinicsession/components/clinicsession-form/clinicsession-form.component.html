@@ -2,10 +2,7 @@
   <h4>{{ data.clinicsession ? 'Editar Sesión Clínica' : 'Crear Sesión Clínica' }}</h4>
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="clinicsessionForm" [formGroup]="clinicsessionForm">
-     <strong>{{ clinicsessionForm | json}}</strong>
     <div class="row mb-1">
-
-
         <div class="form-group col-md-6">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Fecha Solicitud</mat-label>

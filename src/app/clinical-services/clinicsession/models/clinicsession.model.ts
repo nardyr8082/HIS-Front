@@ -2,7 +2,7 @@ import { Office } from '../../../structure-modules/office/models/office.model';
 import { User } from '../../../security-module/user/models/user.model';
 import { ClinicHistoryStatic } from '../../clinic-history-static/models/clinic-history-static.model';
 import { Disease } from '../../disease/models/disease.model';
-import { Attribute } from '../../../stock-modules/classifiers/attribute/models/attribute.model';
+import { Appointment } from '../../appointment/models/appointment.model';
 
 export interface Clinicsession {
   id: number;
@@ -18,7 +18,7 @@ export interface Clinicsession {
   hc?: ClinicHistoryStatic;
   medico_realiza?: User;
   medico_solicita?: User;
-  cita?: AdmCita;
+  cita?: Appointment;
   departamento?: Office;
   enfermedades?: Array<Disease>;
   hc_string?: string;
@@ -29,16 +29,3 @@ export interface Clinicsession {
   enfermedades_string?: string;
 }
 
-export interface AdmCita {
-  id: number;
-  numero?: string;
-  fecha?: string;
-  hora_inicio?: string;
-  hora_fin?: string;
-  observaciones?: string;
-  paciente?: number;
-  servicio?: number;
-  medico?: number;
-  departamento?: number;
-  estado_cita?: number;
-}

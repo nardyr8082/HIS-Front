@@ -13,7 +13,7 @@ import { Clinicsession } from '../models/clinicsession.model';
 })
 export class ClinicsessionService {
   private apiEndpoint = `${environment.apiUrl}adm_sesion_clinica`;
-  private apiEndpointCita = `${environment.apiUrl}adm_cita`;
+  //private apiEndpointCita = `${environment.apiUrl}adm_cita`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -37,9 +37,9 @@ export class ClinicsessionService {
     return this.http.get<ApiResponse<Clinicsession>>(this.apiEndpoint + queryParams);
   }
 
-  getCita(): Observable<ApiResponse<any>> {
+  /*getCita(): Observable<ApiResponse<any>> {
     return this.http.get<ApiResponse<any>>(this.apiEndpointCita);
-  }
+  }*/
   private formatQueryParams(filters?: any, sortColumn?: string, sortDirection?: string, pageIndex?: number, pageSize?: number): string {
     let queryParams = '';
 
