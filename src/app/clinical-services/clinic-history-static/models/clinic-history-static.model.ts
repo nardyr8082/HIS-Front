@@ -1,5 +1,5 @@
 export interface ClinicHistoryStatic {
   id?: string;
-  numero_hc?: number;
+  numero_hc?: any;
   paciente?: string;
 }

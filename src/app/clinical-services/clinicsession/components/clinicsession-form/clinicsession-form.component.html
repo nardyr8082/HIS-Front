@@ -1,0 +1,161 @@
+<div class="form">
+  <h4>{{ data.clinicsession ? 'Editar Sesión Clínica' : 'Crear Sesión Clínica' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="clinicsessionForm" [formGroup]="clinicsessionForm">
+
+    <div class="row mb-1">
+        <div class="form-group col-md-6">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Fecha Solicitud</mat-label>
+      <!--<input matInput formControlName="fecha" />-->
+      <input matInput formControlName="fecha_inicioT" [matDatepicker]="picker" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="datestartControl.errors?.required"> {{ 'La fecha solicitud es' }} <strong>requerido</strong>  </mat-error>
+    </mat-form-field>
+        </div>
+
+      <div class="form-group col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label i18n="Timepicker 1 Title">Hora Solicitud</mat-label>
+          <input matTimepicker #t1="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
+                 i18n-cancelLabel="Timepicker 1 Cancel Label" cancelLabel="Cancel"   mode="24h" formControlName="horaiT" placeholder="Please select time..."
+                 name="time-1" required>
+          <mat-icon matSuffix (click)="t1.showDialog()">access_time</mat-icon>
+          <mat-error *ngIf="timestartControl.errors?.required"> {{ 'La hora solicitud es' }} <strong>requerido</strong>  </mat-error>
+          <!--<mat-error *ngIf="time1.touched && time1.invalid">Invalid Date</mat-error>-->
+        </mat-form-field>
+      </div>
+      </div>
+
+    <div class="row mb-1">
+        <div class="form-group col-md-6">
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Fecha Realización</mat-label>
+      <!--<input matInput formControlName="fecha" />-->
+      <input matInput formControlName="fecha_finT" [matDatepicker]="picker1" />
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+      <mat-error *ngIf="dateendControl.errors?.required"> {{ 'La fecha realización es' }} <strong>requerido</strong>  </mat-error>
+    </mat-form-field>
+        </div>
+
+      <div class="form-group col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label i18n="Timepicker 1 Title">Hora Realización</mat-label>
+          <input matTimepicker #t2="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
+                 i18n-cancelLabel="Timepicker 1 Cancel Label" cancelLabel="Cancel"   mode="24h" formControlName="horafT" placeholder="Please select time..."
+                 name="time-1" required>
+          <mat-icon matSuffix (click)="t2.showDialog()">access_time</mat-icon>
+          <mat-error *ngIf="timeendControl.errors?.required"> {{ 'La hora realización es' }} <strong>requerido</strong>  </mat-error>
+          <!--<mat-error *ngIf="time1.touched && time1.invalid">Invalid Date</mat-error>-->
+        </mat-form-field>
+      </div>
+      </div>
+
+    <div class="row mb-1">
+
+  <!-- user -->
+
+        <div class="form-group col-md-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>HC</mat-label>
+            <mat-select #mySelect formControlName="hc">
+              <mat-option *ngFor="let st of hc" [value]="st.id">{{ st.numero_hc }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="hcControl.errors?.required"> {{ 'Seleccione un hc' }} </mat-error>
+          </mat-form-field>
+  </div>
+      <div class="form-group col-md-6">
+        <!-- Almacen -->
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Médico Realiza</mat-label>
+          <mat-select #mySelect formControlName="medico_realiza">
+            <mat-option *ngFor="let st of medico_realiza" [value]="st.id">{{ st.username }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="medicReaControl.errors?.required"> {{ 'Seleccione un Médico Realiza' }} </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="row mb-1">
+
+
+
+        <div class="form-group col-md-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Médico Solicita</mat-label>
+            <mat-select #mySelect formControlName="medico_solicita">
+              <mat-option *ngFor="let st of medico_solicita" [value]="st.id">{{ st.username }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="medicSolControl.errors?.required"> {{ 'Seleccione un Médico Solicita' }} </mat-error>
+          </mat-form-field>
+    </div>
+
+
+        <!-- Almacen -->
+
+        <div class="form-group col-md-6">
+          <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Cita</mat-label>
+            <mat-select #mySelect formControlName="cita">
+              <mat-option *ngFor="let st of cita" [value]="st.id">{{ st.numero }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="citaControl.errors?.required"> {{ 'Seleccione una cita' }} </mat-error>
+          </mat-form-field>
+        </div>
+
+    </div>
+
+
+
+    <div class="row mb-1">
+
+
+
+
+      <div class="form-group col-md-6">
+        <!-- Almacen -->
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Enfermedades</mat-label>
+          <mat-select #mySelect formControlName="enfermedades" multiple>
+            <mat-option *ngFor="let st of enfermedades" [value]="st.id">{{ st.nombre }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="enfermedadesControl.errors?.required"> {{ 'Seleccione una enfermedad' }} </mat-error>
+        </mat-form-field>
+      </div>
+      <!-- Estado -->
+
+      <div class="form-group col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+        <mat-label>Departamento</mat-label>
+        <mat-select #mySelect formControlName="departamento">
+          <mat-option *ngFor="let st of departamento" [value]="st.id">{{ st.nombre }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="departamentoControl.errors?.required"> {{ 'Seleccione una departamento' }} </mat-error>
+      </mat-form-field>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="form-group col-md-">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Motivo:</mat-label>
+          <input matInput formControlName="motivo" maxlength="255"/>
+          <mat-error *ngIf="motivoControl.errors?.required"> {{ 'El motivo es' }} <strong>requerido</strong>  </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <!-- [disabled]="!clinicsessionForm.valid"-->
+    <button (click)="onSubmit(clinicsessionForm.value)"  [disabled]="!clinicsessionForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.clinicsession ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>

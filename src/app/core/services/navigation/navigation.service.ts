@@ -243,9 +243,17 @@ export class NavigationService {
               display: true,
             },
             {
+
               displayName: 'Examen Sistema',
               iconName: ['radio_button_unchecked'],
               route: 'system-exam',
+              material: true,
+              display: true,
+            }
+            {
+              displayName: 'Sesión Clínica',
+              iconName: ['swap_vertical_circle'],
+              route: 'clinical-session',
               material: true,
               display: true,
             },
@@ -255,7 +263,23 @@ export class NavigationService {
               route: 'stock-state-appointment',
               material: true,
               display: true,
-            },
+            }, {
+              displayName: 'Indicaciones de Tratamiento',
+              iconName: ['swap_vertical_circle'],
+              route: 'treatment-indications',
+              material: true,
+              display: true,
+
+            }, {
+              displayName: 'Ejecuciones de Tratamiento',
+              iconName: ['swap_vertical_circle'],
+              route: 'treatment-executions',
+              material: true,
+              display: true,
+
+            }
+
+
           ],
           material: true,
           display: true,
@@ -295,13 +319,19 @@ export class NavigationService {
           ],
           material: true,
           display: true,
-        },{
+        }, {
+          displayName: 'Entrevistas',
+          iconName: ['center_focus_strong'],
+          route: 'interview',
+          material: true,
+          display: true,
+        }, {
           displayName: 'Crear Historia Clínica Tabla',
           iconName: ['center_focus_strong'],
           route: 'clinic-history-static',
           material: true,
           display: true,
-          
+
         },
         {
           displayName: 'Núcleo Funcional',
@@ -368,98 +398,98 @@ export class NavigationService {
           material: true,
           display: true,
         },
- /*        {
-          displayName: 'Nomencladores',
-          iconName: ['build'],
-          material: true,
-          children: [
-            {
-              displayName: 'Categoría Científica',
-              iconName: ['radio_button_unchecked'],
-              route: 'cat-science',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Categoría Docente',
-              iconName: ['radio_button_unchecked'],
-              route: 'cat-docent',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Profesión',
-              iconName: ['radio_button_unchecked'],
-              route: 'profession',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Sexo',
-              iconName: ['radio_button_unchecked'],
-              route: 'gender',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Tipo Documento Id',
-              iconName: ['radio_button_unchecked'],
-              route: 'doc-type-id',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Especialidades',
-              iconName: ['radio_button_unchecked'],
-              route: 'specialty',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Estado Civil',
-              iconName: ['radio_button_unchecked'],
-              route: 'civil_status',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Nacionalidad',
-              iconName: ['radio_button_unchecked'],
-              route: 'nationality',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Raza',
-              iconName: ['radio_button_unchecked'],
-              route: 'race',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Países',
-              iconName: ['radio_button_unchecked'],
-              route: 'country',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Provincias',
-              iconName: ['radio_button_unchecked'],
-              route: 'state',
-              material: true,
-              display: true,
-            },
-            {
-              displayName: 'Distritos',
-              iconName: ['radio_button_unchecked'],
-              route: 'municipality',
-              material: true,
-              display: true,
-            },
-          ],
-          display: true,
-        }, */
+        /*        {
+                 displayName: 'Nomencladores',
+                 iconName: ['build'],
+                 material: true,
+                 children: [
+                   {
+                     displayName: 'Categoría Científica',
+                     iconName: ['radio_button_unchecked'],
+                     route: 'cat-science',
+                     material: true,
+                     display: true,
+                   },
+                   {
+                     displayName: 'Categoría Docente',
+                     iconName: ['radio_button_unchecked'],
+                     route: 'cat-docent',
+                     material: true,
+                     display: true,
+                   },
+                   {
+                     displayName: 'Profesión',
+                     iconName: ['radio_button_unchecked'],
+                     route: 'profession',
+                     material: true,
+                     display: true,
+                   },
+                   {
+                     displayName: 'Sexo',
+                     iconName: ['radio_button_unchecked'],
+                     route: 'gender',
+                     material: true,
+                     display: true,
+                   },
+                   {
+                     displayName: 'Tipo Documento Id',
+                     iconName: ['radio_button_unchecked'],
+                     route: 'doc-type-id',
+                     material: true,
+                     display: true,
+                   },
+                   {
+                     displayName: 'Especialidades',
+                     iconName: ['radio_button_unchecked'],
+                     route: 'specialty',
+                     material: true,
+                     display: true,
+                   },
+                   {
+                     displayName: 'Estado Civil',
+                     iconName: ['radio_button_unchecked'],
+                     route: 'civil_status',
+                     material: true,
+                     display: true,
+                   },
+                   {
+                     displayName: 'Nacionalidad',
+                     iconName: ['radio_button_unchecked'],
+                     route: 'nationality',
+                     material: true,
+                     display: true,
+                   },
+                   {
+                     displayName: 'Raza',
+                     iconName: ['radio_button_unchecked'],
+                     route: 'race',
+                     material: true,
+                     display: true,
+                   },
+                   {
+                     displayName: 'Países',
+                     iconName: ['radio_button_unchecked'],
+                     route: 'country',
+                     material: true,
+                     display: true,
+                   },
+                   {
+                     displayName: 'Provincias',
+                     iconName: ['radio_button_unchecked'],
+                     route: 'state',
+                     material: true,
+                     display: true,
+                   },
+                   {
+                     displayName: 'Distritos',
+                     iconName: ['radio_button_unchecked'],
+                     route: 'municipality',
+                     material: true,
+                     display: true,
+                   },
+                 ],
+                 display: true,
+               }, */
       ],
       display: true,
     },

@@ -118,7 +118,7 @@ export class PatientFormComponent implements OnInit {
       motivo_defuncion: [this.patient ? this.patient.motivo_defuncion : null, [Validators.required, Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$')]],
     });
 
-    this.nro_identificacionFormControl.valueChanges
+    /*this.nro_identificacionFormControl.valueChanges
       .pipe(
         debounceTime(3000),
         distinctUntilChanged(),
@@ -136,7 +136,7 @@ export class PatientFormComponent implements OnInit {
             .subscribe();
         }),
       )
-      .subscribe();
+      .subscribe();*/
   }
 
   getFormattedDate(apiDate: string) {

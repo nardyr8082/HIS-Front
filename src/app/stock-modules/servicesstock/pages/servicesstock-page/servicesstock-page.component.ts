@@ -170,6 +170,7 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
       data: {
         servicesstock: null,
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as ServicesstockFormComponent;
@@ -208,6 +209,7 @@ export class ServicesstockPageComponent implements OnInit, OnDestroy {
       data: {
         servicesstock: item,
       },
+      disableClose: true,
     });
     const modalComponentRef = dialogRef.componentInstance as ServicesstockFormComponent;
 

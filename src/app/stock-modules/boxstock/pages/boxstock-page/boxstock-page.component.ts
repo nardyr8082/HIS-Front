@@ -117,6 +117,7 @@ export class BoxstockPageComponent implements OnInit {
       data: {
         boxstock: null,
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as BoxstockFormComponent;
@@ -155,6 +156,7 @@ export class BoxstockPageComponent implements OnInit {
       data: {
         boxstock: item,
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as BoxstockFormComponent;

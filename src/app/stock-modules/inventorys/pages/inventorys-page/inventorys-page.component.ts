@@ -152,6 +152,7 @@ export class InventorysPageComponent implements OnInit, OnDestroy {
       data: {
         inventorys: null,
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as InventorysFormComponent;
@@ -190,6 +191,7 @@ export class InventorysPageComponent implements OnInit, OnDestroy {
       data: {
         inventorys: item,
       },
+      disableClose: true,
     });
     const modalComponentRef = dialogRef.componentInstance as InventorysFormComponent;
 

@@ -216,6 +216,7 @@ export class ExistencePageComponent implements OnInit {
         existence: null,
 
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as ExistenceFormComponent;
@@ -260,6 +261,7 @@ export class ExistencePageComponent implements OnInit {
       data: {
         existence: item,
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as ExistenceFormComponent;

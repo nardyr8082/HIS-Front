@@ -136,6 +136,7 @@ export class PricechangesPageComponent implements OnInit, OnDestroy {
       data: {
         pricechanges: null,
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as PricechangesFormComponent;
@@ -174,6 +175,7 @@ export class PricechangesPageComponent implements OnInit, OnDestroy {
       data: {
         pricechanges: item,
       },
+      disableClose: true,
     });
     const modalComponentRef = dialogRef.componentInstance as PricechangesFormComponent;
 

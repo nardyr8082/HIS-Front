@@ -158,6 +158,7 @@ export class StockPageComponent implements OnInit {
       data: {
         stock: null,
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as StockFormComponent;
@@ -196,6 +197,7 @@ export class StockPageComponent implements OnInit {
       data: {
         stock: item,
       },
+      disableClose: true,
     });
 
     const modalComponentRef = dialogRef.componentInstance as StockFormComponent;

@@ -146,6 +146,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'clinical-session',
+        loadChildren: () => import('./clinical-services/clinicsession/clinicsession.module').then((m) => m.ClinicsessionModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'clinic-history-static',
         loadChildren: () => import('./clinical-services/clinic-history-static/clinic-history-static.module').then((m) => m.ClinicHistoryStaticModule),
         canActivate: [BackendGuard],
@@ -270,7 +275,7 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/classifiers/move-type/move-type.module').then((m) => m.MoveTypeModule),
         canActivate: [BackendGuard],
       },
-       {
+      {
         path: 'lotwarehouse',
         loadChildren: () => import('./stock-modules/warehouse-lot/warehouse-lot.module').then((m) => m.WarehouseLotModule),
         canActivate: [BackendGuard],
@@ -403,7 +408,7 @@ const routes: Routes = [
           import('./stock-modules/warehouse-received-transfer/warehouse-received-transfer.module').then((m) => m.WarehouseReceivedTransferModule),
         canActivate: [BackendGuard],
       },
-      
+
       {
         path: 'batch-distribution',
         loadChildren: () => import('./stock-modules/batch-distribution/batch-distribution.module').then((m) => m.BatchDistributionModule),
@@ -419,6 +424,31 @@ const routes: Routes = [
         loadChildren: () => import('./stock-modules/transfer-emited-stock/transfer-emited-stock.module').then((m) => m.TransferEmitedStockModule),
         canActivate: [BackendGuard],
       },
+      {
+        path: 'treatment-indications',
+        loadChildren: () => import('./clinical-services/treatment-indications/treatment-indications.module').then((m) => m.TreatmentIndicationsModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'treatment-executions',
+        loadChildren: () => import('./clinical-services/treatment-executions/treatment-executions.module').then((m) => m.TreatmentExecutionsModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'moves',
+        loadChildren: () => import('./stock-modules/stock-moves/stock-moves.module').then((m) => m.StockMovesModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'appointment',
+        loadChildren: () => import('./clinical-services/appointment/appointment.module').then((m) => m.AppointmentModule),
+        canActivate: [BackendGuard],
+      },
+      {
+        path: 'interview',
+        loadChildren: () => import('./clinical-services/interview/interview.module').then((m) => m.InterviewModule),
+        canActivate: [BackendGuard],
+      },
     ],
   },
   {
@@ -427,7 +457,7 @@ const routes: Routes = [
   },
 ];
 
-export const routing: ModuleWithProviders<Route> = RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' });
+export const routing: ModuleWithProviders<Route> = RouterModule.forRoot(routes);
 
 @NgModule({
   imports: [routing],

@@ -4,7 +4,7 @@ export interface WarehouseMovementDetail {
   precio?: number;
   importe?: number;
   existencia?: number;
-  movimiento?: string;
-  producto?: string;
-  unidad_medida?: string;
+  movimiento?: any;
+  producto?: any;
+  unidad_medida?: any;
 }

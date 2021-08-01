@@ -2,12 +2,16 @@
   <h4>{{ data.inventorys ? 'Editar Inventario' : 'Crear Inventario' }}</h4>
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="inventorysForm" [formGroup]="inventorysForm">
+    <div class="row mb-1">
+      <div class="form-group col-md-6">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Número:</mat-label>
       <input matInput formControlName="numero" />
       <mat-error *ngIf="numberControl.errors?.required"> {{ 'La número es' }} <strong>requerido</strong>  </mat-error>
    </mat-form-field>
+      </div>
 
+        <div class="form-group col-md-6">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Fecha Inicial:</mat-label>
       <!--<input matInput formControlName="fecha" />-->
@@ -16,7 +20,11 @@
       <mat-datepicker #picker></mat-datepicker>
       <mat-error *ngIf="datestartControl.errors?.required"> {{ 'La fecha inicial es' }} <strong>requerido</strong>  </mat-error>
     </mat-form-field>
+        </div>
+      </div>
 
+    <div class="row mb-1">
+      <div class="form-group col-md-6">
     <mat-form-field appearance="fill">
       <mat-label i18n="Timepicker 1 Title">Hora Inicial</mat-label>
       <input matTimepicker #t1="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
@@ -26,7 +34,9 @@
       <mat-error *ngIf="timestartControl.errors?.required"> {{ 'La hora inicial es' }} <strong>requerido</strong>  </mat-error>
       <!--<mat-error *ngIf="time1.touched && time1.invalid">Invalid Date</mat-error>-->
     </mat-form-field>
+      </div>
 
+        <div class="form-group col-md-6">
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Fecha Fin:</mat-label>
       <!--<input matInput formControlName="fecha" />-->
@@ -35,7 +45,11 @@
       <mat-datepicker #picker1></mat-datepicker>
       <mat-error *ngIf="dateendControl.errors?.required"> {{ 'La fecha inicial es' }} <strong>requerido</strong>  </mat-error>
     </mat-form-field>
+        </div>
+      </div>
 
+    <div class="row mb-1">
+      <div class="form-group col-md-6">
     <mat-form-field appearance="fill">
       <mat-label i18n="Timepicker 1 Title">Hora Fin</mat-label>
       <input matTimepicker #t2="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
@@ -45,9 +59,10 @@
       <mat-error *ngIf="timeendControl.errors?.required"> {{ 'La hora inicial es' }} <strong>requerido</strong>  </mat-error>
       <!--<mat-error *ngIf="time1.touched && time1.invalid">Invalid Date</mat-error>-->
     </mat-form-field>
-
+      </div>
   <!-- user -->
-  <div class="mb-4">
+
+        <div class="form-group col-md-6">
     <ng-select
       appearance="outline"
       class="custom w-100"
@@ -60,8 +75,12 @@
     <small class="text-danger error-style" *ngIf="userControl.errors?.required && userControl.dirty">
       El campo usuario es <strong>requerido</strong></small>
   </div>
+    </div>
+
+
+    <div class="row mb-1">
+      <div class="form-group col-md-6">
    <!-- Almacen -->
-   <div class="mb-4">
     <ng-select
       appearance="outline"
       class="custom w-100"
@@ -75,7 +94,8 @@
       El campo almacén es <strong>requerido</strong></small>
   </div>
     <!-- Estado -->
-    <div class="mb-4">
+
+        <div class="form-group col-md-6">
       <ng-select
         appearance="outline"
         class="custom w-100"
@@ -87,6 +107,7 @@
       </ng-select>
       <small class="text-danger error-style" *ngIf="statusControl.errors?.required && statusControl.dirty">
         El campo estado es <strong>requerido</strong></small>
+    </div>
     </div>
   </form>
   <mat-divider class="my-4"></mat-divider>

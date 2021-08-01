@@ -1,0 +1,98 @@
+<div class="form">
+    <h4>{{ data.appointment ? 'Editar Cita' : 'Crear Cita' }}
+    </h4>
+    <mat-divider class="my-4"></mat-divider>
+    <form *ngIf="appointmentForm" [formGroup]="appointmentForm">
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Número:</mat-label>
+            <input matInput formControlName="numero" />
+        </mat-form-field>
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Fecha</mat-label>
+            <input matInput formControlName="fecha" [matDatepicker]="picker" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label i18n="Timepicker 1 Title">Hora Inicio</mat-label>
+            <input matTimepicker #t1="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
+                i18n-cancelLabel="Timepicker 1 Cancel Label" cancelLabel="Cancel" id="timepicker-example-1" mode="24h"
+                formControlName="hora_inicio" placeholder="Please select time..." name="time-1" required>
+            <mat-icon matSuffix (click)="t1.showDialog()">access_time</mat-icon>
+            <mat-error *ngIf="hora_inicioControl.errors?.required"> {{ 'La hora inicio es' }} <strong>requerido</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label i18n="Timepicker 1 Title">Hora Fin</mat-label>
+            <input matTimepicker #t1="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
+                i18n-cancelLabel="Timepicker 1 Cancel Label" cancelLabel="Cancel" id="timepicker-example-1" mode="24h"
+                formControlName="hora_fin" placeholder="Please select time..." name="time-1" required>
+            <mat-icon matSuffix (click)="t1.showDialog()">access_time</mat-icon>
+            <mat-error *ngIf="hora_finControl.errors?.required"> {{ 'La hora fin es' }} <strong>requerido</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-divider class="my-4"></mat-divider>
+
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Observaciones:</mat-label>
+            <input matInput formControlName="observaciones" />
+        </mat-form-field>
+
+        <div class="mb-4">
+            <ng-select appearance="outline" class="custom w-100" placeholder="Paciente" [items]="paciente"
+                bindLabel="nro_identificacion" bindValue="id" formControlName="paciente">
+            </ng-select>
+            <small class="text-danger error-style" *ngIf="pacienteControl.errors?.required && pacienteControl.dirty">
+                El campo Paciente es <strong>requerido</strong></small>
+        </div>
+
+        <div class="mb-4">
+            <ng-select appearance="outline" class="custom w-100" placeholder="Servicio" [items]="servicesstock"
+                bindLabel="nombre" bindValue="id" formControlName="servicio">
+            </ng-select>
+            <small class="text-danger error-style" *ngIf="servicioControl.errors?.required && servicioControl.dirty">
+                El campo Servicio es <strong>requerido</strong></small>
+        </div>
+
+        <div class="mb-4">
+            <ng-select appearance="outline" class="custom w-100" placeholder="Médico" [items]="user"
+                bindLabel="username" bindValue="id" formControlName="medico">
+            </ng-select>
+            <small class="text-danger error-style" *ngIf="medicoControl.errors?.required && medicoControl.dirty">
+                El campo Médico es <strong>requerido</strong></small>
+        </div>
+
+
+        <div class="mb-4">
+            <ng-select appearance="outline" class="custom w-100" placeholder="Departamento" [items]="departament"
+                bindLabel="nombre" bindValue="id" formControlName="departamento">
+            </ng-select>
+            <small class="text-danger error-style"
+                *ngIf="departamentoControl.errors?.required && departamentoControl.dirty">
+                El campo Departamento es <strong>requerido</strong></small>
+        </div>
+
+        <div class="mb-4">
+            <ng-select appearance="outline" class="custom w-100" placeholder="Estado cita" [items]="stateAppointment"
+                bindLabel="descripcion" bindValue="id" formControlName="estado_cita">
+            </ng-select>
+            <small class="text-danger error-style"
+                *ngIf="estado_citaControl.errors?.required && estado_citaControl.dirty">
+                El campo Estado cita es <strong>requerido</strong></small>
+        </div>
+    </form>
+    <mat-divider class="my-4"></mat-divider>
+    <div class="d-flex align-items-center justify-content-end">
+        <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+        <button (click)="onSubmit(appointmentForm.value)" [disabled]="!appointmentForm.valid" mat-raised-button
+            color="primary" class="button">
+            {{ data.appointment ? 'Aceptar' : 'Crear' }}
+        </button>
+    </div>
+
+</div>
