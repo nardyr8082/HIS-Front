@@ -243,6 +243,13 @@ export class NavigationService {
               display: true,
             },
             {
+              displayName: 'Sesión Clínica',
+              iconName: ['swap_vertical_circle'],
+              route: 'clinical-session',
+              material: true,
+              display: true,
+            },
+            {
               displayName: 'Estado de cita',
               iconName: ['swap_vertical_circle'],
               route: 'stock-state-appointment',
