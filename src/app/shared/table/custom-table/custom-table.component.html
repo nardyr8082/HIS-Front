@@ -35,7 +35,7 @@
       </form>
     </ng-container>
   </ng-container>
-  <button mat-icon-button title="Reiniciar busqueda" (click)="resetFilters()">
+  <button *ngIf="filters.length > 0" mat-icon-button title="Reiniciar busqueda" (click)="resetFilters()">
     <mat-icon>clear</mat-icon>
   </button>
 </div>

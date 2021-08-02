@@ -5,7 +5,7 @@ import { MeasureService } from 'src/app/stock-modules/classifiers/measure/servic
 import { WarehouseProductService } from 'src/app/stock-modules/warehouse-lot/services/warehouse-product.service';
 import { WarehouseMovementDetail } from '../../models/warehouse-movement-detail.model';
 import { WarehouseMovementDetailFormComponent } from '../../components/warehouse-movement-detail-form/warehouse-movement-detail-form.component';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { of, Subscription } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -20,7 +20,7 @@ import { Sort } from '@angular/material/sort';
   templateUrl: './warehouse-movement-detail-page.component.html',
   styleUrls: ['./warehouse-movement-detail-page.component.scss'],
 })
-export class WarehouseMovementDetailPageComponent implements OnInit {
+export class WarehouseMovementDetailPageComponent implements OnInit, OnChanges {
   @Input() displayHeader = true;
   @Input() warehouseMovementDetail: WarehouseMovementDetail[];
   dataCount = 0;
@@ -61,11 +61,14 @@ export class WarehouseMovementDetailPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getWarehouseMovementDetail();
-
     this.getMeasure();
     this.getWarehouseProduct();
   }
+
+  ngOnChanges() {
+    this.getWarehouseMovementDetail();
+  }
+
   ngOnDestroy() {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
@@ -168,6 +171,23 @@ export class WarehouseMovementDetailPageComponent implements OnInit {
         .subscribe();
 
       this.subscriptions.push(sub);
+    } else {
+      this.warehouseMovementDetail = this.warehouseMovementDetail.map((res) => ({
+        ...res,
+        id: res.id,
+        cantidad: res.cantidad,
+        precio: res.precio,
+        importe: res.importe,
+        existencia: res.existencia,
+        movimiento: res.movimiento.comentario,
+        movimiento_id: res.movimiento.id,
+        producto: res.producto.descripcion,
+        producto_id: res.producto.id,
+        unidad_medida: res.unidad_medida.descripcion,
+        unidad_medida_id: res.unidad_medida.id,
+      }));
+
+      this.dataCount = this.warehouseMovementDetail.length;
     }
   }
 

@@ -75,7 +75,7 @@ export class StockMoveService {
     return this.http.get<any>(`${this.apiEndpoint}/${id}/`);
   }
 
-  createStockMove(data: StockMove): Observable<StockMove> {
+  createStockMove(data): Observable<StockMove> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 

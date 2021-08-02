@@ -17,11 +17,10 @@ import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
 
-
 @Component({
   selector: 'app-appointment-page',
   templateUrl: './appointment-page.component.html',
-  styleUrls: ['./appointment-page.component.scss']
+  styleUrls: ['./appointment-page.component.scss'],
 })
 export class AppointmentPageComponent implements OnInit {
   appointment: Appointment[];
@@ -65,14 +64,12 @@ export class AppointmentPageComponent implements OnInit {
     private servicesstockService: ServicesstockService,
     private stateAppointmentService: StateAppointmentService,
     private toastService: ToastrService,
-
   ) {
     this.putUser();
     this.putDepartament();
     this.putPatient();
     this.putServicesstock();
     this.putStateAppointment();
-
   }
 
   ngOnInit(): void {
@@ -83,14 +80,14 @@ export class AppointmentPageComponent implements OnInit {
     this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
-
   putUser(filters = {}) {
     const sub = this.userService
       .getUsers(filters, 'descripcion', 'asc', 1, 10000)
       .pipe(
         map((response) => {
           this.configuration.tableFilters[7].items = response.results.map((res) => ({ id: res.id, name: res.username }));
-        }))
+        }),
+      )
       .subscribe();
     this.subscriptions.push(sub);
   }
@@ -101,7 +98,8 @@ export class AppointmentPageComponent implements OnInit {
       .pipe(
         map((response) => {
           this.configuration.tableFilters[8].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
-        }))
+        }),
+      )
       .subscribe();
     this.subscriptions.push(sub);
   }
@@ -112,7 +110,8 @@ export class AppointmentPageComponent implements OnInit {
       .pipe(
         map((response) => {
           this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id, name: res.nro_identificacion }));
-        }))
+        }),
+      )
       .subscribe();
     this.subscriptions.push(sub);
   }
@@ -123,7 +122,8 @@ export class AppointmentPageComponent implements OnInit {
       .pipe(
         map((response) => {
           this.configuration.tableFilters[6].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
-        }))
+        }),
+      )
       .subscribe();
     this.subscriptions.push(sub);
   }
@@ -134,11 +134,11 @@ export class AppointmentPageComponent implements OnInit {
       .pipe(
         map((response) => {
           this.configuration.tableFilters[9].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
-        }))
+        }),
+      )
       .subscribe();
     this.subscriptions.push(sub);
   }
-
 
   getAppointment(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
@@ -146,7 +146,6 @@ export class AppointmentPageComponent implements OnInit {
       .getAppointment(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
-          console.log(response.results);
           this.appointment = response.results.map((res) => ({
             ...res,
             id: res.id,
@@ -166,7 +165,7 @@ export class AppointmentPageComponent implements OnInit {
             departamento: res.departamento.nombre,
             id_departamento: res.departamento.id,
             estado_cita: res.estado_cita.descripcion,
-            id_estado_cita: res.estado_cita.id
+            id_estado_cita: res.estado_cita.id,
           }));
           this.dataCount = response.count;
           this.loading = false;
@@ -176,14 +175,13 @@ export class AppointmentPageComponent implements OnInit {
           this.toastService.error('Hubo un error al obtener los datos. Por favor, inténtelo de nuevo más tarde.', 'Error');
           this.loading = false;
           return null;
-        })
+        }),
       )
 
       .subscribe();
 
     this.subscriptions.push(sub);
   }
-
 
   onChangePage(page: PageEvent) {
     this.page = page.pageIndex + 1;
@@ -206,13 +204,12 @@ export class AppointmentPageComponent implements OnInit {
       maxHeight: '100vh',
       width: '100%',
       data: {
-
         appointment: null,
         user: null,
         patient: null,
         servicesstock: null,
         departament: null,
-        stateAppointment: null
+        stateAppointment: null,
       },
     });
 
@@ -220,8 +217,6 @@ export class AppointmentPageComponent implements OnInit {
 
     const sub = modalComponentRef.create
       .pipe(
-
-
         switchMap((Appointment: Appointment) =>
           this.appointmentService.createAppointment(Appointment).pipe(
             catchError(() => {
@@ -234,7 +229,6 @@ export class AppointmentPageComponent implements OnInit {
                 this.getAppointment(this.filters, 'id', 'desc', this.page, this.pageSize);
 
                 this.toastService.success('La Cita  fue creada correctamente.', 'Felicidades');
-
               }
             }),
           ),
@@ -246,7 +240,6 @@ export class AppointmentPageComponent implements OnInit {
   }
 
   openEditForm(item) {
-
     let dialogRef: MatDialogRef<AppointmentFormComponent, any>;
 
     dialogRef = this.dialog.open(AppointmentFormComponent, {
@@ -261,7 +254,7 @@ export class AppointmentPageComponent implements OnInit {
         patient: item,
         servicesstock: item,
         departament: item,
-        stateAppointment: item
+        stateAppointment: item,
       },
     });
 
@@ -269,7 +262,6 @@ export class AppointmentPageComponent implements OnInit {
 
     const sub = modalComponentRef.edit
       .pipe(
-
         switchMap((Appointment: Appointment) =>
           this.appointmentService.editAppointment({ ...Appointment, id: item.id }).pipe(
             catchError(() => {
@@ -282,7 +274,6 @@ export class AppointmentPageComponent implements OnInit {
                 this.getAppointment(this.filters, 'id', 'desc', this.page, this.pageSize);
 
                 this.toastService.success('La Cita fue  modificadas correctamente.', 'Felicidades');
-
               }
             }),
           ),
@@ -306,7 +297,6 @@ export class AppointmentPageComponent implements OnInit {
           this.appointmentService.deleteAppointment(item.id).pipe(
             map(() => item),
             catchError(() => {
-
               this.toastService.error('Hubo un error al eliminar la Cita . Por favor, inténtelo de nuevo más tarde.', 'Error');
 
               modalRef.close();
@@ -331,8 +321,6 @@ export class AppointmentPageComponent implements OnInit {
   }
 
   onChangeSort(sort: Sort) {
-
     this.getAppointment(this.filters, sort.active, sort.direction);
   }
-
 }
