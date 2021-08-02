@@ -2,53 +2,52 @@
   <h4>{{ data.inventoryCount ? 'Editar Conteo de Inventario' : 'Crear Conteo de Inventario' }}</h4>
   <mat-divider class="my-4"></mat-divider>
   <form *ngIf="inventoryCountForm" [formGroup]="inventoryCountForm">
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Cantidad Real:</mat-label>
-      <input matInput formControlName="conteo_cant_real" />
-   </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Cantidad Máquina:</mat-label>
-      <input matInput formControlName="cantidad_maquina" />
-      <mat-error *ngIf="this.cantMaquinaControl.errors?.required"> {{ 'La cantidad en máquina es' }} <strong>requerido</strong>  </mat-error>
-    </mat-form-field>
+    <div class="row mb-1">
+      <div class="form-group col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Cantidad Real:</mat-label>
+          <input matInput formControlName="conteo_cant_real" />
+        </mat-form-field>
+      </div>
+      <div class="form-group col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Cantidad Máquina:</mat-label>
+          <input matInput formControlName="cantidad_maquina" />
+          <mat-error *ngIf="this.cantMaquinaControl.errors?.required"> {{ 'La cantidad en máquina es' }}
+            <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Importe Máquina:</mat-label>
       <input matInput formControlName="importe_maquina" />
-      <mat-error *ngIf="this.importMaquinaControl.errors?.required"> {{ 'El importe en máquina es' }} <strong>requerido</strong>  </mat-error>
+      <mat-error *ngIf="this.importMaquinaControl.errors?.required"> {{ 'El importe en máquina es' }}
+        <strong>requerido</strong>
+      </mat-error>
     </mat-form-field>
-  <!-- Inventario -->
-  <div class="mb-4">
-    <ng-select
-      appearance="outline"
-      class="custom w-100"
-      placeholder="Inventario"
-      [items]="inventario"
-      bindLabel="numero"
-      bindValue="id"
-      formControlName="inventario">
-    </ng-select>
-    <small class="text-danger error-style" *ngIf="inventarioControl.errors?.required && inventarioControl.dirty">
-      El campo inventario es <strong>requerido</strong></small>
-  </div>
-   <!-- Existencia -->
-   <div class="mb-4">
-    <ng-select
-      appearance="outline"
-      class="custom w-100"
-      placeholder="Existencia"
-      [items]="existencia"
-      bindLabel="cantidad"
-      bindValue="id"
-      formControlName="existencia">
-    </ng-select>
-    <small class="text-danger error-style" *ngIf="existenciaControl.errors?.required && existenciaControl.dirty">
-      El campo existencia es <strong>requerido</strong></small>
-  </div>
+    <!-- Inventario -->
+    <div class="mb-4">
+      <ng-select appearance="outline" class="custom w-100" placeholder="Inventario" [items]="inventario"
+        bindLabel="numero" bindValue="id" formControlName="inventario">
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="inventarioControl.errors?.required && inventarioControl.dirty">
+        El campo inventario es <strong>requerido</strong></small>
+    </div>
+    <!-- Existencia -->
+    <div class="mb-4">
+      <ng-select appearance="outline" class="custom w-100" placeholder="Existencia" [items]="existencia"
+        bindLabel="cantidad" bindValue="id" formControlName="existencia">
+      </ng-select>
+      <small class="text-danger error-style" *ngIf="existenciaControl.errors?.required && existenciaControl.dirty">
+        El campo existencia es <strong>requerido</strong></small>
+    </div>
   </form>
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
-    <button (click)="onSubmit(inventoryCountForm.value)" [disabled]="!inventoryCountForm.valid" mat-raised-button color="primary" class="button">
+    <button (click)="onSubmit(inventoryCountForm.value)" [disabled]="!inventoryCountForm.valid" mat-raised-button
+      color="primary" class="button">
       {{ data.inventoryCount ? 'Aceptar' : 'Crear' }}
     </button>
   </div>

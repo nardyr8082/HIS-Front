@@ -15,27 +15,35 @@
       </mat-select>
       <mat-error *ngIf="tipoControl.errors?.required"> {{ 'Seleccione un tipo de recurso' }} </mat-error>
     </mat-form-field>
-
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Marca</mat-label>
-      <input matInput formControlName="marca" />
-      <mat-error *ngIf="marcaControl.errors?.required"> {{ 'La marca es' }} <strong>requerido</strong> </mat-error>
-    </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Modelo</mat-label>
-      <input matInput formControlName="modelo" />
-      <mat-error *ngIf="modeloControl.errors?.required"> {{ 'El modelo es' }} <strong>requerido</strong> </mat-error>
-    </mat-form-field>
+    <div class="row mb-1">
+      <div class="form-group col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Marca</mat-label>
+          <input matInput formControlName="marca" />
+          <mat-error *ngIf="marcaControl.errors?.required"> {{ 'La marca es' }} <strong>requerido</strong> </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-group col-md-6">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Modelo</mat-label>
+          <input matInput formControlName="modelo" />
+          <mat-error *ngIf="modeloControl.errors?.required"> {{ 'El modelo es' }} <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Numero Serie</mat-label>
       <input matInput formControlName="numero_serie" />
-      <mat-error *ngIf="numeroSerieControl.errors?.required"> {{ 'El numero serie es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="numeroSerieControl.errors?.required"> {{ 'El numero serie es' }} <strong>requerido</strong>
+      </mat-error>
     </mat-form-field>
   </form>
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
-    <button (click)="onSubmit(clasificatorForm.value)" [disabled]="!clasificatorForm.valid" mat-raised-button color="primary" class="button">
+    <button (click)="onSubmit(clasificatorForm.value)" [disabled]="!clasificatorForm.valid" mat-raised-button
+      color="primary" class="button">
       {{ data.clasificator ? 'Aceptar' : 'Crear' }}
     </button>
   </div>

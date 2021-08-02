@@ -6,89 +6,104 @@
       <mat-label>Nombre:</mat-label>
       <input matInput formControlName="nombre" maxlength="2147483647" />
       <mat-error *ngIf="this.nameControl.errors?.required"> {{ 'El nombre es' }} <strong>requerido</strong> </mat-error>
-      <mat-error *ngIf="this.nameControl.errors?.pattern"> {{ 'El nombre solo permite' }} <strong>números</strong> </mat-error>
+      <mat-error *ngIf="this.nameControl.errors?.pattern"> {{ 'El nombre solo permite' }} <strong>números</strong>
+      </mat-error>
     </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Especificidad:</mat-label>
-      <input matInput formControlName="especificidad" />
-    </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Variables:</mat-label>
-      <input matInput formControlName="variables" />
-    </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Objetivo:</mat-label>
-      <input matInput formControlName="objetivo" />
-    </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Fórmulas de Cálculo:</mat-label>
-      <input matInput formControlName="formula_de_calculo" />
-    </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Interpretación:</mat-label>
-      <input matInput formControlName="interpretacion" />
-    </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Desgloce Específico:</mat-label>
-      <input matInput formControlName="desglose_especifico" />
-    </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Método Medición:</mat-label>
-      <input matInput formControlName="metodo_medicion" />
-    </mat-form-field>
-    <mat-form-field class="w-100" appearance="outline">
-      <mat-label>Fuente Indicador:</mat-label>
-      <input matInput formControlName="fuente_indicador" />
-    </mat-form-field>
-   <!-- subcategoria -->
-   <div class="mb-4">
-    <ng-select
-      appearance="outline"
-      class="custom w-100"
-      placeholder="Subcategoria"
-      [items]="subcategories"
-      bindLabel="descripcion"
-      bindValue="id"
-      formControlName="subcategoria"
-    >
-    </ng-select>
-    <small class="text-danger error-style" *ngIf="subcategoriaControl.errors?.required && frecuenciaControl.dirty"
-      >El campo categoría es <strong>requerido</strong></small
-    >
-  </div>
-   <!-- tipo indicador -->
-   <div class="mb-4">
-    <ng-select
-      appearance="outline"
-      class="custom w-100"
-      placeholder="Tipo Indicador"
-      [items]="indicatorTypes"
-      bindLabel="descripcion"
-      bindValue="id"
-      formControlName="tipo_indicador">
-    </ng-select>
-    <small class="text-danger error-style" *ngIf="tipoIndicadorControl.errors?.required && frecuenciaControl.dirty">
-      El campo tipo indicador es <strong>requerido</strong></small>
-  </div>
-   <!-- frecuencia -->
-   <div class="mb-4">
-    <ng-select
-      appearance="outline"
-      class="custom w-100"
-      placeholder="Frecuencia"
-      [items]="frequencys"
-      bindLabel="descripcion"
-      bindValue="id"
-      formControlName="frecuencia">
-    </ng-select>
-    <small class="text-danger error-style" *ngIf="frecuenciaControl.errors?.required && frecuenciaControl.dirty">
-      El campo frecuencia es <strong>requerido</strong></small>
-  </div>
+    <div class="row mb-1">
+      <div class="form-group col-md-4">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Especificidad:</mat-label>
+          <input matInput formControlName="especificidad" />
+        </mat-form-field>
+      </div>
+      <div class="form-group col-md-4">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Variables:</mat-label>
+          <input matInput formControlName="variables" />
+        </mat-form-field>
+      </div>
+      <div class="form-group col-md-4">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Objetivo:</mat-label>
+          <input matInput formControlName="objetivo" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row mb-1">
+      <div class="form-group col-md-4">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Fórmulas de Cálculo:</mat-label>
+          <input matInput formControlName="formula_de_calculo" />
+        </mat-form-field>
+      </div>
+      <div class="form-group col-md-4">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Interpretación:</mat-label>
+          <input matInput formControlName="interpretacion" />
+        </mat-form-field>
+      </div>
+      <div class="form-group col-md-4">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Desgloce Específico:</mat-label>
+          <input matInput formControlName="desglose_especifico" />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row mb-1">
+      <div class="form-group col-md-4">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Método Medición:</mat-label>
+          <input matInput formControlName="metodo_medicion" />
+        </mat-form-field>
+      </div>
+      <div class="form-group col-md-4">
+        <mat-form-field class="w-100" appearance="outline">
+          <mat-label>Fuente Indicador:</mat-label>
+          <input matInput formControlName="fuente_indicador" />
+        </mat-form-field>
+      </div>
+      <!-- subcategoria -->
+      <div class="form-group col-md-4">
+        <div class="mb-4">
+          <ng-select appearance="outline" class="custom w-100" placeholder="Subcategoria" [items]="subcategories"
+            bindLabel="descripcion" bindValue="id" formControlName="subcategoria">
+          </ng-select>
+          <small class="text-danger error-style"
+            *ngIf="subcategoriaControl.errors?.required && frecuenciaControl.dirty">El campo categoría es
+            <strong>requerido</strong></small>
+        </div>
+      </div>
+    </div>
+    <!-- tipo indicador -->
+    <div class="row mb-1">
+      <div class="form-group col-md-6">
+        <div class="mb-4">
+          <ng-select appearance="outline" class="custom w-100" placeholder="Tipo Indicador" [items]="indicatorTypes"
+            bindLabel="descripcion" bindValue="id" formControlName="tipo_indicador">
+          </ng-select>
+          <small class="text-danger error-style"
+            *ngIf="tipoIndicadorControl.errors?.required && frecuenciaControl.dirty">
+            El campo tipo indicador es <strong>requerido</strong></small>
+        </div>
+      </div>
+      <!-- frecuencia -->
+      <div class="form-group col-md-6">
+        <div class="mb-4">
+          <ng-select appearance="outline" class="custom w-100" placeholder="Frecuencia" [items]="frequencys"
+            bindLabel="descripcion" bindValue="id" formControlName="frecuencia">
+          </ng-select>
+          <small class="text-danger error-style" *ngIf="frecuenciaControl.errors?.required && frecuenciaControl.dirty">
+            El campo frecuencia es <strong>requerido</strong></small>
+        </div>
+      </div>
+    </div>
   </form>
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
-    <button (click)="onSubmit(indicatorForm.value)" [disabled]="!indicatorForm.valid" mat-raised-button color="primary" class="button">
+    <button (click)="onSubmit(indicatorForm.value)" [disabled]="!indicatorForm.valid" mat-raised-button color="primary"
+      class="button">
       {{ data.indicator ? 'Aceptar' : 'Crear' }}
     </button>
   </div>
