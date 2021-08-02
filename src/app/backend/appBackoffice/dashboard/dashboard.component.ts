@@ -21,6 +21,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.dashboardService.getDashboardData().subscribe((resp) => {
       this.data = resp.dataCount;
+      this.dataCount = resp.count;
     });
   }
 
