@@ -236,9 +236,16 @@ export class NavigationService {
               display: true,
             },
             {
-              displayName: 'Examén Físico',
+              displayName: 'Examen Físico',
               iconName: ['radio_button_unchecked'],
               route: 'clinic-test',
+              material: true,
+              display: true,
+            },
+            {
+              displayName: 'Examen Sistema',
+              iconName: ['radio_button_unchecked'],
+              route: 'system-exam',
               material: true,
               display: true,
             },
@@ -251,27 +258,25 @@ export class NavigationService {
             },
             {
               displayName: 'Estado de cita',
-              iconName: ['swap_vertical_circle'],
+              iconName: ['radio_button_unchecked'],
               route: 'stock-state-appointment',
               material: true,
               display: true,
-            }, {
+            },
+            {
               displayName: 'Indicaciones de Tratamiento',
               iconName: ['swap_vertical_circle'],
               route: 'treatment-indications',
               material: true,
               display: true,
-
-            }, {
+            },
+            {
               displayName: 'Ejecuciones de Tratamiento',
               iconName: ['swap_vertical_circle'],
               route: 'treatment-executions',
               material: true,
               display: true,
-
-            }
-
-
+            },
           ],
           material: true,
           display: true,
@@ -311,19 +316,20 @@ export class NavigationService {
           ],
           material: true,
           display: true,
-        }, {
+        },
+        {
           displayName: 'Entrevistas',
           iconName: ['center_focus_strong'],
           route: 'interview',
           material: true,
           display: true,
-        }, {
+        },
+        {
           displayName: 'Crear Historia Clínica Tabla',
           iconName: ['center_focus_strong'],
           route: 'clinic-history-static',
           material: true,
           display: true,
-
         },
         {
           displayName: 'Núcleo Funcional',
@@ -606,11 +612,18 @@ export class NavigationService {
       material: true,
       children: [
         {
+          displayName: 'Movimientos',
+          iconName: ['swap_vertical_circle'],
+          route: 'moves',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Lote',
           iconName: ['swap_vertical_circle'],
           route: 'lotwarehouse',
           material: true,
-          display: true
+          display: true,
         },
         {
           displayName: 'Existencia',

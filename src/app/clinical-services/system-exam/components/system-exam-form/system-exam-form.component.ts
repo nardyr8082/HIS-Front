@@ -9,35 +9,50 @@ import { SystemExamService } from '../../services/system-exam.service';
 import { SystemExam } from '../../models/system-exam.model';
 
 @Component({
-  selector: 'app-subcategory-form',
-  templateUrl: './subcategory-form.component.html',
-  styleUrls: ['./subcategory-form.component.scss'],
+  selector: 'app-system-examn-form',
+  templateUrl: './system-exam-form.component.html',
+  styleUrls: ['./system-exam-form.component.scss'],
 })
 export class SystemExamFormComponent implements OnInit, OnDestroy {
   @Output() create: EventEmitter<any> = new EventEmitter();
   @Output() edit: EventEmitter<any> = new EventEmitter();
 
-  subcategoryForm: FormGroup;
-  category: any = [];
+  systemExamForm: FormGroup;
+  fisicExam: any = [];
+  system: any = [];
   subscriptions: Subscription[] = [];
 
-  constructor(public subcategoryService: SystemExamService, public dialogRef: MatDialogRef<SystemExamFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(public systemExamService: SystemExamService, public dialogRef: MatDialogRef<SystemExamFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.buildForm();
-    this.getCategory();
+    this.getFisicExam();
+    this.getSystem();
 
   }
 
   ngOnDestroy() {
     this.subscriptions;
   }
-  getCategory() {
-    const sub = this.subcategoryService
-      .getCategory()
+  getFisicExam() {
+    const sub = this.systemExamService
+      .getFisicExam()
       .pipe(
         map((response: ApiResponse<any>) => {
-          this.category = response.results;
+          this.fisicExam = response.results;
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getSystem() {
+    const sub = this.systemExamService
+      .getSystem()
+      .pipe(
+        map((response: ApiResponse<any>) => {
+          this.system = response.results;
         }),
       )
       .subscribe();
@@ -46,18 +61,27 @@ export class SystemExamFormComponent implements OnInit, OnDestroy {
   }
 
   buildForm() {
-    this.subcategoryForm = new FormGroup({
-      descripcion: new FormControl(this.data.subcategory ? this.data.subcategory.descripcion : '',[ Validators.required,  Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$') ]),
-      categoria: new FormControl(this.data.subcategory ? this.data.subcategory.categoria_id : '', Validators.required),
+    this.systemExamForm = new FormGroup({
+      observacion: new FormControl(this.data.systemExam ? this.data.systemExam.observacion : '',[ Validators.required,  Validators.pattern('^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$') ]),
+      examen_fisico: new FormControl(this.data.systemExam ? this.data.systemExam.examen_fisico_id : '', Validators.required),
+      sistema: new FormControl(this.data.systemExam ? this.data.systemExam.sistema_id : '', Validators.required),
     });
   }
 
   get nameSystemExamControl() {
-    return this.subcategoryForm?.get('descripcion') as FormControl;
+    return this.systemExamForm?.get('observacion') as FormControl;
+  }
+
+  get fisicExamControl() {
+    return this.systemExamForm?.get('examen_fisico') as FormControl;
+  }
+
+  get systemControl() {
+    return this.systemExamForm?.get('sistema') as FormControl;
   }
 
   onSubmit(data) {
-    this.data.subcategory ? this.edit.emit(data) : this.create.emit(data);
+    this.data.systemExam ? this.edit.emit(data) : this.create.emit(data);
     this.dialogRef.close();
   }
 

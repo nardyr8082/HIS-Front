@@ -89,7 +89,7 @@ export class WarehouseLotPageComponent implements OnInit {
       .getWarehouseLot(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
-          console.log(response.results);
+         
           this.warehouseLot = response.results.map((res) => ({
             ...res,
             id: res.id,

@@ -104,19 +104,19 @@ export class WarehouseMovementDetailService {
     return this.http.get<any>(this.apiEndpoint).pipe(
       map((res) => {
         let prueba = [];
-        if ( id !== undefined && id !== null) {
+        if (id !== undefined && id !== null) {
           prueba = res.results.filter((valores) => (valores.id === id && valores.movimiento['id'] === mov && valores.producto['id'] === idPro));
-          if (prueba.length === 1){
-            console.log('NO EXISTE 1');
+          if (prueba.length === 1) {
+
             return { isAvailable: false };
           }
         }
-        const  miarre = res.results.filter((valores) => (valores.movimiento['id'] === mov && valores.producto['id'] === idPro));
+        const miarre = res.results.filter((valores) => (valores.movimiento['id'] === mov && valores.producto['id'] === idPro));
         if (miarre.length == 0) {
-          console.log('NO EXISTE 2');
+
           return { isAvailable: false };
         }
-        console.log('Segundo ', miarre);
+
         return { isAvailable: true };
       }),
     );

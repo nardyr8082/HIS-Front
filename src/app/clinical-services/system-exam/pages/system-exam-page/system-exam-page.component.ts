@@ -11,6 +11,7 @@ import { SystemExamFormComponent } from '../../components/system-exam-form/syste
 import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from '../../../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { Sort } from '@angular/material/sort';
+import { PhysicalexamService } from '../../../physicalexam/services/physicalexam.service'
 
 @Component({
   selector: 'app-system-exam-page',
@@ -19,6 +20,8 @@ import { Sort } from '@angular/material/sort';
 })
 export class SystemExamPageComponent implements OnInit, OnDestroy {
   systemExam: SystemExam[];
+  fisicExam: any = [];
+  fisic: any = [];
   dataCount = 0;
   configuration = SYSTEM_EXAM_TABLE_CONFIGURATION;
   subscriptions: Subscription[] = [];
@@ -47,9 +50,12 @@ export class SystemExamPageComponent implements OnInit, OnDestroy {
   constructor(
     private systemExamService: SystemExamService,
     private toastService: ToastrService,
+    private fisicExamService: PhysicalexamService,
     public dialog: MatDialog,
   ) {
     this.getFisicExam();
+    this.getSystem();
+  
   }
 
   ngOnInit(): void {
@@ -61,11 +67,11 @@ export class SystemExamPageComponent implements OnInit, OnDestroy {
   }
 
   getFisicExam(filters = {}) {
-    const sub = this.systemExamService
-      .getFisicExam()
+    const sub = this.fisicExamService
+      .getPhysicalexam({}, 'id', 'asc', 1, 1000)
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.impresion_general }));
         }),
       )
       .subscribe();
@@ -78,8 +84,20 @@ export class SystemExamPageComponent implements OnInit, OnDestroy {
       .getSystem()
       .pipe(
         map((response) => {
-          this.configuration.tableFilters[1].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
+          this.configuration.tableFilters[2].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
         }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  getFisicExamEdit(filters = {}) {
+    const sub = this.fisicExamService
+      .getPhysicalexam({}, 'id', 'asc', 1, 1000)
+      .pipe(
+        map((response) => {
+          this.fisicExam = response.results; }),
       )
       .subscribe();
 
@@ -92,11 +110,13 @@ export class SystemExamPageComponent implements OnInit, OnDestroy {
       .getSystemExam(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
-          this.systemExam = response.results.map((resp) => {
-            const categoria = resp.categoria ? resp.categoria.descripcion : '';
-            const categoria_id = resp.categoria ? resp.categoria.id : '';
-            return { ...resp, categoria: categoria, categoria_id: categoria_id };
-          });
+          this.systemExam = response.results.map((res) => ({
+            ...res,
+            examen_fisico_string: res.examen_fisico.impresion_general,
+            examen_fisico_id:res.examen_fisico.id,
+            sistema_id: res.sistema.id,
+            sistema_string: res.sistema.descripcion,
+          }));
           this.dataCount = response.count;
           this.loading = false;
         }),
@@ -173,6 +193,8 @@ export class SystemExamPageComponent implements OnInit, OnDestroy {
         systemExam: item,
       },
     });
+    this.getFisicExamEdit({id:item.examen_fisico.id});
+    console.log(this.fisicExam);
     const modalComponentRef = dialogRef.componentInstance as SystemExamFormComponent;
 
     const sub = modalComponentRef.edit

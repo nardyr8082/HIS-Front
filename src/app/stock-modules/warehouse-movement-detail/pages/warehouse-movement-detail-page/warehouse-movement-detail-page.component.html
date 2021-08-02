@@ -10,7 +10,7 @@
     [displayedColumns]="configuration.displayedColumns"
     [columnsName]="configuration.columnsName"
     [paginationSize]="configuration.paginationSize"
-    [filters]="configuration.tableFilters"
+    [filters]="displayHeader ? configuration.tableFilters : []"
     [rowActionButtons]="rowActionButtons"
     [loading]="loading"
     (changePage)="onChangePage($event)"

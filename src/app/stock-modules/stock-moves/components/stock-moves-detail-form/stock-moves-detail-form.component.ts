@@ -165,7 +165,7 @@ export class StockMovesDetailFormComponent implements OnInit, OnDestroy, OnChang
       .pipe(
         map(() => {
           this.toastService.success('El Detalle Movimiento fue creado correctamente.', 'Felicidades');
-          this.buildForm();
+          this.clearValuesForm();
           this.create.emit(null);
         }),
         catchError(() => {
@@ -175,5 +175,12 @@ export class StockMovesDetailFormComponent implements OnInit, OnDestroy, OnChang
       )
       .subscribe();
     this.subscriptions.push(sub);
+  }
+
+  clearValuesForm() {
+    Object.keys(this.stockDetailMoveForm.controls).forEach((key) => {
+      this.stockDetailMoveForm.controls[key].setValue(null);
+      this.stockDetailMoveForm.controls[key].markAsUntouched();
+    });
   }
 }

@@ -107,7 +107,7 @@ export class FactureServicePageComponent implements OnInit, OnDestroy {
             estado_descrip: res.estado.descripcion,
             comercial_id:res.comercial.id,
             servicio_id: res.servicio.id,
-            servicio_string: res.servicio.id,
+            servicio_string: res.servicio.nombre,
           }));
           this.dataCount = response.count;
           this.loading = false;

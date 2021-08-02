@@ -72,24 +72,4 @@ export class StockMovesItemComponent implements OnInit, OnDestroy {
   getMoveTypes() {
     this.moveTypes$ = this.moveTypeService.getMoveTypes({}, 'id', 'asc', 1, 10000).pipe(map((response) => response.results));
   }
-
-  onEdit($event) {}
-
-  onCreate(data) {
-    const sub = this.stockMoveService
-      .createStockMove(data)
-      .pipe(
-        map((response) => {
-          this.stockMove = response;
-          this.toastrService.success('El movimiento se ha guardado correctamente');
-        }),
-        catchError(() => {
-          this.toastrService.error('Hubo algún error guardadno el movimiento.', 'Error');
-          return of(null);
-        }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
 }

@@ -16,11 +16,10 @@ import { PatientService } from 'src/app/patient/services/patient.service';
 import { ServicesstockService } from 'src/app/stock-modules/servicesstock/services/servicesstock.service';
 import { StateAppointmentService } from 'src/app/stock-modules/stock-state-appointment/services/stock-state-appointment.service';
 
-
 @Component({
   selector: 'app-appointment-form',
   templateUrl: './appointment-form.component.html',
-  styleUrls: ['./appointment-form.component.scss']
+  styleUrls: ['./appointment-form.component.scss'],
 })
 export class AppointmentFormComponent implements OnInit {
   @Output() create: EventEmitter<any> = new EventEmitter();
@@ -44,8 +43,8 @@ export class AppointmentFormComponent implements OnInit {
     private stateAppointmentService: StateAppointmentService,
     public dialogRef: MatDialogRef<AppointmentFormComponent>,
     private toastrService: ToastrService,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -126,7 +125,6 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   buildForm() {
-    console.log(this.data);
     const fecha = this.data.appointment ? this.getFormattedDate(this.data.appointment.fecha) : '';
     const hora_inicio = this.data.appointment ? this.getFormattedHora(this.data.appointment.fecha_hora_I) : '';
     const hora_fin = this.data.appointment ? this.getFormattedHora(this.data.appointment.fecha_hora_F) : '';
@@ -140,9 +138,8 @@ export class AppointmentFormComponent implements OnInit {
       medico: new FormControl(this.data.appointment ? this.data.appointment.id_medico : '', Validators.required),
       servicio: new FormControl(this.data.appointment ? this.data.appointment.id_servicio : '', Validators.required),
       departamento: new FormControl(this.data.appointment ? this.data.appointment.id_departamento : '', Validators.required),
-      estado_cita: new FormControl(this.data.appointment ? this.data.appointment.id_estado_cita : '', Validators.required)
+      estado_cita: new FormControl(this.data.appointment ? this.data.appointment.id_estado_cita : '', Validators.required),
     });
-    console.log(this.appointmentForm);
   }
 
   get numeroControl() {
@@ -181,24 +178,20 @@ export class AppointmentFormComponent implements OnInit {
     return this.appointmentForm?.get('estado_cita') as FormControl;
   }
 
-
   getFormattedDate(apiDate: string) {
     const arrayDate = apiDate.split('-');
     return new Date(parseInt(arrayDate[0]), parseInt(arrayDate[1]) - 1, parseInt(arrayDate[2]));
   }
   getFormattedHora(apiDate: string) {
-    if (apiDate.indexOf('Z') !== -1)
-      apiDate = apiDate.substring(0, apiDate.length - 1);
+    if (apiDate.indexOf('Z') !== -1) apiDate = apiDate.substring(0, apiDate.length - 1);
     return new Date(apiDate);
   }
 
   sendData() {
     if (this.appointmentForm.valid) {
-
       const appointment = this.appointmentForm.value;
       const dateFormat = moment(appointment.fecha);
       appointment.fecha = dateFormat.format('yyyy-MM-DD');
-
 
       this.data.appointmentForm ? this.edit.emit(appointment) : this.create.emit(appointment);
       this.dialogRef.close();
@@ -207,9 +200,7 @@ export class AppointmentFormComponent implements OnInit {
     }
   }
 
-
   onSubmit(data) {
-
     let valores = {};
     let fecha = data['fecha'].toString();
     let hora_inicio = data['hora_inicio'].toString();
@@ -217,7 +208,6 @@ export class AppointmentFormComponent implements OnInit {
     let formateadaFecha = fecha.split(' ');
     let formateadaHora = hora_inicio.split(' ');
     let formateadaHoraF = hora_fin.split(' ');
-
 
     if (this.data.appointmentForm === null || formateadaFecha.length > 0) {
       const midateFecha = formateadaFecha[3] + '-' + this.ChangesMonth(formateadaFecha[1]) + '-' + formateadaFecha[2];
@@ -239,7 +229,6 @@ export class AppointmentFormComponent implements OnInit {
       valores['paciente'] = data['paciente'];
     }
 
-
     this.data.appointment ? this.edit.emit(valores) : this.create.emit(valores);
     this.dialogRef.close();
   }
@@ -249,7 +238,6 @@ export class AppointmentFormComponent implements OnInit {
   }
 
   ChangesMonth(mes: any) {
-
     if (mes === 'Jan') {
       return '01';
     }
@@ -285,5 +273,4 @@ export class AppointmentFormComponent implements OnInit {
     }
     return 12;
   }
-
 }

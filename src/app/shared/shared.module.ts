@@ -76,7 +76,7 @@ const components = [DeleteConfirmationModalComponent];
     CustomTableComponent,
     ...components,
   ],
-  entryComponents: [PanelNotificationsComponent, DeleteConfirmationModalComponent],
+  entryComponents: [PanelNotificationsComponent, DeleteConfirmationModalComponent, ConfirmationDialogFrontComponent],
   imports: [
     ReactiveFormsModule,
     FormsModule,

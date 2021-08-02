@@ -55,47 +55,35 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
     this.subscriptions;
   }
   myChangePro(event) {
-    console.log('evento', event.value);
     this.valueProd = event.value;
     this.myselect = true;
     this.disabledSubmit();
   }
   myChangeMov(event) {
-    console.log('evento', event.value);
     this.valueMov = event.value;
     this.myselect = true;
     this.disabledSubmit();
   }
   disabledSubmit() {
-    console.log('disabled submit');
-    console.log('disable MOV', this.valueMov);
-    console.log('disable PRO', this.valueProd);
     let id = null;
     //put, post espera un evento
     if (this.valueMov === null && this.valueProd === null) {
-      console.log('OK 1');
       if (this.data?.warehouseMovementDetail !== null) {
-        console.log('OK 2');
         this.valueMov = this.WarehouseMovementDetailForm.get('movimiento').value;
         this.valueProd = this.WarehouseMovementDetailForm.get('producto').value;
         id = this.WarehouseMovementDetailForm.get('id').value;
       } else {
-        console.log('OK 3');
         this.notSubmit = false;
       }
     }
     //put onselect, post es cuano se selecciono 2 enevto
     if (this.valueMov !== null && this.valueProd !== null) {
-      console.log('OK 4');
       if (this.data?.warehouseMovementDetail !== null) id = this.data?.warehouseMovementDetail.id;
       this.warehouseMovementDetailService.checkMov(this.valueMov, this.valueProd, id).subscribe((res) => {
-        console.log('OK 5', res.isAvailable);
         this.notSubmit = res.isAvailable;
         if (this.notSubmit) this.toastService.error('El conjunto de Producto y Movimiento ya existe.', 'Error');
       });
-      console.log('El submit es final 0', this.notSubmit);
     }
-    console.log('El submit es final 1', this.notSubmit);
   }
 
   getMeasure() {
@@ -146,7 +134,6 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
         }),
       )
       .subscribe();
-    console.log(this.move);
     this.subscriptions.push(sub);
   }
 
@@ -170,8 +157,6 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
       movimiento: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.movimiento_id : null, [Validators.required]),
       unidad_medida: new FormControl(this.data.warehouseMovementDetail ? this.data.warehouseMovementDetail.unidad_medida_id : null, Validators.required),
     });
-    console.log('buildForm DATA:', this.data?.warehouseMovementDetail);
-    console.log('buildForm:', this.WarehouseMovementDetailForm);
     if (this.data?.warehouseMovementDetail !== null || this.data?.warehouseMovementDetail !== undefined) this.disabledSubmit();
     /*this.WarehouseMovementDetailForm.controls.producto.valueChanges
       .subscribe(
@@ -193,10 +178,8 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
   }*/
 
   getShowAmount(event) {
-    console.log('showamount: ', event);
     let counts = this.WarehouseMovementDetailForm.get('cantidad').value;
     let price = this.WarehouseMovementDetailForm.get('precio').value;
-    console.log('form chequeo:', this.WarehouseMovementDetailForm);
     if (counts === null || price === null || counts < 0 || price < 0) {
       this.amount = 0;
     } else {
@@ -236,8 +219,6 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(data) {
-    console.log('ver data ya', data);
-    console.log('ver ya', this.data);
     //data['precio'] = parseInt(data['precio']);
     //data['cantidad'] = parseInt(data['cantidad']);
     //data['importe'] = null;
@@ -256,8 +237,6 @@ export class WarehouseMovementDetailFormComponent implements OnInit, OnDestroy {
     valores['movimiento'] = data['movimiento'];
     valores['producto'] = data['producto'];
     valores['unidad_medida'] = data['unidad_medida'];
-    console.log('ver valores ya', valores);
-    if (data === valores) console.log('Son iguales');
     this.data.warehouseMovementDetail ? this.edit.emit(valores) : this.create.emit(valores);
     this.dialogRef.close();
   }

@@ -86,9 +86,9 @@
 <div class="container mb-4">
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex justify-content-end">
-    <button [routerLink]="['/moves']" mat-raised-button color="primary" class="button">Volver al listado de Movimientos</button>
+    <button [routerLink]="['/moves']" mat-raised-button class="button mx-2">Volver al listado de Movimientos</button>
+    <button [disabled]="!stockMove || stockMove.estado == 2" (click)="confirmMove()" mat-raised-button color="primary" class="button">
+      Confirmar Movimiento
+    </button>
   </div>
 </div>
-<pre>
-  {{ stockMove | json }}
-</pre>

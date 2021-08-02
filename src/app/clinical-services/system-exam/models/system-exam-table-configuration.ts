@@ -3,7 +3,7 @@ import { DEFAULT_PAGINATION_SIZE } from '../../../core/models/api-response.model
 
 export const SYSTEM_EXAM_TABLE_CONFIGURATION: TableConfiguration = {
   paginationSize: DEFAULT_PAGINATION_SIZE,
-  displayedColumns: ['observacion', 'examen_fisico', 'sistema'],
+  displayedColumns: ['observacion', 'examen_fisico_string', 'sistema_string'],
   columnsName: ['Observación', 'Examen Físico', 'Sistema'],
   tableFilters: [
     {

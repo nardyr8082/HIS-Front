@@ -1,3 +1,4 @@
+import { ConfirmationDialogFrontComponent } from './../../../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
 import { DeleteConfirmationModalComponent } from './../../../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { MoveStatusService } from './../../../classifiers/move-status/services/move-status.service';
 import { MoveTypeService } from './../../../classifiers/move-type/services/moveType.service';
@@ -33,6 +34,13 @@ export class StockMovesPageComponent implements OnInit, OnDestroy {
   pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
+    {
+      tooltipText: 'Confirmar Movimiento',
+      icon: 'done',
+      color: 'warm',
+      class: 'btn-primary',
+      callback: (item) => this.confirmMove(item),
+    },
     {
       tooltipText: 'Editar Movimiento',
       icon: 'edit',
@@ -136,7 +144,7 @@ export class StockMovesPageComponent implements OnInit, OnDestroy {
             const almacenString = res.almacen.nombre;
             const tipoMovimientoString = res.tipo_de_movimiento.descripcion;
             const estadoString =
-              res.estado.descripcion.toLowerCase() == 'Finalizado'
+              res.estado.descripcion.toLowerCase() == 'confirmado'
                 ? `<p class="text-success">${res.estado.descripcion}</p>`
                 : `<p class="text-danger">${res.estado.descripcion}</p>`;
             const userString = `${res.usuario?.first_name} ${res.usuario?.last_name}`;
@@ -212,5 +220,42 @@ export class StockMovesPageComponent implements OnInit, OnDestroy {
 
   changeSort(sort: Sort) {
     this.getStockMoves(this.filters, sort.active, sort.direction);
+  }
+
+  confirmMove(item) {
+    if (item?.estado.id == '1') {
+      const stockMove = {
+        ...item,
+        almacen: item.almacen.id,
+        tipo_de_movimiento: item.tipo_de_movimiento.id,
+        usuario: item.usuario.id,
+      };
+      const modalRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+        data: {
+          title: 'Confirmar Movimiento',
+          question: '¿Está seguro que desea que desea confirmar el movimiento? Esta operación es irreversible.',
+        },
+      });
+
+      const modalComponentRef = modalRef.componentInstance as ConfirmationDialogFrontComponent;
+
+      const sub = modalComponentRef.accept
+        .pipe(
+          filter((accept) => accept),
+          switchMap(() =>
+            this.stockMoveService.createStockMove({ ...stockMove, estado: 2 }).pipe(
+              map(() => {
+                this.toastService.success('El movimiento ha sido confirmado correctamente', 'Felicidades');
+                this.getStockMoves(this.filters, 'id', 'desc', this.page, this.pageSize);
+              }),
+            ),
+          ),
+        )
+        .subscribe();
+
+      this.subscriptions.push(sub);
+    } else {
+      this.toastService.info('Este movimiento ya se encuetra confirmado', 'Información');
+    }
   }
 }
