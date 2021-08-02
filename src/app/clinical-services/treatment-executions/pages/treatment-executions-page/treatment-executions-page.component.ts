@@ -98,7 +98,7 @@ export class TreatmentExecutionsPageComponent implements OnInit {
       .getTreatmentExecutions(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
-          console.log(response.results);
+       
           this.treatmentExecutions = response.results.map((res) => ({
             ...res,
             id: res.id,

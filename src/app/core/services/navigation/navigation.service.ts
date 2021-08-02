@@ -262,23 +262,21 @@ export class NavigationService {
               route: 'stock-state-appointment',
               material: true,
               display: true,
-            }, {
+            },
+            {
               displayName: 'Indicaciones de Tratamiento',
               iconName: ['swap_vertical_circle'],
               route: 'treatment-indications',
               material: true,
               display: true,
-
-            }, {
+            },
+            {
               displayName: 'Ejecuciones de Tratamiento',
               iconName: ['swap_vertical_circle'],
               route: 'treatment-executions',
               material: true,
               display: true,
-
-            }
-
-
+            },
           ],
           material: true,
           display: true,
@@ -318,19 +316,20 @@ export class NavigationService {
           ],
           material: true,
           display: true,
-        }, {
+        },
+        {
           displayName: 'Entrevistas',
           iconName: ['center_focus_strong'],
           route: 'interview',
           material: true,
           display: true,
-        }, {
+        },
+        {
           displayName: 'Crear Historia Clínica Tabla',
           iconName: ['center_focus_strong'],
           route: 'clinic-history-static',
           material: true,
           display: true,
-
         },
         {
           displayName: 'Núcleo Funcional',
@@ -613,11 +612,18 @@ export class NavigationService {
       material: true,
       children: [
         {
+          displayName: 'Movimientos',
+          iconName: ['swap_vertical_circle'],
+          route: 'moves',
+          material: true,
+          display: true,
+        },
+        {
           displayName: 'Lote',
           iconName: ['swap_vertical_circle'],
           route: 'lotwarehouse',
           material: true,
-          display: true
+          display: true,
         },
         {
           displayName: 'Existencia',

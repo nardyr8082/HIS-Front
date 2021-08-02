@@ -85,7 +85,7 @@ export class ExistencePageComponent implements OnInit {
 
       .pipe(
         map((response) => {
-          console.log(response.results);
+
           this.configuration.tableFilters[4].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
         }),
       )
@@ -99,7 +99,7 @@ export class ExistencePageComponent implements OnInit {
       .getMeasures(filters, 'descripcion', 'asc', 1, 10000)
       .pipe(
         map((response: ApiResponse<any>) => {
-          console.log(response.results);
+
           this.configuration.tableFilters[3].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
 
         }),
@@ -113,7 +113,7 @@ export class ExistencePageComponent implements OnInit {
       .getStock(filters, 'descripcion', 'asc', 1, 10000)
       .pipe(
         map((response: ApiResponse<any>) => {
-          console.log(response.results);
+
           this.configuration.tableFilters[2].items = response.results.map((res) => ({ id: res.id, name: res.nombre }));
 
         }),
@@ -127,7 +127,7 @@ export class ExistencePageComponent implements OnInit {
       .getWarehouseLot(filters, 'descripcion', 'asc', 1, 10000)
       .pipe(
         map((response: ApiResponse<any>) => {
-          console.log(response.results);
+
           this.configuration.tableFilters[5].items = response.results.map((res) => ({ id: res.id, name: res.codigo }));
 
         }),
@@ -157,7 +157,7 @@ export class ExistencePageComponent implements OnInit {
       .getExistence(filters, sortColumn, sortDirection, page, pageSize)
       .pipe(
         map((response: ApiResponse<any>) => {
-          console.log(response.results)
+
           this.existence = response.results.map((res) => ({
             ...res,
             id: res.id,

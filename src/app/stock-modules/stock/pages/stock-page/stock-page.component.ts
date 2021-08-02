@@ -16,7 +16,6 @@ import { User } from '../../../../security-module/user/models/user.model';
 import { OfficeService } from '../../../../structure-modules/office/services/office.service';
 import { Office } from '../../../../structure-modules/office/models/office.model';
 
-
 @Component({
   selector: 'app-stock-page',
   templateUrl: './stock-page.component.html',
@@ -49,7 +48,13 @@ export class StockPageComponent implements OnInit {
     },
   ];
 
-  constructor(private officeService: OfficeService, private userService: UserService, private stockService: StockService, private toastService: ToastrService, public dialog: MatDialog) {
+  constructor(
+    private officeService: OfficeService,
+    private userService: UserService,
+    private stockService: StockService,
+    private toastService: ToastrService,
+    public dialog: MatDialog,
+  ) {
     this.putUser();
     this.putOffice();
   }
@@ -88,8 +93,6 @@ export class StockPageComponent implements OnInit {
     this.subscriptions.push(sub);
   }
 
-
-
   getStock(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.stockService
@@ -101,7 +104,13 @@ export class StockPageComponent implements OnInit {
             const departamentoString = this.getOfficeString(res.departamento);
             const activo = res.activo ? '<p class="text-success">Si</p>' : '<p class="text-danger">No</p>';
             const punto_de_venta = res.punto_de_venta ? '<p class="text-success">Si</p>' : '<p class="text-danger">No</p>';
-            return { ...res, activo_string: activo, punto_de_venta_string: punto_de_venta, jefe_almacen_string: userString, departamento_string: departamentoString};
+            return {
+              ...res,
+              activo_string: activo,
+              punto_de_venta_string: punto_de_venta,
+              jefe_almacen_string: userString,
+              departamento_string: departamentoString,
+            };
           });
           this.dataCount = response.count;
           this.loading = false;
@@ -120,16 +129,13 @@ export class StockPageComponent implements OnInit {
     return user.username;
   }
   getActiveString(active: boolean) {
-    if (active === true)
-      return '<p class="text-success">Si</p>';
+    if (active === true) return '<p class="text-success">Si</p>';
     return '<p class="text-danger">No</p>';
   }
   getSalePointString(point: boolean) {
-    if (point === true){
-      console.log('OKIS');
+    if (point === true) {
       return '<p class="text-success">Si</p>';
     }
-    console.log('NOP');
     return '<p class="text-danger">No</p>';
   }
   getOfficeString(office: Office) {
@@ -261,4 +267,3 @@ export class StockPageComponent implements OnInit {
     this.getStock(this.filters, sort.active, sort.direction);
   }
 }
-

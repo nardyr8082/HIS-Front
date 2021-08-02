@@ -10,7 +10,7 @@ export interface StockMove {
   comentario?: string;
   nro_control?: string;
   almacen?: Stock;
-  estado?: MoveStatus;
+  estado?: any;
   tipo_de_movimiento?: MoveType;
   usuario?: User;
 }

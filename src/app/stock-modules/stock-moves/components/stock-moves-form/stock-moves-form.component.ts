@@ -1,8 +1,12 @@
+import { ConfirmationDialogFrontComponent } from './../../../../shared/confirmation-dialog-front/confirmation-dialog-front.component';
+import { DeleteConfirmationModalComponent } from './../../../../shared/delete-confirmation-modal/delete-confirmation-modal.component';
+import { ToastrService } from 'ngx-toastr';
+import { StockMoveService } from './../../services/stock-move.service';
 import { WarehouseMovementDetailService } from './../../../warehouse-movement-detail/services/warehouse-movement-detail.service';
 import { AuthenticationService } from './../../../../core/services/authentication/authentication.service';
 import { MoveType } from './../../../classifiers/move-type/models/move-type.model';
 import { ProductCategory } from './../../../classifiers/product-category/models/product-category.model';
-import { Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StockMove } from './../../models/stock-move.model';
 import { Component, Input, OnDestroy, OnInit, EventEmitter, Output, OnChanges } from '@angular/core';
@@ -10,7 +14,9 @@ import { User } from 'src/app/security-module/user/models/user.model';
 import { Stock } from 'src/app/stock-modules/boxstock/models/boxstock.model';
 import * as moment from 'moment';
 import { WarehouseMovementDetail } from 'src/app/stock-modules/warehouse-movement-detail/models/warehouse-movement-detail.model';
-import { map } from 'rxjs/operators';
+import { map, catchError, filter, switchMap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-stock-moves-form',
@@ -25,9 +31,6 @@ export class StockMovesFormComponent implements OnInit, OnDestroy, OnChanges {
 
   filteredMoveTypes: MoveType[] = [];
 
-  @Output() create: EventEmitter<any> = new EventEmitter();
-  @Output() edit: EventEmitter<any> = new EventEmitter();
-
   user: User;
 
   subscriptions: Subscription[] = [];
@@ -36,7 +39,14 @@ export class StockMovesFormComponent implements OnInit, OnDestroy, OnChanges {
 
   stockMovesDetails: WarehouseMovementDetail[] = [];
 
-  constructor(private authenticationService: AuthenticationService, private stockMoveDetailsService: WarehouseMovementDetailService) {}
+  constructor(
+    private toastrService: ToastrService,
+    private stockMoveService: StockMoveService,
+    private authenticationService: AuthenticationService,
+    private stockMoveDetailsService: WarehouseMovementDetailService,
+    private dialog: MatDialog,
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.getAuthUser();
@@ -134,18 +144,91 @@ export class StockMovesFormComponent implements OnInit, OnDestroy, OnChanges {
   //#endregion
 
   changeCategory(categoryId: number) {
-    this.filteredMoveTypes = this.moveTypes.filter((mt) => mt.categoria.id == categoryId);
+    this.filteredMoveTypes = this.moveTypes?.filter((mt) => mt.categoria.id == categoryId);
   }
 
   onSubmit(data) {
     const dateFormat = moment(data.fecha);
     data.fecha = dateFormat.format('yyyy-MM-DD');
-    this.stockMove ? this.edit.emit(data) : this.create.emit(data);
+    this.stockMove ? this.onEdit(data) : this.onCreate(data);
+  }
+
+  onCreate(data) {
+    const sub = this.stockMoveService
+      .createStockMove(data)
+      .pipe(
+        map((response) => {
+          this.stockMove = response;
+          this.toastrService.success('El movimiento se ha guardado correctamente');
+        }),
+        catchError(() => {
+          this.toastrService.error('Hubo algún error guardadno el movimiento.', 'Error');
+          return of(null);
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+  }
+
+  onEdit(data) {
+    const sub = this.stockMoveService
+      .editStockMove(data)
+      .pipe(
+        map((response) => {
+          this.stockMove = response;
+          this.toastrService.success('El movimiento se ha editado correctamente');
+        }),
+        catchError(() => {
+          this.toastrService.error('Hubo algún error guardadno el movimiento.', 'Error');
+          return of(null);
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
   }
 
   onCreateStockMove() {
     if (this.stockMove) {
       this.getStockMovesDetails(this.stockMove.id);
+    }
+  }
+
+  confirmMove() {
+    if (this.stockMove?.estado.id == '1') {
+      const stockMove = {
+        ...this.stockMove,
+        almacen: this.stockMove.almacen.id,
+        tipo_de_movimiento: this.stockMove.tipo_de_movimiento.id,
+        usuario: this.stockMove.usuario.id,
+      };
+      const modalRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+        data: {
+          title: 'Confirmar Movimiento',
+          question: '¿Está seguro que desea que desea confirmar el movimiento? Esta operación es irreversible.',
+        },
+      });
+
+      const modalComponentRef = modalRef.componentInstance as ConfirmationDialogFrontComponent;
+
+      const sub = modalComponentRef.accept
+        .pipe(
+          filter((accept) => accept),
+          switchMap(() =>
+            this.stockMoveService.createStockMove({ ...stockMove, estado: 2 }).pipe(
+              map(() => {
+                this.router.navigate(['moves']);
+                this.toastrService.success('El movimiento ha sido confirmado correctamente', 'Felicidades');
+              }),
+            ),
+          ),
+        )
+        .subscribe();
+
+      this.subscriptions.push(sub);
+    } else {
+      this.toastrService.info('Este movimiento ya se encuetra confirmado', 'Información');
     }
   }
 }
