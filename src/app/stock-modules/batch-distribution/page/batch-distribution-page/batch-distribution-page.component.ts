@@ -6,7 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BatchDistributionService } from './../../services/batch-distribution.service';
 import { BATCH_DISTRIBUTION_TABLE_CONFIGURATION } from './../../models/batch-distribution-table-configuration';
 import { BatchDistribution } from './../../models/batch-distribution.model';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { of, Subscription } from 'rxjs';
 import { DEFAULT_PAGE_SIZE } from 'src/app/core/models/api-response.model';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -19,12 +19,13 @@ import { Sort } from '@angular/material/sort';
   templateUrl: './batch-distribution-page.component.html',
   styleUrls: ['./batch-distribution-page.component.scss'],
 })
-export class BatchDistributionPageComponent implements OnInit, OnDestroy {
+export class BatchDistributionPageComponent implements OnInit, OnDestroy, OnChanges {
   batchDistribution: BatchDistribution[];
+  @Input() moveDetail;
   dataCount = 0;
   configuration = BATCH_DISTRIBUTION_TABLE_CONFIGURATION;
   subscriptions: Subscription[] = [];
-  filters = {};
+  @Input() filters = {};
   loading = false;
   page = 1;
   pageSize = DEFAULT_PAGE_SIZE;
@@ -55,7 +56,9 @@ export class BatchDistributionPageComponent implements OnInit, OnDestroy {
     this.associteLoteWithFilters();
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  ngOnChanges() {
     this.getBatchDistribution();
   }
 
@@ -84,6 +87,7 @@ export class BatchDistributionPageComponent implements OnInit, OnDestroy {
       .pipe(
         map((response: ApiResponse<BatchDistribution>) => {
           this.batchDistribution = response.results.map((response) => {
+            console.log('response', response);
             const lote_string = response.lote.codigo;
             const detalle_movimiento_string = response.detalle_movimiento.movimiento;
             return { ...response, lote_string, detalle_movimiento_string };
@@ -108,7 +112,7 @@ export class BatchDistributionPageComponent implements OnInit, OnDestroy {
   }
 
   onChangeFilter(filters) {
-    this.filters = filters;
+    this.filters = { ...this.filters, ...filters };
     this.getBatchDistribution(filters, 'id', 'desc');
   }
 
@@ -123,6 +127,7 @@ export class BatchDistributionPageComponent implements OnInit, OnDestroy {
       width: '100%',
       data: {
         batchDistribution: null,
+        moveDetail: this.moveDetail,
       },
     });
 
@@ -132,8 +137,11 @@ export class BatchDistributionPageComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((batchDistribution: BatchDistribution) =>
           this.batchDistributionService.createBatchDistribution(batchDistribution).pipe(
-            catchError(() => {
-              this.toastService.error('Hubo un error al crear el Distribución de Lote. Por favor, inténtelo de nuevo más tarde.', 'Error');
+            catchError((error) => {
+              this.toastService.error(
+                error?.msg ? error?.msg : 'Hubo un error al crear el Distribución de Lote. Por favor, inténtelo de nuevo más tarde.',
+                'Error',
+              );
               return of(null);
             }),
             tap((success) => {
@@ -161,6 +169,7 @@ export class BatchDistributionPageComponent implements OnInit, OnDestroy {
       width: '100%',
       data: {
         batchDistribution: item,
+        moveDetail: this.moveDetail,
       },
     });
 
