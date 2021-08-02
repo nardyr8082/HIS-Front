@@ -243,13 +243,12 @@ export class NavigationService {
               display: true,
             },
             {
-
               displayName: 'Examen Sistema',
               iconName: ['radio_button_unchecked'],
               route: 'system-exam',
               material: true,
               display: true,
-            }
+            },
             {
               displayName: 'Sesión Clínica',
               iconName: ['swap_vertical_circle'],
