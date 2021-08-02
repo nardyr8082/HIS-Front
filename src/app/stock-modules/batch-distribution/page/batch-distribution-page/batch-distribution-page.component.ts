@@ -87,7 +87,6 @@ export class BatchDistributionPageComponent implements OnInit, OnDestroy, OnChan
       .pipe(
         map((response: ApiResponse<BatchDistribution>) => {
           this.batchDistribution = response.results.map((response) => {
-            console.log('response', response);
             const lote_string = response.lote.codigo;
             const detalle_movimiento_string = response.detalle_movimiento.movimiento;
             return { ...response, lote_string, detalle_movimiento_string };

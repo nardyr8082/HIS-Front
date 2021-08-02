@@ -709,13 +709,13 @@ export class NavigationService {
           material: true,
           display: true,
         },
-        {
-          displayName: 'Distribucion de Lote',
-          iconName: ['swap_vertical_circle'],
-          route: 'batch-distribution',
-          material: true,
-          display: true,
-        },
+        // {
+        //   displayName: 'Distribucion de Lote',
+        //   iconName: ['swap_vertical_circle'],
+        //   route: 'batch-distribution',
+        //   material: true,
+        //   display: true,
+        // },
         {
           displayName: 'Inventario',
           iconName: ['swap_vertical_circle'],
@@ -835,13 +835,13 @@ export class NavigationService {
               material: true,
               display: true,
             },
-            {
-              displayName: 'Detalle Movimiento',
-              iconName: ['radio_button_unchecked'],
-              route: 'warehouse-movement-detail',
-              material: true,
-              display: true,
-            },
+            // {
+            //   displayName: 'Detalle Movimiento',
+            //   iconName: ['radio_button_unchecked'],
+            //   route: 'warehouse-movement-detail',
+            //   material: true,
+            //   display: true,
+            // },
             {
               displayName: 'Estado de Movimiento',
               iconName: ['radio_button_unchecked'],
