@@ -5,59 +5,50 @@
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Numero :</mat-label>
       <input matInput formControlName="nro_inventario" />
-      <mat-error *ngIf="numberControl.errors?.required"> {{ 'La numero inventario es' }} <strong>requerido</strong>  </mat-error>
+      <mat-error *ngIf="numberControl.errors?.required"> {{ 'La numero inventario es' }} <strong>requerido</strong>
+      </mat-error>
     </mat-form-field>
-    <mat-checkbox checked="false" formControlName="activo">Activo</mat-checkbox>
-    <div class="mb-4">
-      <ng-select
-        appearance="outline"
-        class="custom w-100"
-        placeholder="Estado"
-        [items]="id_estado"
-        bindLabel="descripcion"
-        bindValue="id"
-        formControlName="id_estado">
-      </ng-select>
-      <small class="text-danger error-style" *ngIf="statusControl.errors?.required && statusControl.dirty">
-        El campo Estado es <strong>requerido</strong></small>
+    <div class="row mb-1">
+      <div class="form-group col-md-6">
+        <mat-checkbox checked="false" formControlName="activo">Activo</mat-checkbox>
+      </div>
+      <div class="form-group col-md-6">
+        <div class="mb-4">
+          <ng-select appearance="outline" class="custom w-100" placeholder="Estado" [items]="id_estado"
+            bindLabel="descripcion" bindValue="id" formControlName="id_estado">
+          </ng-select>
+          <small class="text-danger error-style" *ngIf="statusControl.errors?.required && statusControl.dirty">
+            El campo Estado es <strong>requerido</strong></small>
+        </div>
+      </div>
     </div>
     <!-- Almacen -->
-    <div class="mb-4">
-      <ng-select
-        appearance="outline"
-        class="custom w-100"
-        placeholder="Recurso"
-        [items]="id_recurso"
-        bindLabel="nombre"
-        bindValue="id"
-        formControlName="id_recurso">
-      </ng-select>
-      <small class="text-danger error-style" *ngIf="classificatorControl.errors?.required && classificatorControl.dirty">
-        El campo recurso es <strong>requerido</strong></small>
+    <div class="row mb-1">
+      <div class="form-group col-md-6">
+        <div class="mb-4">
+          <ng-select appearance="outline" class="custom w-100" placeholder="Recurso" [items]="id_recurso"
+            bindLabel="nombre" bindValue="id" formControlName="id_recurso">
+          </ng-select>
+          <small class="text-danger error-style"
+            *ngIf="classificatorControl.errors?.required && classificatorControl.dirty">
+            El campo recurso es <strong>requerido</strong></small>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <!-- Estado -->
+        <div class="mb-4">
+          <ng-select appearance="outline" class="custom w-100" placeholder="Departamento" [items]="id_departamento"
+            bindLabel="nombre" bindValue="id" formControlName="id_departamento">
+          </ng-select>
+          <small class="text-danger error-style" *ngIf="officeControl.errors?.required && officeControl.dirty">
+            El campo Departamento es <strong>requerido</strong></small>
+        </div>
+      </div>
     </div>
-    <!-- Estado -->
+
     <div class="mb-4">
-      <ng-select
-        appearance="outline"
-        class="custom w-100"
-        placeholder="Departamento"
-        [items]="id_departamento"
-        bindLabel="nombre"
-        bindValue="id"
-        formControlName="id_departamento">
-      </ng-select>
-      <small class="text-danger error-style" *ngIf="officeControl.errors?.required && officeControl.dirty">
-        El campo Departamento es <strong>requerido</strong></small>
-    </div>
-    <div class="mb-4">
-      <ng-select
-        appearance="outline"
-        class="custom w-100"
-        placeholder="Paciente"
-        [items]="paciente"
-        bindLabel="nombre"
-        bindValue="id"
-        formControlName="paciente">
+      <ng-select appearance="outline" class="custom w-100" placeholder="Paciente" [items]="paciente" bindLabel="nombre"
+        bindValue="id" formControlName="paciente">
       </ng-select>
       <small class="text-danger error-style" *ngIf="patientControl.errors?.required && patientControl.dirty">
         El campo Paciente es <strong>requerido</strong></small>
@@ -66,9 +57,9 @@
   <mat-divider class="my-4"></mat-divider>
   <div class="d-flex align-items-center justify-content-end">
     <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
-    <button (click)="onSubmit(aftselfresourcesForm.value)" [disabled]="!aftselfresourcesForm.valid" mat-raised-button color="primary" class="button">
+    <button (click)="onSubmit(aftselfresourcesForm.value)" [disabled]="!aftselfresourcesForm.valid" mat-raised-button
+      color="primary" class="button">
       {{ data.aftselfresources ? 'Aceptar' : 'Crear' }}
     </button>
   </div>
 </div>
-

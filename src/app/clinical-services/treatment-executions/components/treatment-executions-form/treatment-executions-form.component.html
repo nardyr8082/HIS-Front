@@ -3,39 +3,44 @@
     </h4>
     <mat-divider class="my-4"></mat-divider>
     <form *ngIf="treatmentExecutionsForm" [formGroup]="treatmentExecutionsForm">
-
-        <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Descripcion:</mat-label>
-            <input matInput formControlName="descripcion" />
-        </mat-form-field>
-
-        <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Fecha</mat-label>
-            <input matInput formControlName="fecha" [matDatepicker]="picker" />
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-            <mat-label i18n="Timepicker 1 Title">Hora</mat-label>
-            <input matTimepicker #t1="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
-                i18n-cancelLabel="Timepicker 1 Cancel Label" cancelLabel="Cancel" id="timepicker-example-1" mode="24h"
-                formControlName="hora" placeholder="Please select time..." name="time-1" required>
-            <mat-icon matSuffix (click)="t1.showDialog()">access_time</mat-icon>
-            <mat-error *ngIf="timeControl.errors?.required"> {{ 'La hora es' }} <strong>requerido</strong> </mat-error>
-
-        </mat-form-field>
-
-        <mat-divider class="my-4"></mat-divider>
-        <div class="mb-4">
-            <ng-select appearance="outline" class="custom w-100" placeholder="Sección Clínica" [items]="clinicalSection"
-                bindLabel="cita.id" bindValue="id" formControlName="sesion_clinica">
-            </ng-select>
-            <small class="text-danger error-style"
-                *ngIf="sesion_clinicaControl.errors?.required && sesion_clinicaControl.dirty">
-                El campo Sección Clínica es <strong>requerido</strong></small>
+        <div class="row mb-1">
+            <div class="form-group col-md-6">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Descripcion:</mat-label>
+                    <input matInput formControlName="descripcion" />
+                </mat-form-field>
+            </div>
+            <div class="form-group col-md-6">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Fecha</mat-label>
+                    <input matInput formControlName="fecha" [matDatepicker]="picker" />
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
         </div>
+        <div class="row mb-1">
+            <div class="form-group col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label i18n="Timepicker 1 Title">Hora</mat-label>
+                    <input matTimepicker #t1="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
+                        i18n-cancelLabel="Timepicker 1 Cancel Label" cancelLabel="Cancel" id="timepicker-example-1"
+                        mode="24h" formControlName="hora" placeholder="Please select time..." name="time-1" required>
+                    <mat-icon matSuffix (click)="t1.showDialog()">access_time</mat-icon>
+                    <mat-error *ngIf="timeControl.errors?.required"> {{ 'La hora es' }} <strong>requerido</strong>
+                    </mat-error>
 
+                </mat-form-field>
+            </div>
+            <div class="form-group col-md-6">
+                <ng-select appearance="outline" class="custom w-100" placeholder="Sección Clínica"
+                    [items]="clinicalSection" bindLabel="cita.id" bindValue="id" formControlName="sesion_clinica">
+                </ng-select>
+                <small class="text-danger error-style"
+                    *ngIf="sesion_clinicaControl.errors?.required && sesion_clinicaControl.dirty">
+                    El campo Sección Clínica es <strong>requerido</strong></small>
+            </div>
+        </div>
         <mat-divider class="my-4"></mat-divider>
         <div class="mb-4">
             <ng-select appearance="outline" class="custom w-100" placeholder="Usuario" [items]="user"
