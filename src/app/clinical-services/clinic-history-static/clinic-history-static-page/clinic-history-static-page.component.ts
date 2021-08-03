@@ -11,8 +11,11 @@ import { ApiResponse, DEFAULT_PAGE_SIZE } from 'src/app/core/models/api-response
 import { ClinicHistoryStaticFormComponent } from '../clinic-history-static-form/clinic-history-static-form.component';
 import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
+import { ConfirmationDialogFrontComponent } from 'src/app/shared/confirmation-dialog-front/confirmation-dialog-front.component';
 import { Sort } from '@angular/material/sort';
-
+import { Router } from '@angular/router';
+import { ClinicHistoryStaticPinComponent } from './clinic-history-static-pin/clinic-history-static-pin/clinic-history-static-pin.component';
+import { ClinicHistoryStaticPin } from './clinic-history-static-pin/models/clinic-history-static-pin.model';
 @Component({
   selector: 'app-clinic-history-static-page',
   templateUrl: './clinic-history-static-page.component.html',
@@ -36,6 +39,12 @@ export class ClinicHistoryStaticPageComponent implements OnInit {
       color: 'primary',
       class: 'btn-primary',
       callback: (item) => this.openEditForm(item),
+    }, {
+      tooltipText: 'Detalles de Historia Clínica',
+      icon: 'visibility',
+      color: 'primary',
+      class: 'btn-default',
+      callback: (item) => this.goToDetails(item),
     },
     {
       tooltipText: 'Eliminar Historia Clínica',
@@ -51,7 +60,8 @@ export class ClinicHistoryStaticPageComponent implements OnInit {
     public dialog: MatDialog,
     private clinicHistoryStaticService: ClinicHistoryStaticService,
     private patientService: PatientService,
-    private toastService: ToastrService
+    private toastService: ToastrService,
+    private router: Router
   ) {
     this.putPatient();
   }
@@ -91,7 +101,8 @@ export class ClinicHistoryStaticPageComponent implements OnInit {
             id: res.id,
             numero_hc: res.numero_hc,
             paciente: res.paciente.nro_identificacion,
-            paciente_id: res.paciente.id
+            paciente_id: res.paciente.id,
+            paciente_pin: (res.paciente.pin) ? res.paciente.pin : '0000'
           }));
 
           this.dataCount = response.count;
@@ -208,6 +219,49 @@ export class ClinicHistoryStaticPageComponent implements OnInit {
       .subscribe();
 
     this.subscriptions.push(sub);
+  }
+
+  goToDetails(clinicHistoryStatic?: ClinicHistoryStatic) {
+    const pin_paciente = clinicHistoryStatic.paciente_pin;
+
+    if (pin_paciente == '0000') {
+      clinicHistoryStatic ? this.router.navigateByUrl(`/clinic-history-static/details/${clinicHistoryStatic.id}`) : this.router.navigateByUrl(`clinic-history-static`);
+    }
+    if (pin_paciente != '0000' && pin_paciente != '') {
+      let dialogRef: MatDialogRef<ClinicHistoryStaticPinComponent, any>;
+      dialogRef = this.dialog.open(ClinicHistoryStaticPinComponent, {
+        panelClass: 'app-dialog-add-edit-business',
+        maxWidth: '500px',
+        minWidth: '150px',
+        maxHeight: '100vh',
+        width: '100%',
+        data: {
+          dataclinicHistoryStaticPin: clinicHistoryStatic,
+        },
+      });
+
+      const modalComponentRef = dialogRef.componentInstance as ClinicHistoryStaticPinComponent;
+
+      const sub = modalComponentRef.create
+    }
+    if (pin_paciente == '' || pin_paciente == null) {
+      const modalRef = this.dialog.open(ConfirmationDialogFrontComponent, {
+        data: {
+          title: 'Pin Historia Clínica',
+          question: 'Esta Historia clínica no tiene Pin. Debe crearlo',
+        },
+      });
+
+      const modalComponentRef = modalRef.componentInstance as ConfirmationDialogFrontComponent;
+
+    }
+
+
+
+
+
+
+
   }
 
   deleteClinicHistoryStatic(item) {

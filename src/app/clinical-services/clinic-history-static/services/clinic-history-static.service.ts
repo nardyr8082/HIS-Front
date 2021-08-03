@@ -77,6 +77,10 @@ export class ClinicHistoryStaticService {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }
 
+  getClinicHistoryStaticById(id: number): Observable<ClinicHistoryStatic> {
+    return this.http.get<any>(`${this.apiEndpoint}/${id}/`);
+  }
+
   editClinicHistoryStatic(data: ClinicHistoryStatic): Observable<ClinicHistoryStatic> {
 
     return this.http.patch<ClinicHistoryStatic>(`${this.apiEndpoint}/${data.id}/`, data);
