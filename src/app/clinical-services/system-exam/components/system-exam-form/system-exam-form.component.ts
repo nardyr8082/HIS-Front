@@ -7,6 +7,7 @@ import { ApiResponse } from 'src/app/core/models/api-response.model';
 import { MatFormField, MatFormFieldControl } from '@angular/material/form-field';
 import { SystemExamService } from '../../services/system-exam.service';
 import { SystemExam } from '../../models/system-exam.model';
+import { PhysicalexamService } from '../../../physicalexam/services/physicalexam.service'
 
 @Component({
   selector: 'app-system-examn-form',
@@ -19,10 +20,14 @@ export class SystemExamFormComponent implements OnInit, OnDestroy {
 
   systemExamForm: FormGroup;
   fisicExam: any = [];
+  fisic: any = [];
   system: any = [];
   subscriptions: Subscription[] = [];
 
-  constructor(public systemExamService: SystemExamService, public dialogRef: MatDialogRef<SystemExamFormComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {}
+  constructor(public systemExamService: SystemExamService, 
+    private fisicExamService: PhysicalexamService,
+    public dialogRef: MatDialogRef<SystemExamFormComponent>,
+     @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -34,12 +39,32 @@ export class SystemExamFormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscriptions;
   }
+
+  getFisicExamEdit(id) {
+    const sub = this.systemExamService
+      .getPhysicalexam(id)
+      .pipe(
+        map((response) => {
+          this.fisicExam = response.results; }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+    console.log(this.fisicExam);
+  }
+
   getFisicExam() {
     const sub = this.systemExamService
       .getFisicExam()
       .pipe(
         map((response: ApiResponse<any>) => {
-          this.fisicExam = response.results;
+          if (this.data.systemExam) {
+          this.getFisicExamEdit(this.data.systemExam.examen_fisico.id);
+           }
+          else{
+            this.fisicExam = response.results;
+          }
+      
         }),
       )
       .subscribe();

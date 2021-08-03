@@ -20,8 +20,6 @@ import { PhysicalexamService } from '../../../physicalexam/services/physicalexam
 })
 export class SystemExamPageComponent implements OnInit, OnDestroy {
   systemExam: SystemExam[];
-  fisicExam: any = [];
-  fisic: any = [];
   dataCount = 0;
   configuration = SYSTEM_EXAM_TABLE_CONFIGURATION;
   subscriptions: Subscription[] = [];
@@ -86,18 +84,6 @@ export class SystemExamPageComponent implements OnInit, OnDestroy {
         map((response) => {
           this.configuration.tableFilters[2].items = response.results.map((res) => ({ id: res.id, name: res.descripcion }));
         }),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
-
-  getFisicExamEdit(filters = {}) {
-    const sub = this.fisicExamService
-      .getPhysicalexam({}, 'id', 'asc', 1, 1000)
-      .pipe(
-        map((response) => {
-          this.fisicExam = response.results; }),
       )
       .subscribe();
 
@@ -193,8 +179,6 @@ export class SystemExamPageComponent implements OnInit, OnDestroy {
         systemExam: item,
       },
     });
-    this.getFisicExamEdit({id:item.examen_fisico.id});
-    console.log(this.fisicExam);
     const modalComponentRef = dialogRef.componentInstance as SystemExamFormComponent;
 
     const sub = modalComponentRef.edit

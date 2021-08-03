@@ -12,8 +12,9 @@ import { SystemExam } from '../models/system-exam.model';
 })
 export class SystemExamService {
   private apiEndpoint = `${environment.apiUrl}adm_examen_sistema`;
-  private apiEndpointF = `${environment.apiUrl}adm_examen_fisico_unico`;
+  private apiEndpointFU = `${environment.apiUrl}adm_examen_fisico_unico`;
   private apiEndpointS = `${environment.apiUrl}adm_sistema`;
+  private apiEndpointF = `${environment.apiUrl}adm_examen_fisico`;
   private defaultFilter: any = {};
 
   private defaultSortColumn: string = 'id';
@@ -37,7 +38,11 @@ export class SystemExamService {
     return this.http.get<ApiResponse<SystemExam>>(this.apiEndpoint + queryParams);
   }
   getFisicExam(): Observable<ApiResponse<any>> {
-    return this.http.get<ApiResponse<any>>(this.apiEndpointF);
+    return this.http.get<ApiResponse<any>>(this.apiEndpointFU);
+  }
+
+  getPhysicalexam(id): Observable<ApiResponse<any>> {
+    return this.http.get<ApiResponse<any>>(`${this.apiEndpointF}/${id}/`);
   }
 
   getSystem(): Observable<ApiResponse<any>> {
