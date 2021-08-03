@@ -1,0 +1,42 @@
+<div class="form">
+  <!--<h4>{{ data.pinpaciente ? 'Editar Pin Paciente' : 'Crear Pin Paciente' }}</h4>-->
+  <h4>{{ 'Pin Paciente' }}</h4>
+  <mat-divider class="my-4"></mat-divider>
+  <form *ngIf="pinpacienteForm" [formGroup]="pinpacienteForm">
+
+
+      <mat-form-field *ngIf="data.pinpaciente === null ? true : false" class="w-100" appearance="outline">
+        <mat-label>Nombre:</mat-label>
+        <mat-select formControlName="id">
+          <mat-option *ngFor="let name of ids" [value]="name.id">{{ name.nombre }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="idControl.errors?.required && idControl.dirty">Seleccione un Nombre</mat-error>
+      </mat-form-field>
+
+    <mat-form-field *ngIf="data.pinpaciente === null ? false : true" class="w-100"  appearance="outline">
+      <mat-label>Pin Anterior</mat-label>
+      <input matInput formControlName="pin_anterior" maxlength="4"/>
+      <mat-error *ngIf="pinLastControl.errors?.required"> {{ 'La pin anterior es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Pin Nuevo</mat-label>
+      <input matInput formControlName="pin_nuevo" maxlength="4"/>
+      <mat-error *ngIf="pinNewControl.errors?.required"> {{ 'El pin nuevi es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Confirmar Pin</mat-label>
+      <input matInput formControlName="pin_confirmar" maxlength="4"/>
+      <mat-error *ngIf="pinConfirmControl.errors?.required"> {{ 'La confirmación del pin es' }} <strong>requerida</strong> </mat-error>
+    </mat-form-field>
+
+  </form>
+  <mat-divider class="my-4"></mat-divider>
+  <div class="d-flex align-items-center justify-content-end">
+    <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+    <button (click)="onSubmit(pinpacienteForm.value)" [disabled]="!pinpacienteForm.valid" mat-raised-button color="primary" class="button">
+      {{ data.pinpaciente ? 'Aceptar' : 'Crear' }}
+    </button>
+  </div>
+</div>
