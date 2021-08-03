@@ -286,6 +286,13 @@ export class NavigationService {
           iconName: ['note'],
           children: [
             {
+              displayName: 'Pin Paciente',
+              iconName: ['radio_button_unchecked'],
+              route: 'pin_paciente',
+              material: true,
+              display: true,
+            },
+            {
               displayName: 'Historia Clínica',
               iconName: ['radio_button_unchecked'],
               route: 'clinical-services/clinic-history',
