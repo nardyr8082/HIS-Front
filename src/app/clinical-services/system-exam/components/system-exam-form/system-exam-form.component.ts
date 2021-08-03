@@ -50,7 +50,7 @@ export class SystemExamFormComponent implements OnInit, OnDestroy {
       .getPhysicalexam(id)
       .pipe(
         map((response) => {
-          this.fisicExam = response.results; }),
+          this.fisicExam = [response]; }),
       )
       .subscribe();
     this.subscriptions.push(sub);

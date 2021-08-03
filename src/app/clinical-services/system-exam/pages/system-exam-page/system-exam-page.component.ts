@@ -184,7 +184,7 @@ export class SystemExamPageComponent implements OnInit, OnDestroy {
     const sub = modalComponentRef.edit
       .pipe(
         switchMap((systemExam: SystemExam) =>
-          this.systemExamService.editSystemExam({ ...systemExam, id: item.id }).pipe(
+          this.systemExamService.editSystemExam({ ...systemExam, id: item.examen_fisico.id }).pipe(
             catchError(() => {
               this.toastService.error('Hubo un error al editar el examen sistema. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
@@ -213,7 +213,7 @@ export class SystemExamPageComponent implements OnInit, OnDestroy {
       .pipe(
         filter((accept) => accept),
         switchMap(() =>
-          this.systemExamService.deleteSystemExam(item.id).pipe(
+          this.systemExamService.deleteSystemExam(item.examen_fisico.id).pipe(
             map(() => item),
             catchError(() => {
               this.toastService.error('Hubo un error al eliminar el examen sistema. Por favor, inténtelo de nuevo más tarde.', 'Error');
