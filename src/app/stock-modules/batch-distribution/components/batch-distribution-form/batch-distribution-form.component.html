@@ -15,12 +15,18 @@
       <mat-error *ngIf="loteControl.errors?.required"> {{ 'Seleccione un lote' }} </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="w-100" appearance="outline">
+    <mat-form-field *ngIf="!moveDetail" class="w-100" appearance="outline">
       <mat-label>Detalle de Movimiento</mat-label>
       <mat-select #mySelect formControlName="detalle_movimiento">
         <mat-option *ngFor="let lote of lotes" [value]="lote.id">{{ lote.codigo }}</mat-option>
       </mat-select>
       <mat-error *ngIf="detalle_movimientoControl.errors?.required"> {{ 'El detalle de movimiento es' }} <strong>requerido</strong> </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100" appearance="outline">
+      <mat-label>Precio</mat-label>
+      <input type="number" matInput formControlName="precio" />
+      <mat-error *ngIf="precioControl.errors?.required"> {{ 'El precio es ' }} <strong>requerido</strong> </mat-error>
     </mat-form-field>
   </form>
   <mat-divider class="my-4"></mat-divider>

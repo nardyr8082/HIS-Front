@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { map } from 'rxjs/operators';
 import { WarehouseLot } from 'src/app/stock-modules/warehouse-lot/models/warehouseLot';
+import { WarehouseMovementDetail } from 'src/app/stock-modules/warehouse-movement-detail/models/warehouse-movement-detail.model';
 
 @Component({
   selector: 'app-batch-distribution-form',
@@ -17,6 +18,8 @@ export class BatchDistributionFormComponent implements OnInit {
 
   lotes: WarehouseLot[];
 
+  moveDetail: WarehouseMovementDetail;
+
   subscriptions: Subscription[] = [];
 
   batchDistributionForm: FormGroup;
@@ -28,6 +31,7 @@ export class BatchDistributionFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.moveDetail = this.data?.moveDetail;
     this.buildForm();
     this.getLotes();
   }
@@ -40,10 +44,12 @@ export class BatchDistributionFormComponent implements OnInit {
     this.batchDistributionForm = new FormGroup({
       id: new FormControl(this.data?.batchDistribution?.id ? this.data?.batchDistribution.id : null),
       cant_por_lote: new FormControl(this.data?.batchDistribution?.cant_por_lote ? this.data?.batchDistribution.cant_por_lote : null, [Validators.required]),
+      precio: new FormControl(this.data?.batchDistribution?.precio ? this.data?.batchDistribution.precio : null, [Validators.required]),
       lote: new FormControl(this.data?.batchDistribution?.lote ? this.data?.batchDistribution.lote.id : null, [Validators.required]),
-      detalle_movimiento: new FormControl(this.data?.batchDistribution?.detalle_movimiento ? this.data?.batchDistribution.detalle_movimiento.id : null, [
-        Validators.required,
-      ]),
+      detalle_movimiento: new FormControl(
+        this.data?.batchDistribution?.detalle_movimiento ? this.data?.batchDistribution.detalle_movimiento.id : this.moveDetail ? this.moveDetail.id : null,
+        [Validators.required],
+      ),
     });
   }
 
@@ -61,6 +67,10 @@ export class BatchDistributionFormComponent implements OnInit {
 
   get detalle_movimientoControl() {
     return this.batchDistributionForm.get('detalle_movimiento') as FormControl;
+  }
+
+  get precioControl() {
+    return this.batchDistributionForm.get('precio') as FormControl;
   }
 
   onSubmit(data) {

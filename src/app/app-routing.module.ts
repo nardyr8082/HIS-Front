@@ -312,6 +312,11 @@ const routes: Routes = [
         canActivate: [BackendGuard],
       },
       {
+        path: 'pin_paciente',
+        loadChildren: () => import('./clinical-services/pinpaciente/pinpaciente.module').then((m) => m.PinpacienteModule),
+        canActivate: [BackendGuard],
+      },
+      {
         path: 'indicator-type',
         loadChildren: () => import('./indicator-module/indicator-type/indicator-type.module').then((m) => m.IndicatorTypeModule),
         canActivate: [BackendGuard],
