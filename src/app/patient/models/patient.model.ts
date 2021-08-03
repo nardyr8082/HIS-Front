@@ -42,4 +42,5 @@ export interface Patient {
   tipo_doc?: DocTypeId;
   nacionalidad?: Nationality;
   municipio?: Municipality;
+  pin?: any;
 }
