@@ -31,7 +31,12 @@ export class SystemExamFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.buildForm();
-    this.getFisicExam();
+    if (this.data.systemExam) {
+      this.getFisicExamEdit(this.data.systemExam.examen_fisico.id)
+    }
+    else{
+      this.getFisicExam();
+    }
     this.getSystem();
 
   }
@@ -48,9 +53,7 @@ export class SystemExamFormComponent implements OnInit, OnDestroy {
           this.fisicExam = response.results; }),
       )
       .subscribe();
-
     this.subscriptions.push(sub);
-    console.log(this.fisicExam);
   }
 
   getFisicExam() {
@@ -58,13 +61,7 @@ export class SystemExamFormComponent implements OnInit, OnDestroy {
       .getFisicExam()
       .pipe(
         map((response: ApiResponse<any>) => {
-          if (this.data.systemExam) {
-          this.getFisicExamEdit(this.data.systemExam.examen_fisico.id);
-           }
-          else{
-            this.fisicExam = response.results;
-          }
-      
+         this.fisicExam = response.results;      
         }),
       )
       .subscribe();
