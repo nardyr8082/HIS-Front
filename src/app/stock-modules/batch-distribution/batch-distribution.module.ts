@@ -9,5 +9,6 @@ import { BatchDistributionRoutingModule } from './batch-distribution-routing.mod
   declarations: [BatchDistributionPageComponent, BatchDistributionFormComponent],
   imports: [CommonModule, BatchDistributionRoutingModule, SharedModule],
   entryComponents: [BatchDistributionFormComponent],
+  exports: [BatchDistributionPageComponent, BatchDistributionFormComponent],
 })
 export class BatchDistributionModule {}

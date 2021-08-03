@@ -1,3 +1,4 @@
+import { LoteDistributionManageModalComponent } from './../../components/lote-distribution-manage-modal/lote-distribution-manage-modal.component';
 import { WAREHOUSE_MOVEMENT_DETAIL_TABLE_CONFIGURATION } from './../../models/warehouse-movement-detail-table-configuration';
 import { WarehouseMovementDetailService } from '../../services/warehouse-movement-detail.service';
 import { MeasureService } from 'src/app/stock-modules/classifiers/measure/services/measure.service';
@@ -32,6 +33,13 @@ export class WarehouseMovementDetailPageComponent implements OnInit, OnChanges {
   pageSize = DEFAULT_PAGE_SIZE;
 
   rowActionButtons = [
+    {
+      tooltipText: 'Gestionar Distribución por lote',
+      icon: 'assignment',
+      color: 'primary',
+      class: 'btn-primary',
+      callback: (item) => this.openLoteForm(item),
+    },
     {
       tooltipText: 'Editar Detalle Movimiento',
       icon: 'edit',
@@ -239,6 +247,22 @@ export class WarehouseMovementDetailPageComponent implements OnInit, OnChanges {
       .subscribe();
 
     this.subscriptions.push(sub);
+  }
+
+  openLoteForm(item) {
+    let dialogRef: MatDialogRef<LoteDistributionManageModalComponent, any>;
+
+    dialogRef = this.dialog.open(LoteDistributionManageModalComponent, {
+      panelClass: 'app-dialog-add-edit-business',
+      maxWidth: '1000px',
+      minWidth: '150px',
+      maxHeight: '100vh',
+      width: '100%',
+      data: {
+        moveDetail: item,
+      },
+      disableClose: true,
+    });
   }
 
   openEditForm(item) {
