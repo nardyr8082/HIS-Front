@@ -17,18 +17,27 @@
       <mat-label>Pin Anterior</mat-label>
       <input matInput formControlName="pin_anterior" maxlength="4"/>
       <mat-error *ngIf="pinLastControl.errors?.required"> {{ 'La pin anterior es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="pinLastControl.errors?.isNumberInt"> {{ 'El pin anterior es' }} <strong>solo números enteros</strong> </mat-error>
+      <mat-error *ngIf="pinLastControl.errors?.minlength"> {{ 'El pin anterior es' }} <strong>debe ser de 4 cifras</strong> </mat-error>
+      <mat-error *ngIf="pinLastControl.errors?.isEqual"> {{ 'El pin anterior ' }} <strong>no corresponde</strong> </mat-error>
+
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Pin Nuevo</mat-label>
       <input matInput formControlName="pin_nuevo" maxlength="4"/>
-      <mat-error *ngIf="pinNewControl.errors?.required"> {{ 'El pin nuevi es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="pinNewControl.errors?.required"> {{ 'El pin nuevo es' }} <strong>requerido</strong> </mat-error>
+      <mat-error *ngIf="pinNewControl.errors?.isNumberInt"> {{ 'El pin nuevo es' }} <strong>solo números enteros</strong> </mat-error>
+      <mat-error *ngIf="pinNewControl.errors?.minlength"> {{ 'El pin nuevo es' }} <strong>debe ser de 4 cifras</strong> </mat-error>
     </mat-form-field>
 
     <mat-form-field class="w-100" appearance="outline">
       <mat-label>Confirmar Pin</mat-label>
       <input matInput formControlName="pin_confirmar" maxlength="4"/>
       <mat-error *ngIf="pinConfirmControl.errors?.required"> {{ 'La confirmación del pin es' }} <strong>requerida</strong> </mat-error>
+      <mat-error *ngIf="pinConfirmControl.errors?.isNumberInt"> {{ 'La confirmación del pin' }} <strong>solo acepta números enteros</strong> </mat-error>
+      <mat-error *ngIf="pinConfirmControl.errors?.minlength"> {{ 'La confirmación del pin' }} <strong>debe ser de 4 cifras</strong> </mat-error>
+      <mat-error *ngIf="pinConfirmControl.errors?.bothEqual"> {{ 'La confirmación del pin' }} <strong>debe ser igual a Pin Nuevo</strong> </mat-error>
     </mat-form-field>
 
   </form>
