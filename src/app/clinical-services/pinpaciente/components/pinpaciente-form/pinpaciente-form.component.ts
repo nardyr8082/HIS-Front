@@ -43,8 +43,23 @@ export class PinpacienteFormComponent implements OnInit, OnDestroy {
       pin_anterior: new FormControl(this.data.pinpaciente ? this.data.pinpaciente.pin_anterior : '0000', [ Validators.required, Validators.minLength(4), ValidationPinPaciente.isNumberInt, isEqual(this.data.pinpaciente)]),
       pin_nuevo: new FormControl( this.data.pinpaciente ? this.data.pinpaciente.pin_nuevo : '', [ Validators.required, Validators.minLength(4), ValidationPinPaciente.isNumberInt]),
       pin_confirmar: new FormControl(this.data.pinpaciente ? this.data.pinpaciente.pin_confirmar : '', [ Validators.required, Validators.minLength(4), ValidationPinPaciente.isNumberInt]),
-    }, { validators: bothEqual });
+    }, { validators: this.MustMatch('pin_nuevo', 'pin_confirmar') });
     console.log('mensaje form:', this.pinpacienteForm);
+  }
+  MustMatch(news: string, confirm: string) {
+    return(formGroup: FormGroup) => {
+      const control = formGroup.controls[news];
+      const matching = formGroup.controls[confirm];
+      if (matching.errors && !matching.errors.MustMatch) {
+        return null;
+      }
+      if (control.value !== matching.value) {
+        matching.setErrors({MustMatch: true});
+      }
+      else {
+        matching.setErrors(null);
+      }
+    };
   }
   get pinLastControl() {
     return this.pinpacienteForm?.get('pin_anterior') as FormControl;

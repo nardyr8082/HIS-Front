@@ -37,7 +37,7 @@
       <mat-error *ngIf="pinConfirmControl.errors?.required"> {{ 'La confirmación del pin es' }} <strong>requerida</strong> </mat-error>
       <mat-error *ngIf="pinConfirmControl.errors?.isNumberInt"> {{ 'La confirmación del pin' }} <strong>solo acepta números enteros</strong> </mat-error>
       <mat-error *ngIf="pinConfirmControl.errors?.minlength"> {{ 'La confirmación del pin' }} <strong>debe ser de 4 cifras</strong> </mat-error>
-      <mat-error *ngIf="pinConfirmControl.errors?.bothEqual"> {{ 'La confirmación del pin' }} <strong>debe ser igual a Pin Nuevo</strong> </mat-error>
+      <mat-error *ngIf="pinConfirmControl.errors?.MustMatch"> {{ 'La confirmación del pin' }} <strong>debe ser igual a Pin Nuevo</strong> </mat-error>
     </mat-form-field>
 
   </form>
