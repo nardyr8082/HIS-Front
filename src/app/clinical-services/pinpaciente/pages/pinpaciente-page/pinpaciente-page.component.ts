@@ -117,10 +117,10 @@ export class PinpacientePageComponent implements OnInit, OnDestroy {
 
     const modalComponentRef = dialogRef.componentInstance as PinpacienteFormComponent;
 
-    const sub = modalComponentRef.create
+    const sub = modalComponentRef.edit
       .pipe(
         switchMap((pinpaciente: Patient) =>
-          this.pinpacienteService.createPatient(pinpaciente).pipe(
+          this.pinpacienteService.editPatient(pinpaciente).pipe(
             catchError(() => {
               this.toastService.error('Hubo un error al crear el Pin Paciente. Por favor, inténtelo de nuevo más tarde.', 'Error');
               return of(null);
