@@ -45,6 +45,12 @@ export class ClinicHistoryStaticPageComponent implements OnInit {
       color: 'primary',
       class: 'btn-default',
       callback: (item) => this.goToDetails(item),
+    }, {
+      tooltipText: 'Adicionar Sección Clínica',
+      icon: 'assignment',
+      color: 'primary',
+      class: 'btn-default',
+      callback: (item) => this.goToClinicSeccion(item),
     },
     {
       tooltipText: 'Eliminar Historia Clínica',
@@ -262,6 +268,11 @@ export class ClinicHistoryStaticPageComponent implements OnInit {
 
 
 
+  }
+
+  goToClinicSeccion(clinicHistoryStatic?: ClinicHistoryStatic) {
+    console.log(clinicHistoryStatic);
+    clinicHistoryStatic ? this.router.navigateByUrl(`/clinical-session`) : this.router.navigateByUrl(`clinic-history-static`);
   }
 
   deleteClinicHistoryStatic(item) {
