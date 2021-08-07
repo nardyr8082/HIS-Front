@@ -1,1 +1,1 @@
-<app-clinic-history-form [metaTableNames]="metaTableNames" (create)="onCreate($event)"></app-clinic-history-form>
+<app-clinic-history-form *ngIf="metaTableNames" [metaTableNames]="metaTableNames" (create)="onCreate($event)" (edit)="onEdit($event)"></app-clinic-history-form>

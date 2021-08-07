@@ -1,3 +1,4 @@
+import { ClinicHistoryService } from './../../services/clinic-history.service';
 import { MetaTableField } from './../../models/MetaTableField/MetaTableField.model';
 import { MetaTableFieldService } from './../../services/metaTableField.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
@@ -7,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { MetaTableName } from '../../models/MetaTable/MetaTable.model';
 import { MatDialog } from '@angular/material/dialog';
 import { map } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-clinic-history-form',
@@ -24,10 +26,27 @@ export class ClinicHistoryFormComponent implements OnInit, OnDestroy, OnChanges 
   metaFieldsForms: FormGroup[];
 
   subscriptions: Subscription[] = [];
+  tableNameId;
 
-  constructor(private _formBuilder: FormBuilder, public dialog: MatDialog, private metaTableFieldService: MetaTableFieldService) {}
+  constructor(
+    private _formBuilder: FormBuilder,
+    public dialog: MatDialog,
+    private metaTableFieldService: MetaTableFieldService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private dataRecordService: ClinicHistoryService,
+  ) {
+    this.route.params.subscribe((params) => {
+      this.tableNameId = params['id'];
+    });
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.tableNameId) {
+      this.metaTableNames = this.metaTableNames.filter((mtn) => mtn.id == this.tableNameId);
+      this.onChangeTable(this.tableNameId);
+    }
+  }
 
   ngOnChanges() {}
 
@@ -36,14 +55,29 @@ export class ClinicHistoryFormComponent implements OnInit, OnDestroy, OnChanges 
   }
 
   buildFieldsForm(metaTableFields: MetaTableField[]) {
-    this.metaFieldsForms = [];
-    metaTableFields.forEach((field) => {
-      const fieldForm = this._formBuilder.group({
-        name: [{ value: field.mtf_fieldname, disabled: true }],
-        mtf: [field.id, Validators.required],
-        data_value: ['', Validators.required],
+    this.route.queryParams.subscribe((params) => {
+      this.metaFieldsForms = [];
+      metaTableFields.forEach((field) => {
+        const fieldForm = this._formBuilder.group({
+          id: [params[`id_${field.mtf_fieldname}`] ? params[`id_${field.mtf_fieldname}`] : null],
+          name: [{ value: field.mtf_fieldname, disabled: true }],
+          mtf: [field.id, Validators.required],
+          data_value: [params[field.mtf_fieldname] ? params[field.mtf_fieldname] : '', Validators.required],
+        });
+        if (this.tableNameId) {
+          this.dataRecordService
+            .getClicnicHistoryById(params[`id_${field.mtf_fieldname}`])
+            .pipe(
+              map((response) => {
+                fieldForm.addControl('table_record_id', new FormControl(response.table_record_id));
+                this.metaFieldsForms.push(fieldForm);
+              }),
+            )
+            .subscribe();
+        } else {
+          this.metaFieldsForms.push(fieldForm);
+        }
       });
-      this.metaFieldsForms.push(fieldForm);
     });
   }
 
@@ -81,6 +115,6 @@ export class ClinicHistoryFormComponent implements OnInit, OnDestroy, OnChanges 
 
   onSubmit() {
     const data = this.metaFieldsForms.map((form) => form.value);
-    this.clinicHistory ? this.edit.emit({}) : this.create.emit(data);
+    this.tableNameId ? this.edit.emit(data) : this.create.emit(data);
   }
 }

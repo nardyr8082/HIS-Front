@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as moment from 'moment';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { DEFAULT_PAGINATION_SIZE } from 'src/app/core/models/api-response.model';
 import { FilterResponse, FilterTable } from '../../models/table-filter.model';
@@ -14,7 +14,7 @@ import { FilterResponse, FilterTable } from '../../models/table-filter.model';
   templateUrl: './custom-table.component.html',
   styleUrls: ['./custom-table.component.scss'],
 })
-export class CustomTableComponent implements AfterViewInit, OnInit {
+export class CustomTableComponent implements AfterViewInit, OnInit, OnDestroy {
   @Input() data: MatTableDataSource<any>;
   @Input() dataCount: number = 0;
   @Input() displayedColumns: string[] = [];
@@ -31,11 +31,13 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  subscriptions: Subscription[] = [];
+
   searchTerm = new Subject<any>();
   filterForm: FormGroup;
 
   constructor() {
-    this.searchTerm
+    const sub = this.searchTerm
       .pipe(
         map(() => this.filterForm.value),
         debounceTime(400),
@@ -49,6 +51,8 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
         });
         this.changeFilter.emit(searchTerm);
       });
+
+    this.subscriptions.push(sub);
   }
 
   ngOnInit() {
@@ -65,6 +69,10 @@ export class CustomTableComponent implements AfterViewInit, OnInit {
         }
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
   ngAfterViewInit() {

@@ -3,10 +3,10 @@ import { ClinicHistoryService } from './../../services/clinic-history.service';
 import { MetaTableNameService } from './../../services/metaTableName.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MetaTableName } from '../../models/MetaTable/MetaTable.model';
-import { of, Subscription } from 'rxjs';
+import { of, Subscription, Observable, forkJoin } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { ClinicHistory } from '../../models/CLinicHistory/clinicHistory.model';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-clinic-history-item',
@@ -16,6 +16,8 @@ import { Router } from '@angular/router';
 export class ClinicHistoryItemComponent implements OnInit, OnDestroy {
   metaTableNames: MetaTableName[];
   subscriptions: Subscription[] = [];
+
+  tableNameId;
 
   constructor(
     private metaTableNameService: MetaTableNameService,
@@ -61,5 +63,26 @@ export class ClinicHistoryItemComponent implements OnInit, OnDestroy {
       .subscribe();
 
     this.subscriptions.push(sub);
+  }
+
+  onEdit(data: ClinicHistory[]) {
+    const observables: Observable<any>[] = [];
+    data.forEach((hcr) => {
+      const obs = this.clinicHistoryService.editClicnicHistory(hcr);
+      observables.push(obs);
+    });
+
+    forkJoin(observables)
+      .pipe(
+        map(() => {
+          this.toastrService.success('La Historia Clínica ha sido modificada satisfactoriamente.', 'Felicidades');
+          this.router.navigateByUrl('/clinical-services/clinic-history');
+        }),
+        catchError((err) => {
+          this.toastrService.error(err.msg, 'Error');
+          return of(null);
+        }),
+      )
+      .subscribe();
   }
 }

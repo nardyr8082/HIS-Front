@@ -28,6 +28,8 @@ export class ClinicHistoryPageComponent implements OnInit {
   dataTable;
   dataCount = 0;
 
+  selectedTableName;
+
   metaTableFields: MetaTableField[];
   configuration: TableConfiguration;
   subscriptions: Subscription[] = [];
@@ -38,6 +40,13 @@ export class ClinicHistoryPageComponent implements OnInit {
   tableId: number;
 
   rowActionButtons = [
+    {
+      tooltipText: 'Editar Historia Clínica',
+      icon: 'edit',
+      color: 'primary',
+      class: 'btn-primary',
+      callback: (item) => this.goToForm(item),
+    },
     {
       tooltipText: 'Eliminar Historia Clínica',
       icon: 'delete',
@@ -97,7 +106,7 @@ export class ClinicHistoryPageComponent implements OnInit {
   }
 
   goToForm(clicnicHistory?: ClinicHistory) {
-    this.router.navigateByUrl(`/clinical-services/clinic-history/edit/${clicnicHistory.id}`);
+    this.router.navigate([`/clinical-services/clinic-history/edit/${this.selectedTableName}`], { queryParams: { ...clicnicHistory } });
   }
 
   onChangeSort(sort: Sort) {
@@ -161,6 +170,8 @@ export class ClinicHistoryPageComponent implements OnInit {
   onChangeTable(tableId) {
     this.tableId = tableId;
     this.dataTable = null;
+
+    this.selectedTableName = tableId;
     const observableMetafield = this.getMetaTableFields(tableId);
     const observableClinicalHistory = this.getClinicalHistories(tableId);
 
