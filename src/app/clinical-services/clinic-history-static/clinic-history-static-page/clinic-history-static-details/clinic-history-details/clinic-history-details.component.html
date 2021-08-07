@@ -1,0 +1,123 @@
+<div class="container my-3">
+  <mat-card class="w-100">
+    <mat-card-header>
+      <div class="d-flex justify-content-between align-items-center w-100">
+        <div class="d-flex">
+          <img class="img-detail-avatar mx-3" [src]="clinicHistoryStatic.paciente?.foto" />
+          <mat-card-title> Nº Historia Clínica: {{clinicHistoryStatic.numero_hc}}</mat-card-title>
+        </div>
+        <div>
+          <button (click)="goBack()" mat-fab color="primary" aria-label="Back icon">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-divider class="my-3"></mat-divider>
+    <mat-card-content>
+      <div class="row mt-5">
+        <div class="col-lg-6 col-sm-12">
+          <h4>Datos Personales</h4>
+          <div class="card p-3">
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.nombre">
+              Nombre: <b>{{ clinicHistoryStatic.paciente.nombre }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.apellidos">
+              Apellidos: <b>{{ clinicHistoryStatic.paciente.apellidos }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.email">
+              Correo: <b>{{ clinicHistoryStatic.paciente.email }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.nro_identificacion">
+              Número de identificación: <b>{{ clinicHistoryStatic.paciente.nro_identificacion }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.tipo_doc?.descripcion">
+              Tipo de documento: <b>{{ clinicHistoryStatic.paciente.tipo_doc.descripcion }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.fecha_nacimiento">
+              Fecha de Nacimiento: <b>{{ clinicHistoryStatic.paciente.fecha_nacimiento | date: 'dd/MM/yyyy' }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.sexo">
+              Sexo: <b>{{ clinicHistoryStatic.paciente.sexo }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.grupo_sanguineo">
+              Grupo Sanguíneo: <b>{{ clinicHistoryStatic.paciente.grupo_sanguineo }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.nacionalidad?.descripcion">
+              Nacionalidad: <b>{{ clinicHistoryStatic.paciente.nacionalidad }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.municipio?.nombre">
+              Distrito: <b>{{ clinicHistoryStatic.paciente.municipio }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.ocupacion">
+              Profesión: <b>{{ clinicHistoryStatic.paciente?.ocupacion }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.raza">
+              Categoría Docente: <b>{{ clinicHistoryStatic.paciente?.raza}}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.seg_social">
+              Categorías Científica: <b>{{ clinicHistoryStatic.paciente?.seg_social}}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.estado_civil?.descripcion">
+              Especialidades: <b>{{ clinicHistoryStatic.paciente?.estado_civil.descripcion }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.fecha_defuncion">
+              Fecha Defuncion: <b>{{ clinicHistoryStatic.paciente?.fecha_defuncion | date: 'dd/MM/yyyy' }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.motivo_defuncion">
+              Motivo Defuncion: <b>{{ clinicHistoryStatic.paciente?.motivo_defuncion }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.nota_factura">
+              Nota Factura: <b>{{ clinicHistoryStatic.paciente?.nota_factura }}</b>
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+          <h4>Datos de Contacto</h4>
+          <div class="card p-3">
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.direccion">
+              Dirección: <b>{{ clinicHistoryStatic.paciente?.direccion }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.barrio">
+              Barrrio: <b>{{ clinicHistoryStatic.paciente?.barrio }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.numero">
+              Número: <b>{{ clinicHistoryStatic.paciente?.numero }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.cod_postal">
+              Código Postal: <b>{{ clinicHistoryStatic.paciente?.cod_postal }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.nombre_madre">
+              Nombre de la Madre: <b>{{ clinicHistoryStatic.paciente?.nombre_madre }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.nombre_padre">
+              Nombre del Padre: <b>{{ clinicHistoryStatic.paciente?.nombre_padre }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.contacto_emergencia">
+              Contacto de emergencia: <b>{{ clinicHistoryStatic.paciente?.contacto_emergencia }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.telefono_emergencia">
+              Teléfono de emergencia: <b>{{ clinicHistoryStatic.paciente?.telefono_emergencia }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.telefono_casa">
+              Teléfono de casa: <b>{{ clinicHistoryStatic.paciente?.telefono_casa }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.telefono_trabajo">
+              Teléfono del trabajo: <b>{{ clinicHistoryStatic.paciente?.telefono_trabajo }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.telefono_movil">
+              Teléfono Movil: <b>{{ clinicHistoryStatic.paciente?.telefono_movil }}</b>
+            </p>
+            <p class="my-1" *ngIf="clinicHistoryStatic.paciente?.telefono_casa">
+              Teléfono de casa: <b>{{ clinicHistoryStatic.paciente?.telefono_casa }}</b>
+            </p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-end" *ngIf="clinicHistoryStatic.paciente?.qr_code">
+          <img class="qr-image" [src]="apiUrl + clinicHistoryStatic.paciente?.qr_code"
+            [alt]="apiUrl + clinicHistoryStatic.paciente?.qr_code" />
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
