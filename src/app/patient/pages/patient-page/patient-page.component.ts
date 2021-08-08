@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 import { Sort } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-patient-page',
@@ -136,5 +137,19 @@ export class PatientPageComponent implements OnInit {
 
     const sub1 = modalComponentRef.cancel.pipe(tap(() => modalRef.close())).subscribe();
     this.subscriptions.push(sub, sub1);
+  }
+  makePdf() {
+    console.log('He creado el pdf');
+    let pdf = new jsPDF('p', 'mm', 'a4');
+    var img = new Image();
+    img.src = 'assets/logo.jpg';
+    pdf.addImage(img, 'jpg', 4, 4, 50, 25);
+    pdf.text('REPÚBLICA DE GUINEA ECUATORIAL', 60, 10);
+    pdf.text('MINISTERIO DE SANIDAD Y BIENESTAR SOCIAL', 60, 15);
+    pdf.text('TARJETA DE SALUD', 60, 25);
+    pdf.text('________________________________________________________________________________________________________________iop[', 0, 35);
+    pdf.text('Héctor Pérez Pérez', 4, 45);
+    pdf.text('No: 32425', 4, 50);
+    pdf.save('reportes.pdf');
   }
 }
