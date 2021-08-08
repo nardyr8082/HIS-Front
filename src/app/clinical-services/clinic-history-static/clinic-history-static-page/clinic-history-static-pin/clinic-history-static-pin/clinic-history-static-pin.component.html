@@ -1,0 +1,29 @@
+<div class="form">
+    <h4>Insertar Pin</h4>
+    <mat-divider class="my-4"></mat-divider>
+    <p class="my-1" *ngIf="data.dataclinicHistoryStaticPin?.paciente">
+        Paciente: <b>{{ data.dataclinicHistoryStaticPin.paciente}}</b>
+    </p>
+    <p class="my-1" *ngIf="data.dataclinicHistoryStaticPin?.numero_hc">
+        Nº Historia Clínica: <b>{{ data.dataclinicHistoryStaticPin.numero_hc }}</b>
+    </p>
+
+    <mat-divider class="my-4"></mat-divider>
+    <form *ngIf="clinicHistoryStaticPin" [formGroup]="clinicHistoryStaticPin">
+        <mat-form-field class="w-100" appearance="outline">
+            <mat-label>Pin:</mat-label>
+            <input matInput formControlName="paciente_pin" type="password" />
+            <!--    <mat-error *ngIf="this.paciente_pinControl.errors?.required"> {{ 'El pin es:' }}
+                <strong>requerido</strong>
+            </mat-error> -->
+        </mat-form-field>
+    </form>
+    <mat-divider class="my-4"></mat-divider>
+    <div class="d-flex align-items-center justify-content-end">
+        <button (click)="onCancel()" mat-raised-button color="default" class="button mx-2">Cancelar</button>
+        <button (click)="onSubmit(clinicHistoryStaticPin.value)" [disabled]="!clinicHistoryStaticPin.valid"
+            mat-raised-button color="primary" class="button">
+            Aceptar
+        </button>
+    </div>
+</div>

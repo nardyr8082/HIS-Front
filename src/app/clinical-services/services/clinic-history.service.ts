@@ -72,6 +72,10 @@ export class ClinicHistoryService {
     return queryParams;
   }
 
+  getClicnicHistoryById(id): Observable<ClinicHistory> {
+    return this.http.get<any>(`${this.apiEndpoint}/${id}/`);
+  }
+
   createClicnicHistory(data: ClinicHistory): Observable<ClinicHistory> {
     return this.http.post<any>(`${this.apiEndpoint}/`, data);
   }

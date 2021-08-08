@@ -10,7 +10,7 @@ export const CLINIC_HISTORY_STATIC_TABLE_CONFIGURATION: TableConfiguration = {
 
     {
       name: 'numero_hc',
-      title: 'Numero_hc',
+      title: 'Numero',
       type: 'text',
 
     },
