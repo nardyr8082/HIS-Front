@@ -59,6 +59,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { PrettyJsonModule } from 'angular2-prettyjson';
 import { JsonPipe } from '@angular/common';
+import { ChartsModule } from 'ng2-charts';
 
 ///////////////////////////////////////////////////////////////////
 
@@ -83,6 +84,7 @@ const components = [DeleteConfirmationModalComponent];
     FlexLayoutModule,
     CommonModule,
     RouterModule,
+    ChartsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatSnackBarModule,
@@ -126,6 +128,7 @@ const components = [DeleteConfirmationModalComponent];
   exports: [
     ReactiveFormsModule,
     CommonModule,
+    ChartsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatSnackBarModule,

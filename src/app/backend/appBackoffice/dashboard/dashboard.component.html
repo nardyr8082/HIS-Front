@@ -1,10 +1,10 @@
 <div class="container">
   <div class="row">
-    <mat-card class="card" style="margin-left: 30px; max-width: 500px;">
+    <mat-card class="col-md-6">
       <mat-card-header>
         <mat-card-title>Estadísticas</mat-card-title>
       </mat-card-header>
-      <app-custom-table
+      <!--<app-custom-table
       *ngIf="data"
       [data]="data"
       [dataCount]="dataCount"
@@ -13,6 +13,64 @@
       [paginationSize]="configuration.paginationSize"
       [loading]="loading"
       (changePage)="onChangePage($event)"
-    ></app-custom-table></mat-card>
+    ></app-custom-table>-->
+      <div style="display: block;">
+        <canvas baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [legend]="true"
+                [type]="barChartType">
+        </canvas>
+      </div>
+    </mat-card>
+    <mat-card class="col-md-6">
+      <mat-card-header>
+        <mat-card-title>Estadísticas Movimiento Almacén</mat-card-title>
+      </mat-card-header>
+      <!--<app-custom-table
+      *ngIf="data"
+      [data]="data"
+      [dataCount]="dataCount"m
+      [displayedColumns]="configuration.displayedColumns"
+      [columnsName]="configuration.columnsName"
+      [paginationSize]="configuration.paginationSize"
+      [loading]="loading"
+      (changePage)="onChangePage($event)"
+    ></app-custom-table>-->
+      <div style="display: block;">
+        <canvas baseChart
+                [datasets]="moveData"
+                [labels]="moveLabels"
+                [options]="barChartOptions"
+                [legend]="true"
+                [type]="barChartType">
+        </canvas>
+      </div>
+    </mat-card>
+    <mat-card class="col-md-6">
+      <mat-card-header>
+        <mat-card-title>Estadísticas Tipo Movimiento Almacén</mat-card-title>
+      </mat-card-header>
+      <!--<app-custom-table
+      *ngIf="data"
+      [data]="data"
+      [dataCount]="dataCount"
+      [displayedColumns]="configuration.displayedColumns"
+      [columnsName]="configuration.columnsName"
+      [paginationSize]="configuration.paginationSize"
+      [loading]="loading"
+      (changePage)="onChangePage($event)"
+    ></app-custom-table>-->
+      <div style="display: block;">
+        <canvas baseChart
+                [datasets]="tipoData"
+                [labels]="tipoLabels"
+                [options]="barChartOptions"
+                [legend]="true"
+                [type]="barChartType">
+        </canvas>
+      </div>
+    </mat-card>
   </div>
 </div>
