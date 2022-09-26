@@ -3,4 +3,7 @@ export interface ClinicHistoryStatic {
   id?: string;
   numero_hc?: any;
   paciente?: string;
+  fecha_solicitud?: string;
+  medico_realiza_string?: string;
+  fecha_realizacion?: string;
 }

@@ -348,7 +348,7 @@ export class NavigationService {
         {
           displayName: 'Cita',
           iconName: ['today'],
-          route: '',
+          route: 'appointment',
           material: true,
           display: true,
         },

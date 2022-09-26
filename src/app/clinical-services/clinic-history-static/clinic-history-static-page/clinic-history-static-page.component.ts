@@ -13,9 +13,13 @@ import { PageEvent } from '@angular/material/paginator';
 import { DeleteConfirmationModalComponent } from 'src/app/shared/delete-confirmation-modal/delete-confirmation-modal.component';
 import { ConfirmationDialogFrontComponent } from 'src/app/shared/confirmation-dialog-front/confirmation-dialog-front.component';
 import { Sort } from '@angular/material/sort';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ClinicHistoryStaticPinComponent } from './clinic-history-static-pin/clinic-history-static-pin/clinic-history-static-pin.component';
 import { ClinicHistoryStaticPin } from './clinic-history-static-pin/models/clinic-history-static-pin.model';
+import { Clinicsession } from '../../clinicsession/models/clinicsession.model';
+import { ClinicsessionService } from '../../clinicsession/services/clinicsession.service';
+import { Physicalexam } from '../../physicalexam/models/physicalexam.model';
+import { PhysicalexamService } from '../../physicalexam/services/physicalexam.service';
 @Component({
   selector: 'app-clinic-history-static-page',
   templateUrl: './clinic-history-static-page.component.html',
@@ -31,6 +35,10 @@ export class ClinicHistoryStaticPageComponent implements OnInit {
   page = 1;
   pageSize = DEFAULT_PAGE_SIZE;
   patient = [];
+  clinicsession = [];
+  physicalexam = [];
+
+
 
   rowActionButtons = [
     {
@@ -38,7 +46,7 @@ export class ClinicHistoryStaticPageComponent implements OnInit {
       icon: 'edit',
       color: 'primary',
       class: 'btn-primary',
-      callback: (item) => this.openEditForm(item),
+      callback: (item) => this.goToForm(item),
     }, {
       tooltipText: 'Detalles de Historia Clínica',
       icon: 'visibility',
@@ -67,12 +75,18 @@ export class ClinicHistoryStaticPageComponent implements OnInit {
     private clinicHistoryStaticService: ClinicHistoryStaticService,
     private patientService: PatientService,
     private toastService: ToastrService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
+    private clinicsessionService: ClinicsessionService,
+    private physicalexamService: PhysicalexamService,
+
   ) {
     this.putPatient();
+
   }
 
   ngOnInit(): void {
+    this.getSeccionClinic();
     this.getClinicHistoryStatic();
 
   }
@@ -95,6 +109,54 @@ export class ClinicHistoryStaticPageComponent implements OnInit {
     this.subscriptions.push(sub);
   }
 
+
+
+  getSeccionClinic() {
+    const sub = this.clinicsessionService
+      .getClinicsession({}, 'id', 'asc', 1, 10000)
+      .pipe(
+        map((response) => {
+
+          this.clinicsession = response.results;
+
+          this.clinicsession = response.results.map((res) => ({
+            id_hc: res.hc.id,
+            medico_realiza_string: res.medico_realiza.first_name,
+            fecha_solicitud: res.fecha_realizacion,
+            fecha_realizacion: res.fecha_realizacion
+          }));
+          console.log(this.clinicsession);
+          console.log(this.clinicHistoryStatic);
+          for (let i = 0; i < this.clinicsession.length; i++) {
+            for (let j = 0; j < this.clinicHistoryStatic.length; j++) {
+              const elementi = this.clinicsession[i];
+              const elementj = this.clinicHistoryStatic[j];
+              if (this.clinicsession[i].id_hc == this.clinicHistoryStatic[j].id) {
+                this.clinicHistoryStatic[j].medico_realiza_string = (this.clinicsession[i].medico_realiza_string) ? this.clinicsession[i].medico_realiza_string : '';
+                this.clinicHistoryStatic[j].fecha_solicitud = (this.clinicsession[i].fecha_solicitud) ? this.clinicsession[i].fecha_solicitud : '';
+                this.clinicHistoryStatic[j].fecha_realizacion = (this.clinicsession[i].fecha_realizacion) ? this.clinicsession[i].fecha_realizacion : '';
+              }
+
+            }
+
+
+          }
+          console.log(this.clinicsession);
+          console.log(this.clinicHistoryStatic);
+        }),
+        catchError(() => {
+          this.toastService.error('Hubo un error obteniendo los datos del usuario.', 'Error');
+          return of(null);
+        }),
+      )
+      .subscribe();
+
+    this.subscriptions.push(sub);
+
+
+
+  }
+
   getClinicHistoryStatic(filters = this.filters, sortColumn = 'id', sortDirection = 'desc', page = this.page, pageSize = this.pageSize) {
     this.loading = true;
     const sub = this.clinicHistoryStaticService
@@ -102,14 +164,20 @@ export class ClinicHistoryStaticPageComponent implements OnInit {
       .pipe(
         map((response: ApiResponse<any>) => {
 
-          this.clinicHistoryStatic = response.results.map((res) => ({
-            ...res,
-            id: res.id,
-            numero_hc: res.numero_hc,
-            paciente: res.paciente.nro_identificacion,
-            paciente_id: res.paciente.id,
-            paciente_pin: (res.paciente.pin) ? res.paciente.pin : '0000'
-          }));
+          this.clinicHistoryStatic = response.results.map((res) => {
+            //const medico_realiza_string= 
+            console.log(this.clinicsession)
+            return {
+              ...res,
+              id: res.id,
+              numero_hc: res.numero_hc,
+              paciente: res.paciente.nro_identificacion,
+              paciente_id: res.paciente.id,
+              paciente_pin: (res.paciente.pin) ? res.paciente.pin : '0000',
+            };
+
+          });
+
 
           this.dataCount = response.count;
           this.loading = false;
@@ -125,6 +193,10 @@ export class ClinicHistoryStaticPageComponent implements OnInit {
     this.subscriptions.push(sub);
   }
 
+
+
+
+
   onChangePage(page: PageEvent) {
     this.page = page.pageIndex + 1;
     this.pageSize = page.pageSize;
@@ -137,95 +209,100 @@ export class ClinicHistoryStaticPageComponent implements OnInit {
   }
 
 
-  createClinicHistoryStatic() {
-    let dialogRef: MatDialogRef<ClinicHistoryStaticFormComponent, any>;
+  /*  createClinicHistoryStatic() {
+     let dialogRef: MatDialogRef<ClinicHistoryStaticFormComponent, any>;
+ 
+     dialogRef = this.dialog.open(ClinicHistoryStaticFormComponent, {
+       panelClass: 'app-dialog-add-edit-business',
+       maxWidth: '500px',
+       minWidth: '150px',
+       maxHeight: '100vh',
+       width: '100%',
+       data: {
+ 
+         clinicHistoryStatic: null,
+ 
+         patient: null,
+ 
+       },
+     });
+ 
+     const modalComponentRef = dialogRef.componentInstance as ClinicHistoryStaticFormComponent;
+ 
+     const sub = modalComponentRef.create
+       .pipe(
+ 
+ 
+         switchMap((ClinicHistoryStatic: ClinicHistoryStatic) =>
+           this.clinicHistoryStaticService.createClinicHistoryStatic(ClinicHistoryStatic).pipe(
+             catchError(() => {
+               this.toastService.error('Hubo un error al crear la Historia Clínica . Por favor, inténtelo de nuevo más tarde.', 'Error');
+ 
+               return of(null);
+             }),
+             tap((success) => {
+               if (success) {
+                 this.getClinicHistoryStatic(this.filters, 'id', 'desc', this.page, this.pageSize);
+ 
+                 this.toastService.success('La Historia Clínica  fue creado correctamente.', 'Felicidades');
+ 
+               }
+             }),
+           ),
+         ),
+       )
+       .subscribe();
+ 
+     this.subscriptions.push(sub);
+   } */
 
-    dialogRef = this.dialog.open(ClinicHistoryStaticFormComponent, {
-      panelClass: 'app-dialog-add-edit-business',
-      maxWidth: '500px',
-      minWidth: '150px',
-      maxHeight: '100vh',
-      width: '100%',
-      data: {
+  /*  openEditForm(item) {
+ 
+     let dialogRef: MatDialogRef<ClinicHistoryStaticFormComponent, any>;
+ 
+     dialogRef = this.dialog.open(ClinicHistoryStaticFormComponent, {
+       panelClass: 'app-dialog-add-edit-business',
+       maxWidth: '500px',
+       minWidth: '150px',
+       maxHeight: '100vh',
+       width: '100%',
+       data: {
+         clinicHistoryStatic: item,
+       },
+     });
+ 
+     const modalComponentRef = dialogRef.componentInstance as ClinicHistoryStaticFormComponent;
+ 
+     const sub = modalComponentRef.edit
+       .pipe(
+ 
+         switchMap((ClinicHistoryStatic: ClinicHistoryStatic) =>
+           this.clinicHistoryStaticService.editClinicHistoryStatic({ ...ClinicHistoryStatic, id: item.id }).pipe(
+             catchError(() => {
+               this.toastService.error('Hubo un error al editar la Historia clínica . Por favor, inténtelo de nuevo más tarde.', 'Error');
+ 
+               return of(null);
+             }),
+             tap((success) => {
+               if (success) {
+                 this.getClinicHistoryStatic(this.filters, 'id', 'desc', this.page, this.pageSize);
+ 
+                 this.toastService.success('La Historia Clínica fue modificado correctamente.', 'Felicidades');
+ 
+               }
+             }),
+           ),
+         ),
+       )
+       .subscribe();
+ 
+     this.subscriptions.push(sub);
+   } */
 
-        clinicHistoryStatic: null,
-
-        patient: null,
-
-      },
-    });
-
-    const modalComponentRef = dialogRef.componentInstance as ClinicHistoryStaticFormComponent;
-
-    const sub = modalComponentRef.create
-      .pipe(
-
-
-        switchMap((ClinicHistoryStatic: ClinicHistoryStatic) =>
-          this.clinicHistoryStaticService.createClinicHistoryStatic(ClinicHistoryStatic).pipe(
-            catchError(() => {
-              this.toastService.error('Hubo un error al crear la Historia Clínica . Por favor, inténtelo de nuevo más tarde.', 'Error');
-
-              return of(null);
-            }),
-            tap((success) => {
-              if (success) {
-                this.getClinicHistoryStatic(this.filters, 'id', 'desc', this.page, this.pageSize);
-
-                this.toastService.success('La Historia Clínica  fue creado correctamente.', 'Felicidades');
-
-              }
-            }),
-          ),
-        ),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
+  goToForm(item = null) {
+    item ? this.router.navigate(['edit', item.id], { relativeTo: this.route }) : this.router.navigate(['create'], { relativeTo: this.route });
   }
 
-  openEditForm(item) {
-
-    let dialogRef: MatDialogRef<ClinicHistoryStaticFormComponent, any>;
-
-    dialogRef = this.dialog.open(ClinicHistoryStaticFormComponent, {
-      panelClass: 'app-dialog-add-edit-business',
-      maxWidth: '500px',
-      minWidth: '150px',
-      maxHeight: '100vh',
-      width: '100%',
-      data: {
-        clinicHistoryStatic: item,
-      },
-    });
-
-    const modalComponentRef = dialogRef.componentInstance as ClinicHistoryStaticFormComponent;
-
-    const sub = modalComponentRef.edit
-      .pipe(
-
-        switchMap((ClinicHistoryStatic: ClinicHistoryStatic) =>
-          this.clinicHistoryStaticService.editClinicHistoryStatic({ ...ClinicHistoryStatic, id: item.id }).pipe(
-            catchError(() => {
-              this.toastService.error('Hubo un error al editar la Historia clínica . Por favor, inténtelo de nuevo más tarde.', 'Error');
-
-              return of(null);
-            }),
-            tap((success) => {
-              if (success) {
-                this.getClinicHistoryStatic(this.filters, 'id', 'desc', this.page, this.pageSize);
-
-                this.toastService.success('La Historia Clínica fue modificado correctamente.', 'Felicidades');
-
-              }
-            }),
-          ),
-        ),
-      )
-      .subscribe();
-
-    this.subscriptions.push(sub);
-  }
 
   goToDetails(clinicHistoryStatic?: ClinicHistoryStatic) {
     const pin_paciente = clinicHistoryStatic.paciente_pin;

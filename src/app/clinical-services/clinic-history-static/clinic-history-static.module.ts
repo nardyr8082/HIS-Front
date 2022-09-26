@@ -7,10 +7,12 @@ import { ClinicHistoryStaticFormComponent } from './clinic-history-static-form/c
 import { ClinicHistoryStaticPageComponent } from './clinic-history-static-page/clinic-history-static-page.component';
 import { ClinicHistoryDetailsComponent } from './clinic-history-static-page/clinic-history-static-details/clinic-history-details/clinic-history-details.component';
 import { ClinicHistoryStaticPinComponent } from './clinic-history-static-page/clinic-history-static-pin/clinic-history-static-pin/clinic-history-static-pin.component';
+import { ClinicHistoryStaticNewFormComponent } from './clinic-history-static-form/clinic-history-static-newForm/clinic-history-static-new-form/clinic-history-static-new-form.component';
+
 
 
 @NgModule({
-  declarations: [ClinicHistoryStaticFormComponent, ClinicHistoryStaticPageComponent, ClinicHistoryDetailsComponent, ClinicHistoryStaticPinComponent],
+  declarations: [ClinicHistoryStaticFormComponent, ClinicHistoryStaticPageComponent, ClinicHistoryDetailsComponent, ClinicHistoryStaticPinComponent, ClinicHistoryStaticNewFormComponent],
   imports: [
     CommonModule,
     ClinicHistoryStaticRoutingModule,

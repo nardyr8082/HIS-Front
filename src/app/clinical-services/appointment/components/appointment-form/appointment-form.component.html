@@ -3,19 +3,24 @@
     </h4>
     <mat-divider class="my-4"></mat-divider>
     <form *ngIf="appointmentForm" [formGroup]="appointmentForm">
-
-        <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Número:</mat-label>
-            <input matInput formControlName="numero" />
-        </mat-form-field>
-
-        <mat-form-field class="w-100" appearance="outline">
-            <mat-label>Fecha</mat-label>
-            <input matInput formControlName="fecha" [matDatepicker]="picker" />
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-
+        <div class="row mb-1">
+            <div class="form-group col-md-6">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Número:</mat-label>
+                    <input matInput formControlName="numero" />
+                </mat-form-field>
+            </div>
+            <div class="form-group col-md-6">
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-label>Fecha</mat-label>
+                    <input matInput formControlName="fecha" [matDatepicker]="picker" />
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row mb-1">
+            <div class="form-group col-md-6">
         <mat-form-field appearance="fill">
             <mat-label i18n="Timepicker 1 Title">Hora Inicio</mat-label>
             <input matTimepicker #t1="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
@@ -25,7 +30,8 @@
             <mat-error *ngIf="hora_inicioControl.errors?.required"> {{ 'La hora inicio es' }} <strong>requerido</strong>
             </mat-error>
         </mat-form-field>
-
+</div>
+<div class="form-group col-md-6">
         <mat-form-field appearance="fill">
             <mat-label i18n="Timepicker 1 Title">Hora Fin</mat-label>
             <input matTimepicker #t1="matTimepicker" i18n-okLabel="Timepicker 1 Ok Label" okLabel="Ok"
@@ -35,23 +41,26 @@
             <mat-error *ngIf="hora_finControl.errors?.required"> {{ 'La hora fin es' }} <strong>requerido</strong>
             </mat-error>
         </mat-form-field>
-
-        <mat-divider class="my-4"></mat-divider>
-
+        </div>
+</div>
+        
+<div class="row mb-1">
+    <div class="form-group col-md-6">
         <mat-form-field class="w-100" appearance="outline">
             <mat-label>Observaciones:</mat-label>
             <input matInput formControlName="observaciones" />
         </mat-form-field>
-
-        <div class="mb-4">
+</div>
+<div class="form-group col-md-6"> 
             <ng-select appearance="outline" class="custom w-100" placeholder="Paciente" [items]="paciente"
                 bindLabel="nro_identificacion" bindValue="id" formControlName="paciente">
             </ng-select>
             <small class="text-danger error-style" *ngIf="pacienteControl.errors?.required && pacienteControl.dirty">
                 El campo Paciente es <strong>requerido</strong></small>
-        </div>
-
-        <div class="mb-4">
+       </div>
+</div>
+        <div class="row mb-1">
+            <div class="form-group col-md-6"> 
             <ng-select appearance="outline" class="custom w-100" placeholder="Servicio" [items]="servicesstock"
                 bindLabel="nombre" bindValue="id" formControlName="servicio">
             </ng-select>
@@ -59,32 +68,34 @@
                 El campo Servicio es <strong>requerido</strong></small>
         </div>
 
-        <div class="mb-4">
+        <div class="form-group col-md-6"> 
             <ng-select appearance="outline" class="custom w-100" placeholder="Médico" [items]="user"
                 bindLabel="username" bindValue="id" formControlName="medico">
             </ng-select>
             <small class="text-danger error-style" *ngIf="medicoControl.errors?.required && medicoControl.dirty">
                 El campo Médico es <strong>requerido</strong></small>
-        </div>
+       </div>
+</div>
 
-
-        <div class="mb-4">
+        <div class="row mb-1">
+            <div class="form-group col-md-6"> 
             <ng-select appearance="outline" class="custom w-100" placeholder="Departamento" [items]="departament"
                 bindLabel="nombre" bindValue="id" formControlName="departamento">
             </ng-select>
             <small class="text-danger error-style"
                 *ngIf="departamentoControl.errors?.required && departamentoControl.dirty">
                 El campo Departamento es <strong>requerido</strong></small>
-        </div>
-
-        <div class="mb-4">
+        
+</div>
+<div class="form-group col-md-6">  
             <ng-select appearance="outline" class="custom w-100" placeholder="Estado cita" [items]="stateAppointment"
                 bindLabel="descripcion" bindValue="id" formControlName="estado_cita">
             </ng-select>
             <small class="text-danger error-style"
                 *ngIf="estado_citaControl.errors?.required && estado_citaControl.dirty">
                 El campo Estado cita es <strong>requerido</strong></small>
-        </div>
+       </div>
+       </div>
     </form>
     <mat-divider class="my-4"></mat-divider>
     <div class="d-flex align-items-center justify-content-end">

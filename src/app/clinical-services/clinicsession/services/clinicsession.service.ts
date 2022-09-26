@@ -24,7 +24,7 @@ export class ClinicsessionService {
 
   private defaultPageSize: number = 10;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getClinicsession(filter: any, sortColumn: string, sortDirection: string, page: number, pageSize: number): Observable<ApiResponse<Clinicsession>> {
     this.defaultFilter = filter;
